@@ -30,6 +30,8 @@ type SectionProps = PropsWithChildren<{
 }>;
 
 function Section({children, title}: SectionProps): JSX.Element {
+  console.log(children)
+
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -49,7 +51,35 @@ function Section({children, title}: SectionProps): JSX.Element {
             color: isDarkMode ? Colors.light : Colors.dark,
           },
         ]}>
-        {children}
+          
+      <View style={styles.sectionDescriptionContainer}>
+        {Array.isArray(children) ? (
+          children.map((child, index) => (
+            <Text
+              key={index}
+              style={[
+                styles.sectionDescription,
+                {
+                  color: isDarkMode ? Colors.light : Colors.dark,
+                },
+              ]}>
+              {child}
+            </Text>
+          ))
+        ) : (
+          <Text
+            style={[
+              styles.sectionDescription,
+              {
+                color: isDarkMode ? Colors.light : Colors.dark,
+              },
+            ]}>
+            {children}
+          </Text>
+        )}
+      </View>
+        
+
       </Text>
     </View>
   );
@@ -71,25 +101,42 @@ function App(): JSX.Element {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
+          <Section title="Family">
+            <Text>Man's highest priority.</Text>
+            <Text>+XP by phoning or visiting family.</Text>
           </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
+          <Section title="Friends">
+            <Text>Man's greatest pleasure.</Text>
+            <Text>+XP by going to social settings.</Text>
+            <Text>Utilizes Google Maps API for proof.</Text>
           </Section>
-          <Section title="Debug">
-            <DebugInstructions />
+          <Section title="Finance">
+            <Text>Man's primary focus.</Text>
+            <Text>+XP or -XP based on credit score.</Text>
           </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
+          <Section title="Exercise">
+            <Text>Man's necessary upkeep.</Text>
           </Section>
-          <LearnMoreLinks />
+          <Section title="Coding">
+            <Text>Man's control of rocks.</Text>
+          </Section>
+          
+          <Section title="Cooking">
+            <Text>Fuel rules the Man.</Text>
+          </Section>
+          <Section title="The Arts">
+            <Text>The decoration of time & space.</Text>
+          </Section>
+          <Section title="Philanthropy">
+            <Text>Man's humbling return.</Text>
+          </Section>
+          <Section title="Invention">
+            <Text>Man bending power.</Text>
+          </Section>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -98,8 +145,11 @@ function App(): JSX.Element {
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    marginTop: 32,
+    margin: 5,
     paddingHorizontal: 24,
+    borderWidth:2,
+    borderColor:"blue",
+    flexDirection:"column",
   },
   sectionTitle: {
     fontSize: 24,
@@ -109,10 +159,17 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 18,
     fontWeight: '400',
+    flexDirection:"column",
   },
   highlight: {
     fontWeight: '700',
   },
+  headerIdk:{
+    color:"blue",
+  },
+  sectionDescriptionContainer:{
+    
+  }
 });
 
 export default App;

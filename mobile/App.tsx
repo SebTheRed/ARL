@@ -106,36 +106,47 @@ function App(): JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Family">
-            <Text>Man's highest priority.</Text>
+            <Text>The highest priority.</Text>
             <Text>+XP by phoning or visiting family.</Text>
           </Section>
           <Section title="Friends">
-            <Text>Man's greatest pleasure.</Text>
+            <Text>The greatest pleasure.</Text>
             <Text>+XP by going to social settings.</Text>
             <Text>Utilizes Google Maps API for proof.</Text>
           </Section>
           <Section title="Finance">
-            <Text>Man's primary focus.</Text>
+            <Text>The primary focus.</Text>
             <Text>+XP or -XP based on credit score.</Text>
           </Section>
-          <Section title="Exercise">
-            <Text>Man's necessary upkeep.</Text>
+          <Section title="Agility">
+            <Text>The power to move.</Text>
+            <Text>+XP for logging cardio exercise.</Text>
+          </Section>
+          <Section title="Strength">
+            <Text>The force of will.</Text>
+            <Text>+XP for tracking strength training.</Text>
           </Section>
           <Section title="Coding">
-            <Text>Man's control of rocks.</Text>
+            <Text>The language of rocks.</Text>
+            <Text>+XP using Github.</Text>
           </Section>
-          
+          <Section title="Gaming">
+            <Text>The otherworldly immersion.</Text>
+            <Text>+XP for gaming.</Text>
+            <Text>++XP for gaming in groups.</Text>
+          </Section>
           <Section title="Cooking">
             <Text>Fuel rules the Man.</Text>
+            <Text>+XP for sharing recipes & pics.</Text>
           </Section>
           <Section title="The Arts">
             <Text>The decoration of time & space.</Text>
+            <Text>+XP making/viewing IRL art.</Text>
+            <Text>What is art ?_?</Text>
           </Section>
           <Section title="Philanthropy">
-            <Text>Man's humbling return.</Text>
-          </Section>
-          <Section title="Invention">
-            <Text>Man bending power.</Text>
+            <Text>The humbling altruism.</Text>
+            <Text>+XP when logging into charity events.</Text>
           </Section>
         </View>
       </ScrollView>

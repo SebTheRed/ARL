@@ -7,6 +7,7 @@
 
 import React from 'react';
 import type {PropsWithChildren} from 'react';
+import { Animated, Easing } from 'react-native';
 import {
   SafeAreaView,
   ScrollView,
@@ -39,7 +40,7 @@ function Section({children, title}: SectionProps): JSX.Element {
         style={[
           styles.sectionTitle,
           {
-            color: isDarkMode ? Colors.white : Colors.black,
+            color: "white",
           },
         ]}>
         {title}
@@ -48,7 +49,7 @@ function Section({children, title}: SectionProps): JSX.Element {
         style={[
           styles.sectionDescription,
           {
-            color: isDarkMode ? Colors.light : Colors.dark,
+            color: "white"
           },
         ]}>
           
@@ -60,7 +61,7 @@ function Section({children, title}: SectionProps): JSX.Element {
               style={[
                 styles.sectionDescription,
                 {
-                  color: isDarkMode ? Colors.light : Colors.dark,
+                  color: "white",
                 },
               ]}>
               {child}
@@ -71,7 +72,7 @@ function Section({children, title}: SectionProps): JSX.Element {
             style={[
               styles.sectionDescription,
               {
-                color: isDarkMode ? Colors.light : Colors.dark,
+                color: "white",
               },
             ]}>
             {children}
@@ -89,7 +90,8 @@ function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: '#ffffff',
+    flex:1,
   };
 
   return (
@@ -101,10 +103,15 @@ function App(): JSX.Element {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
+        {/* right here sweet baby Mr Plugin */}
+        <View style={{
+          flex: 1, // or whatever height you want
+          backgroundColor: 'white',
+          borderBottomColor: 'black',
+          borderBottomWidth: 200,
+          opacity: 0.5
+        }} />
+        <View>
           <Section title="Family">
             <Text>The highest priority.</Text>
             <Text>+XP by phoning or visiting family.</Text>
@@ -132,7 +139,7 @@ function App(): JSX.Element {
           </Section>
           <Section title="Gaming">
             <Text>The otherworldly immersion.</Text>
-            <Text>+XP for gaming.</Text>
+            <Text>+XP for playing games.</Text>
             <Text>++XP for gaming in groups.</Text>
           </Section>
           <Section title="Cooking">
@@ -159,8 +166,19 @@ const styles = StyleSheet.create({
     margin: 5,
     paddingHorizontal: 24,
     borderWidth:2,
-    borderColor:"blue",
+    borderColor:"white",
     flexDirection:"column",
+    backgroundColor:"#1c1c1c",
+    borderRadius:10,
+    filter:"drop-shadow(0 0 10 black)",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   sectionTitle: {
     fontSize: 24,

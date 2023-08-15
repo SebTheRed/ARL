@@ -30,21 +30,30 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function Section({children, title}: SectionProps): JSX.Element {
+function Section({children, title, flare}: SectionProps): JSX.Element {
   console.log(children)
 
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: "white",
-          },
-        ]}>
-        {title}
-      </Text>
+      <View style={{flexDirection:"row", alignItems:"flex-end"}}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            {
+              color: "white",
+            },
+          ]}>
+          {title}
+        </Text>
+        <Text
+          style={[
+            styles.sectionFlare,
+          ]}>
+          &nbsp;&nbsp;{flare}
+        </Text>
+      </View>
+      
       <Text
         style={[
           styles.sectionDescription,
@@ -90,7 +99,7 @@ function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#1c1c1c',
     flex:1,
   };
 
@@ -104,56 +113,46 @@ function App(): JSX.Element {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         {/* right here sweet baby Mr Plugin */}
-        <View style={{
-          flex: 1, // or whatever height you want
-          backgroundColor: 'white',
-          borderBottomColor: 'black',
-          borderBottomWidth: 200,
-          opacity: 0.5
-        }} />
         <View>
-          <Section title="Family">
-            <Text>The highest priority.</Text>
-            <Text>+XP by phoning or visiting family.</Text>
+          <Section title="Family" flare="The highest priority.">
+            <Text>+XP when calling & visiting family.</Text>
+            <Text>++XP when family birthdays.</Text>
           </Section>
-          <Section title="Friends">
-            <Text>The greatest pleasure.</Text>
-            <Text>+XP by going to social settings.</Text>
-            <Text>Utilizes Google Maps API for proof.</Text>
+          <Section title="Friends" flare="The greatest pleasure.">
+            <Text>+XP when calling & visiting family.</Text>
+            <Text>++XP when going to social events.</Text>
           </Section>
-          <Section title="Finance">
-            <Text>The primary focus.</Text>
+          <Section title="Finance" flare="The primary focus.">
             <Text>+XP or -XP based on credit score.</Text>
+            <Text>++XP when following budget.</Text>
           </Section>
-          <Section title="Agility">
-            <Text>The power to move.</Text>
-            <Text>+XP for logging cardio exercise.</Text>
+          <Section title="Agility" flare="The power to move.">
+            <Text>+XP when logging cardio exercise.</Text>
+            <Text>++XP when classes or social exercise.</Text>
           </Section>
-          <Section title="Strength">
-            <Text>The force of will.</Text>
-            <Text>+XP for tracking strength training.</Text>
+          <Section title="Strength" flare="The force of will.">
+            <Text>+XP when tracking strength training.</Text>
+            <Text>++XP following schedule.</Text>
           </Section>
-          <Section title="Coding">
-            <Text>The language of rocks.</Text>
+          <Section title="Coding" flare="The language of rocks.">
             <Text>+XP using Github.</Text>
+            <Text>++XP daily leetcode question.</Text>
           </Section>
-          <Section title="Gaming">
-            <Text>The otherworldly immersion.</Text>
-            <Text>+XP for playing games.</Text>
-            <Text>++XP for gaming in groups.</Text>
+          <Section title="Gaming" flare="The otherworldly immersion.">
+            <Text>+XP when playing games.</Text>
+            <Text>++XP when gaming with friends.</Text>
           </Section>
-          <Section title="Cooking">
-            <Text>Fuel rules the Man.</Text>
-            <Text>+XP for sharing recipes & pics.</Text>
+          <Section title="Cooking" flare="Fuel rules the Man.">
+            <Text>+XP logging meals.</Text>
+            <Text>++XP when sharing recipes & pics.</Text>
           </Section>
-          <Section title="The Arts">
-            <Text>The decoration of time & space.</Text>
-            <Text>+XP making/viewing IRL art.</Text>
-            <Text>What is art ?_?</Text>
+          <Section title="The Arts" flare="The decoration of space & time.">
+            <Text>+XP making IRL art.</Text>
+            <Text>++XP going to art shows/galleries.</Text>
           </Section>
-          <Section title="Philanthropy">
-            <Text>The humbling altruism.</Text>
-            <Text>+XP when logging into charity events.</Text>
+          <Section title="Philanthropy" flare="The humbling altruism.">
+            <Text>+XP when donating money to charity.</Text>
+            <Text>++XP when logging into charity events.</Text>
           </Section>
         </View>
       </ScrollView>
@@ -183,6 +182,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
+    fontFamily: "X Company Regular"
+  },
+  sectionFlare:{
+    fontSize:16,
+    fontWeight:'400',
+    color:"white",
+
   },
   sectionDescription: {
     marginTop: 8,

@@ -28,6 +28,7 @@ import {
 
 type SectionProps = PropsWithChildren<{
   title: string;
+  flare: string;
 }>;
 
 function Section({children, title, flare}: SectionProps): JSX.Element {

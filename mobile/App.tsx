@@ -11,6 +11,10 @@ import { Animated, Easing } from 'react-native';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Skills from './Pages/Skills';
+import Stats from './Pages/Stats';
+import Map from './Pages/Achievements';
+import Profile from './Pages/Profile';
+import Achievements from './Pages/Achievements'
 import {
   SafeAreaView,
   ScrollView,
@@ -48,8 +52,12 @@ function App(): JSX.Element {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <NavigationContainer >
-        <Stack.Navigator initialRouteName='Home'>
-          <Stack.Screen name="Home" component={Skills} />
+        <Stack.Navigator initialRouteName='Skills'>
+          <Stack.Screen name="Skills" component={Skills} />
+          <Stack.Screen name="Stats" component={Stats} />
+          <Stack.Screen name="Achievements" component={Achievements} />
+          <Stack.Screen name="Map" component={Map} />
+          <Stack.Screen name="Profile" component={Profile} />
         </Stack.Navigator>
       </NavigationContainer>
       

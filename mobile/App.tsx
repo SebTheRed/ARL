@@ -59,7 +59,10 @@ function App(): JSX.Element {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <NavigationContainer >
-        <Stack.Navigator initialRouteName='Skills'>
+        <Stack.Navigator  initialRouteName='Skills' 
+          screenOptions={{
+            headerShown: false
+          }}>
           <Stack.Screen name="Skills" component={Skills} />
           <Stack.Screen name="Stats" component={Stats} />
           <Stack.Screen name="Trophies" component={Trophies} />

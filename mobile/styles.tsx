@@ -39,10 +39,9 @@ bottomBarText:{
 },
 sectionContainer: {
   margin: 5,
-  paddingHorizontal: 24,
   borderWidth:2,
   borderColor:"#656565",
-  flexDirection:"column",
+  flexDirection:"row",
   backgroundColor:"#1c1c1c",
   borderRadius:10,
   filter:"drop-shadow(0 0 10 black)",
@@ -54,23 +53,36 @@ sectionContainer: {
   shadowOpacity: 0.25,
   shadowRadius: 3.84,
   elevation: 5,
+  justifyContent:"space-between"
+},
+sectionTextContainer:{
+  display:"flex",
+  flexDirection:"column",
+  marginHorizontal:24,
 },
 sectionTitle: {
   fontSize: 24,
   fontWeight: '600',
-  fontFamily: "X Company Regular"
+  fontFamily: "X Company Regular",
+  color:"white",
 },
 sectionFlare:{
   fontSize:16,
   fontWeight:'400',
   color:"white",
-
 },
 sectionDescription: {
   marginTop: 8,
   fontSize: 18,
   fontWeight: '400',
   flexDirection:"column",
+  color:"white",
+},
+sectionLevelBox:{
+  height:"100%",
+  width:"20%",
+  // backgroundColor:"red",
+  borderRadius:7,
 },
 highlight: {
   fontWeight: '700',
@@ -80,6 +92,9 @@ headerIdk:{
 },
 sectionDescriptionContainer:{
 },
+borderedText:{
+  
+}
 
   });
 

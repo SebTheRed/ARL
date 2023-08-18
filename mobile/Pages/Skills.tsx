@@ -7,7 +7,7 @@ import {
     useColorScheme,
     View,
   } from 'react-native';
-import Svg, {Text as SvgText} from 'react-native-svg'
+
 import { useState } from 'react';
 import styles from '../styles'
 import type {PropsWithChildren} from 'react';
@@ -21,22 +21,13 @@ type SkillTileProps = PropsWithChildren<{
   color: string,
   flare: string,
 }>;
+type SkillsProps = PropsWithChildren<{
+  route: any,
+}>
 
+function Skills({route}:SkillsProps): JSX.Element {
+  const { skillsList } = route.params;
 
-function Skills(): JSX.Element {
-
-  const [skillsList,setSkillsList] = useState([
-    {title:"Family",color:"#ff0000",flare:"--",level:1},
-    {title:"Friends",color:"#ff8400",flare:"--",level:1},
-    {title:"Finance",color:"#ffea00",flare:"--",level:1},
-    {title:"Agility",color:"#aeff00",flare:"--",level:1},
-    {title:"Strength",color:"#4dff00",flare:"--",level:1},
-    {title:"Contest",color:"#00ff80",flare:"--",level:1},
-    {title:"Coding",color:"#00fffb",flare:"--",level:1},
-    {title:"Gaming",color:"#0080ff",flare:"--",level:1},
-    {title:"Cooking",color:"#7700ff",flare:"--",level:1},
-    {title:"Humanity",color:"#b300ff",flare:"--",level:1},
-  ]);
   
 
 function Section({children, title, flare}: SectionProps): JSX.Element {
@@ -56,22 +47,11 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
         
       </View>
       <View style={{...styles.sectionLevelBox, backgroundColor:color}}>
-        <View>
-        <Svg height="100%" width="100%" viewBox="0 0 200 100">
-          <SvgText
-            x="50"
-            y="50"
-            fontSize="50"
-            fill="black"
-            stroke="white"
-            strokeWidth="2"
-            textAnchor="middle"
-            alignmentBaseline="middle"
-          >
-            {level}
-          </SvgText>
-        </Svg>
-        </View>
+        <Text style={{...styles.borderedText, position: 'absolute', top: 2, left: 2, color: 'white' }}>{level}</Text>
+        <Text style={{...styles.borderedText, position: 'absolute', top: -2, left: -2, color: 'white' }}>{level}</Text>
+        <Text style={{...styles.borderedText, position: 'absolute', top: 2, left: -2, color: 'white' }}>{level}</Text>
+        <Text style={{...styles.borderedText, position: 'absolute', top: -2, left: 2, color: 'white' }}>{level}</Text>
+        <Text style={{...styles.borderedText, color: 'black' }}>{level}</Text>
       </View>
     </View>
   )
@@ -83,7 +63,7 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
         contentInsetAdjustmentBehavior="automatic"
         style={styles.backgroundStyle}>
           <View>
-            {skillsList.map((d,i)=>{
+            {skillsList.map((d:any,i:number)=>{
               return(<SkillTile title={d.title} color={d.color} level={d.level} flare={d.flare} key={i}/>)
             })}
           </View>

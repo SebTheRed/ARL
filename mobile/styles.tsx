@@ -53,7 +53,8 @@ sectionContainer: {
   shadowOpacity: 0.25,
   shadowRadius: 3.84,
   elevation: 5,
-  justifyContent:"space-between"
+  justifyContent:"space-between",
+  alignItems:"center",
 },
 sectionTextContainer:{
   display:"flex",
@@ -79,10 +80,18 @@ sectionDescription: {
   color:"white",
 },
 sectionLevelBox:{
-  height:"100%",
+  height:"96%",
   width:"20%",
   // backgroundColor:"red",
   borderRadius:7,
+  // alignItems:"center",
+  marginRight:0,
+  borderColor:"#656565",
+  borderWidth:2
+},
+borderedText:{
+  fontSize:45,
+  marginLeft:7,
 },
 highlight: {
   fontWeight: '700',
@@ -92,9 +101,7 @@ headerIdk:{
 },
 sectionDescriptionContainer:{
 },
-borderedText:{
-  
-}
+
 
   });
 

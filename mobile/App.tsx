@@ -32,6 +32,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import BottomBar from './Overlays/BottomBar';
 
 
 const Stack = createStackNavigator();
@@ -60,7 +61,7 @@ function App(): JSX.Element {
           <Stack.Screen name="Profile" component={Profile} />
         </Stack.Navigator>
       </NavigationContainer>
-      
+      <BottomBar />
     </SafeAreaView>
   );
 }

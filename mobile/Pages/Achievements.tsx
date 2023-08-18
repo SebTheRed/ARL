@@ -7,7 +7,7 @@ import {
     useColorScheme,
     View,
   } from 'react-native';
-import styles from './styles'
+import styles from '../styles'
 
 const Achievements = ():JSX.Element => {
     return(

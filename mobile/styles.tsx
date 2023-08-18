@@ -48,6 +48,17 @@ const styles = StyleSheet.create({
       backgroundColor: '#1c1c1c',
       flex:1,
     },
+    bottomBar:{
+      height:'10%',
+      width:'100%',
+      backgroundColor:'red',
+      flexDirection:"row",
+      justifyContent:"space-evenly",
+    },
+    bottomBarIconBox:{
+      width:"20%",
+      alignItems:"center"
+    }
   });
 
 export default styles

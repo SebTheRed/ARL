@@ -12,9 +12,11 @@ import { NavigationContainer, StackActions} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Skills from './Pages/Skills';
 import Stats from './Pages/Stats';
-import Map from './Pages/Trophies';
+import Map from './Pages/Map';
 import Profile from './Pages/Profile';
 import Trophies from './Pages/Trophies'
+import HeaderBar from './Overlays/HeaderBar';
+import styles from './styles';
 import {
   SafeAreaView,
   ScrollView,
@@ -33,8 +35,6 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import BottomBar from './Overlays/BottomBar';
-
-
 const Stack = createStackNavigator();
 type RootStackParamList = {
   Profile: undefined;
@@ -44,21 +44,19 @@ type RootStackParamList = {
   Trophies: undefined;
 };
 
+
+
+
+
+
+////// COMPONENT FUNCTION BEGINNING //////
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: '#1c1c1c',
-    flex:1,
-  };
-
+  // const isDarkMode = useColorScheme() === 'dark';
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
+    <SafeAreaView style={styles.backgroundStyle}>
+      
       <NavigationContainer >
+        {/* <HeaderBar /> */}
         <Stack.Navigator  initialRouteName='Skills' 
           screenOptions={{
             headerShown: false

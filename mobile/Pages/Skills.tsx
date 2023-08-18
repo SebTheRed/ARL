@@ -87,7 +87,6 @@ function Skills(): JSX.Element {
         <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.backgroundStyle}>
-        {/* right here sweet baby Mr Plugin */}
         <View>
           <Section title="Family" flare="The highest priority.">
             <Text>+XP when calling & visiting family.</Text>

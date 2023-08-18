@@ -19,6 +19,8 @@ type RootStackParamList = {
 	Stats: undefined;
 	Trophies: undefined;
   };
+
+////// COMPONENT FUNCTION BEGINNING //////
 const BottomBar = ():JSX.Element => {
 
   // 2. Use the useNavigation hook with the type
@@ -33,24 +35,24 @@ const BottomBar = ():JSX.Element => {
 	return(
 		<View style={styles.bottomBar}>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Profile")}>
-				<Image source={require('../IconBin/account.png')} />
-				<Text>Profile</Text>
+				<Image style={styles.bottomBarIcon} source={require('../IconBin/account.png')} />
+				<Text style={styles.bottomBarText}>Profile</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Map")}>
-				<Image source={require('../IconBin/travel.png')} />
-				<Text>Map</Text>
+				<Image style={styles.bottomBarIcon} source={require('../IconBin/travel.png')} />
+				<Text style={styles.bottomBarText}>Map</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Skills")}>
-				<Image source={require('../IconBin/addChart.png')} />
-				<Text>Skills</Text>
+				<Image style={styles.bottomBarIcon} source={require('../IconBin/addChart.png')} />
+				<Text style={styles.bottomBarText}>Skills</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Stats")}>
-				<Image source={require('../IconBin/areaChart.png')} />
-				<Text>Stats</Text>
+				<Image style={styles.bottomBarIcon} source={require('../IconBin/areaChart.png')} />
+				<Text style={styles.bottomBarText}>Stats</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Trophies")}>
-				<Image source={require('../IconBin/trophy.png')} />
-				<Text>Trophies</Text>
+				<Image style={styles.bottomBarIcon} source={require('../IconBin/trophy.png')} />
+				<Text style={styles.bottomBarText}>Trophies</Text>
 			</TouchableOpacity>
 				
 		</View>

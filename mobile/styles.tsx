@@ -12,7 +12,7 @@ headerBar:{
   height:"5%",
 },
 statusBar:{
-  backgroundColor:"white"
+  backgroundColor:"white",
 },
 bottomBar:{
   height:'10%',
@@ -62,7 +62,7 @@ sectionTextContainer:{
   marginHorizontal:24,
 },
 sectionTitle: {
-  fontSize: 24,
+  fontSize: 28,
   fontWeight: '600',
   fontFamily: "X Company Regular",
   color:"white",

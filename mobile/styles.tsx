@@ -56,8 +56,11 @@ const styles = StyleSheet.create({
       justifyContent:"space-evenly",
     },
     bottomBarIconBox:{
+      height:"100%",
       width:"20%",
-      alignItems:"center"
+      alignItems:"center",
+      borderWidth:2,
+      borderColor:"white",
     }
   });
 

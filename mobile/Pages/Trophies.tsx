@@ -9,10 +9,10 @@ import {
   } from 'react-native';
 import styles from '../styles'
 
-const Achievements = ():JSX.Element => {
+const Trophies = ():JSX.Element => {
     return(
-        <View><Text>Achievements</Text></View>
+        <View><Text>Trophies</Text></View>
     )
 }
 
-export default Achievements
+export default Trophies

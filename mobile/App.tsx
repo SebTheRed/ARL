@@ -8,13 +8,13 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import { Animated, Easing } from 'react-native';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { NavigationContainer, StackActions} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Skills from './Pages/Skills';
 import Stats from './Pages/Stats';
-import Map from './Pages/Achievements';
+import Map from './Pages/Trophies';
 import Profile from './Pages/Profile';
-import Achievements from './Pages/Achievements'
+import Trophies from './Pages/Trophies'
 import {
   SafeAreaView,
   ScrollView,
@@ -36,7 +36,13 @@ import BottomBar from './Overlays/BottomBar';
 
 
 const Stack = createStackNavigator();
-
+type RootStackParamList = {
+  Profile: undefined;
+  Map: undefined;
+  Skills: undefined;
+  Stats: undefined;
+  Trophies: undefined;
+};
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -56,12 +62,12 @@ function App(): JSX.Element {
         <Stack.Navigator initialRouteName='Skills'>
           <Stack.Screen name="Skills" component={Skills} />
           <Stack.Screen name="Stats" component={Stats} />
-          <Stack.Screen name="Achievements" component={Achievements} />
+          <Stack.Screen name="Trophies" component={Trophies} />
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen name="Profile" component={Profile} />
         </Stack.Navigator>
+        <BottomBar/>
       </NavigationContainer>
-      <BottomBar />
     </SafeAreaView>
   );
 }

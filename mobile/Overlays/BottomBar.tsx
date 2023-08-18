@@ -7,34 +7,51 @@ import {
 	useColorScheme,
 	View,
 	Image,
+	TouchableOpacity
 } from 'react-native';
-
-// import account from './account.png'
-
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
 import styles from '../styles'
+type RootStackParamList = {
+	Profile: undefined;
+	Map: undefined;
+	Skills: undefined;
+	Stats: undefined;
+	Trophies: undefined;
+  };
 const BottomBar = ():JSX.Element => {
+
+  // 2. Use the useNavigation hook with the type
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  // 3. Update the handlePress function
+  const handlePress = (val: keyof RootStackParamList) => {
+    navigation.navigate(val);
+  }
+
+
 	return(
 		<View style={styles.bottomBar}>
-			<View style={styles.bottomBarIconBox}>
+			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Profile")}>
 				<Image source={require('../IconBin/account.png')} />
-				<Text>Account</Text>
-			</View>
-			<View style={styles.bottomBarIconBox}>
+				<Text>Profile</Text>
+			</TouchableOpacity>
+			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Map")}>
 				<Image source={require('../IconBin/travel.png')} />
 				<Text>Map</Text>
-			</View>
-			<View style={styles.bottomBarIconBox}>
+			</TouchableOpacity>
+			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Skills")}>
 				<Image source={require('../IconBin/addChart.png')} />
 				<Text>Skills</Text>
-			</View>
-			<View style={styles.bottomBarIconBox}>
+			</TouchableOpacity>
+			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Stats")}>
 				<Image source={require('../IconBin/areaChart.png')} />
 				<Text>Stats</Text>
-			</View>
-			<View style={styles.bottomBarIconBox}>
+			</TouchableOpacity>
+			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Trophies")}>
 				<Image source={require('../IconBin/trophy.png')} />
 				<Text>Trophies</Text>
-			</View>
+			</TouchableOpacity>
 				
 		</View>
 	)

@@ -7,9 +7,25 @@ backgroundStyle:{
   flex:1,
 },
 headerBar:{
-  backgroundColor:"#ff7704",
+  // backgroundColor:"#ff7704",
   width:"100%",
   height:"5%",
+  alignItems:"center",
+  color:"white",
+  borderBottomWidth:2,
+  borderColor:"#ffffff",
+  flexDirection:"row",
+  justifyContent:"space-between"
+},
+headerBarText:{
+  color:"white",
+  fontSize:16
+,},
+headerBarIcon:{
+  tintColor:"white",
+  width: 25,  // desired width
+  height: 25, // desired height
+  resizeMode: 'contain', // or 'cover'
 },
 statusBar:{
   backgroundColor:"white",
@@ -20,8 +36,9 @@ bottomBar:{
   backgroundColor:'#1c1c1c',
   flexDirection:"row",
   justifyContent:"space-evenly",
-  borderTopWidth:4,
+  borderTopWidth:2,
   borderColor:"white",
+  paddingTop:"1%",
 },
 bottomBarIconBox:{
   height:"100%",
@@ -33,9 +50,13 @@ bottomBarIconBox:{
 },
 bottomBarIcon:{
   tintColor:"white",
+  width: 35,  // desired width
+  height: 35, // desired height
+  resizeMode: 'contain', // or 'cover'
 },
 bottomBarText:{
   color:"white",
+  fontSize:16,
 },
 sectionContainer: {
   margin: 5,

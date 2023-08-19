@@ -74,6 +74,7 @@ function App(): JSX.Element {
   return (
 <SafeAreaView style={styles.backgroundStyle}>
   <NavigationContainer>
+      <HeaderBar />
       <Stack.Navigator initialRouteName='Skills' 
                         screenOptions={{ headerShown: false }}>
           <Stack.Screen 

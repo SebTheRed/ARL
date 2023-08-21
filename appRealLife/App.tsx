@@ -65,6 +65,22 @@ function App(): JSX.Element {
     {title:"Humanity",color:"#7700ff",flare:"Volunteering & The Arts",level:20},
   ]);
 
+  const [trophyData,setTrophyData] = useState([
+    {title:"Sisyphus' Prized Work",imgPath:"",desc:"Go to the gym for  30 days straight without missing a single day.",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+    {title:"",imgPath:"",desc:"",unlocked:false},
+
+  ])
 
 
 
@@ -83,7 +99,7 @@ function App(): JSX.Element {
               initialParams={{ skillsList: skillsList }}
           />
           <Stack.Screen name="Stats" component={Stats} />
-          <Stack.Screen name="Trophies" component={Trophies} />
+          <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData}} component={Trophies} />
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>

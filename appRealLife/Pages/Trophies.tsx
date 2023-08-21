@@ -7,15 +7,27 @@ import {
     useColorScheme,
     View,
   } from 'react-native';
-import Elegant1 from '../IconBin/TrophyComponents/elegant1';
 import styles from '../styles'
+import type {PropsWithChildren} from 'react';
 
-const Trophies = ():JSX.Element => {
+// type trophyProps = PropsWithChildren<{
+    
+// }>
+
+const Trophies = ({route}:any):JSX.Element => {
+    const { trophyData } = route.params;
+		// console.log(trophyList)
+
     return(
         <ScrollView horizontal={true} style={styles.backgroundStyle}>
-            <View style={styles.trophyBox}>
-                <Elegant1 />
-            </View>
+            {trophyData.map((d:any,i:number)=>{
+                return(
+                    <View key={i} style={styles.trophyBox}>
+											<Text>{d.title}</Text>
+                    </View>
+                )
+            })}
+            
         </ScrollView>
     )
 }

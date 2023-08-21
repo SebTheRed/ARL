@@ -105,14 +105,19 @@ sectionLevelBox:{
   width:"20%",
   // backgroundColor:"red",
   borderRadius:7,
-  // alignItems:"center",
+  alignItems:"center",
   marginRight:0,
   borderColor:"#656565",
   borderWidth:2
 },
 borderedText:{
   fontSize:45,
-  marginLeft:7,
+},
+offsetWrapper:{
+  left:-25,
+  position:"relative",
+  alignItems:"center",
+  justifyContent:"center"
 },
 highlight: {
   fontWeight: '700',
@@ -122,6 +127,7 @@ headerIdk:{
 },
 sectionDescriptionContainer:{
 },
+
 
 
   });

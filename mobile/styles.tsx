@@ -110,8 +110,16 @@ sectionLevelBox:{
   borderColor:"#656565",
   borderWidth:2
 },
+borderedTextShadow:{
+  fontSize:48,
+  paddingLeft:5,
+  position:"absolute",
+  zIndex:9,
+},
 borderedText:{
   fontSize:45,
+  position:"absolute",
+  zIndex:10,
 },
 offsetWrapper:{
   left:-25,

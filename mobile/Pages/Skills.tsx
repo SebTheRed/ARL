@@ -25,6 +25,7 @@ type SkillsProps = PropsWithChildren<{
   route: any,
 }>
 
+////// FUNC COMPONENT START //////
 function Skills({route}:SkillsProps): JSX.Element {
   const { skillsList } = route.params;
 
@@ -48,11 +49,8 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
       </View>
       <View style={{...styles.sectionLevelBox, backgroundColor:color}}>
         <View style={styles.offsetWrapper}>
-          <Text style={{...styles.borderedText, position: 'absolute', top: 1, left: 1, color: 'black' }}>{level}</Text>
-          <Text style={{...styles.borderedText, position: 'absolute', top: -1, left: -1, color: 'black' }}>{level}</Text>
-          <Text style={{...styles.borderedText, position: 'absolute', top: 1, left: -1, color: 'black' }}>{level}</Text>
-          <Text style={{...styles.borderedText, position: 'absolute', top: -1, left: 1, color: 'black' }}>{level}</Text>
         </View>
+        <Text style={{...styles.borderedTextShadow, color: 'black',}}>{level}</Text>
         <Text style={{...styles.borderedText, color: 'white' }}>{level}</Text>
       </View>
     </View>

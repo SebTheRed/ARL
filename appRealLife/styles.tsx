@@ -135,8 +135,18 @@ headerIdk:{
 },
 sectionDescriptionContainer:{
 },
+trophyBoxWrapper:{
+  flexDirection:"column",
+  width:"100%",
+  height:"100%",
+  flexWrap:"wrap",
+},
 trophyBox:{
-  
+  width:100,
+  height:"33%",
+  color:"white",
+  borderColor:"white",
+  borderWidth:2,
 }
 
 

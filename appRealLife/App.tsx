@@ -5,6 +5,7 @@
  * @format
  */
 
+
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import { Animated, Easing } from 'react-native';
@@ -67,7 +68,7 @@ function App(): JSX.Element {
   ]);
 
   const [trophyData,setTrophyData] = useState([
-    {title:"",imgPath:"",tier:"Bronze",desc:"Go to the gym for 21 days straight without missing a single day.",unlocked:false},
+    {title:"Titan of Steel",imgPath:require('./IconBin/TrophyPNG/elegant1.png'),tier:"Bronze",desc:"Go to the gym for 21 days straight without missing a single day.",unlocked:false},
     {title:"Uphill Battle",imgPath:"",tier:"",desc:"Go to the gym for at least 100 days out of the year. Counter starts Jan 1.",unlocked:false},
     {title:"Progress of Pain",imgPath:"",tier:"Gold",desc:"Go to the gym for at least 265 days out of the year. Counter starts Jan 1.",unlocked:false},
     {title:"Sisyphus' Prized Work",imgPath:"",tier:"",desc:"Log into ARL at the gym 1,0000 times.",unlocked:false},
@@ -126,26 +127,6 @@ function App(): JSX.Element {
     {title:"Save The Bees",imgPath:"",tier:"Silver",desc:"Set up & Maintain a small beekeeping hive.",unlocked:false},
     {title:"Earth's Beautiful Surface",imgPath:"",tier:"Bronze",desc:"Participate in an environmental cleanup drive.",unlocked:false},
     {title:"Earth's Amazing People",imgPath:"",tier:"Gold",desc:"Organize an environmental cleanup drive.",unlocked:false},
-
-
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
-    {title:"",imgPath:"",tier:"",desc:"",unlocked:false},
 
   ])
 

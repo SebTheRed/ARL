@@ -25,8 +25,8 @@ const Trophies = ({route}:any):JSX.Element => {
 			{trophyData.map((d:any,i:number)=>{
 				return(
 					<View key={i} style={styles.trophyBox}>
-						<Text>{d.title}</Text>
-						<Image style={styles.bottomBarIcon} source={d.imgPath} />
+						<Text style={styles.trophyText}>{d.title}</Text>
+						<Image style={styles.trophyIcon} source={d.imgPath} />
 					</View>
 				)
 			})}

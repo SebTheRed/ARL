@@ -147,6 +147,17 @@ trophyBox:{
   color:"white",
   borderColor:"white",
   borderWidth:2,
+  alignItems:"center",
+  justifyContent:"space-between",
+},
+trophyText:{
+  color:"white",
+},
+trophyIcon:{
+  tintColor:"white",
+  width: 80,  // desired width
+  height: 80, // desired height
+  resizeMode: 'contain', // or 'cover'
 }
 
 

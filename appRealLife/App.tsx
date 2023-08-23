@@ -15,7 +15,7 @@ import Skills from './Pages/Skills';
 import Stats from './Pages/Stats';
 import Map from './Pages/Map';
 import Profile from './Pages/Profile';
-import Trophies from './Pages/Trophies'
+import Trophies from './Pages/Trophies/Trophies'
 import HeaderBar from './Overlays/HeaderBar';
 import { useState } from 'react';
 import styles from './styles';
@@ -71,10 +71,10 @@ function App(): JSX.Element {
     {title:"Titan of Steel",imgPath:require('./IconBin/TrophyPNG/goblet1.png'),tier:"Bronze",desc:"Go to the gym for 21 days straight without missing a single day.",unlocked:false},
     {title:"Uphill Battle",imgPath:require('./IconBin/TrophyPNG/gem1.png'),tier:"Silver",desc:"Go to the gym for at least 100 days out of the year. Counter starts Jan 1.",unlocked:false},
     {title:"Progress of Pain",imgPath:require('./IconBin/TrophyPNG/number1.png'),tier:"Gold",desc:"Go to the gym for at least 200 days of the year. Counter starts and ends Jan 1.",unlocked:false},
-    {title:"Sisyphus' Prized Work",imgPath:require('./IconBin/TrophyPNG/pedistal1.png'),tier:"Gold",desc:"Log into ARL at the gym 1,0000 times.",unlocked:false},
-    {title:"Marathon's March", imgPath:require('./IconBin/TrophyPNG/gem2.png'), tier:"Silver", desc:"Run or walk a total of 1000 miles tracked in ARL.", unlocked:false},
+    {title:"Sisyphus' Prized Work",imgPath:require('./IconBin/TrophyPNG/pedistal1.png'),tier:"Gold",desc:"Log into ARL at the gym 1,000 times.",unlocked:false},
+    {title:"Marathon's March", imgPath:require('./IconBin/TrophyPNG/gem2.png'), tier:"Silver", desc:"Run or walk a total of 1,000 miles tracked in ARL.", unlocked:false},
     {title:"Martial Master",imgPath:require('./IconBin/TrophyPNG/elegant2.png'),tier:"Silver",desc:"Earn a new belt in a martial art. Any rank-up counts.",unlocked:false},
-    {title:"26.2", imgPath:require('./IconBin/TrophyPNG/gem3.png'), tier:"Gold", desc:"Run a Marathon", unlocked:false},
+    {title:"26.2", imgPath:require('./IconBin/TrophyPNG/gem3.png'), tier:"Gold", desc:"Run and complete a Marathon", unlocked:false},
     {title:"Powerhouse", imgPath:require('./IconBin/TrophyPNG/simple1.png'), tier:"Gold", desc:"Lift & Upload a combined weight of 25,000 lbs in under an hour. Any lift counts.", unlocked:false},
     {title:"Resolution Revolution I",imgPath:require('./IconBin/TrophyPNG/star1.png'),tier:"Silver",desc:"Log 365 exercises into ARL",unlocked:false},
 
@@ -124,9 +124,9 @@ function App(): JSX.Element {
     {title:"Nature's Friend", imgPath:require('./IconBin/TrophyPNG/person2.png'), tier:"Bronze", desc:"Plant & Upload 25 unique species plants of any shape or size.", unlocked:false},
     {title:"Nature's Steward", imgPath:require('./IconBin/TrophyPNG/person3.png'), tier:"Silver", desc:"Plant & Upload 100 unique species plants of any shape or size.", unlocked:false},
     {title:"Off The Pipeline",imgPath:require('./IconBin/TrophyPNG/star9.png'),tier:"Silver",desc:"Construct & Upload a functioning rainwater collection system.",unlocked:false},
-    {title:"Save The Bees",imgPath:require('./IconBin/TrophyPNG/trophyAndMedal.png'),tier:"Silver",desc:"Set up & Maintain a small beekeeping hive.",unlocked:false},
-    {title:"Earth's Beautiful Surface",imgPath:"",tier:"Bronze",desc:"Participate in an environmental cleanup drive.",unlocked:false},
-    {title:"Earth's Amazing People",imgPath:"",tier:"Gold",desc:"Organize an environmental cleanup drive.",unlocked:false},
+    // {title:"Save The Bees",imgPath:require('./IconBin/TrophyPNG/trophyAndMedal.png'),tier:"Silver",desc:"Set up & Maintain a small beekeeping hive.",unlocked:false},
+    // {title:"Earth's Beautiful Surface",imgPath:"",tier:"Bronze",desc:"Participate in an environmental cleanup drive.",unlocked:false},
+    // {title:"Earth's Amazing People",imgPath:"",tier:"Gold",desc:"Organize an environmental cleanup drive.",unlocked:false},
 
   ])
 

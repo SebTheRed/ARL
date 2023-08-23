@@ -143,12 +143,13 @@ trophyBoxWrapper:{
 },
 trophyBox:{
   width:100,
-  height:"33%",
+  height:"32.6%",
   color:"white",
   borderColor:"white",
   borderWidth:2,
   alignItems:"center",
   justifyContent:"space-between",
+  margin:1,
 },
 trophyText:{
   color:"white",

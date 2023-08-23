@@ -11,7 +11,8 @@ import type {PropsWithChildren} from 'react';
 import { Animated, Easing } from 'react-native';
 import { NavigationContainer, StackActions} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Skills from './Pages/Skills';
+import Skills from './Pages/Skills/Skills';
+import SkillsPage from './Pages/Skills/SkillsPage'
 import Stats from './Pages/Stats';
 import Map from './Pages/Map';
 import Profile from './Pages/Profile';
@@ -38,6 +39,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import BottomBar from './Overlays/BottomBar';
 const Stack = createStackNavigator();
+const SkillStack = createStackNavigator();
 type RootStackParamList = {
   Profile: undefined;
   Map: undefined;
@@ -78,12 +80,10 @@ function App(): JSX.Element {
     {title:"Powerhouse",progressQTY:1, imgPath:require('./IconBin/TrophyPNG/simple1.png'), tier:"Gold", desc:"Lift & Upload a combined weight of 25,000 lbs in under an hour. Any lift counts.", unlocked:false},
     {title:"Resolution Revolution I",progressQTY:365,imgPath:require('./IconBin/TrophyPNG/star1.png'),tier:"Silver",desc:"Log 365 exercises into ARL",unlocked:false},
 
-
     {title:"Resolution Revolution II",progressQTY:365,imgPath:require('./IconBin/TrophyPNG/star3.png'),tier:"Silver",desc:"Cook & Log 365 total dinners.",unlocked:false},
     {title:'Grandma Would Be Proud',progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/simple3.png'),tier:"Gold",desc:"Cook & Log 1,000 total meals.",unlocked:false},
     {title:"Cooking Contributor",progressQTY:25,imgPath:require('./IconBin/TrophyPNG/shield1.png'),tier:"Silver",desc:"Cook & Upload 25 different meal recipes.",unlocked:false},
     {title:"Family Feast",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star2.png'),tier:"Bronze",desc:"Cook & Upload a holiday dinner with at least 6 family members in attendance.",unlocked:false},
-
 
     {title:"Numb Fingers",progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/elegant3.png'),tier:"Gold",desc:"Make 1000 contributions to Github tracked through ARL.",unlocked:false},
     {title:"Bearing FAANGs",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star4.png'),tier:"Silver",desc:"Make an app for the iOS and Google Play store.",unlocked:false},
@@ -91,14 +91,12 @@ function App(): JSX.Element {
     {title:"Digital Playground",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/gear.png'),tier:"Silver",desc:"Develop & release your own game onto Steam, The Web, or both App Stores",unlocked:false},
     {title:"Core Contributor",progressQTY:10, imgPath:require('./IconBin/TrophyPNG/simple4.png'), tier:"Bronze", desc:"Contribute to 10 different open-source projects.", unlocked:false},
 
-
     {title:"Gamer with Taste",progressQTY:50,imgPath:require('./IconBin/TrophyPNG/simple5.png'),tier:"Bronze",desc:"Play 50 different Steam games for 10 hours each.",unlocked:false},
     {title:"Above & Beyond",progressQTY:2500,imgPath:require('./IconBin/TrophyPNG/shield2.png'),tier:"Gold",desc:"Unlock 2,500 Steam achievements",unlocked:false},
     {title:"The Grind",progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/gem4.png'),tier:"Silver",desc:"Play 1,000 hours in Steam one year. Counter starts Jan 1",unlocked:false},
     {title:"Gotta Go Fast",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/number2.png'),tier:"Gold",desc:'Hold the world record in any video game that is considered "speed-runable"',unlocked:false},
     {title:"Cant Stop Wont Stop",progressQTY:24,imgPath:require('./IconBin/TrophyPNG/gem5.png'),tier:"Bronze",desc:"Play a single game for 24 hours straight.",unlocked:false},
 
-    
     {title:"Lightfoot Traveler",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/elegant4.png'),tier:"Bronze",desc:"Visit any foreign country.",unlocked:false},
     {title:"Globe Trotter",progressQTY:10, imgPath:require('./IconBin/TrophyPNG/simple6.png'), tier:"Gold", desc:"Visit 10 different countries and check-in via ARL.", unlocked:false},
     {title:"Artistic Soul",progressQTY:20, imgPath:require('./IconBin/TrophyPNG/gem6.png'), tier:"Bronze", desc:"Visit & Check in at 20 different art museums and galleries.", unlocked:false},
@@ -131,7 +129,24 @@ function App(): JSX.Element {
   ])
 
 
-
+const SkillsNav = () => {
+  return(
+    <SkillStack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
+      <SkillStack.Screen name="Skills" component={Skills} initialParams={{ skillsList: skillsList }}/>
+      <SkillStack.Screen name="Family" initialParams={{skillType:"Family"}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Friends" initialParams={{skillType:"Friends"}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Agility" initialParams={{skillType:"Family"}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Strength" initialParams={{skillType:"Family"}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Earthcraft" initialParams={{skillType:"Earthcraft"}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Cooking" initialParams={{skillType:"Cooking"}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Coding" initialParams={{skillType:"Coding"}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Gaming" initialParams={{skillType:"Gaming"}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Reading" initialParams={{skillType:"Reading"}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Humanity" initialParams={{skillType:"Humanity"}} component={SkillsPage} ></SkillStack.Screen>
+    </SkillStack.Navigator>
+  )
+  
+}
 
 
   // const isDarkMode = useColorScheme() === 'dark';
@@ -139,13 +154,8 @@ function App(): JSX.Element {
 <SafeAreaView style={styles.backgroundStyle}>
   <NavigationContainer>
       <HeaderBar />
-      <Stack.Navigator initialRouteName='Trophies' 
-                        screenOptions={{ headerShown: false }}>
-          <Stack.Screen 
-              name="Skills" 
-              component={Skills}
-              initialParams={{ skillsList: skillsList }}
-          />
+      <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Skills" component={SkillsNav} />
           <Stack.Screen name="Stats" component={Stats} />
           <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData}} component={Trophies} />
           <Stack.Screen name="Map" component={Map} />

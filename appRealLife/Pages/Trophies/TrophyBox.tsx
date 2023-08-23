@@ -41,7 +41,10 @@ const TrophyBox = ({d}:TrophyBoxProps):JSX.Element => {
                 <>
                     <Text style={{...styles.trophyText,textAlign:"left"}}>{d.desc}</Text>
                     {/* <Image style={styles.trophyIcon} source={d.imgPath} /> */}
-                    <Text >{d.progressQTY}</Text>
+                    <View>
+                        <Text style={{...styles.trophyText}} > Progress:</Text>
+                        <Text style={{...styles.trophyText}} >0 / {d.progressQTY}</Text>
+                    </View>
                 </>
             )}
         </TouchableOpacity>

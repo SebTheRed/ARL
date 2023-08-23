@@ -29,9 +29,7 @@ const [panelState,setPanelState]=useState(false);
 			{trophyData.map((d:any,i:number)=>{
 				return(<TrophyBox d={d} key={i}/>)
 			})}
-			</View>
-			
-				
+			</View>	
 		</ScrollView>
 	)
 }

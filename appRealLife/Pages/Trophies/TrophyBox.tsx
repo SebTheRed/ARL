@@ -14,13 +14,17 @@ import styles from '../../styles';
 import type {PropsWithChildren} from 'react';
 
 type TrophyBoxProps = PropsWithChildren<{
-    title:string,
-    imgPath:any,
-    tier:string,
-    desc:string,
+    d:{
+        title:string,
+        imgPath:any,
+        tier:string,
+        desc:string,
+        progressQTY:number,
+        unlocked:boolean,
+    }
 }>
 
-const TrophyBox = ({d}:any):JSX.Element => {
+const TrophyBox = ({d}:TrophyBoxProps):JSX.Element => {
 
     const [panelState,setPanelState]=useState(false);
 
@@ -35,8 +39,9 @@ const TrophyBox = ({d}:any):JSX.Element => {
             )}
             {panelState == true && (
                 <>
-                    <Text style={styles.trophyText}>{d.desc}</Text>
+                    <Text style={{...styles.trophyText,textAlign:"left"}}>{d.desc}</Text>
                     {/* <Image style={styles.trophyIcon} source={d.imgPath} /> */}
+                    <Text >{d.progressQTY}</Text>
                 </>
             )}
         </TouchableOpacity>

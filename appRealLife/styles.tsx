@@ -152,7 +152,9 @@ trophyBox:{
   margin:1,
 },
 trophyText:{
+  padding:3,
   color:"white",
+  textAlign:"center",
 },
 trophyIcon:{
   tintColor:"white",

@@ -13,7 +13,6 @@ import {
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
-import SkillsPage from './SkillsPage'
 type SectionProps = PropsWithChildren<{
     title: string;
     flare: string;

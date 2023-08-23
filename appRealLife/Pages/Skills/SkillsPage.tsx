@@ -6,19 +6,37 @@ import {
     Text,
     useColorScheme,
     View,
+    TouchableOpacity
   } from 'react-native';
 
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
+import HeaderBar from '../../Overlays/HeaderBar';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
 
 type SkillPageProps = PropsWithChildren<{
     route:any
 }>
+type RootStackParamList = {
+  Skills:undefined,
+}
+
+
+
+
+
 
 const SkillsPage = ({route}:SkillPageProps):JSX.Element => {
+const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 const {skillData} = route.params;
 const [matchingSkillData, setMatchingSkillData] = useState({})
+
+
+const handlePress = () => { //REALLY SHOULD NOT USE ANY HERE
+  navigation.navigate("Skills");
+}
 
 // useEffect(()=>{
 //   const findSkillByTitle = (title:string) => skillsLlist.find(skill => skill.title === title);
@@ -30,6 +48,9 @@ if (skillData) {
     <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={{...styles.backgroundStyle}}>
+          <TouchableOpacity onPress={()=>handlePress()} style={styles.backHeaderBar}>
+            <Text style={styles.backHeaderText}>⇦Skills</Text>
+          </TouchableOpacity>
           <View style={{alignItems:"center", width:"100%"}}>
             <View style={styles.skillPageTitleBox}>
               <Text style={styles.skillPageTitle}>{skillData.title}</Text>

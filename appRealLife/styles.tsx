@@ -58,6 +58,15 @@ bottomBarText:{
   color:"white",
   fontSize:16,
 },
+backHeaderBar:{
+  height:26,
+  borderWidth:2,
+  borderColor:"#656565",
+},
+backHeaderText:{
+  color:"white",
+  fontSize:20,
+},
 sectionContainer: {
   margin: 5,
   borderWidth:2,
@@ -169,7 +178,7 @@ trophyBox:{
   width:100,
   height:"32.6%",
   color:"white",
-  borderColor:"white",
+  borderColor:"#656565",
   borderWidth:2,
   alignItems:"center",
   justifyContent:"space-between",
@@ -185,7 +194,8 @@ trophyIcon:{
   width: 80,  // desired width
   height: 80, // desired height
   resizeMode: 'contain', // or 'cover'
-}
+},
+
 
 
 

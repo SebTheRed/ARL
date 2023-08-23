@@ -130,6 +130,30 @@ offsetWrapper:{
 highlight: {
   fontWeight: '700',
 },
+skillPageTitleBox:{
+  flexDirection:"row",
+  justifyContent:"space-between",
+  width:"95%"
+},
+skillPageXPBar:{
+  width:"95%",
+  height:20,
+  borderColor:"#656565",
+  borderWidth:2,
+},
+skillPageXPBox:{
+  width:"95%",
+  justifyContent:"space-between",
+  alignItems:"center",
+  flexDirection:"row",
+},
+skillPageXPText:{
+  color:"white",
+},
+skillPageTitle:{
+  color:"white",
+  fontSize:50,
+},
 headerIdk:{
   color:"blue",
 },

@@ -128,21 +128,26 @@ function App(): JSX.Element {
 
   ])
 
+  const [playerData,setPlayerData] = useState({
+    userName:"SebTheRed",
+
+  })
+
 
 const SkillsNav = () => {
   return(
     <SkillStack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
       <SkillStack.Screen name="Skills" component={Skills} initialParams={{ skillsList: skillsList }}/>
-      <SkillStack.Screen name="Family" initialParams={{skillType:"Family"}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Friends" initialParams={{skillType:"Friends"}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Agility" initialParams={{skillType:"Family"}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Strength" initialParams={{skillType:"Family"}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Earthcraft" initialParams={{skillType:"Earthcraft"}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Cooking" initialParams={{skillType:"Cooking"}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Coding" initialParams={{skillType:"Coding"}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Gaming" initialParams={{skillType:"Gaming"}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Reading" initialParams={{skillType:"Reading"}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Humanity" initialParams={{skillType:"Humanity"}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Agility" initialParams={{skillData:skillsList[2]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Strength" initialParams={{skillData:skillsList[3]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList[4]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList[5]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Coding" initialParams={{skillData:skillsList[6]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Gaming" initialParams={{skillData:skillsList[7]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Reading" initialParams={{skillData:skillsList[8]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList[9]}} component={SkillsPage} ></SkillStack.Screen>
     </SkillStack.Navigator>
   )
   
@@ -155,11 +160,11 @@ const SkillsNav = () => {
   <NavigationContainer>
       <HeaderBar />
       <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Skills" component={SkillsNav} />
-          <Stack.Screen name="Stats" component={Stats} />
-          <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData}} component={Trophies} />
-          <Stack.Screen name="Map" component={Map} />
-          <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Skills" component={SkillsNav} />
+        <Stack.Screen name="Stats" component={Stats} />
+        <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData}} component={Trophies} />
+        <Stack.Screen name="Map" component={Map} />
+        <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
       <BottomBar/>
   </NavigationContainer>

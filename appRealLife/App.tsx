@@ -69,22 +69,100 @@ function App(): JSX.Element {
 });
 
   const [XPTriggerEvents,setXPTriggerEvents] = useState({
-    family:{},
-    friends:{},
-    strength:{},
-    agility:{},
-    earthcraft:{},
-    cooking:{},
-    technology:{},
-    games:{},
-    humanity:{},
+    family:{
+      call_loved_one: { xp: 10, unlocksAt: 0, perDay: 3 },
+      visit_relative: { xp: 20, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
+      organize_reunion: { xp: 100, unlocksAt: 10, perDay:0, perWeek:0, perMonth:1},
+      help_with_chores: { xp: 30, unlocksAt: 15, perDay:2, perWeek:0, perMonth:0},
+      family_game_night: { xp: 40, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
+      family_trip: { xp: 300, unlocksAt: 30, perDay:0, perWeek:0, perMonth:1},
+      weekly_family_meeting: { xp: 100, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
+      house_project: { xp: 500, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
+    },
+    friends: {
+      message_with_friend: { xp: 5, unlocksAt: 0, perDay:3, perWeek:0, perMonth:0},
+      coffee_meetup: { xp: 20, unlocksAt: 5, perDay:2, perWeek:0, perMonth:0},
+      group_outing: { xp: 100, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
+      movie_night: { xp: 50, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
+      attend_club: { xp: 100, unlocksAt: 20, perDay:0, perWeek:1, perMonth:0},
+      surprise_party: { xp: 250, unlocksAt: 30, perDay:0, perWeek:0, perMonth:1},
+      friends_road_trip: { xp: 400, unlocksAt: 40, perDay:0, perWeek:0, perMonth:1},
+      organize_event: { xp: 100, unlocksAt: 50, perDay:0, perWeek:1, perMonth:0}
+    },
+    fitness: {
+      do_pushups: { xp: 5, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
+      stretching_routine: { xp: 5, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
+      walking: { xp: 10, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
+      lift_weights: { xp: 15, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
+      running: { xp: 25, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
+      yoga_at_home: { xp: 25, unlocksAt: 15, perDay:1, perWeek:0, perMonth:0},
+      attend_fitness_class: { xp: 35, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
+      achieve_pr: { xp: 50, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
+      master_yoga_pose: { xp: 100, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
+      run_5k: { xp: 100, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
+      attendance_streak: {xp: 100, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth: 0}
+    },
+    earthcraft: {
+      plant_tree: { xp: 10, unlocksAt: 0, perDay:3, perWeek:0, perMonth:0},
+      water_garden: { xp: 20, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
+      community_garden: { xp: 50, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
+      nature_hike: { xp: 30, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
+      clean_up_event: { xp: 100, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
+      camping: { xp: 100, unlocksAt: 35, perDay:0, perWeek:0, perMonth:1},
+      compost: { xp: 50, unlocksAt: 40, perDay:1, perWeek:0, perMonth:0},
+      wildlife_conservation: { xp: 150, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
+    },
+    cooking: {
+      make_breakfast: { xp: 10, unlocksAt: 0, amountPerDayAllowed: 3 },
+      try_new_recipe: { xp: 20, unlocksAt: 5, amountPerDayAllowed: 2 },
+      bake_cake: { xp: 50, unlocksAt: 15, amountPerDayAllowed: 1 },
+      diet_plan: { xp: 30, unlocksAt: 25, amountPerDayAllowed: 1 },
+      host_dinner: { xp: 100, unlocksAt: 50, amountPerDayAllowed: 1 },
+      learn_cuisine: { xp: 70, unlocksAt: 60, amountPerDayAllowed: 1 },
+      advanced_cooking_class: { xp: 150, unlocksAt: 70, amountPerDayAllowed: 1 }
+    },
+    technology: {
+      write_code: { xp: 10, unlocksAt: 0, amountPerDayAllowed: 3 },
+      fix_bug: { xp: 20, unlocksAt: 5, amountPerDayAllowed: 2 },
+      build_app: { xp: 50, unlocksAt: 15, amountPerDayAllowed: 1 },
+      electronics_project: { xp: 30, unlocksAt: 25, amountPerDayAllowed: 1 },
+      threeD_printing: { xp: 100, unlocksAt: 50, amountPerDayAllowed: 1 },
+      attend_tech_conference: { xp: 70, unlocksAt: 60, amountPerDayAllowed: 1 },
+      advanced_coding_challenge: { xp: 150, unlocksAt: 70, amountPerDayAllowed: 1 }
+    },
+    games: {
+      play_board_game: { xp: 10, unlocksAt: 0, amountPerDayAllowed: 3 },
+      video_game_achievement: { xp: 20, unlocksAt: 5, amountPerDayAllowed: 2 },
+      sports_match: { xp: 50, unlocksAt: 15, amountPerDayAllowed: 1 },
+      tabletop_rpg: { xp: 30, unlocksAt: 25, amountPerDayAllowed: 1 },
+      game_tournament: { xp: 100, unlocksAt: 50, amountPerDayAllowed: 1 },
+      design_game: { xp: 70, unlocksAt: 60, amountPerDayAllowed: 1 },
+      master_game_strategy: { xp: 150, unlocksAt: 70, amountPerDayAllowed: 1 }
+    },
+    language: {
+      daily_duolingo: { xp: 10, unlocksAt: 0, amountPerDayAllowed: 3 },
+      converse_foreign_language: { xp: 20, unlocksAt: 5, amountPerDayAllowed: 2 },
+      watch_foreign_movie: { xp: 50, unlocksAt: 15, amountPerDayAllowed: 1 },
+      read_foreign_book: { xp: 30, unlocksAt: 25, amountPerDayAllowed: 1 },
+      travel_foreign_country: { xp: 100, unlocksAt: 50, amountPerDayAllowed: 1 },
+      write_foreign_essay: { xp: 70, unlocksAt: 60, amountPerDayAllowed: 1 },
+      master_language_exam: { xp: 150, unlocksAt: 70, amountPerDayAllowed: 1 }
+    },
+    humanity: {
+      read_book: { xp: 10, unlocksAt: 0, amountPerDayAllowed: 3 },
+      volunteer_event: { xp: 20, unlocksAt: 5, amountPerDayAllowed: 2 },
+      attend_art_show: { xp: 50, unlocksAt: 15, amountPerDayAllowed: 1 },
+      write_essay: { xp: 30, unlocksAt: 25, amountPerDayAllowed: 1 },
+      organize_charity: { xp: 100, unlocksAt: 50, amountPerDayAllowed: 1 },
+      learn_new_culture: { xp: 70, unlocksAt: 60, amountPerDayAllowed: 1 },
+      master_art_technique: { xp: 150, unlocksAt: 70, amountPerDayAllowed: 1 }
+    }
   })
 
   const [skillsList,setSkillsList] = useState([
     {title:"Family",color:"#ff0000",flare:"Calls, Visits, Reunions",level:99},
     {title:"Friends",color:"#ff8400",flare:"Events, Meetups, Dates",level:12},
-    {title:"Strength",color:"#ffea00",flare:"Weights, Gyms, Martial Arts",level:8},
-    {title:"Agility",color:"#aeff00",flare:"Stretching, Cardio, Yoga",level:45},
+    {title:"Fitness",color:"#ffea00",flare:"Gyms, Runs, Routines",level:8},
     {title:"Earthcraft",color:"#4dff00",flare:"Plants, Animals, Outdoors",level:60},
     {title:"Cooking",color:"#00ff80",flare:"Recipes, Dieting, Baking",level:50},
     {title:"Technology",color:"#00fffb",flare:"Code, Electronics, 3D",level:75},
@@ -157,12 +235,12 @@ function App(): JSX.Element {
     xp:{
       family:1000,
       friends:11,
-      strength:120,
-      agility:1300,
+      fitness:17800,
       earthcraft:140,
       cooking:15000,
       technology:16000,
       games:170,
+      language:1500,
       humanity:1800,
     },
     trophies:{
@@ -181,14 +259,14 @@ const SkillsNav = () => {
       <SkillStack.Screen name="Skills" component={Skills} initialParams={{ skillsList: skillsList }}/>
       <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0]}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Strength" initialParams={{skillData:skillsList[2]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Agility" initialParams={{skillData:skillsList[3]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList[4]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList[5]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Technology" initialParams={{skillData:skillsList[6]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Games" initialParams={{skillData:skillsList[7]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Language" initialParams={{skillData:skillsList[8]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList[9]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList[2]}} component={SkillsPage} ></SkillStack.Screen>
+      {/* <SkillStack.Screen name="Agility" initialParams={{skillData:skillsList[3]}} component={SkillsPage} ></SkillStack.Screen> */}
+      <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList[3]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList[4]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Technology" initialParams={{skillData:skillsList[5]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Games" initialParams={{skillData:skillsList[6]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Language" initialParams={{skillData:skillsList[7]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList[8]}} component={SkillsPage} ></SkillStack.Screen>
     </SkillStack.Navigator>
   )
   

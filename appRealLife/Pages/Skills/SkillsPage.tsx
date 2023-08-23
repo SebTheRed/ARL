@@ -49,7 +49,7 @@ if (skillData) {
         contentInsetAdjustmentBehavior="automatic"
         style={{...styles.backgroundStyle}}>
           <TouchableOpacity onPress={()=>handlePress()} style={styles.backHeaderBar}>
-            <Text style={styles.backHeaderText}>⇦Skills</Text>
+            <Text style={styles.backHeaderText}>⇦Go Back</Text>
           </TouchableOpacity>
           <View style={{alignItems:"center", width:"100%"}}>
             <View style={styles.skillPageTitleBox}>

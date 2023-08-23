@@ -55,18 +55,42 @@ type RootStackParamList = {
 
 ////// COMPONENT FUNCTION BEGINNING //////
 function App(): JSX.Element {
+  const [XPScale, setXPScale] = useState({
+    1: 15, 2: 45, 3: 90, 4: 150, 5: 225, 6: 315, 7: 420, 8: 540, 9: 675, 10: 825,
+    11: 990, 12: 1170, 13: 1365, 14: 1575, 15: 1800, 16: 2040, 17: 2295, 18: 2565, 19: 2850, 20: 3150,
+    21: 3465, 22: 3795, 23: 4140, 24: 4500, 25: 4875, 26: 5265, 27: 5670, 28: 6090, 29: 6525, 30: 6975,
+    31: 7440, 32: 7920, 33: 8415, 34: 8925, 35: 9450, 36: 9990, 37: 10545, 38: 11115, 39: 11700, 40: 12300,
+    41: 12915, 42: 13545, 43: 14190, 44: 14850, 45: 15525, 46: 16215, 47: 16920, 48: 17640, 49: 18375, 50: 19125,
+    51: 19890, 52: 20670, 53: 21465, 54: 22275, 55: 23100, 56: 23940, 57: 24795, 58: 25665, 59: 26550, 60: 27450,
+    61: 28365, 62: 29295, 63: 30240, 64: 31200, 65: 32175, 66: 33165, 67: 34170, 68: 35190, 69: 36225, 70: 37275,
+    71: 38340, 72: 39420, 73: 40515, 74: 41625, 75: 42750, 76: 43890, 77: 45045, 78: 46215, 79: 47400, 80: 48600,
+    81: 49815, 82: 51045, 83: 52290, 84: 53550, 85: 54825, 86: 56115, 87: 57420, 88: 58740, 89: 60075, 90: 61425,
+    91: 62790, 92: 64170, 93: 65565, 94: 66975, 95: 68400, 96: 69840, 97: 71295, 98: 72765, 99: 74250
+});
+
+  const [XPTriggerEvents,setXPTriggerEvents] = useState({
+    family:{},
+    friends:{},
+    strength:{},
+    agility:{},
+    earthcraft:{},
+    cooking:{},
+    technology:{},
+    games:{},
+    humanity:{},
+  })
 
   const [skillsList,setSkillsList] = useState([
-    {title:"Family",color:"#ff0000",flare:"The Highest Priority",level:99},
-    {title:"Friends",color:"#ff8400",flare:"Making & Keeping Them",level:12},
-    {title:"Agility",color:"#ffea00",flare:"Freedom of Movement",level:45},
-    {title:"Strength",color:"#aeff00",flare:"Force of Will",level:8},
-    {title:"Earthcraft",color:"#4dff00",flare:"Plants, Animals, Nature",level:60},
-    {title:"Cooking",color:"#00ff80",flare:"You Are What You Eat",level:50},
-    {title:"Coding",color:"#00fffb",flare:"The Language of Logic",level:75},
-    {title:"Gaming",color:"#0080ff",flare:"Endless Entertainment",level:15},
-    {title:"Reading",color:"#7700ff",flare:"Ink on Paper Imagination",level:10},
-    {title:"Humanity",color:"#bf00ff",flare:"Volunteering & The Arts",level:20},
+    {title:"Family",color:"#ff0000",flare:"Calls, Visits, Reunions",level:99},
+    {title:"Friends",color:"#ff8400",flare:"Events, Meetups, Dates",level:12},
+    {title:"Strength",color:"#ffea00",flare:"Weights, Gyms, Martial Arts",level:8},
+    {title:"Agility",color:"#aeff00",flare:"Stretching, Cardio, Yoga",level:45},
+    {title:"Earthcraft",color:"#4dff00",flare:"Plants, Animals, Outdoors",level:60},
+    {title:"Cooking",color:"#00ff80",flare:"Recipes, Dieting, Baking",level:50},
+    {title:"Technology",color:"#00fffb",flare:"Code, Electronics, 3D",level:75},
+    {title:"Games",color:"#0080ff",flare:"Tabletop, Video, Sports",level:15},
+    {title:"Language",color:"#7700ff",flare:"Duolingo, Travel, PopQuiz",level:10},
+    {title:"Humanity",color:"#c800ff",flare:"Reading, Volunteering, Arts",level:20},
   ]);
 
   const [trophyData,setTrophyData] = useState([
@@ -130,7 +154,24 @@ function App(): JSX.Element {
 
   const [playerData,setPlayerData] = useState({
     userName:"SebTheRed",
-
+    xp:{
+      family:1000,
+      friends:11,
+      strength:120,
+      agility:1300,
+      earthcraft:140,
+      cooking:15000,
+      technology:16000,
+      games:170,
+      humanity:1800,
+    },
+    trophies:{
+      0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,
+      10:false,11:false,12:false,13:false,14:false,15:false,16:false,17:false,18:false,19:false,
+      20:false,21:false,22:false,23:false,24:false,25:false,26:false,27:false,28:false,29:false,
+      30:false,31:false,32:false,33:false,34:false,35:false,36:false,37:false,38:false,39:false,
+      40:false,41:false,42:false,43:false,44:false,45:false,46:false,47:false,48:false,49:false,
+    },
   })
 
 
@@ -140,13 +181,13 @@ const SkillsNav = () => {
       <SkillStack.Screen name="Skills" component={Skills} initialParams={{ skillsList: skillsList }}/>
       <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0]}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Agility" initialParams={{skillData:skillsList[2]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Strength" initialParams={{skillData:skillsList[3]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Strength" initialParams={{skillData:skillsList[2]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Agility" initialParams={{skillData:skillsList[3]}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList[4]}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList[5]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Coding" initialParams={{skillData:skillsList[6]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Gaming" initialParams={{skillData:skillsList[7]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Reading" initialParams={{skillData:skillsList[8]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Technology" initialParams={{skillData:skillsList[6]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Games" initialParams={{skillData:skillsList[7]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Language" initialParams={{skillData:skillsList[8]}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList[9]}} component={SkillsPage} ></SkillStack.Screen>
     </SkillStack.Navigator>
   )

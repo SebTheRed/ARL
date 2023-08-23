@@ -60,7 +60,7 @@ bottomBarText:{
 },
 backHeaderBar:{
   height:26,
-  borderWidth:2,
+  borderBottomWidth:2,
   borderColor:"#656565",
 },
 backHeaderText:{
@@ -161,7 +161,7 @@ skillPageXPText:{
 },
 skillPageTitle:{
   color:"white",
-  fontSize:50,
+  fontSize:40,
 },
 headerIdk:{
   color:"blue",

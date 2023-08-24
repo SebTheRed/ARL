@@ -70,109 +70,111 @@ function App(): JSX.Element {
 
   const [XPTriggerEvents,setXPTriggerEvents] = useState({
     family:{
-      call_loved_one: { xp: 10, unlocksAt: 0, perDay: 3 , perWeek: 0, perMonth: 0},
-      family_photo: {xp: 20, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0,},
-      send_letter: { xp: 20, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
-      visit_relative: { xp: 20, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
-      organize_reunion: { xp: 100, unlocksAt: 10, perDay:0, perWeek:0, perMonth:1},
-      help_with_chores: { xp: 30, unlocksAt: 15, perDay:2, perWeek:0, perMonth:0},
-      family_game_night: { xp: 40, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
-      family_trip: { xp: 300, unlocksAt: 30, perDay:0, perWeek:0, perMonth:1},
-      weekly_family_meeting: { xp: 100, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
-      house_project: { xp: 500, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
+      call_loved_one: {type:"phone",title:"Call a Loved One",desc:"Place a phone call to a starred or favorited contact in your phone." ,xp: 10, unlocksAt: 0, perDay: 3 , perWeek: 0, perMonth: 0},
+      family_photo: {type:"camera",title:"Take a Family Photo",desc:"Take a picture with you & 2 other family members.",xp: 20, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0,},
+      send_letter: {type:"log",title:"Send a Letter",desc:"Send a letter to anyone! Receiving a letter must mean that they're family!", xp: 5, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
+      visit_relative: {type:"gps",title:"Visit a Relative",desc:"Check in with the Map at a relative's place.", xp: 20, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
+      organize_reunion: {type:"timeline",title:"Family Reunion",desc:"Organize & attend a family reunion of at least 3 generations present.", xp: 100, unlocksAt: 10, perDay:0, perWeek:0, perMonth:1},
+      help_with_chores: {type:"camera",title:"Chore Time",desc:"Help a family member with one of their chores.", xp: 30, unlocksAt: 15, perDay:2, perWeek:0, perMonth:0},
+      family_game_night: {type:"camera",title:"Game Night!",desc:"Attend a family game night with at least 4 members.", xp: 40, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
+      family_trip: {type:"timeline",title:"Family Vacation",desc:"Take & document a family vacation.", xp: 300, unlocksAt: 30, perDay:0, perWeek:0, perMonth:1},
+      weekly_family_meeting: {type:"camera",title:"Weekly Family Zoom",desc:"Organize & attend a family zoom meeting.", xp: 100, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
+      house_project: {type:"timeline",title:"House Project",desc:"Design & document a large project that involves many members of your family.", xp: 500, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
     },
     friends: {
-      message_with_friends: { xp: 5, unlocksAt: 0, perDay:10, perWeek:0, perMonth:0},
-      call_friend: {xp: 10, unlocksAt: 0, perDay: 3, perWeek:0, perMonth: 0},
-      coffee_shop: { xp: 20, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
-      restaurant_bar: { xp: 40, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
-      movie_night: { xp: 100, unlocksAt: 20, perDay:0, perWeek:2, perMonth:0},
-      attend_private_party: {xp: 150, unlocksAt: 25, perDay: 0, perWeek: 2, perMonth: 0},
-      attend_club_meeting: { xp: 100, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
-      surprise_party: { xp: 250, unlocksAt: 40, perDay:0, perWeek:0, perMonth:1},
-      friends_road_trip: { xp: 400, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1},
+      message_with_friends: {type:"log",title:"",desc:"", xp: 5, unlocksAt: 0, perDay:10, perWeek:0, perMonth:0},
+      call_friend: {type:"phone",title:"",desc:"", xp: 10, unlocksAt: 0, perDay: 3, perWeek:0, perMonth: 0},
+      coffee_shop: {type:"gps",title:"",desc:"", xp: 20, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
+      restaurant_bar: {type:"gps",title:"",desc:"", xp: 40, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
+      movie_theater: {type:"gps",title:"",desc:"", xp: 100, unlocksAt: 20, perDay:0, perWeek:1, perMonth:0},
+      attend_private_party: {type:"gps",title:"",desc:"",xp: 150, unlocksAt: 25, perDay: 0, perWeek: 2, perMonth: 0},
+      attend_club_meeting: {type:"gps",title:"",desc:"", xp: 100, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
+      surprise_party: {type:"timeline",title:"",desc:"", xp: 250, unlocksAt: 40, perDay:0, perWeek:0, perMonth:1},
+      friends_road_trip: {type:"timeline",title:"",desc:"", xp: 400, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1},
     },
     fitness: {
-      do_pushups: { xp: 5, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
-      stretching_routine: { xp: 5, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
-      walking: { xp: 10, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
-      lift_weights: { xp: 15, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
-      running: { xp: 25, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
-      yoga_at_home: { xp: 25, unlocksAt: 15, perDay:1, perWeek:0, perMonth:0},
-      attend_fitness_class: { xp: 35, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
-      achieve_pr: { xp: 50, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
-      master_yoga_pose: { xp: 100, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
-      run_5k: { xp: 100, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
-      attendance_streak: {xp: 100, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth: 0}
+      do_pushups: {type:"gyro",title:"",desc:"", xp: 5, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
+      stretching_routine: {type:"log",title:"",desc:"", xp: 5, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
+      walking: {type:"acceleration",title:"",desc:"", xp: 10, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
+      attend_gym: {type:"gps",title:"",desc:"", xp: 25, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
+      running: {type:"acceleration",title:"",desc:"", xp: 25, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
+      yoga_at_home: {type:"log",title:"",desc:"", xp: 10, unlocksAt: 15, perDay:1, perWeek:0, perMonth:0},
+      attend_fitness_class: {type:"gps",title:"",desc:"", xp: 35, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
+      achieve_pr: {type:"timeline",title:"",desc:"", xp: 100, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
+      master_yoga_pose: {type:"timeline",title:"",desc:"", xp: 100, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
+      run_5k: {type:"acceleration",title:"",desc:"", xp: 100, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
+      belt_rank: {type:"timeline",title:"",desc:"", xp: 100, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
+      attendance_streak: {type:"gps",title:"Can't Stop Won't Stop",desc:"Attend gyms/classes/exercises for 5 of 7 days in a week.",xp: 100, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth: 0}
     },
     earthcraft: {
-      plant_tree: { xp: 10, unlocksAt: 0, perDay:3, perWeek:0, perMonth:0},
-      new_plant: { xp: 20, unlocksAt: 0, perDay:0, perWeek:1, perMonth:0},
-      bird_watch: {xp: 20, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth: 0},
-      water_garden: { xp: 20, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
-      nature_hike: { xp: 20, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
-      community_garden: { xp: 50, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
-      clean_up_event: { xp: 100, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
-      camping: { xp: 100, unlocksAt: 35, perDay:0, perWeek:0, perMonth:1},
-      compost: { xp: 50, unlocksAt: 40, perDay:1, perWeek:0, perMonth:0},
-      outdoor_project: {xp: 250, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth: 1},
-      wildlife_conservation: { xp: 350, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
+      plant_tree: {type:"camera",title:"",desc:"", xp: 10, unlocksAt: 0, perDay:3, perWeek:0, perMonth:0},
+      new_plant: {type:"camera",title:"",desc:"", xp: 20, unlocksAt: 0, perDay:0, perWeek:1, perMonth:0},
+      bird_watch: {type:"camera",title:"",desc:"",xp: 20, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth: 0},
+      water_garden: {type:"log",title:"",desc:"", xp: 5, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
+      nature_hike: {type:"gps",title:"",desc:"", xp: 20, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
+      community_garden: {type:"camera",title:"",desc:"", xp: 50, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
+      clean_up_event: {type:"timeline",title:"",desc:"", xp: 250, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
+      camping: {type:"timeline",title:"",desc:"", xp: 100, unlocksAt: 35, perDay:0, perWeek:1, perMonth:0},
+      compost: {type:"log",title:"",desc:"", xp: 10, unlocksAt: 40, perDay:2, perWeek:0, perMonth:0},
+      outdoor_project: {type:"timeline",title:"",desc:"",xp: 250, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth: 1},
+      wildlife_park: {type:"gps",title:"",desc:"", xp: 350, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
     },
     cooking: {
-      make_meal: { xp: 10, unlocksAt: 0, perDay: 3, perWeek: 0, perMonth:0 },
-      bake: { xp: 10, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
-      try_new_recipe: { xp: 20, unlocksAt: 10, perDay: 2, perWeek: 0, perMonth:0 },
-      submit_recipe:{xp:50, unlocksAt: 20, perDay:0, perWeek: 1, perMonth:0},
-      create_diet:{xp:50, unlocksAt: 30, perDay:0, perWeek: 0, perMonth:1},
-      follow_diet: { xp: 100, unlocksAt: 30, perDay: 0, perWeek: 1, perMonth:0 },
-      host_dinner: { xp: 200, unlocksAt: 40, perDay: 0, perWeek: 1, perMonth:0 },
-      cooking_class: { xp: 350, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
+      make_meal: {type:"log",title:"",desc:"", xp: 5, unlocksAt: 0, perDay: 3, perWeek: 0, perMonth:0 },
+      bake: {type:"log",title:"",desc:"", xp: 5, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
+      try_new_recipe: {type:"camera",title:"",desc:"", xp: 20, unlocksAt: 10, perDay: 2, perWeek: 0, perMonth:0 },
+      random_week_recipe:{type:"camera",title:"",desc:"",xp:100,unlocksAt:20,perDay:0,perWeek:1,perMonth:0},
+      // submit_recipe:{type:"camera",title:"",desc:"",xp:50, unlocksAt: 20, perDay:0, perWeek: 1, perMonth:0},
+      // create_diet:{type:"",title:"",desc:"",xp:50, unlocksAt: 30, perDay:0, perWeek: 0, perMonth:1},
+      host_dinner: {type:"camera",title:"",desc:"", xp: 200, unlocksAt: 30, perDay: 0, perWeek: 1, perMonth:0 },
+      random_month_challenge: {type:"timeline",title:"",desc:"", xp: 100, unlocksAt: 40, perDay: 0, perWeek: 1, perMonth:0 },
+      cooking_class: {type:"timeline",title:"",desc:"", xp: 350, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     },
     technology: {
-      github_commit: { xp: 5, unlocksAt: 0, perDay: 10, perWeek: 0, perMonth:0 },
-      build_3d_model: {xp : 10, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth: 0},
-      electricity_work: { xp: 50, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth:0 },
-      commit_open_src: { xp: 10, unlocksAt: 10, perDay: 10, perWeek: 0, perMonth:0 },
-      threeD_printing: { xp: 200, unlocksAt: 10, perDay: 0, perWeek: 1, perMonth:0 },
-      build_app: { xp: 150, unlocksAt: 20, perDay: 0, perWeek: 1, perMonth:0 },
-      threeD_model_animation: {xp : 30, unlocksAt: 30, perDay: 1, perWeek: 0, perMonth: 0},
-      leetcode_challenge: { xp: 30, unlocksAt: 40, perDay: 1, perWeek: 0, perMonth:0 },
-      attend_tech_conference: { xp: 350, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 },
-      full_stack_app: {xp : 500, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth: 1},
+      github_commit: {type:"api",title:"",desc:"", xp: 5, unlocksAt: 0, perDay: 10, perWeek: 0, perMonth:0 },
+      build_3d_model: {type:"camera",title:"",desc:"",xp : 10, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth: 0},
+      electricity_work: {type:"camera",title:"",desc:"", xp: 50, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth:0 },
+      commit_open_src: {type:"api",title:"",desc:"", xp: 10, unlocksAt: 10, perDay: 10, perWeek: 0, perMonth:0 },
+      threeD_printing: {type:"camera",title:"",desc:"", xp: 200, unlocksAt: 10, perDay: 0, perWeek: 1, perMonth:0 },
+      build_app: {type:"timeline",title:"",desc:"", xp: 250, unlocksAt: 20, perDay: 0, perWeek: 0, perMonth:1 },
+      threeD_model_animation: {type:"camera",title:"",desc:"",xp : 30, unlocksAt: 30, perDay: 1, perWeek: 0, perMonth: 0},
+      leetcode_challenge: {type:"api",title:"",desc:"", xp: 30, unlocksAt: 40, perDay: 1, perWeek: 0, perMonth:0 },
+      attend_tech_conference: {type:"timeline",title:"",desc:"", xp: 350, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 },
+      full_stack_app: {type:"timeline",title:"",desc:"",xp : 500, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth: 1},
     },
     games: {
-      play_board_game: { xp: 10, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth:0 },
-      playtime_hour: { xp: 5, unlocksAt: 0, perDay: 10, perWeek: 0, perMonth:0 },
-      sports_practive: { xp: 10, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
-      sports_match: { xp: 30, unlocksAt: 10, perDay: 0, perWeek: 3, perMonth:0 },
-      game_achievement: { xp: 10, unlocksAt: 20, perDay: 2, perWeek: 0, perMonth:0 },
-      stream_time: { xp: 10, unlocksAt: 25, perDay: 10, perWeek: 0, perMonth:0 },
-      tabletop_rpg: { xp: 50, unlocksAt: 30, perDay: 0, perWeek: 2, perMonth:0 },
-      tournament: { xp: 250, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 },
-      full_completion: { xp: 250, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
+      play_board_game: {type:"camera",title:"",desc:"", xp: 10, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth:0 },
+      playtime_hour: {type:"api",title:"",desc:"", xp: 5, unlocksAt: 0, perDay: 10, perWeek: 0, perMonth:0 },
+      sports_practive: { type:"camera",title:"",desc:"",xp: 10, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
+      sports_match: {type:"timeline",title:"",desc:"", xp: 30, unlocksAt: 10, perDay: 0, perWeek: 3, perMonth:0 },
+      game_achievement: {type:"api",title:"",desc:"", xp: 10, unlocksAt: 20, perDay: 2, perWeek: 0, perMonth:0 },
+      stream_time: {type:"api",title:"",desc:"", xp: 10, unlocksAt: 25, perDay: 10, perWeek: 0, perMonth:0 },
+      tabletop_rpg: {type:"timeline",title:"",desc:"", xp: 150, unlocksAt: 30, perDay: 0, perWeek: 1, perMonth:0 },
+      tournament: {type:"timeline",title:"",desc:"", xp: 500, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 },
+      full_completion: {type:"api",title:"",desc:"", xp: 250, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     },
     language: {
-      daily_duolingo: { xp: 10, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
-      daily_reading: {xp: 20, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0},
-      converse_foreign_language: { xp: 20, unlocksAt: 10, perDay: 2, perWeek: 0, perMonth:0 },
-      watch_foreign_movie: { xp: 50, unlocksAt: 15, perDay: 1, perWeek: 0, perMonth:0 },
-      read_foreign_book: { xp: 30, unlocksAt: 20, perDay: 1, perWeek: 0, perMonth:0 },
-      travel_foreign_country: { xp: 250, unlocksAt: 30, perDay: 0, perWeek: 0, perMonth:1 },
-      duolingo_50: { xp: 50, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:0 },
-      record_speaking_language: { xp: 50, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth:0 },
-      master_language_exam: { xp: 250, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
+      daily_duolingo: {type:"api",title:"",desc:"", xp: 20, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
+      daily_reading: {type:"log",title:"",desc:"",xp: 5, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0},
+      converse_foreign_language: {type:"log",title:"",desc:"", xp: 5, unlocksAt: 10, perDay: 2, perWeek: 0, perMonth:0 },
+      watch_foreign_movie: {type:"camera",title:"",desc:"", xp: 25, unlocksAt: 20, perDay: 1, perWeek: 0, perMonth:0 },
+      read_foreign_book: {type:"log",title:"",desc:"", xp: 10, unlocksAt: 30, perDay: 1, perWeek: 0, perMonth:0 },
+      duolingo_month: {type:"api",title:"",desc:"", xp: 100, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 },
+      travel_foreign_country: {type:"timeline",title:"",desc:"", xp: 1000, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 },
+      // record_speaking_language: {type:"",title:"",desc:"", xp: 50, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth:0 },
+      // master_language_exam: {type:"exam",title:"",desc:"", xp: 250, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     },
     humanity: {
-      vote: {xp: 1000, unlocksAt: 0, perDay: 0, perMonth: 1},
-      create_art: {xp: 20, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0},
-      create_music: {xp: 20, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0},
-      volunteer_event: { xp: 50, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
-      visit_museum: { xp: 75, unlocksAt: 10, perDay: 0, perWeek: 1, perMonth:0 },
-      attend_art_show: { xp: 50, unlocksAt: 20, perDay: 1, perWeek: 0, perMonth:0 },
-      attend_church:{xp: 100, unlocksAt: 25, perDay: 0, perWeek: 1, perMonth: 0},
-      organize_charity: { xp: 350, unlocksAt: 30, perDay: 0, perWeek: 0, perMonth:1 },
-      attend_live_show: { xp: 250, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 },
-      present_art_show: { xp: 1000, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
+      vote: {type:"camera",title:"",desc:"",xp: 1000, unlocksAt: 0, perDay: 0, perMonth: 0},
+      create_art: {type:"camera",title:"",desc:"",xp: 50, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth: 0},
+      create_music: {type:"upload",title:"",desc:"",xp: 50, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth: 0},
+      volunteer_event: {type:"gps",title:"",desc:"", xp: 50, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth:0 },
+      attend_live_show: {type:"timeline",title:"",desc:"", xp: 100, unlocksAt: 10, perDay: 0, perWeek: 0, perMonth:1 },
+      visit_museum: {type:"gps",title:"",desc:"", xp: 100, unlocksAt: 20, perDay: 0, perWeek: 1, perMonth:0 },
+      attend_art_show: {type:"timeline",title:"",desc:"", xp: 250, unlocksAt: 30, perDay: 0, perWeek: 0, perMonth:1 },
+      attend_church:{type:"camera",title:"",desc:"",xp: 100, unlocksAt: 35, perDay: 0, perWeek: 1, perMonth: 0},
+      organize_charity: {type:"timeline",title:"",desc:"", xp: 350, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 },
+      present_art_show: {type:"timeline",title:"",desc:"", xp: 1000, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     }
   })
 
@@ -274,16 +276,16 @@ const SkillsNav = () => {
   return(
     <SkillStack.Navigator initialRouteName='SkillsMain' screenOptions={{ headerShown: false }}>
       <SkillStack.Screen name="SkillsMain" component={Skills} initialParams={{ skillsList: skillsList, playerData:playerData, XPScale:XPScale }}/>
-      <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList[2], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList[2], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       {/* <SkillStack.Screen name="Agility" initialParams={{skillData:skillsList[3]}} component={SkillsPage} ></SkillStack.Screen> */}
-      <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList[3], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList[4], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Technology" initialParams={{skillData:skillsList[5], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Games" initialParams={{skillData:skillsList[6], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Language" initialParams={{skillData:skillsList[7], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList[8], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList[3], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList[4], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Technology" initialParams={{skillData:skillsList[5], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Games" initialParams={{skillData:skillsList[6], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Language" initialParams={{skillData:skillsList[7], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList[8], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
     </SkillStack.Navigator>
   )
   

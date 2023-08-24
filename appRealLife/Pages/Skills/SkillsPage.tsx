@@ -12,10 +12,9 @@ import {
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
-import HeaderBar from '../../Overlays/HeaderBar';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
-
+import EventTile from './EventTile'
 type SkillPageProps = PropsWithChildren<{
     route:any
 }>
@@ -30,7 +29,7 @@ type RootStackParamList = {
 ////// JSX START FUN COMPONENT //////
 const SkillsPage = ({route}:SkillPageProps):JSX.Element => {
 const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-const {skillData, playerData, XPScale} = route.params;
+const {skillData, playerData, XPScale, XPTriggerEvents} = route.params;
 
 const calculateXPBarWidth = (currentXP: number, prevXP: number, nextXP: number) => {
   const totalXPNeeded = nextXP - prevXP;
@@ -59,6 +58,7 @@ const calculateXPInfo = (currentLevel:number) => {
   }
   return xpNumber
 }
+
 
 const currentXP = playerData.xp[skillData.title.toLowerCase()]; // Assuming skillData.title is 'Family', 'Friends', etc.
 const currentLevel = calculateCurrentLevel(currentXP, XPScale); // Calculate current level
@@ -100,6 +100,11 @@ if (skillData) {
               <Text style={styles.skillPageXPText}>{matchingSkillXp}</Text>
               <Text style={styles.skillPageXPText}>{sideXPVals.next}</Text>
             </View>
+          </View>
+          <View>
+            {Object.keys(XPTriggerEvents[skillTitle.toLowerCase()]).map((d:any,i:number)=>{
+              return(<EventTile d={d} key={i} />)
+            })}
           </View>
         
     </ScrollView>

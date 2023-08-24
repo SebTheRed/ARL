@@ -70,7 +70,9 @@ function App(): JSX.Element {
 
   const [XPTriggerEvents,setXPTriggerEvents] = useState({
     family:{
-      call_loved_one: { xp: 10, unlocksAt: 0, perDay: 3 },
+      call_loved_one: { xp: 10, unlocksAt: 0, perDay: 3 , perWeek: 0, perMonth: 0},
+      family_photo: {xp: 20, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0,},
+      send_letter: { xp: 20, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
       visit_relative: { xp: 20, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
       organize_reunion: { xp: 100, unlocksAt: 10, perDay:0, perWeek:0, perMonth:1},
       help_with_chores: { xp: 30, unlocksAt: 15, perDay:2, perWeek:0, perMonth:0},
@@ -80,14 +82,15 @@ function App(): JSX.Element {
       house_project: { xp: 500, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
     },
     friends: {
-      message_with_friend: { xp: 5, unlocksAt: 0, perDay:3, perWeek:0, perMonth:0},
-      coffee_meetup: { xp: 20, unlocksAt: 5, perDay:2, perWeek:0, perMonth:0},
-      group_outing: { xp: 100, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
-      movie_night: { xp: 50, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
-      attend_club: { xp: 100, unlocksAt: 20, perDay:0, perWeek:1, perMonth:0},
-      surprise_party: { xp: 250, unlocksAt: 30, perDay:0, perWeek:0, perMonth:1},
-      friends_road_trip: { xp: 400, unlocksAt: 40, perDay:0, perWeek:0, perMonth:1},
-      organize_event: { xp: 100, unlocksAt: 50, perDay:0, perWeek:1, perMonth:0}
+      message_with_friends: { xp: 5, unlocksAt: 0, perDay:10, perWeek:0, perMonth:0},
+      call_friend: {xp: 10, unlocksAt: 0, perDay: 3, perWeek:0, perMonth: 0},
+      coffee_shop: { xp: 20, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
+      restaurant_bar: { xp: 40, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
+      movie_night: { xp: 100, unlocksAt: 20, perDay:0, perWeek:2, perMonth:0},
+      attend_private_party: {xp: 150, unlocksAt: 25, perDay: 0, perWeek: 2, perMonth: 0},
+      attend_club_meeting: { xp: 100, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
+      surprise_party: { xp: 250, unlocksAt: 40, perDay:0, perWeek:0, perMonth:1},
+      friends_road_trip: { xp: 400, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1},
     },
     fitness: {
       do_pushups: { xp: 5, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
@@ -104,71 +107,85 @@ function App(): JSX.Element {
     },
     earthcraft: {
       plant_tree: { xp: 10, unlocksAt: 0, perDay:3, perWeek:0, perMonth:0},
+      new_plant: { xp: 20, unlocksAt: 0, perDay:0, perWeek:1, perMonth:0},
+      bird_watch: {xp: 20, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth: 0},
       water_garden: { xp: 20, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
-      community_garden: { xp: 50, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
-      nature_hike: { xp: 30, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
+      nature_hike: { xp: 20, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
+      community_garden: { xp: 50, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
       clean_up_event: { xp: 100, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
       camping: { xp: 100, unlocksAt: 35, perDay:0, perWeek:0, perMonth:1},
       compost: { xp: 50, unlocksAt: 40, perDay:1, perWeek:0, perMonth:0},
-      wildlife_conservation: { xp: 150, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
+      outdoor_project: {xp: 250, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth: 1},
+      wildlife_conservation: { xp: 350, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
     },
     cooking: {
-      make_breakfast: { xp: 10, unlocksAt: 0, amountPerDayAllowed: 3 },
-      try_new_recipe: { xp: 20, unlocksAt: 5, amountPerDayAllowed: 2 },
-      bake_cake: { xp: 50, unlocksAt: 15, amountPerDayAllowed: 1 },
-      diet_plan: { xp: 30, unlocksAt: 25, amountPerDayAllowed: 1 },
-      host_dinner: { xp: 100, unlocksAt: 50, amountPerDayAllowed: 1 },
-      learn_cuisine: { xp: 70, unlocksAt: 60, amountPerDayAllowed: 1 },
-      advanced_cooking_class: { xp: 150, unlocksAt: 70, amountPerDayAllowed: 1 }
+      make_meal: { xp: 10, unlocksAt: 0, perDay: 3, perWeek: 0, perMonth:0 },
+      bake: { xp: 10, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
+      try_new_recipe: { xp: 20, unlocksAt: 10, perDay: 2, perWeek: 0, perMonth:0 },
+      submit_recipe:{xp:50, unlocksAt: 20, perDay:0, perWeek: 1, perMonth:0},
+      create_diet:{xp:50, unlocksAt: 30, perDay:0, perWeek: 0, perMonth:1},
+      follow_diet: { xp: 100, unlocksAt: 30, perDay: 0, perWeek: 1, perMonth:0 },
+      host_dinner: { xp: 200, unlocksAt: 40, perDay: 0, perWeek: 1, perMonth:0 },
+      cooking_class: { xp: 350, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     },
     technology: {
-      write_code: { xp: 10, unlocksAt: 0, amountPerDayAllowed: 3 },
-      fix_bug: { xp: 20, unlocksAt: 5, amountPerDayAllowed: 2 },
-      build_app: { xp: 50, unlocksAt: 15, amountPerDayAllowed: 1 },
-      electronics_project: { xp: 30, unlocksAt: 25, amountPerDayAllowed: 1 },
-      threeD_printing: { xp: 100, unlocksAt: 50, amountPerDayAllowed: 1 },
-      attend_tech_conference: { xp: 70, unlocksAt: 60, amountPerDayAllowed: 1 },
-      advanced_coding_challenge: { xp: 150, unlocksAt: 70, amountPerDayAllowed: 1 }
+      github_commit: { xp: 5, unlocksAt: 0, perDay: 10, perWeek: 0, perMonth:0 },
+      build_3d_model: {xp : 10, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth: 0},
+      electricity_work: { xp: 50, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth:0 },
+      commit_open_src: { xp: 10, unlocksAt: 10, perDay: 10, perWeek: 0, perMonth:0 },
+      threeD_printing: { xp: 200, unlocksAt: 10, perDay: 0, perWeek: 1, perMonth:0 },
+      build_app: { xp: 150, unlocksAt: 20, perDay: 0, perWeek: 1, perMonth:0 },
+      threeD_model_animation: {xp : 30, unlocksAt: 30, perDay: 1, perWeek: 0, perMonth: 0},
+      leetcode_challenge: { xp: 30, unlocksAt: 40, perDay: 1, perWeek: 0, perMonth:0 },
+      attend_tech_conference: { xp: 350, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 },
+      full_stack_app: {xp : 500, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth: 1},
     },
     games: {
-      play_board_game: { xp: 10, unlocksAt: 0, amountPerDayAllowed: 3 },
-      video_game_achievement: { xp: 20, unlocksAt: 5, amountPerDayAllowed: 2 },
-      sports_match: { xp: 50, unlocksAt: 15, amountPerDayAllowed: 1 },
-      tabletop_rpg: { xp: 30, unlocksAt: 25, amountPerDayAllowed: 1 },
-      game_tournament: { xp: 100, unlocksAt: 50, amountPerDayAllowed: 1 },
-      design_game: { xp: 70, unlocksAt: 60, amountPerDayAllowed: 1 },
-      master_game_strategy: { xp: 150, unlocksAt: 70, amountPerDayAllowed: 1 }
+      play_board_game: { xp: 10, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth:0 },
+      playtime_hour: { xp: 5, unlocksAt: 0, perDay: 10, perWeek: 0, perMonth:0 },
+      sports_practive: { xp: 10, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
+      sports_match: { xp: 30, unlocksAt: 10, perDay: 0, perWeek: 3, perMonth:0 },
+      game_achievement: { xp: 10, unlocksAt: 20, perDay: 2, perWeek: 0, perMonth:0 },
+      stream_time: { xp: 10, unlocksAt: 25, perDay: 10, perWeek: 0, perMonth:0 },
+      tabletop_rpg: { xp: 50, unlocksAt: 30, perDay: 0, perWeek: 2, perMonth:0 },
+      tournament: { xp: 250, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 },
+      full_completion: { xp: 250, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     },
     language: {
-      daily_duolingo: { xp: 10, unlocksAt: 0, amountPerDayAllowed: 3 },
-      converse_foreign_language: { xp: 20, unlocksAt: 5, amountPerDayAllowed: 2 },
-      watch_foreign_movie: { xp: 50, unlocksAt: 15, amountPerDayAllowed: 1 },
-      read_foreign_book: { xp: 30, unlocksAt: 25, amountPerDayAllowed: 1 },
-      travel_foreign_country: { xp: 100, unlocksAt: 50, amountPerDayAllowed: 1 },
-      write_foreign_essay: { xp: 70, unlocksAt: 60, amountPerDayAllowed: 1 },
-      master_language_exam: { xp: 150, unlocksAt: 70, amountPerDayAllowed: 1 }
+      daily_duolingo: { xp: 10, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
+      daily_reading: {xp: 20, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0},
+      converse_foreign_language: { xp: 20, unlocksAt: 10, perDay: 2, perWeek: 0, perMonth:0 },
+      watch_foreign_movie: { xp: 50, unlocksAt: 15, perDay: 1, perWeek: 0, perMonth:0 },
+      read_foreign_book: { xp: 30, unlocksAt: 20, perDay: 1, perWeek: 0, perMonth:0 },
+      travel_foreign_country: { xp: 250, unlocksAt: 30, perDay: 0, perWeek: 0, perMonth:1 },
+      duolingo_50: { xp: 50, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:0 },
+      record_speaking_language: { xp: 50, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth:0 },
+      master_language_exam: { xp: 250, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     },
     humanity: {
-      read_book: { xp: 10, unlocksAt: 0, amountPerDayAllowed: 3 },
-      volunteer_event: { xp: 20, unlocksAt: 5, amountPerDayAllowed: 2 },
-      attend_art_show: { xp: 50, unlocksAt: 15, amountPerDayAllowed: 1 },
-      write_essay: { xp: 30, unlocksAt: 25, amountPerDayAllowed: 1 },
-      organize_charity: { xp: 100, unlocksAt: 50, amountPerDayAllowed: 1 },
-      learn_new_culture: { xp: 70, unlocksAt: 60, amountPerDayAllowed: 1 },
-      master_art_technique: { xp: 150, unlocksAt: 70, amountPerDayAllowed: 1 }
+      vote: {xp: 1000, unlocksAt: 0, perDay: 0, perMonth: 1},
+      create_art: {xp: 20, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0},
+      create_music: {xp: 20, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0},
+      volunteer_event: { xp: 50, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
+      visit_museum: { xp: 75, unlocksAt: 10, perDay: 0, perWeek: 1, perMonth:0 },
+      attend_art_show: { xp: 50, unlocksAt: 20, perDay: 1, perWeek: 0, perMonth:0 },
+      attend_church:{xp: 100, unlocksAt: 25, perDay: 0, perWeek: 1, perMonth: 0},
+      organize_charity: { xp: 350, unlocksAt: 30, perDay: 0, perWeek: 0, perMonth:1 },
+      attend_live_show: { xp: 250, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 },
+      present_art_show: { xp: 1000, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     }
   })
 
   const [skillsList,setSkillsList] = useState([
-    {title:"Family",color:"#ff0000",flare:"Calls, Visits, Reunions",level:99},
-    {title:"Friends",color:"#ff8400",flare:"Events, Meetups, Dates",level:12},
-    {title:"Fitness",color:"#ffea00",flare:"Gyms, Runs, Routines",level:8},
-    {title:"Earthcraft",color:"#4dff00",flare:"Plants, Animals, Outdoors",level:60},
-    {title:"Cooking",color:"#00ff80",flare:"Recipes, Dieting, Baking",level:50},
-    {title:"Technology",color:"#00fffb",flare:"Code, Electronics, 3D",level:75},
-    {title:"Games",color:"#0080ff",flare:"Tabletop, Video, Sports",level:15},
-    {title:"Language",color:"#7700ff",flare:"Duolingo, Travel, PopQuiz",level:10},
-    {title:"Humanity",color:"#c800ff",flare:"Reading, Volunteering, Arts",level:20},
+    {title:"Family",color:"#ff0000",flare:"Calls - Visits - Reunions",level:99},
+    {title:"Friends",color:"#ff8400",flare:"Events - Meetups - Dates",level:12},
+    {title:"Fitness",color:"#ffea00",flare:"Gyms - Runs - Routines",level:8},
+    {title:"Earthcraft",color:"#4dff00",flare:"Plants - Animals - Outdoors",level:60},
+    {title:"Cooking",color:"#00ff80",flare:"Recipes - Dieting - Baking",level:50},
+    {title:"Technology",color:"#00fffb",flare:"Code - Electronics - 3D",level:75},
+    {title:"Games",color:"#0080ff",flare:"Tabletop - Video - Sports",level:15},
+    {title:"Language",color:"#7700ff",flare:"Duolingo - Travel - Reading",level:10},
+    {title:"Humanity",color:"#c800ff",flare:"Activism - Volunteering - Arts",level:20},
   ]);
 
   const [trophyData,setTrophyData] = useState([

@@ -146,9 +146,12 @@ skillPageTitleBox:{
 },
 skillPageXPBar:{
   width:"95%",
-  height:20,
+  height:40,
   borderColor:"#656565",
   borderWidth:2,
+  position:"absolute",
+  left: 10,
+  top: 80,
 },
 skillPageXPBox:{
   width:"95%",

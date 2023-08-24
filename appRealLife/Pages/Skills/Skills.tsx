@@ -44,7 +44,7 @@ type RootStackParamList = {
 
 function Skills({route}:SkillsProps): JSX.Element {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { skillsList } = route.params;
+  const { skillsList, XPScale, playerData, } = route.params;
   const [chosenSkillPage,setChosenSkillPage] = useState("")
   
   // useEffect(()=>{
@@ -54,7 +54,21 @@ function Skills({route}:SkillsProps): JSX.Element {
   const handlePress = (val:any) => { //REALLY SHOULD NOT USE ANY HERE
     navigation.navigate(val);
   }
+  
+  const calculateCurrentLevel = (skillName: string, XPScale: any) => {
+    const currentXP = playerData.xp[skillName]; // Assuming skillData.title is 'Family', 'Friends', etc.
+    let level = 1;
+    for (const [lvl, xp] of Object.entries(XPScale)) {
+      if (currentXP >= xp) {
+        level = parseInt(lvl);
+      } else {
+        break;
+      }
+    }
+    return level;
+  };
 
+ // Calculate current level
 
 
 function Section({children, title, flare}: SectionProps): JSX.Element {
@@ -66,6 +80,7 @@ function Section({children, title, flare}: SectionProps): JSX.Element {
   )
 }
 const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
+  const currentLevel = calculateCurrentLevel(title.toLowerCase(), XPScale);
   return(
     <TouchableOpacity onPress={()=>{handlePress(title)}} style={styles.sectionContainer}>
       <View style={styles.sectionTextContainer}>
@@ -76,8 +91,8 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
       <View style={{...styles.sectionLevelBox, backgroundColor:color}}>
         <View style={styles.offsetWrapper}>
         </View>
-        <Text style={{...styles.borderedTextShadow, color: 'black',}}>{level}</Text>
-        <Text style={{...styles.borderedText, color: 'white' }}>{level}</Text>
+        <Text style={{...styles.borderedTextShadow, color: 'black',}}>{currentLevel}</Text>
+        <Text style={{...styles.borderedText, color: 'white' }}>{currentLevel}</Text>
       </View>
     </TouchableOpacity>
   )

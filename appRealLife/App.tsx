@@ -273,17 +273,17 @@ function App(): JSX.Element {
 const SkillsNav = () => {
   return(
     <SkillStack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
-      <SkillStack.Screen name="Skills" component={Skills} initialParams={{ skillsList: skillsList }}/>
-      <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList[2]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Skills" component={Skills} initialParams={{ skillsList: skillsList, playerData:playerData, XPScale:XPScale }}/>
+      <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList[2], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
       {/* <SkillStack.Screen name="Agility" initialParams={{skillData:skillsList[3]}} component={SkillsPage} ></SkillStack.Screen> */}
-      <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList[3]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList[4]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Technology" initialParams={{skillData:skillsList[5]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Games" initialParams={{skillData:skillsList[6]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Language" initialParams={{skillData:skillsList[7]}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList[8]}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList[3], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList[4], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Technology" initialParams={{skillData:skillsList[5], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Games" initialParams={{skillData:skillsList[6], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Language" initialParams={{skillData:skillsList[7], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList[8], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
     </SkillStack.Navigator>
   )
   

@@ -272,8 +272,8 @@ function App(): JSX.Element {
 
 const SkillsNav = () => {
   return(
-    <SkillStack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
-      <SkillStack.Screen name="Skills" component={Skills} initialParams={{ skillsList: skillsList, playerData:playerData, XPScale:XPScale }}/>
+    <SkillStack.Navigator initialRouteName='SkillsMain' screenOptions={{ headerShown: false }}>
+      <SkillStack.Screen name="SkillsMain" component={Skills} initialParams={{ skillsList: skillsList, playerData:playerData, XPScale:XPScale }}/>
       <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList[2], playerData:playerData, XPScale:XPScale}} component={SkillsPage} ></SkillStack.Screen>

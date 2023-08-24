@@ -20,7 +20,7 @@ type SkillPageProps = PropsWithChildren<{
     route:any
 }>
 type RootStackParamList = {
-  Skills:undefined,
+  SkillsMain:undefined,
 }
 
 
@@ -49,6 +49,17 @@ const calculateCurrentLevel = (currentXP: number, XPScale: any) => {
   }
   return level;
 };
+const calculateXPInfo = (currentLevel:number) => {
+  let xpNumber = {current:"0", next:"0"}
+  for (const [lvl, xp] of Object.entries(XPScale)){
+    if (currentLevel.toString() == lvl) {
+      xpNumber.current = (xp).toLocaleString();
+      const calcPlusOne = (parseInt(lvl)+1).toString()
+      xpNumber.next = (parseInt(XPScale[calcPlusOne])).toLocaleString() || "0"
+    }
+  }
+  return xpNumber
+}
 
 const currentXP = playerData.xp[skillData.title.toLowerCase()]; // Assuming skillData.title is 'Family', 'Friends', etc.
 const currentLevel = calculateCurrentLevel(currentXP, XPScale); // Calculate current level
@@ -57,9 +68,10 @@ const nextXP = XPScale[currentLevel + 1];
 const xpBarWidth = calculateXPBarWidth(currentXP, prevXP, nextXP);
 const skillTitle = skillData.title
 const matchingSkillXp = playerData.xp[skillTitle.toLowerCase()]
+const sideXPVals = calculateXPInfo(currentLevel)
 
 const handlePress = () => { //REALLY SHOULD NOT USE ANY HERE
-  navigation.navigate("Skills");
+  navigation.navigate("SkillsMain");
 }
 
 // useEffect(()=>{
@@ -83,9 +95,9 @@ if (skillData) {
             <View style={{...styles.skillPageXPBar,backgroundColor:"transparent"}}></View>
             <View style={{ ...styles.skillPageXPBar, backgroundColor: skillData.color, width: `${xpBarWidth}%` }}></View>
             <View style={styles.skillPageXPBox}>
-              <Text style={styles.skillPageXPText}>PrevXP</Text>
+              <Text style={styles.skillPageXPText}>{sideXPVals.current}</Text>
               <Text style={styles.skillPageXPText}>{matchingSkillXp}</Text>
-              <Text style={styles.skillPageXPText}>NextXP</Text>
+              <Text style={styles.skillPageXPText}>{sideXPVals.next}</Text>
             </View>
           </View>
         

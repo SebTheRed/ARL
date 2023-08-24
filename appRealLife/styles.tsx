@@ -144,14 +144,18 @@ skillPageTitleBox:{
   justifyContent:"space-between",
   width:"95%"
 },
-skillPageXPBar:{
+skillPageXPContainer:{
+  position:"relative",
+  height:45,
   width:"95%",
+  borderWidth:2,
+},
+skillPageXPBar:{
+  width:"100%",
   height:40,
   borderColor:"#656565",
   borderWidth:2,
   position:"absolute",
-  left: 10,
-  top: 80,
 },
 skillPageXPBox:{
   width:"95%",

@@ -46,11 +46,6 @@ type RootStackParamList = {
 function Skills({route}:SkillsProps): JSX.Element {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { skillsList, XPScale, playerData, } = route.params;
-  const [chosenSkillPage,setChosenSkillPage] = useState("")
-  
-  // useEffect(()=>{
-  //   setChosenSkillPage("")
-  // },[route])
 
   const handlePress = (val:any) => { //REALLY SHOULD NOT USE ANY HERE
     navigation.navigate(val);
@@ -59,7 +54,7 @@ function Skills({route}:SkillsProps): JSX.Element {
   const calculateCurrentLevel = (skillName: string, XPScale: any) => {
     const currentXP = playerData.xp[skillName]; // Assuming skillData.title is 'Family', 'Friends', etc.
     let level = 1;
-    for (const [lvl, xp] of Object.entries(XPScale)) {
+    for (const [lvl, xp] of Object.entries(XPScale) as [string,number][]) {
       if (currentXP >= xp) {
         level = parseInt(lvl);
       } else {
@@ -75,7 +70,6 @@ function Skills({route}:SkillsProps): JSX.Element {
 function Section({children, title, flare}: SectionProps): JSX.Element {
   console.log(children)
 
-  const isDarkMode = useColorScheme() === 'dark';
   return(
   <View></View>
   )

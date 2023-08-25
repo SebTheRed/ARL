@@ -44,7 +44,7 @@ const BottomBar = ():JSX.Element => {
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Skills")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/addChart.png')} />
-				<Text style={styles.bottomBarText}>Skills</Text>
+				<Text style={styles.bottomBarText}>Traits</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Stats")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/areaChart.png')} />

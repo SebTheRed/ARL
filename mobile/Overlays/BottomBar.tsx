@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import styles from '../styles'
 type RootStackParamList = {
-	Profile: undefined;
+	Feed: undefined;
 	Map: undefined;
 	Skills: undefined;
 	Stats: undefined;
@@ -34,17 +34,19 @@ const BottomBar = ():JSX.Element => {
 
 	return(
 		<View style={styles.bottomBar}>
-			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Profile")}>
-				<Image style={styles.bottomBarIcon} source={require('../IconBin/account.png')} />
-				<Text style={styles.bottomBarText}>Profile</Text>
-			</TouchableOpacity>
+
+			
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Map")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/travel.png')} />
 				<Text style={styles.bottomBarText}>Map</Text>
 			</TouchableOpacity>
+			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Feed")}>
+				<Image style={styles.bottomBarIcon} source={require('../IconBin/feed.png')} />
+				<Text style={styles.bottomBarText}>Feed</Text>
+			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Skills")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/addChart.png')} />
-				<Text style={styles.bottomBarText}>Skills</Text>
+				<Text style={styles.bottomBarText}>Traits</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Stats")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/areaChart.png')} />
@@ -54,6 +56,7 @@ const BottomBar = ():JSX.Element => {
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/trophy.png')} />
 				<Text style={styles.bottomBarText}>Trophies</Text>
 			</TouchableOpacity>
+			
 				
 		</View>
 	)

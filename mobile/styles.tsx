@@ -56,7 +56,16 @@ bottomBarIcon:{
 },
 bottomBarText:{
   color:"white",
-  fontSize:16,
+  fontSize:18,
+},
+backHeaderBar:{
+  height:26,
+  borderBottomWidth:2,
+  borderColor:"#656565",
+},
+backHeaderText:{
+  color:"white",
+  fontSize:20,
 },
 sectionContainer: {
   margin: 5,
@@ -116,6 +125,33 @@ borderedTextShadow:{
   position:"absolute",
   zIndex:9,
 },
+eventTileBox:{
+  marginTop:20,
+  width:"100%",
+  alignItems:"center",
+  borderColor:"white",
+  borderWidth:2,
+  borderRadius:10,
+},
+eventTileWrapper:{
+  width:"95%",
+  // height:120,
+  margin:5,
+  borderWidth:2,
+  borderColor:"#656565",
+  borderRadius:10,
+  paddingBottom:10,
+  
+},
+eventTileText:{
+  padding:2,
+  color:"white",
+  fontSize:18
+},
+
+
+
+
 borderedText:{
   fontSize:45,
   position:"absolute",
@@ -130,11 +166,77 @@ offsetWrapper:{
 highlight: {
   fontWeight: '700',
 },
+skillPageHeader:{
+  borderColor:"white",
+  borderWidth:2,
+  borderRadius:10,
+  padding:5,
+  marginTop:10,
+},
+skillPageTitleBox:{
+  flexDirection:"row",
+  justifyContent:"space-between",
+  width:"95%"
+},
+skillPageXPContainer:{
+  position:"relative",
+  height:45,
+  width:"95%",
+  borderWidth:2,
+},
+skillPageXPBar:{
+  width:"100%",
+  height:40,
+  borderColor:"#656565",
+  borderWidth:2,
+  position:"absolute",
+},
+skillPageXPBox:{
+  width:"95%",
+  justifyContent:"space-between",
+  alignItems:"center",
+  flexDirection:"row",
+},
+skillPageXPText:{
+  color:"white",
+},
+skillPageTitle:{
+  color:"white",
+  fontSize:40,
+},
 headerIdk:{
   color:"blue",
 },
 sectionDescriptionContainer:{
 },
+trophyBoxWrapper:{
+  flexDirection:"column",
+  width:"100%",
+  height:"100%",
+  flexWrap:"wrap",
+},
+trophyBox:{
+  width:100,
+  height:"32.6%",
+  color:"white",
+  borderColor:"#656565",
+  borderWidth:2,
+  alignItems:"center",
+  justifyContent:"space-between",
+  margin:1,
+},
+trophyText:{
+  padding:3,
+  color:"white",
+  textAlign:"center",
+},
+trophyIcon:{
+  tintColor:"white",
+  width: 80,  // desired width
+  height: 80, // desired height
+  resizeMode: 'contain', // or 'cover'
+},
+
 
 
 

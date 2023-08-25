@@ -34,9 +34,10 @@ const BottomBar = ():JSX.Element => {
 
 	return(
 		<View style={styles.bottomBar}>
+
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Profile")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/account.png')} />
-				<Text style={styles.bottomBarText}>Profile</Text>
+				<Text style={styles.bottomBarText}>Feed</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Map")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/travel.png')} />
@@ -54,6 +55,7 @@ const BottomBar = ():JSX.Element => {
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/trophy.png')} />
 				<Text style={styles.bottomBarText}>Trophies</Text>
 			</TouchableOpacity>
+			
 				
 		</View>
 	)

@@ -96,15 +96,15 @@ if (skillData) {
               <View style={{ ...styles.skillPageXPBar, backgroundColor: skillData.color, width: `${xpBarWidth}%` }}></View>
             </View>
             <View style={styles.skillPageXPBox}>
-              <Text style={styles.skillPageXPText}>{sideXPVals.current}</Text>
-              <Text style={styles.skillPageXPText}>{matchingSkillXp}</Text>
-              <Text style={styles.skillPageXPText}>{sideXPVals.next}</Text>
+              <Text style={styles.skillPageXPText}>PREV- {sideXPVals.current}</Text>
+              <Text style={styles.skillPageXPText}>XP- {matchingSkillXp}</Text>
+              <Text style={styles.skillPageXPText}>NEXT- {sideXPVals.next}</Text>
             </View>
           </View>
           <View style={styles.eventTileBox}>
-            <Text style={styles.skillPageTitle}>Experiences</Text>
+            <Text style={styles.skillPageTitle}>Post an Experience</Text>
             {Object.keys(XPTriggerEvents[skillTitle.toLowerCase()]).map((d:any,i:number)=>{
-              return(<EventTile d={XPTriggerEvents[skillTitle.toLowerCase()][d]} key={i} />)
+              return(<EventTile color={skillData.color} d={XPTriggerEvents[skillTitle.toLowerCase()][d]} key={i} />)
             })}
           </View>
         

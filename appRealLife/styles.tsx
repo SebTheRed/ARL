@@ -137,10 +137,11 @@ eventTileWrapper:{
   width:"95%",
   // height:120,
   margin:5,
-  borderWidth:1,
+  borderWidth:2,
   borderColor:"#656565",
   borderRadius:10,
   paddingBottom:10,
+  
 },
 eventTileText:{
   padding:2,

@@ -86,7 +86,7 @@ if (skillData) {
           <TouchableOpacity onPress={()=>handlePress()} style={styles.backHeaderBar}>
             <Text style={styles.backHeaderText}>⇦Go Back</Text>
           </TouchableOpacity>
-          <View style={{alignItems:"center", width:"100%"}}>
+          <View style={{...styles.skillPageHeader, alignItems:"center", width:"100%"}}>
             <View style={styles.skillPageTitleBox}>
               <Text style={styles.skillPageTitle}>{skillTitle}</Text>
               <Text style={styles.skillPageTitle}>{currentLevel}/99</Text>
@@ -101,9 +101,10 @@ if (skillData) {
               <Text style={styles.skillPageXPText}>{sideXPVals.next}</Text>
             </View>
           </View>
-          <View>
+          <View style={styles.eventTileBox}>
+            <Text style={styles.skillPageTitle}>Experiences</Text>
             {Object.keys(XPTriggerEvents[skillTitle.toLowerCase()]).map((d:any,i:number)=>{
-              return(<EventTile d={d} key={i} />)
+              return(<EventTile d={XPTriggerEvents[skillTitle.toLowerCase()][d]} key={i} />)
             })}
           </View>
         

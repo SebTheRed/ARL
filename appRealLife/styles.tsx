@@ -56,7 +56,7 @@ bottomBarIcon:{
 },
 bottomBarText:{
   color:"white",
-  fontSize:16,
+  fontSize:18,
 },
 backHeaderBar:{
   height:26,
@@ -125,6 +125,32 @@ borderedTextShadow:{
   position:"absolute",
   zIndex:9,
 },
+eventTileBox:{
+  marginTop:20,
+  width:"100%",
+  alignItems:"center",
+  borderColor:"white",
+  borderWidth:2,
+  borderRadius:10,
+},
+eventTileWrapper:{
+  width:"95%",
+  // height:120,
+  margin:5,
+  borderWidth:1,
+  borderColor:"#656565",
+  borderRadius:10,
+  paddingBottom:10,
+},
+eventTileText:{
+  padding:2,
+  color:"white",
+  fontSize:18
+},
+
+
+
+
 borderedText:{
   fontSize:45,
   position:"absolute",
@@ -138,6 +164,13 @@ offsetWrapper:{
 },
 highlight: {
   fontWeight: '700',
+},
+skillPageHeader:{
+  borderColor:"white",
+  borderWidth:2,
+  borderRadius:10,
+  padding:5,
+  marginTop:10,
 },
 skillPageTitleBox:{
   flexDirection:"row",

@@ -15,9 +15,10 @@ import type {PropsWithChildren} from 'react';
 
 const EventTile = ({d, i}:any):JSX.Element => {
     return(
-        <View>
-            <Text>{i}</Text>
-        </View>
+        <TouchableOpacity style={styles.eventTileWrapper}>
+            <Text style={{...styles.eventTileText,fontSize:24,textDecorationColor:"#656565",textDecorationLine:"underline"}}>{d.title}</Text>
+            <Text style={styles.eventTileText}>{d.desc}</Text>
+        </TouchableOpacity>
     )
 }
 

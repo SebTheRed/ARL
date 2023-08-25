@@ -8,6 +8,7 @@ import {
     View,
     TouchableOpacity,
   } from 'react-native';
+  import React from 'react'
   import { useNavigation } from '@react-navigation/native';
   import { NavigationProp } from '@react-navigation/native';
 import { useEffect, useState } from 'react';

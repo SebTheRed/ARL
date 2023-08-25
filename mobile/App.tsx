@@ -66,7 +66,7 @@ function App(): JSX.Element {
     61: 28365, 62: 29295, 63: 30240, 64: 31200, 65: 32175, 66: 33165, 67: 34170, 68: 35190, 69: 36225, 70: 37275,
     71: 38340, 72: 39420, 73: 40515, 74: 41625, 75: 42750, 76: 43890, 77: 45045, 78: 46215, 79: 47400, 80: 48600,
     81: 49815, 82: 51045, 83: 52290, 84: 53550, 85: 54825, 86: 56115, 87: 57420, 88: 58740, 89: 60075, 90: 61425,
-    91: 62790, 92: 64170, 93: 65565, 94: 66975, 95: 68400, 96: 69840, 97: 71295, 98: 72765, 99: 74250
+    91: 62790, 92: 64170, 93: 65565, 94: 66975, 95: 68400, 96: 69840, 97: 71295, 98: 72765, 99: 74250, 100: 100000,
 });
 
   const [XPTriggerEvents,setXPTriggerEvents] = useState({
@@ -161,7 +161,7 @@ function App(): JSX.Element {
       read_foreign_book: {type:"log",title:"Read Foreign Book",desc:"Log about a book you are reading that is written in your non-native language.", xp: 10, unlocksAt: 30, perDay: 1, perWeek: 0, perMonth:0 },
       duolingo_month: {type:"api",title:"Duolingo Month",desc:"Complete your daily Duolingo challenge every day for each month. Counter resets on the 1st.", xp: 100, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 },
       travel_foreign_country: {type:"timeline",title:"Travel to Foreign Country",desc:"Spread your wings! Share your travels with the world.", xp: 1000, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 },
-      // record_speaking_language: {type:"",title:"",desc:"", xp: 50, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth:0 },
+      record_speaking_language: {type:"audio",title:"Babbel",desc:"Upload your foreign language skills for the world to hear!", xp: 50, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth:0 },
       // master_language_exam: {type:"exam",title:"",desc:"", xp: 250, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     },
     humanity: {

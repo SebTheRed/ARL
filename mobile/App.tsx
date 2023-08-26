@@ -59,25 +59,51 @@ type RootStackParamList = {
 ////// COMPONENT FUNCTION BEGINNING //////
 function App(): JSX.Element {
   const [userGeoData,setUserGeoData] = useState({})
-  const [arrayOPlaces, setArrayOPlaces] = useState([])
+  const [arrayOPlaces, setArrayOPlaces] = useState({
+    parks:[],
+    gyms:[],
+    restaurants:[],
+
+  })
 
   useEffect(()=>{
   
   const apiKey = 'AIzaSyARFSBf48RxnNhBWxtQZbCGEhlLm9yfvCk';
-  const fetchPlaces = async (latitude, longitude) => {
-    console.log(latitude,longitude)
-    const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=gym&key=${apiKey}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data)
-    setArrayOPlaces(data.results)
-    // return data.results; // This will be an array of places
-  };
+  // const fetchPlaces = async (latitude, longitude) => {
+  //   console.log(latitude,longitude)
+  //   const parkUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=park&key=${apiKey}`;
+  //   const gymUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=gym&key=${apiKey}`;
+  //   const restaurantUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=restaurant&key=${apiKey}`;
+  //   const theaterUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=coffee&key=${apiKey}`;
+  //   // const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=nature_reserve&key=${apiKey}`;
+  //   // const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=&key=${apiKey}`;
+  //   const parkResponse = await fetch(parkUrl);
+  //   const parkData = await parkResponse.json();
+
+  //   const gymResponse = await fetch(gymUrl);
+  //   const gymData = await gymResponse.json();
+
+  //   const restaurantReponse = await fetch(restaurantUrl);
+  //   const restauarantData = await restaurantReponse.json();
+
+  //   const coffeeResponse = await fetch(theaterUrl);
+  //   const coffeeData = await coffeeResponse.json();
+
+  //   let assembler = {
+  //     parks:parkData.results,
+  //     gyms:gymData.results,
+  //     restaurants:restauarantData.results,
+  //     coffee:coffeeData.results,
+  //   }
+
+  //   setArrayOPlaces(assembler)
+  //   // return data.results; // This will be an array of places
+  // };
   Geolocation.getCurrentPosition(info => {
     console.log(info.coords.latitude, info.coords.longitude);
     console.log("coords received")
     setUserGeoData({latitude:info.coords.latitude, longitude:info.coords.longitude})
-    fetchPlaces(info.coords.latitude, info.coords.longitude)
+    // fetchPlaces(info.coords.latitude, info.coords.longitude)
   });
   
   },[])

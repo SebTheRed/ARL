@@ -38,7 +38,9 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import Geolocation from '@react-native-community/geolocation';
 import BottomBar from './Overlays/BottomBar';
+import { useEffect } from 'react';
 const Stack = createStackNavigator();
 const SkillStack = createStackNavigator();
 type RootStackParamList = {
@@ -56,6 +58,31 @@ type RootStackParamList = {
 
 ////// COMPONENT FUNCTION BEGINNING //////
 function App(): JSX.Element {
+  const [userGeoData,setUserGeoData] = useState({})
+  const [arrayOPlaces, setArrayOPlaces] = useState([])
+
+  useEffect(()=>{
+  
+  const apiKey = 'AIzaSyARFSBf48RxnNhBWxtQZbCGEhlLm9yfvCk';
+  const fetchPlaces = async (latitude, longitude) => {
+    console.log(latitude,longitude)
+    const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=gym&key=${apiKey}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data)
+    setArrayOPlaces(data.results)
+    // return data.results; // This will be an array of places
+  };
+  Geolocation.getCurrentPosition(info => {
+    console.log(info.coords.latitude, info.coords.longitude);
+    console.log("coords received")
+    setUserGeoData({latitude:info.coords.latitude, longitude:info.coords.longitude})
+    fetchPlaces(info.coords.latitude, info.coords.longitude)
+  });
+  
+  },[])
+  
+
   const [XPScale, setXPScale] = useState({
     1: 15, 2: 45, 3: 90, 4: 150, 5: 225, 6: 315, 7: 420, 8: 540, 9: 675, 10: 825,
     11: 990, 12: 1170, 13: 1365, 14: 1575, 15: 1800, 16: 2040, 17: 2295, 18: 2565, 19: 2850, 20: 3150,
@@ -121,12 +148,12 @@ function App(): JSX.Element {
       wildlife_park: {type:"gps",title:"Natural Parks",desc:"Spend time in any of this great nation's National Parks designated on the Map.", xp: 350, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
     },
     cooking: {
-      make_meal: {type:"camera",title:"Cook a Meal",desc:"Cook a meal & label what it is.", xp: 5, unlocksAt: 0, perDay: 3, perWeek: 0, perMonth:0 },
-      bake: {type:"camera",title:"Bake Something",desc:"Bake anything & label what it is.", xp: 5, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 },
+      make_meal: {type:"camera",title:"Cook a Meal",desc:"Cook a meal & label what it is.", xp: 10, unlocksAt: 0, perDay: 3, perWeek: 0, perMonth:0 },
+      bake: {type:"camera",title:"Bake Something",desc:"Bake anything & label what it is.", xp: 10, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth:0 },
       try_new_recipe: {type:"camera",title:"Unique Recipe",desc:"Document unique recipe than any you previously have.", xp: 20, unlocksAt: 10, perDay: 2, perWeek: 0, perMonth:0 },
       random_week_recipe:{type:"camera",title:"Weekly Recipe",desc:"Cook the assigned weekly recipe.",xp:100,unlocksAt:20,perDay:0,perWeek:1,perMonth:0},
       host_dinner: {type:"camera",title:"Host a Dinner Party",desc:"Host a dinner party for yourself and 4 other family or friends!", xp: 200, unlocksAt: 30, perDay: 0, perWeek: 1, perMonth:0 },
-      random_month_challenge: {type:"timeline",title:"Monthly Challenge",desc:"Complete the monthly challenge.", xp: 100, unlocksAt: 40, perDay: 0, perWeek: 1, perMonth:0 },
+      random_month_challenge: {type:"timeline",title:"Monthly Challenge",desc:"Complete the monthly challenge.", xp: 500, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 },
       cooking_class: {type:"timeline",title:"Cooking Class",desc:"Host or attend a cooking class.", xp: 350, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     },
     technology: {
@@ -138,7 +165,7 @@ function App(): JSX.Element {
       build_app: {type:"timeline",title:"Computer Application",desc:"Create a basic computer program in any language.", xp: 250, unlocksAt: 20, perDay: 0, perWeek: 0, perMonth:1 },
       threeD_model_animation: {type:"camera",title:"3D Animation",desc:"Animate a 3D model that you created.",xp : 30, unlocksAt: 30, perDay: 1, perWeek: 0, perMonth: 0},
       leetcode_challenge: {type:"api",title:"LeetCode Challenge",desc:"Complete any leetcode challenge you haven't already completed.", xp: 30, unlocksAt: 40, perDay: 1, perWeek: 0, perMonth:0 },
-      attend_tech_conference: {type:"timeline",title:"Tech Conference",desc:"Attend a tech conference of any kind. Must take picture of crowd.", xp: 350, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 },
+      attend_tech_conference: {type:"timeline",title:"Tech Conference",desc:"Attend a tech conference of any kind. Must take picture of crowd.", xp: 1000, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 },
       full_stack_app: {type:"timeline",title:"Full Stack App",desc:"Create and deploy a full stack application. HTTPS required.",xp : 500, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth: 1},
     },
     games: {
@@ -166,10 +193,10 @@ function App(): JSX.Element {
     },
     humanity: {
       vote: {type:"camera",title:"Your Vote Matters",desc:"Cast your vote for an official Federal or State election.",xp: 1000, unlocksAt: 0, perDay: 0, perMonth: 0},
-      create_art: {type:"camera",title:"Artist's Hand",desc:"Create your own art and upload it here for the world to enjoy.",xp: 50, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth: 0},
-      create_music: {type:"audio",title:"Making of the Music",desc:"Play & upload music you have created for the world to hear.",xp: 50, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth: 0},
-      volunteer_event: {type:"camera",title:"Volunteering",desc:"Get out and give back to your community.", xp: 50, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth:0 },
-      attend_live_show: {type:"timeline",title:"Live Show",desc:"Attend a live show of any kind. Must take picture of crowd.", xp: 100, unlocksAt: 10, perDay: 0, perWeek: 0, perMonth:1 },
+      create_art: {type:"camera",title:"Artist's Hand",desc:"Create your own art and upload it here for the world to enjoy.",xp: 100, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth: 0},
+      create_music: {type:"audio",title:"Making of the Music",desc:"Play & upload music you have created for the world to hear.",xp: 100, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth: 0},
+      volunteer_event: {type:"camera",title:"Volunteering",desc:"Get out and give back to your community.", xp: 100, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth:0 },
+      attend_live_show: {type:"timeline",title:"Live Show",desc:"Attend a live show of any kind. Must take picture of crowd.", xp: 200, unlocksAt: 10, perDay: 0, perWeek: 0, perMonth:1 },
       visit_museum: {type:"timeline",title:"Museum Day",desc:"Visit a museum of any kind.", xp: 100, unlocksAt: 20, perDay: 0, perWeek: 1, perMonth:0 },
       attend_art_show: {type:"timeline",title:"Art Show",desc:"Attend an art show, and see if any art is worth your dollar.", xp: 250, unlocksAt: 30, perDay: 0, perWeek: 0, perMonth:1 },
       attend_church:{type:"camera",title:"Holy Day",desc:"Attend any religious gathering.",xp: 100, unlocksAt: 35, perDay: 0, perWeek: 1, perMonth: 0},
@@ -301,7 +328,7 @@ const SkillsNav = () => {
         <Stack.Screen name="Skills" component={SkillsNav} />
         <Stack.Screen name="Stats" component={Stats} />
         <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData}} component={Trophies} />
-        <Stack.Screen name="Map" component={Map} />
+        <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces}} component={Map} />
         <Stack.Screen name="Feed" component={Feed} />
       </Stack.Navigator>
       <BottomBar/>

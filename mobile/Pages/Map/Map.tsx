@@ -14,6 +14,11 @@ import Config from "react-native-config";
 import Geolocation from '@react-native-community/geolocation';
 import { useEffect } from 'react';
 
+type markerProps = {
+  geometry: any,
+  name: string,
+  vicinity: any,
+}
 
 ////// COMPONENT FUNCTION BEGINNING //////
 const Map = ():JSX.Element=>{
@@ -58,7 +63,7 @@ useEffect(()=>{
                 longitudeDelta: 0.0121,
               }}
             >
-              {arrayOLocations.map((place, index) => (
+              {arrayOLocations.map((place:markerProps, index) => (
                 <Marker
                   key={index}
                   coordinate={{

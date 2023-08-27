@@ -45,8 +45,9 @@ import Geolocation from '@react-native-community/geolocation';
 import BottomBar from './Overlays/BottomBar';
 import { useEffect, } from 'react';
 import { useUID } from './Contexts/UIDContext';
-import { doc, setDoc, collection, getDoc } from "firebase/firestore";
+
 import {db} from './Firebase/firebase'
+import {UserDataProvider} from './Contexts/UserDataContext';
 const Stack = createStackNavigator();
 const SkillStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -61,10 +62,7 @@ type RootStackParamList = {
 
 ////// COMPONENT FUNCTION BEGINNING //////
 function App(): JSX.Element {
-  const { uid, setUID }:any = useUID();
-  const [userData, setUserData] = useState({})
   const [userGeoData,setUserGeoData] = useState({})
-  const [isLoggedIn,setIsLoggedIn] = useState(false)
   const [arrayOPlaces, setArrayOPlaces] = useState({
     parks:[],
     gyms:[],
@@ -335,7 +333,7 @@ function App(): JSX.Element {
 const SkillsNav = () => {
   return(
     <SkillStack.Navigator initialRouteName='SkillsMain' screenOptions={{ headerShown: false }}>
-      <SkillStack.Screen name="SkillsMain" component={Skills} initialParams={{skillsList: skillsList, playerData:playerData,userData:userData, XPScale:XPScale }}/>
+      <SkillStack.Screen name="SkillsMain" component={Skills} initialParams={{skillsList: skillsList, playerData:playerData,XPScale:XPScale }}/>
       <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList[2], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
@@ -352,25 +350,6 @@ const SkillsNav = () => {
 
 
 const AuthApp = ()=>{
-  useEffect(()=>{
-    console.log("CHANGE IN UID")
-    if (uid) {
-      const userDocRef = doc(db,"users", uid);
-      getDoc(userDocRef)
-      .then((docSnapshot)=>{
-        if(docSnapshot.exists()){
-          console.log("Document data:", docSnapshot.data())
-          setUserData(docSnapshot.data())
-        } else {
-          console.error("NO SUCH DOCUMENT. HOW IS USER ACCESSING UID FUNC WITHOUT UID DOCUMENT?!")
-          console.error("SERIOUSLY LOOK AT THIS LOGIC, SOMETHING IS WRONG IF THE USER IS HERE")
-        }
-      }).catch((error)=>{
-        console.error("Error getting doc", error)
-      })
-    }
-  },[uid])
-
 return (
   <>
     <HeaderBar />
@@ -388,15 +367,17 @@ return (
 
   return(
     <UIDProvider>
-      <SafeAreaView style={styles.backgroundStyle}>
-        <NavigationContainer >
-          <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
-            <AuthStack.Screen name="Login" component={Login} initialParams={{"setIsLoggedIn":setIsLoggedIn}} />
-                <AuthStack.Screen name="AuthedApp" component={AuthApp} />
-            <AuthStack.Screen name="SignUp" component={SignUp} />
-          </AuthStack.Navigator>
-        </NavigationContainer>
-      </SafeAreaView>
+      <UserDataProvider>
+        <SafeAreaView style={styles.backgroundStyle}>
+          <NavigationContainer >
+            <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
+              <AuthStack.Screen name="Login" component={Login}/>
+                  <AuthStack.Screen name="AuthedApp" component={AuthApp} />
+              <AuthStack.Screen name="SignUp" component={SignUp} />
+            </AuthStack.Navigator>
+          </NavigationContainer>
+        </SafeAreaView>
+      </UserDataProvider>
     </UIDProvider>
   )
 }

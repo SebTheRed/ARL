@@ -17,7 +17,9 @@ import {signInWithEmailAndPassword} from 'firebase/auth'
 import { useUID } from '../../Contexts/UIDContext';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
-import {app, auth} from '../../Firebase/firebase'
+import {db, auth,} from '../../Firebase/firebase'
+import {doc, getDoc} from 'firebase/firestore'
+import { useUserData } from '../../Contexts/UserDataContext';
 
 type RootStackParamList = {
 	Login:undefined,
@@ -25,10 +27,10 @@ type RootStackParamList = {
 	SignUp:undefined,
 }
 const Login = ({route}:any):JSX.Element => {
-	const {setIsLoggedIn} = route.params;
 	const [email,setEmail] = useState("")
 	const [password,setPassword] = useState("")
 	const {setUID}:any = useUID();
+	const {setUserData}:any = useUserData()
 
  // 2. Use the useNavigation hook with the type
  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -46,7 +48,21 @@ const signIn = async(e:any) => {
 			let uid = userCredentials.user.uid
 			navigation.navigate("AuthedApp")
 			setUID(uid)
-			setIsLoggedIn(true)
+			if (uid) {
+				const userDocRef = doc(db, "users", uid);
+				getDoc(userDocRef)
+				  .then((docSnapshot) => {
+					if (docSnapshot.exists()) {
+					  console.log("Setting user data:", docSnapshot.data());  // Debugging line
+					  setUserData(docSnapshot.data());
+					} else {
+					  console.error("No such document!");
+					}
+				  })
+				  .catch((error) => {
+					console.error("Error getting doc", error);
+				  });
+			  }
         })
         .catch((error)=>{
             console.error(error)

@@ -14,6 +14,8 @@ import {
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
+import {useUserData} from '../../Contexts/UserDataContext'
+import {useUID} from '../../Contexts/UIDContext'
 
 
 type SectionProps = PropsWithChildren<{
@@ -46,10 +48,16 @@ type RootStackParamList = {
 
 
 function Skills({route}:SkillsProps): JSX.Element {
-  
+  const {userData}:any = useUserData()
+  const {uid}:any = useUID()
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { userData, skillsList, XPScale, playerData, } = route.params;
-  console.log(userData)
+  const { skillsList, XPScale, playerData, } = route.params;
+
+  useEffect(()=>{
+    console.log("userData", userData)
+    console.log("uid", uid)
+  },[userData,uid])
+  
 
 
   const handlePress = (val:any) => { //REALLY SHOULD NOT USE ANY HERE
@@ -84,7 +92,7 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
   return(
     <TouchableOpacity onPress={()=>{handlePress(title)}} style={styles.sectionContainer}>
       <View style={styles.sectionTextContainer}>
-        <Text style={styles.sectionTitle}>{userData.email}</Text>
+        <Text style={styles.sectionTitle}>{title}</Text>
         <Text style={styles.sectionDescription}>{flare}</Text>
         
       </View>

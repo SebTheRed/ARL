@@ -10,7 +10,7 @@ export const useUID = () => {
   return context;
 };
 
-export const UIDProvider = ({ children }) => {
+export const UIDProvider = ({ children }:any) => {
   const [uid, setUID] = useState('some_initial_value');
   return <UIDContext.Provider value={{ uid, setUID }}>{children}</UIDContext.Provider>;
 };

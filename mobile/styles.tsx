@@ -236,7 +236,43 @@ trophyIcon:{
   height: 80, // desired height
   resizeMode: 'contain', // or 'cover'
 },
-
+container: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#f2f2f2',
+},
+title: {
+  fontSize: 32,
+  fontWeight: 'bold',
+  marginBottom: 20,
+},
+inputContainer: {
+  width: '80%',
+  marginBottom: 15,
+},
+label: {
+  fontSize: 16,
+  marginBottom: 5,
+},
+input: {
+  height: 40,
+  paddingHorizontal: 10,
+  borderWidth: 1,
+  borderColor: '#ccc',
+  borderRadius: 5,
+},
+button: {
+  marginTop: 20,
+  backgroundColor: '#007bff',
+  paddingVertical: 10,
+  paddingHorizontal: 20,
+  borderRadius: 5,
+},
+buttonText: {
+  color: '#fff',
+  fontSize: 18,
+},
 
 
 

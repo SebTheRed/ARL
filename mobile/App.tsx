@@ -21,6 +21,7 @@ import HeaderBar from './Overlays/HeaderBar';
 import { useState } from 'react';
 import styles from './styles';
 import Feed from './Pages/Feed/Feed';
+import Login from './Pages/Login'
 import {
   SafeAreaView,
   ScrollView,
@@ -43,6 +44,7 @@ import BottomBar from './Overlays/BottomBar';
 import { useEffect } from 'react';
 const Stack = createStackNavigator();
 const SkillStack = createStackNavigator();
+const AuthStack = createStackNavigator();
 type RootStackParamList = {
   Profile: undefined;
   Map: undefined;
@@ -332,7 +334,6 @@ const SkillsNav = () => {
       <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList[2], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      {/* <SkillStack.Screen name="Agility" initialParams={{skillData:skillsList[3]}} component={SkillsPage} ></SkillStack.Screen> */}
       <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList[3], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList[4], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Technology" initialParams={{skillData:skillsList[5], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
@@ -345,22 +346,32 @@ const SkillsNav = () => {
 }
 
 
-  // const isDarkMode = useColorScheme() === 'dark';
-  return (
-<SafeAreaView style={styles.backgroundStyle}>
-  <NavigationContainer>
-      <HeaderBar />
-      <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Skills" component={SkillsNav} />
-        <Stack.Screen name="Stats" component={Stats} />
-        <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData}} component={Trophies} />
-        <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces}} component={Map} />
-        <Stack.Screen name="Feed" component={Feed} />
-      </Stack.Navigator>
-      <BottomBar/>
-  </NavigationContainer>
-</SafeAreaView>
-  );
+const AuthApp = ()=>{
+return (
+  <>
+    <HeaderBar />
+    <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Skills" component={SkillsNav} />
+      <Stack.Screen name="Stats" component={Stats} />
+      <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData}} component={Trophies} />
+      <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces}} component={Map} />
+      <Stack.Screen name="Feed" component={Feed} />
+    </Stack.Navigator>
+    <BottomBar/>
+  </>
+
+);}
+
+  return(
+    <SafeAreaView style={styles.backgroundStyle}>
+      <NavigationContainer>
+        <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
+          <AuthStack.Screen name="Login" component={Login} />
+          <AuthStack.Screen name="AuthedApp" component={AuthApp} />
+        </AuthStack.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
+  )
 }
 
 

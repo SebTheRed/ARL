@@ -21,7 +21,8 @@ import HeaderBar from './Overlays/HeaderBar';
 import { useState } from 'react';
 import styles from './styles';
 import Feed from './Pages/Feed/Feed';
-import Login from './Pages/Login'
+import Login from './Pages/Login/Login'
+import SignUp from './Pages/Login/SignUp';
 import {
   SafeAreaView,
   ScrollView,
@@ -368,6 +369,7 @@ return (
         <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
           <AuthStack.Screen name="Login" component={Login} />
           <AuthStack.Screen name="AuthedApp" component={AuthApp} />
+          <AuthStack.Screen name="SignUp" component={SignUp} />
         </AuthStack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

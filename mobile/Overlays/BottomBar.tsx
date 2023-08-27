@@ -9,6 +9,7 @@ import {
 	Image,
 	TouchableOpacity
 } from 'react-native';
+import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import styles from '../styles'

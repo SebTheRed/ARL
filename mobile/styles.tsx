@@ -236,40 +236,53 @@ trophyIcon:{
   height: 80, // desired height
   resizeMode: 'contain', // or 'cover'
 },
-container: {
+logincontainer: {
   flex: 1,
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#f2f2f2',
+  backgroundColor: '#1c1c1c',
+  
 },
-title: {
+logintitle: {
   fontSize: 32,
   fontWeight: 'bold',
   marginBottom: 20,
+  color:"white",
 },
-inputContainer: {
+logininputContainer: {
   width: '80%',
   marginBottom: 15,
 },
-label: {
+loginlabel: {
   fontSize: 16,
   marginBottom: 5,
+  color:"white",
 },
-input: {
+logininput: {
   height: 40,
   paddingHorizontal: 10,
   borderWidth: 1,
-  borderColor: '#ccc',
+  backgroundColor: '#656565',
+  borderColor:"white",
   borderRadius: 5,
+  color:"white",
 },
-button: {
-  marginTop: 20,
+loginbutton: {
+  marginTop: 30,
   backgroundColor: '#007bff',
   paddingVertical: 10,
   paddingHorizontal: 20,
   borderRadius: 5,
+  alignItems:"center",
 },
-buttonText: {
+loginSignupButton:{
+  marginTop:20,
+  backgroundColor:"#656565",
+  paddingVertical: 10,
+  paddingHorizontal: 20,
+  borderRadius:5,
+},
+loginbuttonText: {
   color: '#fff',
   fontSize: 18,
 },

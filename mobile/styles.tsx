@@ -7,7 +7,7 @@ backgroundStyle:{
   flex:1,
 },
 headerBar:{
-  // backgroundColor:"#ff7704",
+  backgroundColor:"#1c1c1c",
   width:"100%",
   height:"5%",
   alignItems:"center",

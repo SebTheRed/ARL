@@ -14,19 +14,20 @@ import {
   import { NavigationProp } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import {signInWithEmailAndPassword} from 'firebase/auth'
-
+import { useUID } from '../../Contexts/UIDContext';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
 import {app, auth} from '../../Firebase/firebase'
 
 type RootStackParamList = {
 	Login:undefined,
-	AuthedApp:{ uid?: string },
+	AuthedApp:undefined,
 	SignUp:undefined,
 }
 const Login = ():JSX.Element => {
 	const [email,setEmail] = useState("")
 	const [password,setPassword] = useState("")
+	const {updateUID}:any = useUID();
 
  // 2. Use the useNavigation hook with the type
  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -42,7 +43,8 @@ const signIn = async(e:any) => {
         .then((userCredentials)=>{
             console.log(userCredentials)
 			let uid = userCredentials.user.uid
-			navigation.navigate("AuthedApp", {uid})
+			navigation.navigate("AuthedApp")
+			updateUID(uid)
         })
         .catch((error)=>{
             console.error(error)

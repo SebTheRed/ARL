@@ -23,6 +23,7 @@ import styles from './styles';
 import Feed from './Pages/Feed/Feed';
 import Login from './Pages/Login/Login'
 import SignUp from './Pages/Login/SignUp';
+import { UIDProvider } from './Contexts/UIDContext';
 import {
   SafeAreaView,
   ScrollView,
@@ -42,7 +43,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import Geolocation from '@react-native-community/geolocation';
 import BottomBar from './Overlays/BottomBar';
-import { useEffect } from 'react';
+import { useEffect, } from 'react';
 const Stack = createStackNavigator();
 const SkillStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -55,12 +56,9 @@ type RootStackParamList = {
 };
 
 
-
-
-
-
 ////// COMPONENT FUNCTION BEGINNING //////
 function App(): JSX.Element {
+
   const [userGeoData,setUserGeoData] = useState({})
   const [arrayOPlaces, setArrayOPlaces] = useState({
     parks:[],
@@ -69,6 +67,8 @@ function App(): JSX.Element {
 
   })
 
+
+  
   useEffect(()=>{
   
   // const apiKey = 'AIzaSyARFSBf48RxnNhBWxtQZbCGEhlLm9yfvCk';
@@ -328,10 +328,10 @@ function App(): JSX.Element {
   })
 
 
-const SkillsNav = (uid) => {
+const SkillsNav = (uid:any) => {
   return(
     <SkillStack.Navigator initialRouteName='SkillsMain' screenOptions={{ headerShown: false }}>
-      <SkillStack.Screen name="SkillsMain" component={Skills} initialParams={{skillsList: skillsList, playerData:playerData, XPScale:XPScale }}/>
+      <SkillStack.Screen name="SkillsMain" component={Skills} initialParams={{uid:uid,skillsList: skillsList, playerData:playerData, XPScale:XPScale }}/>
       <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList[2], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
@@ -347,18 +347,16 @@ const SkillsNav = (uid) => {
 }
 
 
-const AuthApp = ({route})=>{
-  const {uid} = route.params
-
+const AuthApp = ()=>{
 return (
   <>
     <HeaderBar />
     <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Skills" initialParams={{uid:uid}} component={SkillsNav} />
-      <Stack.Screen name="Stats" initialParams={{uid:uid}} component={Stats} />
-      <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData, uid:uid}} component={Trophies} />
-      <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces, uid:uid}} component={Map} />
-      <Stack.Screen name="Feed" initialParams={{uid:uid}} component={Feed} />
+      <Stack.Screen name="Skills"  component={SkillsNav} />
+      <Stack.Screen name="Stats"  component={Stats} />
+      <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
+      <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces,}} component={Map} />
+      <Stack.Screen name="Feed" component={Feed} />
     </Stack.Navigator>
     <BottomBar/>
   </>
@@ -366,15 +364,17 @@ return (
 );}
 
   return(
-    <SafeAreaView style={styles.backgroundStyle}>
-      <NavigationContainer >
-        <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
-          <AuthStack.Screen name="Login" component={Login} />
-          <AuthStack.Screen name="AuthedApp" component={AuthApp} />
-          <AuthStack.Screen name="SignUp" component={SignUp} />
-        </AuthStack.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+    <UIDProvider>
+      <SafeAreaView style={styles.backgroundStyle}>
+        <NavigationContainer >
+          <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
+            <AuthStack.Screen name="Login" component={Login} />
+            <AuthStack.Screen name="AuthedApp" component={AuthApp} />
+            <AuthStack.Screen name="SignUp" component={SignUp} />
+          </AuthStack.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
+    </UIDProvider>
   )
 }
 

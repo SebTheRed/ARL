@@ -21,8 +21,8 @@ type markerProps = {
 }
 
 ////// COMPONENT FUNCTION BEGINNING //////
-const Map = ({route}):JSX.Element=>{
-const {userGeoData, arrayOPlaces} = route.params;
+const Map = ({route}:any):JSX.Element=>{
+const {uid, userGeoData, arrayOPlaces} = route.params;
 
 const [currentLocation,setCurrentLocation] = useState(userGeoData)
 

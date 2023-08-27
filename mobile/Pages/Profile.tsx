@@ -7,9 +7,11 @@ import {
     useColorScheme,
     View,
   } from 'react-native';
+  import React from 'react'
 import styles from '../styles'
 
-const Profile = ():JSX.Element=>{
+const Profile = ({route}:any):JSX.Element=>{
+    const {uid} = route.params;
     return(
         <View><Text>Profile</Text></View>
     )

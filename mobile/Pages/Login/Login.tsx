@@ -21,7 +21,7 @@ import {app, auth} from '../../Firebase/firebase'
 
 type RootStackParamList = {
 	Login:undefined,
-	AuthedApp:undefined,
+	AuthedApp:{ uid?: string },
 	SignUp:undefined,
 }
 const Login = ():JSX.Element => {
@@ -41,9 +41,11 @@ const signIn = async(e:any) => {
         signInWithEmailAndPassword(auth,email,password)
         .then((userCredentials)=>{
             console.log(userCredentials)
+			let uid = userCredentials.user.uid
+			navigation.navigate("AuthedApp", {uid})
         })
         .catch((error)=>{
-            console.log(error)
+            console.error(error)
         })
 }
 	return(

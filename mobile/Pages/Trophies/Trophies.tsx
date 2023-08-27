@@ -10,7 +10,7 @@ import {
   } from 'react-native';
 import styles from '../../styles'
 import type {PropsWithChildren,} from 'react';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TrophyBox from './TrophyBox';
 
@@ -19,7 +19,7 @@ import TrophyBox from './TrophyBox';
 // }>
 
 const Trophies = ({route}:any):JSX.Element => {
-const { trophyData } = route.params;
+const {uid, trophyData } = route.params;
 const [panelState,setPanelState]=useState(false);
 		// console.log(trophyList)
 

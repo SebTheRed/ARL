@@ -8,12 +8,12 @@ import {
     View,
     TouchableOpacity
   } from 'react-native';
-
+import React from 'react'
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
 
-const EventTile = ({d, i, color}:any):JSX.Element => {
+const EventTile = ({d, i, color, uid}:any):JSX.Element => {
     return(
         <TouchableOpacity style={styles.eventTileWrapper}>
             <View style={{flexDirection:"row",justifyContent:"space-between"}}>

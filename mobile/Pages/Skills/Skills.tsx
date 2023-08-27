@@ -46,7 +46,7 @@ type RootStackParamList = {
 
 function Skills({route}:SkillsProps): JSX.Element {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { skillsList, XPScale, playerData, } = route.params;
+  const { uid, skillsList, XPScale, playerData, } = route.params;
 
   const handlePress = (val:any) => { //REALLY SHOULD NOT USE ANY HERE
     navigation.navigate(val);

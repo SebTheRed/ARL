@@ -18,7 +18,7 @@ import {createUserWithEmailAndPassword} from 'firebase/auth'
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
-import {app, auth} from '../../Firebase/firebase'
+import {db, auth} from '../../Firebase/firebase'
 
 type RootStackParamList = {
 	Login:undefined,
@@ -46,7 +46,6 @@ const createAccount = async(e:any) => {
 		const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
 		console.log(userCredentials)
 		uid = userCredentials.user.uid;
-		let db = getFirestore(app)
 		await setDoc(doc(db, "users", uid), {
 			email: email,
 			name: name, 

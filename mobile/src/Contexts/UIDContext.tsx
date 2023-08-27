@@ -12,8 +12,5 @@ export const useUID = () => {
 
 export const UIDProvider = ({ children }) => {
   const [uid, setUID] = useState('some_initial_value');
-  const updateUID = (newUID)=>{
-    setUID(newUID)
-  }
-  return <UIDContext.Provider value={{ uid, updateUID }}>{children}</UIDContext.Provider>;
+  return <UIDContext.Provider value={{ uid, setUID }}>{children}</UIDContext.Provider>;
 };

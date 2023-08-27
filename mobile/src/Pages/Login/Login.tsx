@@ -24,10 +24,11 @@ type RootStackParamList = {
 	AuthedApp:undefined,
 	SignUp:undefined,
 }
-const Login = ():JSX.Element => {
+const Login = ({route}:any):JSX.Element => {
+	const {setIsLoggedIn} = route.params;
 	const [email,setEmail] = useState("")
 	const [password,setPassword] = useState("")
-	const {updateUID}:any = useUID();
+	const {setUID}:any = useUID();
 
  // 2. Use the useNavigation hook with the type
  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -44,7 +45,8 @@ const signIn = async(e:any) => {
             console.log(userCredentials)
 			let uid = userCredentials.user.uid
 			navigation.navigate("AuthedApp")
-			updateUID(uid)
+			setUID(uid)
+			setIsLoggedIn(true)
         })
         .catch((error)=>{
             console.error(error)

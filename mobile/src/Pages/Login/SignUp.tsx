@@ -46,6 +46,10 @@ const createAccount = async(e:any) => {
 		const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
 		console.log(userCredentials)
 		uid = userCredentials.user.uid;
+        //NEED
+        //TO
+        //ADD LOADING
+        // SCREEN HERE
 		await setDoc(doc(db, "users", uid), {
 			email: email,
 			name: name, 
@@ -118,6 +122,7 @@ const createAccount = async(e:any) => {
         }
         );
 		console.log("User document created in Firestore");
+        navigation.navigate("Login")
 	} catch(error){
 		console.log(error)
 	}

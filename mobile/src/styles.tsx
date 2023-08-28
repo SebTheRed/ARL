@@ -140,8 +140,12 @@ eventTileWrapper:{
   borderWidth:2,
   borderColor:"#656565",
   borderRadius:10,
-  paddingBottom:10,
+  flexDirection:"row"
   
+},
+eventTileMain:{
+  width:"80%",
+  overflow:"hidden",
 },
 eventTileText:{
   padding:2,
@@ -162,6 +166,21 @@ offsetWrapper:{
   position:"relative",
   alignItems:"center",
   justifyContent:"center"
+},
+eventButtonWrapper:{
+  alignItems:"center",
+  justifyContent:"space-evenly",
+  width:"100%",
+  height:"100%",
+  flexDirection:"column"
+},
+eventButtonIcon:{
+  height:"50%",
+  width:"50%",
+  alignItems:"center",
+},
+eventButtonText:{
+
 },
 highlight: {
   fontWeight: '700',

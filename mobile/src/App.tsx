@@ -115,7 +115,7 @@ function App(): JSX.Element {
   
 
   const [XPScale, setXPScale] = useState({
-    1: 15, 2: 45, 3: 90, 4: 150, 5: 225, 6: 315, 7: 420, 8: 540, 9: 675, 10: 825,
+    1: 0, 2: 10, 3: 50, 4: 100, 5: 180, 6: 315, 7: 420, 8: 540, 9: 675, 10: 825,
     11: 990, 12: 1170, 13: 1365, 14: 1575, 15: 1800, 16: 2040, 17: 2295, 18: 2565, 19: 2850, 20: 3150,
     21: 3465, 22: 3795, 23: 4140, 24: 4500, 25: 4875, 26: 5265, 27: 5670, 28: 6090, 29: 6525, 30: 6975,
     31: 7440, 32: 7920, 33: 8415, 34: 8925, 35: 9450, 36: 9990, 37: 10545, 38: 11115, 39: 11700, 40: 12300,
@@ -153,7 +153,7 @@ function App(): JSX.Element {
       friends_road_trip: {type:"timeline",title:"Road Trip!",desc:"Take a roadtrip totaling 3 destinations with at least 1 friend or significant other.", xp: 200, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1},
     },
     fitness: {
-      daily_pushups: {type:"gyro",title:"Daily Pushups",desc:"Perform a slowly incrementing number of pushups every day.", xp: 10, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
+      daily_pushups: {type:"log",title:"Daily Pushups",desc:"Perform a slowly incrementing number of pushups every day.", xp: 10, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
       stretching_routine: {type:"log",title:"Stretch it Out",desc:"Log yes or no to doing stretches in the morning and at night.", xp: 5, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
       walking: {type:"acceleration",title:"Go for a Walk",desc:"Go for a walk. Be sure to press start when you begin or it won't count!", xp: 20, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
       attend_gym: {type:"camera",title:"Go to the Gym",desc:"Spend time at any marked gym on the Map.", xp: 10, unlocksAt: 10, perDay:2, perWeek:0, perMonth:0},
@@ -384,7 +384,7 @@ const AuthApp = ()=>{
           <NavigationContainer >
             <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
               <AuthStack.Screen name="Login" component={Login}/>
-                  <AuthStack.Screen name="AuthedApp" component={AuthApp} />
+              <AuthStack.Screen name="AuthedApp" component={AuthApp} />
               <AuthStack.Screen name="SignUp" component={SignUp} />
             </AuthStack.Navigator>
           </NavigationContainer>

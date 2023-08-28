@@ -39,21 +39,22 @@ const Login = ({route}:any):JSX.Element => {
 		Animated.sequence([
 		  Animated.timing(animatedValue, {
 			toValue: 1,
-			duration: 5000,
+			duration: 20000,
 			useNativeDriver: false,
 		  }),
 		  Animated.timing(animatedValue, {
 			toValue: 0,
-			duration: 5000,
+			duration: 20000,
 			useNativeDriver: false,
 		  }),
 		])
 	  ).start();
 	}, []);
 	const interpolatedColor = animatedValue.interpolate({
-		inputRange: [0, 1],
-		outputRange: ['orange', 'gold'],
+		inputRange: [0,0.25,0.5,0.75, 1],
+		outputRange: ['orange', 'gold', "#00ff15", "cyan", "#007bff"],
 	  });
+
 
  // 2. Use the useNavigation hook with the type
  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -93,27 +94,34 @@ const signIn = async(e:any) => {
 }
 	return(
 		<Animated.View style={{...styles.logincontainer,backgroundColor:interpolatedColor}}>
+			<View style={{...styles.ARLLogoWrapper, backgroundColor:"transparent"}}>
+				<View style={styles.offsetWrapper}>
+				</View>
+				<Text style={{...styles.borderedTextShadow, color: 'black',fontWeight:"bold"}}>arl</Text>
+				<Text style={{...styles.borderedText, color: 'white' ,fontWeight:"bold"}}>arl</Text>
+			</View>
 			<View style={{...styles.loginWrapper}}>
+			
 				<View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-					<Text style={styles.logintitle}>Log In </Text>
+					<Text style={styles.logintitle}>log in </Text>
 					<Text style={{...styles.skillPageXPText,}}> or </Text>
 					<TouchableOpacity onPress={()=>handleSignUpPress("SignUp")} style={styles.loginSignupButton}>
 						
-						<Text style={styles.loginbuttonText}>Sign Up</Text>
+						<Text style={styles.loginbuttonText}>sign up</Text>
 					</TouchableOpacity>
 				</View>
 				
 				<View style={styles.logininputContainer}>
-					<Text style={styles.loginlabel}>Email</Text>
+					<Text style={styles.loginlabel}>email</Text>
 					<TextInput onChangeText={(text)=>setEmail(text)} style={styles.logininput} placeholder="Enter your email" />
 				</View>
 				<View style={styles.logininputContainer}>
-					<Text style={styles.loginlabel}>Password</Text>
+					<Text style={styles.loginlabel}>password</Text>
 					<TextInput onChangeText={(text)=>setPassword(text)} style={styles.logininput} placeholder="Enter your password" secureTextEntry />
 				</View>
 				
 				<TouchableOpacity onPress={signIn} style={styles.loginbutton}>
-					<Text style={styles.loginbuttonText}>Enter ARL</Text>
+					<Text style={styles.loginbuttonText}>login</Text>
 				</TouchableOpacity>
 			</View>
 		</Animated.View>

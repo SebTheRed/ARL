@@ -272,6 +272,11 @@ loginWrapper:{
   borderWidth:2,
   borderRadius:10,
 },
+ARLLogoWrapper:{
+  alignItems:'center',
+  height:"10%",
+
+},
 logintitle: {
   fontSize: 32,
   fontWeight: 'bold',

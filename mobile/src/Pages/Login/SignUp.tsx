@@ -60,8 +60,8 @@ const SignUp = ():JSX.Element => {
 	  ).start();
 	}, []);
 	const interpolatedColor = animatedValue.interpolate({
-		inputRange: [0, 1],
-		outputRange: ['orange', 'gold'],
+		inputRange: [0,0.25,0.5,0.75, 1],
+		outputRange: ['orange', 'gold', "green", "cyan", "#007bff"],
 	  });
 
 
@@ -163,34 +163,34 @@ const createAccount = async(e:any) => {
 <Animated.View style={{...styles.logincontainer,backgroundColor:interpolatedColor}}>
     <View style={{...styles.loginWrapper, height:"90%", width:"90%"}}>
         <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-            <Text style={styles.logintitle}>Sign Up</Text>
+            <Text style={styles.logintitle}>sign up</Text>
             <Text style={{...styles.skillPageXPText,}}> or </Text>
             <TouchableOpacity onPress={()=>handleGoBackPress("Login")} style={styles.loginSignupButton}>
-                <Text style={styles.loginbuttonText}>⇦ Go Back</Text>
+                <Text style={styles.loginbuttonText}>⇦ go back</Text>
             </TouchableOpacity>
         </View>
         <View style={styles.logininputContainer}>
-            <Text style={styles.loginlabel}>User Name</Text>
+            <Text style={styles.loginlabel}>user name</Text>
             <TextInput onChangeText={(text)=>setUserName(text)} style={styles.logininput} />
         </View>
         <View style={styles.logininputContainer}>
-            <Text style={styles.loginlabel}>Email</Text>
+            <Text style={styles.loginlabel}>email</Text>
             <TextInput onChangeText={(text)=>setEmail(text)} style={styles.logininput} />
         </View>
         <View style={styles.logininputContainer}>
-            <Text style={styles.loginlabel}>First & Last Name</Text>
+            <Text style={styles.loginlabel}>first & last Name</Text>
             <TextInput onChangeText={(text)=>setName(text)} style={styles.logininput} />
         </View>
         <View style={styles.logininputContainer}>
-            <Text style={styles.loginlabel}>Phone Number</Text>
+            <Text style={styles.loginlabel}>phone number</Text>
             <TextInput onChangeText={(text)=>setPhoneNumber(text)} style={styles.logininput} />
         </View>
         <View style={styles.logininputContainer}>
-            <Text style={styles.loginlabel}>Password</Text>
+            <Text style={styles.loginlabel}>password</Text>
             <TextInput onChangeText={(text)=>setPassword(text)} style={styles.logininput} secureTextEntry />
         </View>
         <TouchableOpacity onPress={createAccount} style={styles.loginbutton}>
-            <Text style={styles.loginbuttonText}>Complete Sign Up & Join ARL!</Text>
+            <Text style={styles.loginbuttonText}>complete sign up</Text>
         </TouchableOpacity>
     </View>
 </Animated.View>

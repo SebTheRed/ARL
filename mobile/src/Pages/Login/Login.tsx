@@ -8,6 +8,7 @@ import {
     View,
     TouchableOpacity,
 		TextInput,
+		Animated,
   } from 'react-native';
   import React from 'react'
   import { useNavigation } from '@react-navigation/native';
@@ -20,7 +21,7 @@ import type {PropsWithChildren} from 'react';
 import {db, auth,} from '../../Firebase/firebase'
 import {doc, getDoc} from 'firebase/firestore'
 import { useUserData } from '../../Contexts/UserDataContext';
-
+import LinearGradient from 'react-native-linear-gradient';
 type RootStackParamList = {
 	Login:undefined,
 	AuthedApp:undefined,
@@ -31,6 +32,28 @@ const Login = ({route}:any):JSX.Element => {
 	const [password,setPassword] = useState("")
 	const {setUID}:any = useUID();
 	const {setUserData}:any = useUserData()
+	const animatedValue = new Animated.Value(0);
+
+	useEffect(() => {
+	  Animated.loop(
+		Animated.sequence([
+		  Animated.timing(animatedValue, {
+			toValue: 1,
+			duration: 5000,
+			useNativeDriver: false,
+		  }),
+		  Animated.timing(animatedValue, {
+			toValue: 0,
+			duration: 5000,
+			useNativeDriver: false,
+		  }),
+		])
+	  ).start();
+	}, []);
+	const interpolatedColor = animatedValue.interpolate({
+		inputRange: [0, 1],
+		outputRange: ['orange', 'gold'],
+	  });
 
  // 2. Use the useNavigation hook with the type
  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -69,24 +92,31 @@ const signIn = async(e:any) => {
         })
 }
 	return(
-		<View style={styles.logincontainer}>
-			<Text style={styles.logintitle}>Sign In</Text>
-
-			<View style={styles.logininputContainer}>
-				<Text style={styles.loginlabel}>Email</Text>
-				<TextInput onChangeText={(text)=>setEmail(text)} style={styles.logininput} placeholder="Enter your email" />
+		<Animated.View style={{...styles.logincontainer,backgroundColor:interpolatedColor}}>
+			<View style={{...styles.loginWrapper}}>
+				<View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
+					<Text style={styles.logintitle}>Log In </Text>
+					<Text style={{...styles.skillPageXPText,}}> or </Text>
+					<TouchableOpacity onPress={()=>handleSignUpPress("SignUp")} style={styles.loginSignupButton}>
+						
+						<Text style={styles.loginbuttonText}>Sign Up</Text>
+					</TouchableOpacity>
+				</View>
+				
+				<View style={styles.logininputContainer}>
+					<Text style={styles.loginlabel}>Email</Text>
+					<TextInput onChangeText={(text)=>setEmail(text)} style={styles.logininput} placeholder="Enter your email" />
+				</View>
+				<View style={styles.logininputContainer}>
+					<Text style={styles.loginlabel}>Password</Text>
+					<TextInput onChangeText={(text)=>setPassword(text)} style={styles.logininput} placeholder="Enter your password" secureTextEntry />
+				</View>
+				
+				<TouchableOpacity onPress={signIn} style={styles.loginbutton}>
+					<Text style={styles.loginbuttonText}>Enter ARL</Text>
+				</TouchableOpacity>
 			</View>
-			<View style={styles.logininputContainer}>
-				<Text style={styles.loginlabel}>Password</Text>
-				<TextInput onChangeText={(text)=>setPassword(text)} style={styles.logininput} placeholder="Enter your password" secureTextEntry />
-			</View>
-			<TouchableOpacity onPress={()=>handleSignUpPress("SignUp")} style={styles.loginSignupButton}>
-				<Text style={styles.loginbuttonText}>Sign Up</Text>
-			</TouchableOpacity>
-			<TouchableOpacity onPress={signIn} style={styles.loginbutton}>
-				<Text style={styles.loginbuttonText}>Login</Text>
-			</TouchableOpacity>
-		</View>
+		</Animated.View>
 	)
 }
 

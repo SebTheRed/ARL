@@ -9,6 +9,7 @@ import {
     View,
     TouchableOpacity,
 		TextInput,
+        Animated,
   } from 'react-native';
   import React from 'react'
   import { useNavigation } from '@react-navigation/native';
@@ -39,6 +40,34 @@ const SignUp = ():JSX.Element => {
     const handleGoBackPress = (val: keyof RootStackParamList) => {
     navigation.navigate(val);
     }
+
+	const animatedValue = new Animated.Value(0);
+
+	useEffect(() => {
+	  Animated.loop(
+		Animated.sequence([
+		  Animated.timing(animatedValue, {
+			toValue: 1,
+			duration: 5000,
+			useNativeDriver: false,
+		  }),
+		  Animated.timing(animatedValue, {
+			toValue: 0,
+			duration: 5000,
+			useNativeDriver: false,
+		  }),
+		])
+	  ).start();
+	}, []);
+	const interpolatedColor = animatedValue.interpolate({
+		inputRange: [0, 1],
+		outputRange: ['orange', 'gold'],
+	  });
+
+
+
+
+
 
 const createAccount = async(e:any) => {
     let uid = ""
@@ -129,9 +158,17 @@ const createAccount = async(e:any) => {
     }
 
     return(
-    <View style={styles.logincontainer}>
-        
-        <Text style={styles.logintitle}>Sign Up</Text>
+
+
+<Animated.View style={{...styles.logincontainer,backgroundColor:interpolatedColor}}>
+    <View style={{...styles.loginWrapper, height:"90%", width:"90%"}}>
+        <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
+            <Text style={styles.logintitle}>Sign Up</Text>
+            <Text style={{...styles.skillPageXPText,}}> or </Text>
+            <TouchableOpacity onPress={()=>handleGoBackPress("Login")} style={styles.loginSignupButton}>
+                <Text style={styles.loginbuttonText}>⇦ Go Back</Text>
+            </TouchableOpacity>
+        </View>
         <View style={styles.logininputContainer}>
             <Text style={styles.loginlabel}>User Name</Text>
             <TextInput onChangeText={(text)=>setUserName(text)} style={styles.logininput} />
@@ -152,13 +189,13 @@ const createAccount = async(e:any) => {
             <Text style={styles.loginlabel}>Password</Text>
             <TextInput onChangeText={(text)=>setPassword(text)} style={styles.logininput} secureTextEntry />
         </View>
-        <TouchableOpacity onPress={()=>handleGoBackPress("Login")} style={styles.loginSignupButton}>
-            <Text style={styles.loginbuttonText}>⇦ Go Back</Text>
-        </TouchableOpacity>
         <TouchableOpacity onPress={createAccount} style={styles.loginbutton}>
             <Text style={styles.loginbuttonText}>Complete Sign Up & Join ARL!</Text>
         </TouchableOpacity>
     </View>
+</Animated.View>
+
+
     )
 }
 

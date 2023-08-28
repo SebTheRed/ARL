@@ -219,7 +219,7 @@ function App(): JSX.Element {
       read_foreign_book: {type:"log",title:"Read Foreign Book",desc:"Log about a book you are reading that is written in your non-native language.", xp: 10, unlocksAt: 30, perDay: 1, perWeek: 0, perMonth:0 },
       duolingo_month: {type:"api",title:"Duolingo Month",desc:"Complete your daily Duolingo challenge every day for each month. Counter resets on the 1st.", xp: 100, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 },
       travel_foreign_country: {type:"timeline",title:"Travel to Foreign Country",desc:"Spread your wings! Share your travels with the world.", xp: 250, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 },
-      record_speaking_language: {type:"audio",title:"Babbel",desc:"Upload your foreign language skills for the world to hear!", xp: 50, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth:0 },
+      record_speaking_language: {type:"camera",title:"Babbel",desc:"Upload your foreign language skills for the world to hear!", xp: 50, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth:0 },
       // master_language_exam: {type:"exam",title:"",desc:"", xp: 250, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     },
     humanity: {

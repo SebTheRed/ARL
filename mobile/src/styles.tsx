@@ -259,8 +259,18 @@ logincontainer: {
   flex: 1,
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#1c1c1c',
-  
+  // backgroundColor: '#1c1c1c',
+},
+loginWrapper:{
+  width:"80%",
+  height:"60%",
+  backgroundColor:"#1c1c1c",
+  justifyContent:"center",
+  alignContent:"center",
+  padding:10,
+  borderColor:"white",
+  borderWidth:2,
+  borderRadius:10,
 },
 logintitle: {
   fontSize: 32,
@@ -269,7 +279,7 @@ logintitle: {
   color:"white",
 },
 logininputContainer: {
-  width: '80%',
+  width: '100%',
   marginBottom: 15,
 },
 loginlabel: {
@@ -293,13 +303,16 @@ loginbutton: {
   paddingHorizontal: 20,
   borderRadius: 5,
   alignItems:"center",
+  textAlign:'center'
 },
 loginSignupButton:{
-  marginTop:20,
+  marginBottom:20,
   backgroundColor:"#656565",
   paddingVertical: 10,
   paddingHorizontal: 20,
   borderRadius:5,
+  alignItems:'center',
+  width:"40%"
 },
 loginbuttonText: {
   color: '#fff',

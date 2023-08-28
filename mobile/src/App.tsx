@@ -47,7 +47,7 @@ import { useEffect, } from 'react';
 import { useUID } from './Contexts/UIDContext';
 
 import {db} from './Firebase/firebase'
-import {UserDataProvider} from './Contexts/UserDataContext';
+import {UserDataProvider, useUserData} from './Contexts/UserDataContext';
 const Stack = createStackNavigator();
 const SkillStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -62,13 +62,13 @@ type RootStackParamList = {
 
 ////// COMPONENT FUNCTION BEGINNING //////
 function App(): JSX.Element {
+  const [isWaitingUserData,setIsWaitingUserData] = useState(false)
   const [userGeoData,setUserGeoData] = useState({})
   const [arrayOPlaces, setArrayOPlaces] = useState({
     parks:[],
     gyms:[],
     restaurants:[],
   })
-
   
   
   useEffect(()=>{
@@ -350,20 +350,32 @@ const SkillsNav = () => {
 
 
 const AuthApp = ()=>{
-return (
-  <>
-    <HeaderBar />
-    <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Skills"  component={SkillsNav} />
-      <Stack.Screen name="Stats"  component={Stats} />
-      <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
-      <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces,}} component={Map} />
-      <Stack.Screen name="Feed" component={Feed} />
-    </Stack.Navigator>
-    <BottomBar/>
-  </>
-
-);}
+  const {userData}:any = useUserData()
+  console.log("authapp, ", userData)
+  if (Object.values(userData).length>0) {
+    return(
+      <>
+        <HeaderBar />
+          <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Skills"  component={SkillsNav} />
+            <Stack.Screen name="Stats"  component={Stats} />
+            <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
+            <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces,}} component={Map} />
+            <Stack.Screen name="Feed" component={Feed} />
+          </Stack.Navigator>
+        <BottomBar/>
+      </>
+    )
+  } else {
+    return(
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={styles.backgroundStyle}>
+          <Text>LOADING</Text>
+        </ScrollView>
+    )
+  }
+}
 
   return(
     <UIDProvider>

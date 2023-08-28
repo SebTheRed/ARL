@@ -65,7 +65,7 @@ function Skills({route}:SkillsProps): JSX.Element {
   }
   
   const calculateCurrentLevel = (skillName: string, XPScale: any) => {
-    const currentXP = playerData.xp[skillName]; // Assuming skillData.title is 'Family', 'Friends', etc.
+    const currentXP = userData.xpData[skillName]; // Assuming skillData.title is 'Family', 'Friends', etc.
     let level = 1;
     for (const [lvl, xp] of Object.entries(XPScale) as [string,number][]) {
       if (currentXP >= xp) {

@@ -15,6 +15,7 @@ import type {PropsWithChildren} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import EventTile from './EventTile'
+import {useUserData} from '../../Contexts/UserDataContext'
 type SkillPageProps = PropsWithChildren<{
     route:any
 }>
@@ -28,8 +29,9 @@ type RootStackParamList = {
 
 ////// JSX START FUN COMPONENT //////
 const SkillsPage = ({route}:SkillPageProps):JSX.Element => {
+const {userData}:any = useUserData()
 const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-const {skillData, playerData, XPScale, XPTriggerEvents} = route.params;
+const {skillData, XPScale, XPTriggerEvents} = route.params;
 
 const calculateXPBarWidth = (currentXP: number, prevXP: number, nextXP: number) => {
   const totalXPNeeded = nextXP - prevXP;
@@ -60,13 +62,13 @@ const calculateXPInfo = (currentLevel:number) => {
 }
 
 
-const currentXP = playerData.xp[skillData.title.toLowerCase()]; // Assuming skillData.title is 'Family', 'Friends', etc.
+const currentXP = userData.xpData[skillData.title.toLowerCase()]; // Assuming skillData.title is 'Family', 'Friends', etc.
 const currentLevel = calculateCurrentLevel(currentXP, XPScale); // Calculate current level
 const prevXP = XPScale[currentLevel];
 const nextXP = XPScale[currentLevel + 1];
 const xpBarWidth = calculateXPBarWidth(currentXP, prevXP, nextXP);
 const skillTitle = skillData.title
-const matchingSkillXp = (playerData.xp[skillTitle.toLowerCase()]).toLocaleString()
+const matchingSkillXp = (userData.xpData[skillTitle.toLowerCase()]).toLocaleString()
 const sideXPVals = calculateXPInfo(currentLevel)
 
 const handlePress = () => { //REALLY SHOULD NOT USE ANY HERE

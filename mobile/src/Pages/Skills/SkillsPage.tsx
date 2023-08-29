@@ -108,7 +108,7 @@ if (skillData) {
             <Text style={styles.skillPageTitle}>Post an Experience</Text>
             <Text style={styles.skillPageXPText}>Press any of the experiences below to begin posting</Text>
             {Object.keys(XPTriggerEvents[skillTitle.toLowerCase()]).map((d:any,i:number)=>{
-              return(<EventTile color={skillData.color} d={XPTriggerEvents[skillTitle.toLowerCase()][d]} key={i} />)
+              return(<EventTile skillTitle={skillData.title} color={skillData.color} d={XPTriggerEvents[skillTitle.toLowerCase()][d]} key={i} />)
             })}
           </View>
         

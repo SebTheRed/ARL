@@ -20,7 +20,7 @@ import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
 type RootStackParamList = {
     ExperienceUploader:undefined,
   }
-const EventTile = ({d, i, color, uid}:any):JSX.Element => {
+const EventTile = ({d, i, color,skillTitle, uid}:any):JSX.Element => {
     const {setCurrentEvent}:any = useCurrentEvent()
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 const returnImgRequire = () => {
@@ -35,7 +35,7 @@ const returnImgRequire = () => {
 
 const handlePress = async() => {
     // console.log(d)
-    setCurrentEvent(d)
+    setCurrentEvent({...d,"skillTitle":skillTitle})
     navigation.navigate("ExperienceUploader")
     
     

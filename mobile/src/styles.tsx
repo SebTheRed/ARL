@@ -333,8 +333,22 @@ loginbuttonText: {
   fontSize: 18,
 },
 
+expUploaderTop:{
+  backgroundColor:"#1c1c1c",
+  flex:1,
+},
+closeUploaderButton:{
+  color:"white",
+  fontWeight:"bold",
+  paddingTop:50,
+  paddingLeft:0,
+  borderBottomWidth:2,
+  borderColor:"#656565",
+},
 
 
-  });
+
+
+});
 
 export default styles

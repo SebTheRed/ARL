@@ -100,22 +100,22 @@ function App(): JSX.Element {
       call_loved_one: {type:"log",title:"Call a Loved One",desc:"Place a phone call to a starred or favorited contact in your phone." ,xp: 5, unlocksAt: 0, perDay: 3 , perWeek: 0, perMonth: 0},
       family_photo: {type:"camera",title:"Take a Family Photo",desc:"Take a picture with you & 2 other family members.",xp: 10, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0,},
       send_letter: {type:"camera",title:"Send a Letter",desc:"Send a letter to anyone! Receiving a letter must mean that they're family!", xp: 5, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
-      visit_relative: {type:"camera",title:"Visit a Relative",desc:"Check in with the Map at a relative's place.", xp: 10, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
+      visit_relative: {type:"camera",title:"Visit a Relative",desc:"Visit a family member who you don't live with.", xp: 10, unlocksAt: 5, perDay:1, perWeek:0, perMonth:0},
       organize_reunion: {type:"timeline",title:"Family Reunion",desc:"Organize & attend a family reunion of at least 3 generations present.", xp: 100, unlocksAt: 10, perDay:0, perWeek:0, perMonth:1},
       help_with_chores: {type:"camera",title:"Chore Time",desc:"Help a family member with one of their chores.", xp: 15, unlocksAt: 15, perDay:2, perWeek:0, perMonth:0},
       family_game_night: {type:"camera",title:"Game Night!",desc:"Attend a family game night with at least 4 members.", xp: 20, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
-      family_trip: {type:"timeline",title:"Family Vacation",desc:"Take & document a family vacation.", xp: 150, unlocksAt: 30, perDay:0, perWeek:0, perMonth:1},
+      family_trip: {type:"timeline",title:"Family Vacation",desc:"Attend & document a family vacation.", xp: 150, unlocksAt: 30, perDay:0, perWeek:0, perMonth:1},
       weekly_family_meeting: {type:"camera",title:"Weekly Family Zoom",desc:"Organize & attend a family zoom meeting.", xp: 50, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
       house_project: {type:"timeline",title:"House Project",desc:"Design & document a large project that involves many members of your family.", xp: 200, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
     },
     friends: {
       message_with_friends: {type:"log",title:"Message with Friends",desc:"Log about a conversation you had with a friend today.", xp: 5, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
       call_friend: {type:"log",title:"Call a Friend.",desc:"Log about a phone call you had with a friend today.", xp: 5, unlocksAt: 0, perDay: 2, perWeek:0, perMonth: 0},
-      coffee_shop: {type:"camera",title:"Cafe Love",desc:"Spend time at any marked coffee shop on the Map.", xp: 10, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
+      coffee_shop: {type:"camera",title:"Cafe Love",desc:"Spend time at any coffee shop, and take a picture of your order.", xp: 10, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
       date_night: {type:"timeline",title:"Date Night",desc:"Take your significant other out for a night on the town.", xp: 15, unlocksAt: 5, perDay:0, perWeek:1, perMonth:0},
-      restaurant_bar: {type:"camera",title:"Out on the Town",desc:"Spend time at any marked restaurant or bar on the Map.", xp: 15, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
-      movie_theater: {type:"camera",title:"Movie Night",desc:"Spend time at any marked movie theater on the Map.", xp: 30, unlocksAt: 20, perDay:0, perWeek:1, perMonth:0},
-      attend_private_party: {type:"timeline",title:"Private Party",desc:"Have a party of at least 4 friends, then go do something fun!",xp: 40, unlocksAt: 25, perDay: 0, perWeek: 1, perMonth: 0},
+      restaurant_bar: {type:"camera",title:"Out on the Town",desc:"Spend time at any restaurant / bar / brewery.", xp: 15, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
+      movie_theater: {type:"camera",title:"Movie Night",desc:"Spend some time watching a movie at a theater. Be sure to turn off your phone during the film!", xp: 30, unlocksAt: 20, perDay:0, perWeek:1, perMonth:0},
+      attend_private_party: {type:"timeline",title:"Private Party",desc:"Have a party of at least 4 friends.",xp: 40, unlocksAt: 25, perDay: 0, perWeek: 1, perMonth: 0},
       attend_club_meeting: {type:"camera",title:"Private Club",desc:"Check in with the Map at your club's meeting.", xp: 50, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
       surprise_party: {type:"timeline",title:"Surprise Party",desc:"Attend a surprise party for any celebration.", xp: 150, unlocksAt: 40, perDay:0, perWeek:0, perMonth:1},
       friends_road_trip: {type:"timeline",title:"Road Trip!",desc:"Take a roadtrip totaling 3 destinations with at least 1 friend or significant other.", xp: 200, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1},
@@ -124,27 +124,27 @@ function App(): JSX.Element {
       daily_pushups: {type:"log",title:"Daily Pushups",desc:"Perform a slowly incrementing number of pushups every day.", xp: 10, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
       stretching_routine: {type:"log",title:"Stretch it Out",desc:"Log yes or no to doing stretches in the morning and at night.", xp: 5, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
       walking: {type:"acceleration",title:"Go for a Walk",desc:"Go for a walk. Be sure to press start when you begin or it won't count!", xp: 20, unlocksAt: 0, perDay:2, perWeek:0, perMonth:0},
-      attend_gym: {type:"camera",title:"Go to the Gym",desc:"Spend time at any marked gym on the Map.", xp: 10, unlocksAt: 10, perDay:2, perWeek:0, perMonth:0},
+      attend_gym: {type:"camera",title:"Go to the Gym",desc:"Spend time at any gym. Use this as motivation.", xp: 10, unlocksAt: 10, perDay:2, perWeek:0, perMonth:0},
       running: {type:"acceleration",title:"Runner's High",desc:"Go for a run. Be sure to press start when you begin!", xp: 20, unlocksAt: 10, perDay:2, perWeek:0, perMonth:0},
       yoga_at_home: {type:"camera",title:"Home Yoga Studio",desc:"Complete a yoga exercise in the warmth of your home.", xp: 15, unlocksAt: 15, perDay:1, perWeek:0, perMonth:0},
-      attend_fitness_class: {type:"camera",title:"Fitness Class",desc:"Check into a fitness class via the Map at any of the marked gyms.", xp: 20, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
+      attend_fitness_class: {type:"camera",title:"Fitness Class",desc:"Complete a fitness class.", xp: 20, unlocksAt: 20, perDay:1, perWeek:0, perMonth:0},
       achieve_pr: {type:"timeline",title:"Personal Record",desc:"Accomplish & document a person record of any category.", xp: 100, unlocksAt: 30, perDay:0, perWeek:0, perMonth:1},
       run_5k: {type:"acceleration",title:"Five Kilometers",desc:"Run 3.2 miles. Be sure to press start when you begin!", xp: 50, unlocksAt: 40, perDay:0, perWeek:1, perMonth:0},
-      belt_rank: {type:"timeline",title:"Martial Master",desc:"Ascend in belt rank at an official martial arts academy marked on the Map.", xp: 150, unlocksAt: 40, perDay:0, perWeek:0, perMonth:1},
+      belt_rank: {type:"timeline",title:"Martial Master",desc:"Ascend in belt rank at an official martial arts academy.", xp: 150, unlocksAt: 40, perDay:0, perWeek:0, perMonth:1},
       attendance_streak: {type:"camera",title:"Can't Stop Won't Stop",desc:"Attend gyms/classes/exercises for 5 of 7 days in a week.",xp: 100, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth: 0}
     },
     earthcraft: {
-      plant_tree: {type:"camera",title:"Plant a Tree",desc:"Plant a tree and mark it on the Map.", xp: 5, unlocksAt: 0, perDay:5, perWeek:0, perMonth:0},
+      plant_tree: {type:"camera",title:"Plant a Tree",desc:"Plant a tree and log its species.", xp: 5, unlocksAt: 0, perDay:5, perWeek:0, perMonth:0},
       new_plant: {type:"camera",title:"New House Plant",desc:"Acquire a new house plant.", xp: 10, unlocksAt: 0, perDay:0, perWeek:1, perMonth:0},
-      bird_watch: {type:"camera",title:"Bird Watching",desc:"Snap a picture of a bird that you can see and identify it.",xp: 5, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth: 0},
+      nature_hike: {type:"acceleration",title:"The Great Outdoors",desc:"Hike/Bike/Climb/Be in any area considered nature.", xp: 10, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
       water_garden: {type:"log",title:"Water your Plants",desc:"Log that you watered your plants. Treat this as a reminder to do so!", xp: 5, unlocksAt: 0, perDay:1, perWeek:0, perMonth:0},
-      nature_hike: {type:"acceleration",title:"The Great Outdoors",desc:"Hike/Bike/Climb/Be In any area considered nature on the Map.", xp: 10, unlocksAt: 10, perDay:1, perWeek:0, perMonth:0},
+      bird_watch: {type:"camera",title:"Bird Watching",desc:"Snap a picture of a bird that you can see and identify it.",xp: 5, unlocksAt: 10, perDay: 2, perWeek: 0, perMonth: 0},
       community_garden: {type:"timeline",title:"Community Gardening",desc:"Help cultivate your community garden.", xp: 30, unlocksAt: 20, perDay:0, perWeek:1, perMonth:0},
-      clean_up_event: {type:"timeline",title:"Community Cleanup",desc:"Clean up your community, with your community! 6 members are required.", xp: 100, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
+      clean_up_event: {type:"timeline",title:"Community Cleanup",desc:"Clean up your community, with your community! 4 members are required.", xp: 100, unlocksAt: 30, perDay:0, perWeek:1, perMonth:0},
       camping: {type:"timeline",title:"Camping Trip",desc:"Spend the night in any area considered nature on the Map.", xp: 50, unlocksAt: 35, perDay:0, perWeek:1, perMonth:0},
       compost: {type:"log",title:"Composting",desc:"Log whether or not you've composted your food remains today.", xp: 10, unlocksAt: 40, perDay:1, perWeek:0, perMonth:0},
-      outdoor_project: {type:"timeline",title:"Outdoors Project",desc:"Imagine & Create something outdoors. Let your imagination run wild!",xp: 150, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth: 1},
-      wildlife_park: {type:"camera",title:"Natural Parks",desc:"Spend time in any of this great nation's National Parks designated on the Map.", xp: 200, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
+      outdoor_project: {type:"timeline",title:"Outdoors Project",desc:"Imagine & create something outdoors. Let your imagination run wild!",xp: 150, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth: 1},
+      wildlife_park: {type:"camera",title:"Natural Parks",desc:"Spend time in any of this great nation's National Parks.", xp: 200, unlocksAt: 50, perDay:0, perWeek:0, perMonth:1}
     },
     cooking: {
       make_meal: {type:"camera",title:"Cook a Meal",desc:"Cook a meal & label what it is.", xp: 5, unlocksAt: 0, perDay: 3, perWeek: 0, perMonth:0 },
@@ -200,7 +200,7 @@ function App(): JSX.Element {
       attend_art_show: {type:"timeline",title:"Art Show",desc:"Attend an art show, and see if any art is worth your dollar.", xp: 50, unlocksAt: 30, perDay: 0, perWeek: 1, perMonth:0 },
       attend_church:{type:"camera",title:"Holy Day",desc:"Attend any religious gathering.",xp: 50, unlocksAt: 35, perDay: 0, perWeek: 1, perMonth: 0},
       organize_charity: {type:"timeline",title:"Organize Charity Work",desc:"Organize and accomplish charity work with 4+ people including yourself.", xp: 100, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 },
-      present_talent: {type:"timeline",title:"Present Your Talent",desc:"Share your art at shows, comdy on a stage, etc. Any real life showing of your art counts!", xp: 200, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
+      present_talent: {type:"timeline",title:"Present Your Talent",desc:"Share your art at shows, comedy on a stage, etc. Any real life showing of your art counts!", xp: 200, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     }
   })
 

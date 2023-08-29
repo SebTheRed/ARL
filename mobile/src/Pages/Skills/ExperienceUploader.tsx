@@ -110,9 +110,9 @@ const ExperienceUploader = ():JSX.Element => {
                     <View style={{...styles.eventTileWrapper,borderColor:`${settingOne?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:24,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Post to Feed</Text>
+                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Post to Feed</Text>
                             </View>
-                            <Text style={styles.eventTileText}>Switch off to hide post from friends. Disabling any additional XP from their Upvotes.</Text>
+                            <Text style={{...styles.eventTileText, fontSize:16,}}>Switch off to hide post from friends. Disabling any additional XP from their Upvotes.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                             <View style={styles.eventButtonWrapper}>
@@ -129,9 +129,9 @@ const ExperienceUploader = ():JSX.Element => {
                     <View style={{...styles.eventTileWrapper,borderColor:`${settingTwo?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:24,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Marker</Text>
+                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Marker</Text>
                             </View>
-                            <Text style={styles.eventTileText}>Switch on to have your post appear on the Map.</Text>
+                            <Text style={{...styles.eventTileText, fontSize:16,}}>Switch on to have your post appear on the Map for friends to find.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                             <View style={styles.eventButtonWrapper}>
@@ -148,9 +148,9 @@ const ExperienceUploader = ():JSX.Element => {
                     <View style={{...styles.eventTileWrapper,borderColor:`${settingThree?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:24,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Go Global</Text>
+                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Go Global</Text>
                             </View>
-                            <Text style={styles.eventTileText}>Switch on to make post visible to the Global Feed & Map. Post delayed one hour for privacy.</Text>
+                            <Text style={{...styles.eventTileText, fontSize:16,}}>Switch on to make post visible to the Global Feed & Map. Post delayed one hour for privacy.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                             <View style={styles.eventButtonWrapper}>
@@ -168,7 +168,7 @@ const ExperienceUploader = ():JSX.Element => {
                 </View>
                 <View style={{alignItems:"center", width:"100%"}}>
                     <TouchableOpacity style={{...styles.loginbutton, width:"95%", backgroundColor:`${currentEvent.skillColor}`}}>
-                        <Text style={{...styles.loginbuttonText, fontWeight:"bold"}}>Log your {currentEvent.skillTitle} Experience</Text>
+                        <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Log your {currentEvent.skillTitle} Experience</Text>
                     </TouchableOpacity>
                 </View>
                 

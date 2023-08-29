@@ -21,6 +21,7 @@ type SkillPageProps = PropsWithChildren<{
 }>
 type RootStackParamList = {
   SkillsMain:undefined,
+  ExperienceUploader:undefined,
 }
 
 

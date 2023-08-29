@@ -23,6 +23,18 @@ import LinearGradient from 'react-native-linear-gradient';
 
 
 const ExperienceUploader = ():JSX.Element => {
+    const {currentEvent, setCurrentEvent}:any = useCurrentEvent()
+    const [utilityType,setUtilityType] = useState(undefined)
+
+    useEffect(()=>{
+        setUtilityType(currentEvent.type)
+        console.log("expUpload")
+        console.log(currentEvent)
+    },[])
+    
+
+
+
     return(
         <View></View>
     )

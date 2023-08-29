@@ -10,7 +10,7 @@ import React from 'react';
 import type {PropsWithChildren} from 'react';
 import { Animated, Easing } from 'react-native';
 import { NavigationContainer, StackActions,} from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators} from '@react-navigation/stack';
 import Skills from './Pages/Skills/Skills';
 import SkillsPage from './Pages/Skills/SkillsPage'
 import Stats from './Pages/Stats';
@@ -24,6 +24,7 @@ import Feed from './Pages/Feed/Feed';
 import Login from './Pages/Login/Login'
 import SignUp from './Pages/Login/SignUp';
 import { UIDProvider } from './Contexts/UIDContext';
+import {CurrentEventProvider} from './Contexts/CurrentEventContext'
 import {
   SafeAreaView,
   ScrollView,
@@ -45,7 +46,7 @@ import Geolocation from '@react-native-community/geolocation';
 import BottomBar from './Overlays/BottomBar';
 import { useEffect, } from 'react';
 import { useUID } from './Contexts/UIDContext';
-
+import ExperienceUploader from './Pages/Skills/ExperienceUploader';
 import {db} from './Firebase/firebase'
 import {UserDataProvider, useUserData} from './Contexts/UserDataContext';
 const Stack = createStackNavigator();
@@ -72,45 +73,12 @@ function App(): JSX.Element {
   
   
   useEffect(()=>{
-  
-  // const apiKey = 'AIzaSyARFSBf48RxnNhBWxtQZbCGEhlLm9yfvCk';
-  // const fetchPlaces = async (latitude, longitude) => {
-  //   console.log(latitude,longitude)
-  //   const parkUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=park&key=${apiKey}`;
-  //   const gymUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=gym&key=${apiKey}`;
-  //   const restaurantUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=restaurant&key=${apiKey}`;
-  //   const theaterUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=coffee&key=${apiKey}`;
-  //   // const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=nature_reserve&key=${apiKey}`;
-  //   // const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=&key=${apiKey}`;
-  //   const parkResponse = await fetch(parkUrl);
-  //   const parkData = await parkResponse.json();
-
-  //   const gymResponse = await fetch(gymUrl);
-  //   const gymData = await gymResponse.json();
-
-  //   const restaurantReponse = await fetch(restaurantUrl);
-  //   const restauarantData = await restaurantReponse.json();
-
-  //   const coffeeResponse = await fetch(theaterUrl);
-  //   const coffeeData = await coffeeResponse.json();
-
-  //   let assembler = {
-  //     parks:parkData.results,
-  //     gyms:gymData.results,
-  //     restaurants:restauarantData.results,
-  //     coffee:coffeeData.results,
-  //   }
-
-  //   setArrayOPlaces(assembler)
-  //   // return data.results; // This will be an array of places
-  // };
   Geolocation.getCurrentPosition(info => {
     console.log(info.coords.latitude, info.coords.longitude);
     console.log("coords received")
     setUserGeoData({latitude:info.coords.latitude, longitude:info.coords.longitude})
     // fetchPlaces(info.coords.latitude, info.coords.longitude)
   });
-  
   },[])
   
 
@@ -332,7 +300,7 @@ function App(): JSX.Element {
 
 const SkillsNav = () => {
   return(
-    <SkillStack.Navigator initialRouteName='SkillsMain' screenOptions={{ headerShown: false }}>
+    <SkillStack.Navigator initialRouteName='SkillsMain' screenOptions={{ headerShown: false,cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,}}>
       <SkillStack.Screen name="SkillsMain" component={Skills} initialParams={{skillsList: skillsList, playerData:playerData,XPScale:XPScale }}/>
       <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
@@ -343,6 +311,7 @@ const SkillsNav = () => {
       <SkillStack.Screen name="Games" initialParams={{skillData:skillsList[6], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Language" initialParams={{skillData:skillsList[7], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList[8], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="ExperienceUploader" component={ExperienceUploader}></SkillStack.Screen>
     </SkillStack.Navigator>
   )
   
@@ -380,15 +349,17 @@ const AuthApp = ()=>{
   return(
     <UIDProvider>
       <UserDataProvider>
-        <SafeAreaView style={styles.backgroundStyle}>
-          <NavigationContainer >
-            <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
-              <AuthStack.Screen name="Login" component={Login}/>
-              <AuthStack.Screen name="AuthedApp" component={AuthApp} />
-              <AuthStack.Screen name="SignUp" component={SignUp} />
-            </AuthStack.Navigator>
-          </NavigationContainer>
-        </SafeAreaView>
+        <CurrentEventProvider>
+          <SafeAreaView style={styles.backgroundStyle}>
+            <NavigationContainer >
+              <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
+                <AuthStack.Screen name="Login" component={Login}/>
+                <AuthStack.Screen name="AuthedApp" component={AuthApp} />
+                <AuthStack.Screen name="SignUp" component={SignUp} />
+              </AuthStack.Navigator>
+            </NavigationContainer>
+          </SafeAreaView>
+        </CurrentEventProvider>
       </UserDataProvider>
     </UIDProvider>
   )
@@ -397,3 +368,37 @@ const AuthApp = ()=>{
 
 
 export default App;
+
+
+  
+  // const apiKey = 'AIzaSyARFSBf48RxnNhBWxtQZbCGEhlLm9yfvCk';
+  // const fetchPlaces = async (latitude, longitude) => {
+  //   console.log(latitude,longitude)
+  //   const parkUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=park&key=${apiKey}`;
+  //   const gymUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=gym&key=${apiKey}`;
+  //   const restaurantUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=restaurant&key=${apiKey}`;
+  //   const theaterUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=coffee&key=${apiKey}`;
+  //   // const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=nature_reserve&key=${apiKey}`;
+  //   // const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=&key=${apiKey}`;
+  //   const parkResponse = await fetch(parkUrl);
+  //   const parkData = await parkResponse.json();
+
+  //   const gymResponse = await fetch(gymUrl);
+  //   const gymData = await gymResponse.json();
+
+  //   const restaurantReponse = await fetch(restaurantUrl);
+  //   const restauarantData = await restaurantReponse.json();
+
+  //   const coffeeResponse = await fetch(theaterUrl);
+  //   const coffeeData = await coffeeResponse.json();
+
+  //   let assembler = {
+  //     parks:parkData.results,
+  //     gyms:gymData.results,
+  //     restaurants:restauarantData.results,
+  //     coffee:coffeeData.results,
+  //   }
+
+  //   setArrayOPlaces(assembler)
+  //   // return data.results; // This will be an array of places
+  // };

@@ -10,7 +10,7 @@ export const useCurrentEvent = () => {
     return context;
   };
   
-  export const UIDProvider = ({ children }:any) => {
+  export const CurrentEventProvider = ({ children }:any) => {
     const [currentEvent, setCurrentEvent] = useState({});
     return <CurrentEventContext.Provider value={{ currentEvent, setCurrentEvent }}>{children}</CurrentEventContext.Provider>;
   };

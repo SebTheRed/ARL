@@ -13,11 +13,16 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
 import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
 
+type RootStackParamList = {
+    ExperienceUploader:undefined,
+  }
 const EventTile = ({d, i, color, uid}:any):JSX.Element => {
     const {setCurrentEvent}:any = useCurrentEvent()
-
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 const returnImgRequire = () => {
     switch(d.type){
         case "api": return(require('../../IconBin/api.png'))
@@ -28,12 +33,12 @@ const returnImgRequire = () => {
     }
 }
 
-const handlePress = () => {
-    console.log(d)
-    // setCurrentEvent({
-    //     type:d.type,
-    //     objKeyId:"",
-    // })
+const handlePress = async() => {
+    // console.log(d)
+    setCurrentEvent(d)
+    navigation.navigate("ExperienceUploader")
+    
+    
 }
     
 

@@ -9,8 +9,7 @@ import {
 	Image,
 	TouchableOpacity} from 'react-native'
 	import React from 'react'
-const Feed = ({route}:any):JSX.Element => {
-const {uid} = route.params;
+const Feed = ():JSX.Element => {
     return(
         <View><Text>Feed</Text></View>
     )

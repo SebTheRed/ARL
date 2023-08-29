@@ -351,7 +351,7 @@ const SkillsNav = () => {
 
 const AuthApp = ()=>{
   const {userData}:any = useUserData()
-  console.log("authapp, ", userData)
+  // console.log("authapp, ", userData)
   if (Object.values(userData).length>0) {
     return(
       <>

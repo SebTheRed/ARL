@@ -10,8 +10,7 @@ import {
   import React from 'react'
 import styles from '../styles'
 
-const Profile = ({route}:any):JSX.Element=>{
-    const {uid} = route.params;
+const Profile = ():JSX.Element=>{
     return(
         <View><Text>Profile</Text></View>
     )

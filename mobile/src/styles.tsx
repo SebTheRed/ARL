@@ -319,6 +319,15 @@ loginSignupButton:{
   alignItems:'center',
   width:"40%"
 },
+whatIsARLButton:{
+  marginTop:20,
+  paddingVertical: 10,
+  paddingHorizontal: 20,
+  borderRadius: 5,
+  alignItems:"center",
+  textAlign:'center',
+  backgroundColor:'#656565',
+},
 loginbuttonText: {
   color: '#fff',
   fontSize: 18,

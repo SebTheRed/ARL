@@ -123,6 +123,9 @@ const signIn = async(e:any) => {
 				<TouchableOpacity onPress={signIn} style={styles.loginbutton}>
 					<Text style={styles.loginbuttonText}>login</Text>
 				</TouchableOpacity>
+				{/* <TouchableOpacity onPress={signIn} style={styles.whatIsARLButton}>
+					<Text style={styles.loginbuttonText}>what's arl ?</Text>
+				</TouchableOpacity> */}
 			</View>
 		</Animated.View>
 	)

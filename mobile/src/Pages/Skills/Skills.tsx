@@ -54,8 +54,8 @@ function Skills({route}:SkillsProps): JSX.Element {
   const { skillsList, XPScale, playerData, } = route.params;
 
   useEffect(()=>{
-    console.log("userData", userData)
-    console.log("uid", uid)
+    // console.log("userData", userData)
+    // console.log("uid", uid)
   },[userData,uid])
   
 

@@ -13,8 +13,10 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
+import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
 
 const EventTile = ({d, i, color, uid}:any):JSX.Element => {
+    const {setCurrentEvent}:any = useCurrentEvent()
 
 const returnImgRequire = () => {
     switch(d.type){
@@ -25,11 +27,19 @@ const returnImgRequire = () => {
         case "timeline": return(require('../../IconBin/timeline.png'))
     }
 }
+
+const handlePress = () => {
+    console.log(d)
+    // setCurrentEvent({
+    //     type:d.type,
+    //     objKeyId:"",
+    // })
+}
     
 
 
     return(
-        <TouchableOpacity style={styles.eventTileWrapper}>
+        <TouchableOpacity onPress={handlePress} style={styles.eventTileWrapper}>
             <View style={{...styles.eventTileMain}}>
                 <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                     <Text style={{...styles.eventTileText,fontSize:24,textDecorationColor:"#656565",textDecorationLine:"underline"}}>{d.title}</Text>

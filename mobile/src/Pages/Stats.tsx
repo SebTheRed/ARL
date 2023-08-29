@@ -10,8 +10,7 @@ import {
   import React from 'react'
 import styles from '../styles'
 
-const Stats = ({route}:any):JSX.Element => {
-    const {uid} = route.params;
+const Stats = ():JSX.Element => {
     return(
         <View><Text>Stats</Text></View>
     )

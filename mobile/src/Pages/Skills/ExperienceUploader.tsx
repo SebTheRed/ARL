@@ -40,6 +40,7 @@ const ExperienceUploader = ():JSX.Element => {
         const skillName = currentEvent.skillTitle
         console.log(skillName)
         navigation.navigate(currentEvent.skillTitle)
+        setCurrentEvent({})
     }
 
     return(

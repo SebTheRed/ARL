@@ -41,28 +41,28 @@ const SignUp = ():JSX.Element => {
     navigation.navigate(val);
     }
 
-	const animatedValue = new Animated.Value(0);
+	// const animatedValue = new Animated.Value(0);
 
-	useEffect(() => {
-	  Animated.loop(
-		Animated.sequence([
-		  Animated.timing(animatedValue, {
-			toValue: 1,
-			duration: 5000,
-			useNativeDriver: false,
-		  }),
-		  Animated.timing(animatedValue, {
-			toValue: 0,
-			duration: 5000,
-			useNativeDriver: false,
-		  }),
-		])
-	  ).start();
-	}, []);
-	const interpolatedColor = animatedValue.interpolate({
-		inputRange: [0,0.25,0.5,0.75, 1],
-		outputRange: ['orange', 'gold', "green", "cyan", "#007bff"],
-	  });
+	// useEffect(() => {
+	//   Animated.loop(
+	// 	Animated.sequence([
+	// 	  Animated.timing(animatedValue, {
+	// 		toValue: 1,
+	// 		duration: 5000,
+	// 		useNativeDriver: false,
+	// 	  }),
+	// 	  Animated.timing(animatedValue, {
+	// 		toValue: 0,
+	// 		duration: 5000,
+	// 		useNativeDriver: false,
+	// 	  }),
+	// 	])
+	//   ).start();
+	// }, []);
+	// const interpolatedColor = animatedValue.interpolate({
+	// 	inputRange: [0,0.25,0.5,0.75, 1],
+	// 	outputRange: ['orange', 'gold', "green", "cyan", "#007bff"],
+	//   });
 
 
 
@@ -160,7 +160,7 @@ const createAccount = async(e:any) => {
     return(
 
 
-<Animated.View style={{...styles.logincontainer,backgroundColor:interpolatedColor}}>
+<Animated.View style={{...styles.logincontainer,backgroundColor:"#19c6ff"}}>
     <View style={{...styles.loginWrapper, height:"90%", width:"90%"}}>
         <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
             <Text style={styles.logintitle}>sign up</Text>

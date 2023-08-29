@@ -193,7 +193,7 @@ function App(): JSX.Element {
     humanity: {
       vote: {type:"camera",title:"Your Vote Matters",desc:"Cast your vote for an official Federal or State election. Must use the Map.",xp: 2000, unlocksAt: 0, perDay: 0, perMonth: 0},
       create_art: {type:"camera",title:"Artist's Hand",desc:"Create your own art and upload it here for the world to enjoy.",xp: 20, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth: 0},
-      create_music: {type:"audio",title:"Making of the Music",desc:"Play & upload music you have created for the world to hear.",xp: 20, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth: 0},
+      create_music: {type:"camera",title:"Making of the Music",desc:"Play & upload music you have created for the world to hear.",xp: 20, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth: 0},
       volunteer_event: {type:"camera",title:"Volunteering",desc:"Get out and give back to your community.", xp: 30, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth:0 },
       attend_live_show: {type:"timeline",title:"Live Show",desc:"Attend a live show of any kind. Must take picture of crowd.", xp: 100, unlocksAt: 10, perDay: 0, perWeek: 0, perMonth:1 },
       visit_museum: {type:"timeline",title:"Museum Day",desc:"Visit a museum of any kind.", xp: 40, unlocksAt: 20, perDay: 0, perWeek: 1, perMonth:0 },

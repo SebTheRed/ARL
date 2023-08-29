@@ -32,28 +32,28 @@ const Login = ({route}:any):JSX.Element => {
 	const [password,setPassword] = useState("")
 	const {setUID}:any = useUID();
 	const {setUserData}:any = useUserData()
-	const animatedValue = new Animated.Value(0);
+	// const animatedValue = new Animated.Value(0);
 
-	useEffect(() => {
-	  Animated.loop(
-		Animated.sequence([
-		  Animated.timing(animatedValue, {
-			toValue: 1,
-			duration: 20000,
-			useNativeDriver: false,
-		  }),
-		  Animated.timing(animatedValue, {
-			toValue: 0,
-			duration: 20000,
-			useNativeDriver: false,
-		  }),
-		])
-	  ).start();
-	}, []);
-	const interpolatedColor = animatedValue.interpolate({
-		inputRange: [0,0.25,0.5,0.75, 1],
-		outputRange: ['orange', 'gold', "#00ff15", "cyan", "#007bff"],
-	  });
+	// useEffect(() => {
+	//   Animated.loop(
+	// 	Animated.sequence([
+	// 	  Animated.timing(animatedValue, {
+	// 		toValue: 1,
+	// 		duration: 20000,
+	// 		useNativeDriver: false,
+	// 	  }),
+	// 	  Animated.timing(animatedValue, {
+	// 		toValue: 0,
+	// 		duration: 20000,
+	// 		useNativeDriver: false,
+	// 	  }),
+	// 	])
+	//   ).start();
+	// }, []);
+	// const interpolatedColor = animatedValue.interpolate({
+	// 	inputRange: [0,0.25,0.5,0.75, 1],
+	// 	outputRange: ['orange', 'gold', "#00ff15", "cyan", "#007bff"],
+	//   });
 
 
  // 2. Use the useNavigation hook with the type
@@ -93,7 +93,7 @@ const signIn = async(e:any) => {
         })
 }
 	return(
-		<Animated.View style={{...styles.logincontainer,backgroundColor:interpolatedColor}}>
+		<Animated.View style={{...styles.logincontainer,backgroundColor:"#19c6ff"}}>
 			<View style={{...styles.ARLLogoWrapper, backgroundColor:"transparent"}}>
 				<View style={styles.offsetWrapper}>
 				</View>
@@ -103,7 +103,7 @@ const signIn = async(e:any) => {
 			<View style={{...styles.loginWrapper}}>
 			
 				<View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-					<Text style={styles.logintitle}>log in </Text>
+					<Text style={styles.logintitle}>sign in </Text>
 					<Text style={{...styles.skillPageXPText,}}> or </Text>
 					<TouchableOpacity onPress={()=>handleSignUpPress("SignUp")} style={styles.loginSignupButton}>
 						
@@ -121,7 +121,7 @@ const signIn = async(e:any) => {
 				</View>
 				
 				<TouchableOpacity onPress={signIn} style={styles.loginbutton}>
-					<Text style={styles.loginbuttonText}>login</Text>
+					<Text style={styles.loginbuttonText}>sign into arl</Text>
 				</TouchableOpacity>
 				{/* <TouchableOpacity onPress={signIn} style={styles.whatIsARLButton}>
 					<Text style={styles.loginbuttonText}>what's arl ?</Text>

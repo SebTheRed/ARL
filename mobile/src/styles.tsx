@@ -271,10 +271,19 @@ loginWrapper:{
   borderColor:"white",
   borderWidth:2,
   borderRadius:10,
+  filter:"drop-shadow(0 0 10 black)",
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 5,
+  },
+  shadowOpacity: 0.85,
+  shadowRadius: 13.84,
 },
 ARLLogoWrapper:{
   alignItems:'center',
   height:"10%",
+  
 
 },
 logintitle: {

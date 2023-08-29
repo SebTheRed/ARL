@@ -35,7 +35,7 @@ const returnImgRequire = () => {
 
 const handlePress = async() => {
     // console.log(d)
-    setCurrentEvent({...d,"skillTitle":skillTitle})
+    setCurrentEvent({...d,"skillTitle":skillTitle, "skillColor":color,})
     navigation.navigate("ExperienceUploader")
     
     

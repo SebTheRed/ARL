@@ -223,6 +223,18 @@ skillPageTitle:{
   color:"white",
   fontSize:40,
 },
+expUploaderTop:{
+  backgroundColor:"#1c1c1c",
+  flex:1,
+},
+closeUploaderButton:{
+  color:"white",
+  fontWeight:"bold",
+  paddingTop:50,
+  paddingLeft:0,
+  borderBottomWidth:2,
+  borderColor:"#656565",
+},
 actionBox:{
   color:"white"
 },
@@ -231,7 +243,7 @@ actionText:{
   fontSize:30
 },
 logContainer:{
-  flex: 1,
+  marginTop:20,
   justifyContent: 'center',
   alignItems: 'center',
   backgroundColor: '#1c1c1c',
@@ -246,6 +258,14 @@ textArea: {
   padding: 10,
   backgroundColor: '#656565',
   color:"white",
+},
+togglesContainer:{
+  marginTop:20,
+  width:"100%",
+  alignItems:"center",
+  // borderColor:"white",
+  // borderWidth:2,
+  // borderRadius:10,
 },
 headerIdk:{
   color:"blue",
@@ -366,18 +386,7 @@ loginbuttonText: {
   fontSize: 18,
 },
 
-expUploaderTop:{
-  backgroundColor:"#1c1c1c",
-  flex:1,
-},
-closeUploaderButton:{
-  color:"white",
-  fontWeight:"bold",
-  paddingTop:50,
-  paddingLeft:0,
-  borderBottomWidth:2,
-  borderColor:"#656565",
-},
+
 
 
 

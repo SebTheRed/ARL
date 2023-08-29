@@ -223,6 +223,30 @@ skillPageTitle:{
   color:"white",
   fontSize:40,
 },
+actionBox:{
+  color:"white"
+},
+actionText:{
+  color:"white",
+  fontSize:30
+},
+logContainer:{
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#1c1c1c',
+},
+textArea: {
+  height: 120,
+  justifyContent: 'flex-start',
+  borderColor: 'white',
+  borderRadius:10,
+  borderWidth: 2,
+  width: '95%',
+  padding: 10,
+  backgroundColor: '#656565',
+  color:"white",
+},
 headerIdk:{
   color:"blue",
 },

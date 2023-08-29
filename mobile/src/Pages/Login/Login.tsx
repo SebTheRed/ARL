@@ -113,11 +113,11 @@ const signIn = async(e:any) => {
 				
 				<View style={styles.logininputContainer}>
 					<Text style={styles.loginlabel}>email</Text>
-					<TextInput onChangeText={(text)=>setEmail(text)} style={styles.logininput} placeholder="Enter your email" />
+					<TextInput onChangeText={(text)=>setEmail(text)} style={styles.logininput}  />
 				</View>
 				<View style={styles.logininputContainer}>
 					<Text style={styles.loginlabel}>password</Text>
-					<TextInput onChangeText={(text)=>setPassword(text)} style={styles.logininput} placeholder="Enter your password" secureTextEntry />
+					<TextInput onChangeText={(text)=>setPassword(text)} style={styles.logininput} secureTextEntry />
 				</View>
 				
 				<TouchableOpacity onPress={signIn} style={styles.loginbutton}>

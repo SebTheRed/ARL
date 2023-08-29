@@ -27,7 +27,9 @@ type RootStackParamList = {
 }
 const ExperienceUploader = ():JSX.Element => {
     const {currentEvent, setCurrentEvent}:any = useCurrentEvent()
-    const [utilityType,setUtilityType] = useState(undefined)
+    const [utilityType,setUtilityType] = useState("")
+    const [text, setText] = useState('');
+
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     useEffect(()=>{
         setUtilityType(currentEvent.type)
@@ -35,7 +37,6 @@ const ExperienceUploader = ():JSX.Element => {
         console.log(currentEvent)
     },[])
     
-
     const handleGoBack = () => {
         const skillName = currentEvent.skillTitle
         console.log(skillName)
@@ -43,16 +44,65 @@ const ExperienceUploader = ():JSX.Element => {
         setCurrentEvent({})
     }
 
+    const LogAction = ():JSX.Element => {
+        return(<Text>Log</Text>)
+    }
+    const ApiAction = ():JSX.Element => {
+        return(<Text>Api</Text>)
+    }
+    const CameraAction = ():JSX.Element => {
+        return(<Text>Camera</Text>)
+    }
+    const AccelerationAction = ():JSX.Element => {
+        return(<Text>Acceleration</Text>)
+    }
+    const TimelineAction = ():JSX.Element => {
+        return(<Text>Timeline</Text>)
+    }
+
+
+    const ActionSplitter = ():JSX.Element => {
+        switch(utilityType){
+            case "api": return(<ApiAction />)
+            case "camera": return(<CameraAction />)
+            case "log": return(<LogAction />)
+            case "acceleration": return(<AccelerationAction />)
+            case "timeline": return(<TimelineAction />)
+            default:return(<LogAction />)
+        }
+    }
+
     return(
         <Modal
         animationType="slide"
         transparent={true}
         visible={true}>
-        <View style={{...styles.expUploaderTop}}>
-          <TouchableOpacity onPress={()=>handleGoBack()} style={styles.closeUploaderButton}>
-            <Text style={styles.backHeaderText}>⇦Go Back</Text>
-          </TouchableOpacity>
-        </View>
+            <View style={{...styles.expUploaderTop}}>
+                <TouchableOpacity onPress={()=>handleGoBack()} style={styles.closeUploaderButton}>
+                    <Text style={styles.backHeaderText}>⇦Go Back</Text>
+                </TouchableOpacity>
+                <View style={{...styles.actionBox,backgroundColor:''}}>
+                    {/* This is where the camera button/start run button / etc would be */}
+                </View>
+                <View style={{...styles.logContainer}}>
+                    <View style={{flexDirection:"row",justifyContent:"space-between",width:"90%"}}>
+                        <Text style={{...styles.loginlabel}}>Write a log of the experience:</Text>
+                        <Text style={{...styles.loginlabel, color:`${(text.length === 256)?"red":"white"}`}}>{text.length} / 256</Text>
+                    </View>
+                    <TextInput
+                        style={styles.textArea}
+                        underlineColorAndroid="transparent"
+                        placeholder="Type something"
+                        placeholderTextColor="grey"
+                        numberOfLines={10}
+                        multiline={true}
+                        onChangeText={(text) => setText(text)}
+                        value={text}
+                        maxLength={256}
+                    />
+                    
+                </View>
+            </View>
           
         </Modal>
     )

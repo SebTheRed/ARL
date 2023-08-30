@@ -186,7 +186,8 @@ const ExperienceUploader = ():JSX.Element => {
                             </View>
                         </View>
                     </View>
-                    <View style={{...styles.eventTileWrapper,borderColor:`${settingTwo?currentEvent.skillColor:"#656565"}`}}>
+                    {settingOne == true &&
+                    (<View style={{...styles.eventTileWrapper,borderColor:`${settingTwo?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                                 <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Post</Text>
@@ -205,7 +206,23 @@ const ExperienceUploader = ():JSX.Element => {
                             </View>
                         </View>
                     </View>
-                    <View style={{...styles.eventTileWrapper,borderColor:`${settingThree?currentEvent.skillColor:"#656565"}`}}>
+                    )}
+                    {settingOne == false &&
+                    (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
+                        <View style={{...styles.eventTileMain}}>
+                            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                                <Text style={{...styles.eventTileText,fontSize:20,color:"gray",textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Post</Text>
+                            </View>
+                            <Text style={{...styles.eventTileText,color:"gray", fontSize:16,}}>Switch on to have your post appear on the Map for friends to find.</Text>
+                        </View>
+                        <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+                            <View style={styles.eventButtonWrapper}>
+                            </View>
+                        </View>
+                    </View>
+                    )}
+                    { settingTwo == true &&
+                    (<View style={{...styles.eventTileWrapper,borderColor:`${settingThree?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                                 <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
@@ -224,6 +241,20 @@ const ExperienceUploader = ():JSX.Element => {
                             </View>
                         </View>
                     </View>
+                    )}
+                    { settingTwo == false &&
+                    (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
+                        <View style={{...styles.eventTileMain}}>
+                            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                                <Text style={{...styles.eventTileText,color:"gray",fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
+                            </View>
+                            <Text style={{...styles.eventTileText,color:"gray", fontSize:16,}}>Switch on to make post visible to the Global Feed & Map. Post delayed one hour for privacy.</Text>
+                        </View>
+                        <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+
+                        </View>
+                    </View>
+                    )}
                     
                 </View>
                 <View style={{alignItems:"center", width:"100%"}}>

@@ -19,15 +19,18 @@ import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
 import {db, auth,} from '../../Firebase/firebase'
-import {doc, getDoc} from 'firebase/firestore'
+import {setDoc,doc} from 'firebase/firestore'
 import { useUserData } from '../../Contexts/UserDataContext';
 import LinearGradient from 'react-native-linear-gradient';
+import { useUID } from '../../Contexts/UIDContext';
+import Geolocation from '@react-native-community/geolocation';
 
 type RootStackParamList = {
     SkillsPage:undefined,
 }
 const ExperienceUploader = ():JSX.Element => {
     const {currentEvent, setCurrentEvent}:any = useCurrentEvent()
+    const {uid}:any = useUID()
     const [utilityType,setUtilityType] = useState("")
     const [text, setText] = useState('');
     const [settingOne,setSettingOne] = useState(true)
@@ -40,12 +43,69 @@ const ExperienceUploader = ():JSX.Element => {
         console.log("expUpload")
         console.log(currentEvent)
     },[])
-    
+    function generateTimestamp() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hour = String(now.getHours()).padStart(2, '0');
+        const minute = String(now.getMinutes()).padStart(2, '0');
+        const second = String(now.getSeconds()).padStart(2, '0');
+      
+        return `${year}-${month}-${day}-${hour}-${minute}-${second}`;
+      }
+      
     const handleGoBack = () => {
         const skillName = currentEvent.skillTitle
         console.log(skillName)
         navigation.navigate(currentEvent.skillTitle)
         setCurrentEvent({})
+    }
+    const getGeoLocation = () => {
+        return new Promise((resolve, reject) => {
+          Geolocation.getCurrentPosition(
+            (position) => {
+              resolve({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              });
+            },
+            (error) => {
+              reject(error);
+            },
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+          );
+        });
+      };
+    const handlePostSubmit = async() => {
+        let timeStamp = generateTimestamp()
+        if (text.length>16) {
+            let geoTag = undefined
+            if (settingTwo == true) {geoTag = await getGeoLocation();}
+            
+            const postObj = {
+                posterUID:uid,
+                postSkill:currentEvent.skillTitle,
+                eventTitle:currentEvent.title,
+                xp:currentEvent.xp,
+                score:0,
+                geoTag:geoTag,
+                timeStamp:timeStamp,
+                textLog:text,
+                publicPost:settingOne,
+                mapPost:settingTwo,
+                globalPost:settingThree,
+            }
+            try {
+                await setDoc(doc(db, "posts", `${uid}_${timeStamp}`),postObj)
+                .then(()=>console.log("Post Success!"))
+            } catch(err){
+                console.error("Post failed to post",err)
+            }
+        } else {
+            console.warn("LOG MUST BE LONGER THAN 16 CHARACTERS")
+        }
+        
     }
 
     const LogAction = ():JSX.Element => {
@@ -110,7 +170,7 @@ const ExperienceUploader = ():JSX.Element => {
                     <View style={{...styles.eventTileWrapper,borderColor:`${settingOne?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Post to Feed</Text>
+                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Friends Post</Text>
                             </View>
                             <Text style={{...styles.eventTileText, fontSize:16,}}>Switch off to hide post from friends. Disabling any additional XP from their Upvotes.</Text>
                         </View>
@@ -129,7 +189,7 @@ const ExperienceUploader = ():JSX.Element => {
                     <View style={{...styles.eventTileWrapper,borderColor:`${settingTwo?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Marker</Text>
+                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Post</Text>
                             </View>
                             <Text style={{...styles.eventTileText, fontSize:16,}}>Switch on to have your post appear on the Map for friends to find.</Text>
                         </View>
@@ -148,7 +208,7 @@ const ExperienceUploader = ():JSX.Element => {
                     <View style={{...styles.eventTileWrapper,borderColor:`${settingThree?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Go Global</Text>
+                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
                             </View>
                             <Text style={{...styles.eventTileText, fontSize:16,}}>Switch on to make post visible to the Global Feed & Map. Post delayed one hour for privacy.</Text>
                         </View>
@@ -167,7 +227,7 @@ const ExperienceUploader = ():JSX.Element => {
                     
                 </View>
                 <View style={{alignItems:"center", width:"100%"}}>
-                    <TouchableOpacity style={{...styles.loginbutton, width:"95%", backgroundColor:`${currentEvent.skillColor}`}}>
+                    <TouchableOpacity onPress={handlePostSubmit} style={{...styles.loginbutton, width:"95%", backgroundColor:`${currentEvent.skillColor}`}}>
                         <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Log your {currentEvent.skillTitle} Experience</Text>
                     </TouchableOpacity>
                 </View>

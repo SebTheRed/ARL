@@ -11,6 +11,6 @@ export const useUID = () => {
 };
 
 export const UIDProvider = ({ children }:any) => {
-  const [uid, setUID] = useState('some_initial_value');
+  const [uid, setUID] = useState('');
   return <UIDContext.Provider value={{ uid, setUID }}>{children}</UIDContext.Provider>;
 };

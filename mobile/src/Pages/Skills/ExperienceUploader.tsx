@@ -78,24 +78,23 @@ const ExperienceUploader = ():JSX.Element => {
         });
       };
     const handlePostSubmit = async() => {
+        
         let timeStamp = generateTimestamp()
-        if (text.length>16) {
-            let geoTag = undefined
-            if (settingTwo == true) {geoTag = await getGeoLocation();}
-            
+        if (text.length>15) {     
             const postObj = {
                 posterUID:uid,
                 postSkill:currentEvent.skillTitle,
                 eventTitle:currentEvent.title,
                 xp:currentEvent.xp,
                 score:0,
-                geoTag:geoTag,
+                geoTag:{latitude:0,longitude:0},
                 timeStamp:timeStamp,
                 textLog:text,
                 publicPost:settingOne,
                 mapPost:settingTwo,
                 globalPost:settingThree,
             }
+            if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };;}
             try {
                 await setDoc(doc(db, "posts", `${uid}_${timeStamp}`),postObj)
                 .then(()=>console.log("Post Success!"))
@@ -103,7 +102,7 @@ const ExperienceUploader = ():JSX.Element => {
                 console.error("Post failed to post",err)
             }
         } else {
-            console.warn("LOG MUST BE LONGER THAN 16 CHARACTERS")
+            console.warn("LOG MUST BE AT LEAST 16 CHARACTERS")
         }
         
     }

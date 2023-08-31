@@ -66,24 +66,23 @@ const PostContentSplitter = ():JSX.Element => {
     return(
         <View style={{...styles.feedPostWrapper}}>
 			<View style={{...styles.postTopRow}}>
-				<View style={{...styles.postTopTitleContainer}}>
+				<View style={{...styles.postProfileAndNameContainer}}>
 					<View style={{...styles.postProfPic}}>
 						{/* ADD IMG TAG WITH HOOK TO USER PROFILE USER ID IMG */}
 					</View>
 					<Text style={{...styles.postTopName}}>SebTheRed </Text>
-					<View style={{...styles.postTopStreakIconContainer}}>
-						<Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
-						<Text style={{...styles.postTopStreak}}>69</Text>
-					</View>
-					
-					<View style={{...styles.postTopTrophyBox}}>
-						{/*TROPHY PINS GO HERE */}
-					</View>
-					<TouchableOpacity style={{...styles.postTopMapButton}}>
-						{/* Map Icon here with button onPress */}
-					</TouchableOpacity>
+				</View>
+				<View style={{...styles.postTopStreakIconContainer}}>
+					<Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
+					<Text style={{...styles.postTopStreak}}>69</Text>
 				</View>
 				
+				<View style={{...styles.postTopTrophyBox}}>
+					{/*TROPHY PINS GO HERE */}
+				</View>
+				<TouchableOpacity style={{...styles.postTopMapButton}}>
+					<Image style={styles.postTopMapIcon} source={require('../../IconBin/travel.png')} />
+				</TouchableOpacity>
 			</View>
 			<View style={{...styles.postTopExperienceContainer}}>
 				<Text style={{...styles.postTopExperienceName,color:matchingSkillData.color}}>{data.eventTitle}</Text>

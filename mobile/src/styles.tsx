@@ -408,6 +408,11 @@ postTopRow:{
   margin:2.5,
   alignItems:"flex-end",
 },
+postProfileAndNameContainer:{
+  flexDirection:"row",
+  justifyContent:"flex-start",
+  alignItems:"flex-end"
+},
 postProfPic:{
   borderColor:"white",
   borderRadius:50,
@@ -433,8 +438,15 @@ postTopStreakIconContainer:{
 },
 postTopStreakIcon:{
   tintColor:"white",
-  width: 20,  // desired width
-  height: 20, // desired height
+  width: 25,  // desired width
+  height: 25, // desired height
+  resizeMode: 'contain', // or 'cover'
+  marginBottom:3,
+},
+postTopMapIcon:{
+  tintColor:"white",
+  width: 25,  // desired width
+  height: 25, // desired height
   resizeMode: 'contain', // or 'cover'
   marginBottom:3,
 },
@@ -457,7 +469,7 @@ postTopExperienceContainer:{
 },
 postTopExperienceName:{
   color:"white",
-  fontSize:24,
+  fontSize:18,
 
 },
 postTopTraitName:{

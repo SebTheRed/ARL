@@ -393,20 +393,28 @@ feedFlatList:{
   width:"100%",
 },
 feedPostWrapper:{
-  backgroundColor:"#656565",
   width:370,
   height:200,
-  margin:"2.5%"
+  margin:"2.5%",
+  borderRadius:10,
+  borderWidth:2,
+  borderColor:"white"
 },
 feedPostText: {
   color:"white"
 },
 postTopRow:{
   flexDirection:"row",
-  justifyContent:'space-between'
+  justifyContent:'space-between',
+  margin:2.5,
+  alignItems:"flex-end",
 },
 postProfPic:{
-
+  borderColor:"white",
+  borderRadius:50,
+  borderWidth:2,
+  width:35,
+  height:35,
 },
 postTopTitleContainer:{
   flexDirection:"row"
@@ -439,13 +447,40 @@ postContentContainer:{
 
 },
 postBottomWrapper:{
-  
+  flexDirection:"row",
+  justifyContent:"space-evenly",
+  position:"absolute",
+  bottom:0,
+  width:"100%",
+  backgroundColor:"#656565",
+  borderBottomEndRadius:8,
+  borderBottomLeftRadius:8,
+  // borderTopWidth:2,
+  // borderColor:"white"
 },
+postBottomIconContainer:{
+  alignItems:"center"
+},
+postBottomIcon:{
+  tintColor:"white",
+  width: 35,  // desired width
+  height: 35, // desired height
+  resizeMode: 'contain', // or 'cover'
+},
+postBottomText:{},
 postBottomReactionContainer:{
-
+  alignItems:"center",
 },
 postBottomVoteContainer:{
-
+  flexDirection:"row",
+  alignItems:"center",
+  // borderWidth:2,
+  // borderColor:"white",
+  // borderRadius:5
+},
+postBottomScore:{
+  color:"white",
+  fontSize:25,
 },
 postBottomCommentsContainer:{
 

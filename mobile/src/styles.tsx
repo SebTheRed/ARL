@@ -417,19 +417,38 @@ postProfPic:{
   height:35,
 },
 postTopTitleContainer:{
-  flexDirection:"row"
+  flexDirection:"row",
+  justifyContent:"space-between",
+  width:250,
+  alignItems:"flex-end",
+  
 },
 postTopName:{
   color:"white",
+  fontSize:24,
+},
+postTopStreakIconContainer:{
+  flexDirection:"row",
+  width:100,
+  alignItems:"flex-end",
+},
+postTopStreakIcon:{
+  tintColor:"white",
+  width: 20,  // desired width
+  height: 20, // desired height
+  resizeMode: 'contain', // or 'cover'
+  marginBottom:3,
 },
 postTopStreak:{
   color:"white",
+  fontSize:18,
 },
 postTopTrophyBox:{
 
 },
 postTopTimestamp:{
   color:"gray",
+  fontSize:18,
 },
 postTopExperienceContainer:{
 

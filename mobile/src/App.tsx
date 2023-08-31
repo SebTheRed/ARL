@@ -331,7 +331,7 @@ const AuthApp = ()=>{
             <Stack.Screen name="Stats"  component={Stats} />
             <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
             <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces,}} component={Map} />
-            <Stack.Screen name="Feed" component={Feed} />
+            <Stack.Screen name="Feed" initialParams={{skillsList: skillsList}} component={Feed} />
           </Stack.Navigator>
         <BottomBar/>
       </>

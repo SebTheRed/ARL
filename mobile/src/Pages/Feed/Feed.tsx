@@ -15,13 +15,14 @@ import { useEffect, useState } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
 import FeedPost from './FeedPost';
 import styles from '../../styles'
-const Feed = ():JSX.Element => {
+const Feed = ({route}:any):JSX.Element => {
 	const {currentFeed}:any = useFeed()
+	const {skillsList} = route.params;
 	console.log(currentFeed)
     return(
         <FlatList
 			data={currentFeed}
-			renderItem={({item})=><FeedPost data={item}/>}
+			renderItem={({item})=><FeedPost skillsList={skillsList} data={item}/>}
 			keyExtractor={item => item.id}
 			style={styles.feedFlatList}
 			contentContainerStyle={{ alignItems: 'center' }}

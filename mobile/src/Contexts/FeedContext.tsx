@@ -24,7 +24,7 @@ export const useFeed = () => {
                 const docs = querySnapshot.docs.map(doc => doc.data());
                 console.log("docs",docs)
                 const sortedDocs = docs.sort((a, b) => {
-                    return a.timeStamp.localeCompare(b.timeStamp);
+                    return b.timeStamp.localeCompare(a.timeStamp);
                   });
                 setCurrentFeed(sortedDocs);
             }

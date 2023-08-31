@@ -487,6 +487,10 @@ postContentContainer:{
   margin:"2.5%",
   marginBottom:50,
 },
+postContentLogText:{
+  color:"white",
+  fontSize:18,
+},
 postBottomWrapper:{
   flexDirection:"row",
   justifyContent:"space-evenly",
@@ -525,7 +529,7 @@ postBottomScore:{
 },
 postBottomCommentsContainer:{
 
-}
+},
 
 
 });

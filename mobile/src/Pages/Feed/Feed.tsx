@@ -16,8 +16,15 @@ import { useFeed } from '../../Contexts/FeedContext';
 import FeedPost from './FeedPost';
 import styles from '../../styles'
 const Feed = ({route}:any):JSX.Element => {
-	const {currentFeed}:any = useFeed()
+	const {currentFeed,refreshFeed}:any = useFeed()
 	const {skillsList} = route.params;
+	const [refreshing, setRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await refreshFeed(); // Call the refresh function from the context
+    setRefreshing(false);
+  };
 	console.log(currentFeed)
     return(
         <FlatList
@@ -26,6 +33,8 @@ const Feed = ({route}:any):JSX.Element => {
 			keyExtractor={item => item.id}
 			style={styles.feedFlatList}
 			contentContainerStyle={{ alignItems: 'center' }}
+			refreshing={refreshing} // Add this line
+      		onRefresh={handleRefresh} // Add this line
 		/>
     )
 }

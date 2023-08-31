@@ -50,8 +50,7 @@ const PostContentSplitter = ():JSX.Element => {
 	switch(data.type){
 		case "log":return(
 		<View style={{...styles.postContentContainer}}>
-			
-			{/* PHOTOS GO HERE */}
+			<Text style={{...styles.postContentLogText}}>{data.textLog}</Text>
 		</View>
 		)
 		case "api":return(<View></View>)

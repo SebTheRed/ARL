@@ -13,10 +13,10 @@ import {
 import React, { useEffect, useState } from 'react';
 import styles from '../../styles'
 
-const FeedPost = ({d}:any):JSX.Element => {
+const FeedPost = ({data}:any):JSX.Element => {
     return(
         <View style={{...styles.feedPostWrapper}}>
-            <Text style={{...styles.feedPostText}}>{d.title}</Text>
+            <Text style={{...styles.feedPostText}}>{data.eventTitle}</Text>
         </View>
     )
 }

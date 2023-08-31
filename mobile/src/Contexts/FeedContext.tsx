@@ -22,7 +22,7 @@ export const useFeed = () => {
                 const q = query(collection(db, 'posts')); // Replace 'posts' with the actual collection name
                 const querySnapshot = await getDocs(q);
                 const docs = querySnapshot.docs.map(doc => doc.data());
-                console.log(docs)
+                console.log("docs",docs)
                 const sortedDocs = docs.sort((a, b) => {
                     return a.timeStamp.localeCompare(b.timeStamp);
                   });

@@ -24,6 +24,7 @@ import Feed from './Pages/Feed/Feed';
 import Login from './Pages/Login/Login'
 import SignUp from './Pages/Login/SignUp';
 import { UIDProvider } from './Contexts/UIDContext';
+import { FeedProvider } from './Contexts/FeedContext';
 import {CurrentEventProvider} from './Contexts/CurrentEventContext'
 import {
   SafeAreaView,
@@ -350,15 +351,17 @@ const AuthApp = ()=>{
     <UIDProvider>
       <UserDataProvider>
         <CurrentEventProvider>
-          <SafeAreaView style={styles.backgroundStyle}>
-            <NavigationContainer >
-              <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
-                <AuthStack.Screen name="Login" component={Login}/>
-                <AuthStack.Screen name="AuthedApp" component={AuthApp} />
-                <AuthStack.Screen name="SignUp" component={SignUp} />
-              </AuthStack.Navigator>
-            </NavigationContainer>
-          </SafeAreaView>
+          <FeedProvider>
+            <SafeAreaView style={styles.backgroundStyle}>
+              <NavigationContainer >
+                <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
+                  <AuthStack.Screen name="Login" component={Login}/>
+                  <AuthStack.Screen name="AuthedApp" component={AuthApp} />
+                  <AuthStack.Screen name="SignUp" component={SignUp} />
+                </AuthStack.Navigator>
+              </NavigationContainer>
+            </SafeAreaView>
+          </FeedProvider>
         </CurrentEventProvider>
       </UserDataProvider>
     </UIDProvider>

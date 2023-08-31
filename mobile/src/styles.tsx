@@ -387,39 +387,47 @@ loginbuttonText: {
 },
 
 
-
+feedFlatList:{
+  backgroundColor:"#1c1c1c",
+  flex:1,
+  width:"100%",
+},
 feedPostWrapper:{
-
+  backgroundColor:"#656565",
+  width:370,
+  height:200,
+  margin:"2.5%"
 },
 feedPostText: {
   color:"white"
 },
 postTopRow:{
-
+  flexDirection:"row",
+  justifyContent:'space-between'
 },
 postProfPic:{
 
 },
 postTopTitleContainer:{
-
+  flexDirection:"row"
 },
 postTopName:{
-  
+  color:"white",
 },
 postTopStreak:{
-
+  color:"white",
 },
 postTopTrophyBox:{
 
 },
 postTopTimestamp:{
-
+  color:"gray",
 },
 postTopExperienceContainer:{
 
 },
 postTopExperienceName:{
-
+  color:"white",
 },
 postTopTraitName:{
 
@@ -439,7 +447,7 @@ postBottomReactionContainer:{
 postBottomVoteContainer:{
 
 },
-postBottomComentsContainer:{
+postBottomCommentsContainer:{
 
 }
 

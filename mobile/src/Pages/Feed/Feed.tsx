@@ -23,7 +23,8 @@ const Feed = ():JSX.Element => {
 			data={currentFeed}
 			renderItem={({item})=><FeedPost data={item}/>}
 			keyExtractor={item => item.id}
-			style={styles.backgroundStyle}
+			style={styles.feedFlatList}
+			contentContainerStyle={{ alignItems: 'center' }}
 		/>
     )
 }

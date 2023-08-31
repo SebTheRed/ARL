@@ -68,7 +68,7 @@ const signIn = async(e:any) => {
 	e.preventDefault();
         signInWithEmailAndPassword(auth,email,password)
         .then((userCredentials)=>{
-            console.log(userCredentials)
+            // console.log(userCredentials)
 			let uid = userCredentials.user.uid
 			navigation.navigate("AuthedApp")
 			setUID(uid)
@@ -77,7 +77,7 @@ const signIn = async(e:any) => {
 				getDoc(userDocRef)
 				  .then((docSnapshot) => {
 					if (docSnapshot.exists()) {
-					  console.log("Setting user data:", docSnapshot.data());  // Debugging line
+					//   console.log("Setting user data:", docSnapshot.data());  // Debugging line
 					  setUserData(docSnapshot.data());
 					} else {
 					  console.error("No such document!");

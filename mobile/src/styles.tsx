@@ -388,6 +388,12 @@ loginbuttonText: {
 
 
 
+feedPostWrapper:{
+
+},
+feedPostText: {
+  color:"white"
+},
 
 
 

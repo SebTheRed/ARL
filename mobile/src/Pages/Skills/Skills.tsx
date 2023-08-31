@@ -51,7 +51,7 @@ function Skills({route}:SkillsProps): JSX.Element {
   const {userData}:any = useUserData()
   const {uid}:any = useUID()
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { skillsList, XPScale, playerData, } = route.params;
+  const { skillsList, XPScale,} = route.params;
 
   useEffect(()=>{
     // console.log("userData", userData)
@@ -81,7 +81,7 @@ function Skills({route}:SkillsProps): JSX.Element {
 
 
 function Section({children, title, flare}: SectionProps): JSX.Element {
-  console.log(children)
+  // console.log(children)
 
   return(
   <View></View>

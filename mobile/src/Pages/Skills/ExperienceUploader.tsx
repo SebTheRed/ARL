@@ -95,6 +95,7 @@ const ExperienceUploader = ():JSX.Element => {
                 globalPost:settingThree,
                 id: `${uid}_${timeStamp}`,
                 uid: uid,
+                postType:currentEvent.type
             }
             if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };;}
             try {

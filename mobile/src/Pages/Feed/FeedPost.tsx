@@ -26,7 +26,7 @@ useEffect(()=>{
 	
 },[])
 
-function timeRemainingUntil24Hours(timestamp:any) {
+function timeRemainingUntil24Hours(timestamp: string): string {
 	// Parse the timestamp string into its components
 	const [year, month, day, hour, minute, second] = timestamp.split('-').map(Number);
 	// Create a Date object from the timestamp
@@ -34,7 +34,7 @@ function timeRemainingUntil24Hours(timestamp:any) {
 	// Get the current date and time
 	const currentDate = new Date();
 	// Calculate the time difference in milliseconds
-	const timeDifference = currentDate - pastDate;
+	const timeDifference = currentDate.getTime() - pastDate.getTime();
 	// Calculate the remaining time in milliseconds
 	const remainingTime = (24 * 60 * 60 * 1000) - timeDifference;
 	// Calculate remaining hours and minutes
@@ -42,8 +42,26 @@ function timeRemainingUntil24Hours(timestamp:any) {
 	const remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
 	// Format the remaining time as HH:MM
 	const formattedTime = `${String(remainingHours).padStart(2, '0')}:${String(remainingMinutes).padStart(2, '0')}`;
+
 	return formattedTime;
   }
+
+const PostContentSplitter = ():JSX.Element => {
+	switch(data.type){
+		case "log":return(
+		<View style={{...styles.postContentContainer}}>
+			
+			{/* PHOTOS GO HERE */}
+		</View>
+		)
+		case "api":return(<View></View>)
+		case "camera":return(<View></View>)
+		case "acceleration":return(<View></View>)
+		case "timeline":return(<View></View>)
+		default:return(<View><Text>ERROR!!!!</Text></View>)
+	}
+}
+  
 	
     return(
         <View style={{...styles.feedPostWrapper}}>
@@ -61,20 +79,18 @@ function timeRemainingUntil24Hours(timestamp:any) {
 					<View style={{...styles.postTopTrophyBox}}>
 						{/*TROPHY PINS GO HERE */}
 					</View>
+					<TouchableOpacity style={{...styles.postTopMapButton}}>
+						{/* Map Icon here with button onPress */}
+					</TouchableOpacity>
 				</View>
-				<Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
+				
 			</View>
 			<View style={{...styles.postTopExperienceContainer}}>
-				<Text style={{...styles.postTopExperienceName}}>{data.eventTitle}</Text>
-				<Text style={{...styles.postTopTraitName, color:matchingSkillData.color}}>{data.postSkill}</Text>
-				<TouchableOpacity style={{...styles.postTopMapButton}}>
-					{/* Map Icon here with button onPress */}
-				</TouchableOpacity>
+				<Text style={{...styles.postTopExperienceName,color:matchingSkillData.color}}>{data.eventTitle}</Text>
+				<Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
+				
 			</View>
-			{/* PHOTOS GO HERE */}
-			<View style={{...styles.postContentContainer}}>
-				<Text>Placeholder for now</Text>
-			</View>
+			<PostContentSplitter />
 			<View style={{...styles.postBottomWrapper}}>
 				<View style={{...styles.postBottomReactionContainer}}>
 					<TouchableOpacity style={styles.postBottomIconContainer} >

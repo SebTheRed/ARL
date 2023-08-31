@@ -394,7 +394,6 @@ feedFlatList:{
 },
 feedPostWrapper:{
   width:370,
-  height:200,
   margin:"2.5%",
   borderRadius:10,
   borderWidth:2,
@@ -451,19 +450,30 @@ postTopTimestamp:{
   fontSize:18,
 },
 postTopExperienceContainer:{
-
+  margin:2.5,
+  marginLeft:37.5,
+  flexDirection:"row",
+  justifyContent:"space-between",
 },
 postTopExperienceName:{
   color:"white",
+  fontSize:24,
+
 },
 postTopTraitName:{
-
+  fontSize:18,
 },
 postTopMapButton:{
 
 },
 postContentContainer:{
-
+  width:"95%",
+  height:200,
+  borderColor:"#656565",
+  borderWidth:2,
+  borderRadius:8,
+  margin:"2.5%",
+  marginBottom:50,
 },
 postBottomWrapper:{
   flexDirection:"row",

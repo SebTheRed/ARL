@@ -394,7 +394,54 @@ feedPostWrapper:{
 feedPostText: {
   color:"white"
 },
+postTopRow:{
 
+},
+postProfPic:{
+
+},
+postTopTitleContainer:{
+
+},
+postTopName:{
+  
+},
+postTopStreak:{
+
+},
+postTopTrophyBox:{
+
+},
+postTopTimestamp:{
+
+},
+postTopExperienceContainer:{
+
+},
+postTopExperienceName:{
+
+},
+postTopTraitName:{
+
+},
+postTopMapButton:{
+
+},
+postContentContainer:{
+
+},
+postBottomWrapper:{
+  
+},
+postBottomReactionContainer:{
+
+},
+postBottomVoteContainer:{
+
+},
+postBottomComentsContainer:{
+
+}
 
 
 });

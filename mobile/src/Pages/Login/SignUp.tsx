@@ -148,6 +148,8 @@ const createAccount = async(e:any) => {
             settings:{
                 darkMode:true,
             },
+            friends:{},
+            blockedUsers:{},
         }
         );
 		console.log("User document created in Firestore");

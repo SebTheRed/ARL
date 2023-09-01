@@ -12,9 +12,17 @@ import {
 } from 'react-native'
 import React, { useEffect, useState } from 'react';
 import styles from '../../styles'
+import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
+import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
 
+type RootStackParamList = {
+	Profile:undefined,
+}
 
 const FeedPost = ({data, skillsList}:any):JSX.Element => {
+	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+	const {findPageUserID}:any = useProfilePageUID()
 	const [matchingSkillData,setMatchingSkillData] = useState({title:"",color:"",flare:"",level:0})
 	const [translatedTimestamp,setTranslatedTimestamp] = useState("")
 
@@ -46,6 +54,28 @@ function timeRemainingUntil24Hours(timestamp: string): string {
 	return formattedTime;
   }
 
+const handleProfilePress = () => {
+	findPageUserID(data.posterUID)
+	navigation.dispatch(
+		CommonActions.reset({
+		  index: 0,
+		  routes: [
+			{
+			  name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
+			  state: {
+				routes: [
+				  {
+					name: 'Feed', // The name of the child navigator
+				  },
+				],
+			  },
+			},
+		  ],
+		})
+	  );
+	}
+
+
 const PostContentSplitter = ():JSX.Element => {
 	switch(data.type){
 		case "log":return(
@@ -66,9 +96,9 @@ const PostContentSplitter = ():JSX.Element => {
         <View style={{...styles.feedPostWrapper}}>
 			<View style={{...styles.postTopRow}}>
 				<View style={{...styles.postProfileAndNameContainer}}>
-					<View style={{...styles.postProfPic}}>
+					<TouchableOpacity style={{...styles.postProfPic}} onPress={handleProfilePress}>
 						{/* ADD IMG TAG WITH HOOK TO USER PROFILE USER ID IMG */}
-					</View>
+					</TouchableOpacity>
 					<Text style={{...styles.postTopName}}>SebTheRed </Text>
 				</View>
 				<View style={{...styles.postTopStreakIconContainer}}>

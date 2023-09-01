@@ -26,6 +26,7 @@ import SignUp from './Pages/Login/SignUp';
 import { UIDProvider } from './Contexts/UIDContext';
 import { FeedProvider } from './Contexts/FeedContext';
 import {CurrentEventProvider} from './Contexts/CurrentEventContext'
+import {ProfilePageUIDProvider} from './Contexts/ProfilePageUID'
 import {
   SafeAreaView,
   ScrollView,
@@ -350,6 +351,7 @@ const AuthApp = ()=>{
   return(
     <UIDProvider>
       <UserDataProvider>
+        <ProfilePageUIDProvider>
         <CurrentEventProvider>
           <FeedProvider>
             <SafeAreaView style={styles.backgroundStyle}>
@@ -363,6 +365,7 @@ const AuthApp = ()=>{
             </SafeAreaView>
           </FeedProvider>
         </CurrentEventProvider>
+        </ProfilePageUIDProvider>
       </UserDataProvider>
     </UIDProvider>
   )

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getDocs, query, orderBy, startAt, endAt, collection, limit } from "firebase/firestore"; // Import onSnapshot
+import { getDocs, query, orderBy, startAt, endAt, collection, limit,startAfter } from "firebase/firestore"; // Import onSnapshot
 import { useUID } from './UIDContext';
 import { db } from '../Firebase/firebase';
 const FeedContextProvider = createContext({});
@@ -24,29 +24,41 @@ export const FeedProvider = ({ children }:any) => {
 
   const refreshFeed = () => {
     setLastVisible(null);
-    fetchData(true);
+    setCurrentFeed([])
+    fetchData();
   };
+  const paginateFeed = () => {
+    fetchData()
+  }
 
   const fetchData = async (refresh = false) => {
+
     let feedQuery = query(
       collection(db, "posts"),
-      orderBy("timeStamp"),
-      startAt(lastVisible || ""),
-      endAt(lastVisible ? `${lastVisible}\uf8ff` : "\uf8ff"),
+      orderBy("timeStamp", "desc"),  // Change to descending order
       limit(PAGE_SIZE)
     );
+  
+    if (lastVisible) {
+      feedQuery = query(
+        collection(db, "posts"),
+        orderBy("timeStamp", "desc"),  // Change to descending order
+        startAfter(lastVisible),  // Use startAfter for pagination
+        limit(PAGE_SIZE)
+      );
+    }
 
     const snapshot = await getDocs(feedQuery);
     const newDocs = snapshot.docs.map(doc => doc.data());
 
     if (newDocs.length > 0) {
-      setLastVisible(newDocs[newDocs.length - 1].timestamp);
-      setCurrentFeed(refresh ? newDocs : [...currentFeed, ...newDocs]);
+      setLastVisible(newDocs[newDocs.length - 1].timeStamp);
+      setCurrentFeed(prevFeed => [...prevFeed, ...newDocs]);
     }
   };
 
   return (
-    <FeedContextProvider.Provider value={{ currentFeed, refreshFeed }}>
+    <FeedContextProvider.Provider value={{ currentFeed, refreshFeed, paginateFeed }}>
       {children}
     </FeedContextProvider.Provider>
   );

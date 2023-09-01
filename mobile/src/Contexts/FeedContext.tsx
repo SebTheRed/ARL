@@ -11,10 +11,11 @@ export const useFeed = () => {
   }
   return context;
 };
+type DocumentData = undefined
 
 export const FeedProvider = ({ children }:any) => {
   const { uid }:any = useUID();
-  const [currentFeed, setCurrentFeed] = useState([]);
+  const [currentFeed, setCurrentFeed] = useState<any>([]);
   const [lastVisible, setLastVisible] = useState(null);
   const PAGE_SIZE = 5;
 
@@ -53,7 +54,7 @@ export const FeedProvider = ({ children }:any) => {
 
     if (newDocs.length > 0) {
       setLastVisible(newDocs[newDocs.length - 1].timeStamp);
-      setCurrentFeed(prevFeed => [...prevFeed, ...newDocs]);
+      setCurrentFeed((prevFeed:any) => [...prevFeed, ...newDocs]);
     }
   };
 

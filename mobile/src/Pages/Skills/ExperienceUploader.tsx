@@ -13,7 +13,7 @@ import {
   } from 'react-native';
   import React from 'react'
   import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
-  import { NavigationRouteContext, useNavigation } from '@react-navigation/native';
+  import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
   import { NavigationProp } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
@@ -23,13 +23,16 @@ import {setDoc,doc} from 'firebase/firestore'
 import { useUserData } from '../../Contexts/UserDataContext';
 import LinearGradient from 'react-native-linear-gradient';
 import { useUID } from '../../Contexts/UIDContext';
+import { useFeed } from '../../Contexts/FeedContext';
 import Geolocation from '@react-native-community/geolocation';
 
 type RootStackParamList = {
     SkillsPage:undefined,
+    Feed:undefined,
 }
 const ExperienceUploader = ():JSX.Element => {
     const {currentEvent, setCurrentEvent}:any = useCurrentEvent()
+    const {refreshFeed}:any = useFeed()
     const {uid}:any = useUID()
     const [utilityType,setUtilityType] = useState("")
     const [text, setText] = useState('');
@@ -95,12 +98,33 @@ const ExperienceUploader = ():JSX.Element => {
                 globalPost:settingThree,
                 id: `${uid}_${timeStamp}`,
                 uid: uid,
-                postType:currentEvent.type
+                type:currentEvent.type
             }
-            if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };;}
+            if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
             try {
                 await setDoc(doc(db, "posts", `${uid}_${timeStamp}`),postObj)
-                .then(()=>console.log("Post Success!"))
+                .then(() => {
+                    console.log("Post Success!");
+                    // Go back to the root navigator
+                    refreshFeed()
+                    navigation.dispatch(
+                        CommonActions.reset({
+                          index: 0,
+                          routes: [
+                            {
+                              name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
+                              state: {
+                                routes: [
+                                  {
+                                    name: 'Feed', // The name of the child navigator
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        })
+                      );
+                    })
             } catch(err){
                 console.error("Post failed to post",err)
             }

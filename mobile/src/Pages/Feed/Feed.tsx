@@ -9,6 +9,7 @@ import {
 	Image,
 	TouchableOpacity,
 	FlatList,
+	RefreshControl
 } from 'react-native'
 import React from 'react'
 import { useEffect, useState } from 'react';
@@ -35,6 +36,14 @@ const Feed = ({route}:any):JSX.Element => {
 			contentContainerStyle={{ alignItems: 'center' }}
 			refreshing={refreshing} // Add this line
       		onRefresh={handleRefresh} // Add this line
+			  refreshControl={
+				<RefreshControl
+				  refreshing={refreshing}
+				  onRefresh={handleRefresh}
+				  colors={['#FFF']} // spinner colors, it's an array but you can specify a single color
+				  tintColor="#FFF" // iOS only, color of the spinner
+				/>
+			  }
 		/>
     )
 }

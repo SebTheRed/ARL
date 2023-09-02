@@ -333,7 +333,7 @@ const AuthApp = ()=>{
             <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
             <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces,}} component={Map} />
             <Stack.Screen name="Feed" initialParams={{skillsList: skillsList}} component={Feed} />
-            <Stack.Screen name="Profile" initialParams={{skillsList:skillsList, XPScale}} component={Profile} />
+            <Stack.Screen name="Profile" initialParams={{skillsList:skillsList, XPScale, trophyData}} component={Profile} />
           </Stack.Navigator>
         <BottomBar/>
       </>

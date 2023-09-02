@@ -528,7 +528,10 @@ postBottomScore:{
   fontSize:25,
 },
 postBottomCommentsContainer:{
-
+  tintColor:"white",
+  width: 35,  // desired width
+  height: 35, // desired height
+  resizeMode: 'contain', // or 'cover'
 },
 
 
@@ -545,12 +548,30 @@ profilePageCover:{
 },
 profilePageTopContainer:{ 
   flexDirection:"row",
-  justifyContent:"space-between"
+  justifyContent:"space-between",
+  height:50,
+},
+profilePageTopLeftContainer:{
+  width:"30%",
+  flexDirection:"row",
+  alignItems:"flex-start",
+  marginTop:2.5,
+  // borderWidth:2,
+  // borderColor:"#fff",
+},
+profilePageTrophyButton:{
+  width:43,
+  height:43,
+},
+profilePageTrophyPin:{
+  tintColor:"white",
+  width: 43,  // desired width
+  height: 43, // desired height
+  resizeMode: 'contain', // or 'cover'
 },
 profilePageStreakContainer:{
   flexDirection:"row",
   alignItems:"flex-start",
-  width:"30%",
 },
 profilePagePictureBox:{
   width:100,
@@ -580,10 +601,21 @@ profilePageMultiButton:{
 postTopButtonText:{
   color:"white"
 },
-profilePageNamesContainer:{},
-profilePageUserName:{},
-profilePageRealName:{},
-profilePageStatsContainer:{},
+profilePageNamesContainer:{
+  alignItems:"center",
+},
+profilePageUserName:{
+  color:"white",
+  fontSize: 24,
+},
+profilePageRealName:{
+  color:"white"
+},
+profilePageStatsContainer:{
+  borderColor:"#fff",
+  borderWidth:2,
+  width:"95%"
+},
 profilePageStatsTop:{},
 profilePageJoinDateContainer:{},
 profilePageFriendsContainer:{},

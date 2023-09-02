@@ -95,11 +95,7 @@ const createAccount = async(e:any) => {
 			userName:userName,
             streak:0,
             picURL:"",
-            trophyPins:{
-                1:"",
-                2:"",
-                3:"",
-            },
+            trophyPins:["","",""],
             xpData:{
                 family:1,friends:1,fitness:1,
                 earthcraft:1,cooking:1,technology:1,

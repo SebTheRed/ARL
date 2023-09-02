@@ -9,7 +9,7 @@ import {
 	Image,
 	TouchableOpacity,
 	FlatList,
-	RefreshControl
+	RefreshControl,
 } from 'react-native'
 import React from 'react'
 import { useEffect, useState } from 'react';
@@ -20,15 +20,42 @@ import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
 
+type TrophyDataObj = {
+    title:string,
+    tier:string,
+    imgPath:undefined,
+    desc:string,
+    progressQTY:number,
+}
+type MatchingTrophyType = [
+    {},{},{}
+]
+
 const Profile = ({route}:any):JSX.Element => {
-    const {skillsList, XPScale}:any = route.params;
+    const {skillsList, XPScale, trophyData}:any = route.params;
     const {matchingProfileData, profilePageUID}:any = useProfilePageUID()
     const {userData}:any = useUserData()
     const {uid}:any = useUID()
     const [buttonType,setButtonType] = useState("")
+    const [matchedTrophyPins,setMatchedTrophyPins] = useState([{},{},{}])
     
     useEffect(()=>{
         // console.log(matchingProfileData)
+        const trophyPinTitles = matchingProfileData.trophyPins
+        let passThruArray = [{},{},{}]
+        trophyPinTitles.map((title:string,i:number)=>{
+            console.log("in de loop")
+            trophyData.map((trophy:TrophyDataObj)=>{
+                if (title === trophy.title){
+                    passThruArray[i] = trophy
+                    console.log(trophy)
+                }
+            })
+        if (Object.keys(passThruArray[i]).length === 0) {passThruArray.push()}
+        })
+        setMatchedTrophyPins(passThruArray)
+
+
         if (uid == profilePageUID) {setButtonType("Edit")}
         else {
             // Get an array of all friend UIDs
@@ -41,7 +68,7 @@ const Profile = ({route}:any):JSX.Element => {
               setButtonType("Add");
             }
         }
-    },[])
+    },[userData])
 
     const calculateCurrentLevel = (skillName: string) => {
         const currentXP = matchingProfileData.xpData[skillName]; // Assuming skillData.title is 'Family', 'Friends', etc.
@@ -80,22 +107,30 @@ const Profile = ({route}:any):JSX.Element => {
       }
 
 
-
-
-
-
-
-
-
     return(
     <ScrollView style={styles.profilePageContainer}>
         <View style={styles.profilePageCover}></View>
         
         <View style={styles.profilePageTopContainer}>
-            <View style={styles.profilePageStreakContainer}>
-                <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
-				<Text style={{...styles.postTopStreak}}>69</Text>
+            <View style={styles.profilePageTopLeftContainer}>
+                    {matchedTrophyPins.map((trophy:any,i:number)=>{
+                        if (trophy.title == "") {
+                            return(
+                                <Text>+</Text>
+                            )
+                        }
+                        return(
+                            <TouchableOpacity key={i} style={styles.profilePageTrophyButton}>
+                                <Image style={styles.profilePageTrophyPin} source={trophy.imgPath} />
+                            </TouchableOpacity>
+                        )
+                    })}
+                {/* <View style={styles.profilePageStreakContainer}>
+                    <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
+                    <Text style={{...styles.postTopStreak}}>69</Text>
+                </View> */}
             </View>
+            
             <View style={styles.profilePagePictureBox}>
                 <Image style={styles.profilePagePicture} source={require('./mochi.png')} />
             </View>
@@ -103,13 +138,12 @@ const Profile = ({route}:any):JSX.Element => {
                 <TouchableOpacity style={styles.profilePageMultiButton}>
                     <MultiButtonSplitter />
                 </TouchableOpacity>
-                {/* Some kind of switch logic here instead */}
             </View>
         </View>
 
         <View style={styles.profilePageNamesContainer}>
-            <View style={styles.profilePageUserName}></View>
-            <View style={styles.profilePageRealName}></View>
+            <Text style={styles.profilePageUserName}>@{matchingProfileData.userName}</Text>
+            <Text style={styles.profilePageRealName}>{matchingProfileData.name}</Text>
         </View>
 
         <View style={styles.profilePageStatsContainer}>

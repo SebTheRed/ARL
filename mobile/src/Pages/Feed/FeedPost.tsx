@@ -23,7 +23,7 @@ type RootStackParamList = {
 const FeedPost = ({data, skillsList}:any):JSX.Element => {
 	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 	const {findPageUserID}:any = useProfilePageUID()
-	const [matchingSkillData,setMatchingSkillData] = useState({title:"",color:"",flare:"",level:0})
+	const [matchingSkillData,setMatchingSkillData] = useState({title:"",color:"#fff",flare:"",level:0})
 	const [translatedTimestamp,setTranslatedTimestamp] = useState("")
 
 useEffect(()=>{
@@ -65,7 +65,7 @@ const handleProfilePress = () => {
 			  state: {
 				routes: [
 				  {
-					name: 'Feed', // The name of the child navigator
+					name: 'Profile', // The name of the child navigator
 				  },
 				],
 			  },

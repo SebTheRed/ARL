@@ -66,7 +66,14 @@ const SignUp = ():JSX.Element => {
 
 
 
-
+const getCurrentDate = () => {
+    const date = new Date();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = date.getFullYear();
+    
+    return `${month}/${day}/${year}`;
+    };
 
 
 const createAccount = async(e:any) => {
@@ -81,6 +88,7 @@ const createAccount = async(e:any) => {
         // SCREEN HERE
 		await setDoc(doc(db, "users", uid), {
 			email: email,
+            accountCreationDate:getCurrentDate(),
 			name: name, 
 			phoneNumber: phoneNumber, 
 			userName:userName,

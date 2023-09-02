@@ -15,7 +15,7 @@ import Skills from './Pages/Skills/Skills';
 import SkillsPage from './Pages/Skills/SkillsPage'
 import Stats from './Pages/Stats';
 import Map from './Pages/Map/Map';
-import Profile from './Pages/Profile';
+import Profile from './Pages/Profile/Profile';
 import Trophies from './Pages/Trophies/Trophies'
 import HeaderBar from './Overlays/HeaderBar';
 import { useState } from 'react';
@@ -333,6 +333,7 @@ const AuthApp = ()=>{
             <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
             <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces,}} component={Map} />
             <Stack.Screen name="Feed" initialParams={{skillsList: skillsList}} component={Feed} />
+            <Stack.Screen name="Profile" initialParams={{skillsList:skillsList, XPScale}} component={Profile} />
           </Stack.Navigator>
         <BottomBar/>
       </>

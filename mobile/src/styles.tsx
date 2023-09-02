@@ -532,6 +532,28 @@ postBottomCommentsContainer:{
 },
 
 
+profilePageContainer:{
+  backgroundColor:"#1c1c1c",
+  flex:1,
+},
+profilePageCover:{},
+profilePageTopContainer:{},
+profilePageStreakContainer:{},
+profilePagePicture:{},
+profilePageMultiButton:{},
+profilePageNamesContainer:{},
+profilePageUserName:{},
+profilePageRealName:{},
+profilePageStatsContainer:{},
+profilePageStatsTop:{},
+profilePageJoinDateContainer:{},
+profilePageFriendsContainer:{},
+profilePageStatsbottom:{},
+profilePageTraitBox:{},
+profilePageTraitNumber:{},
+
+
+
 });
 
 export default styles

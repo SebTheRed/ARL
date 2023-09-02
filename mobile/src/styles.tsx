@@ -614,11 +614,13 @@ profilePageMultiButton:{
   borderRadius:5,
   padding:5,
   margin:2.5,
-  width:135,
+  width:130,
   height:30,
+  marginRight:5,
 },
 postTopButtonText:{
-  color:"white"
+  color:"white",
+  fontSize:14,
 },
 profilePageNamesContainer:{
   alignItems:"center",

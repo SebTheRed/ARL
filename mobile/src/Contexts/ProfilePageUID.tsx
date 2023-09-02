@@ -19,6 +19,7 @@ export const ProfilePageUIDProvider = ({children}:any) => {
     },[])
 
     const findPageUserID = (chosenUID:string) => {
+        setProfilePageUID(chosenUID)
         if (uid === chosenUID) {
             setMatchingProfileData(userData)
         } else {

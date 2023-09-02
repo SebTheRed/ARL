@@ -56,7 +56,7 @@ const Profile = ({route}:any):JSX.Element => {
         console.log(passThruArray)
         setMatchedTrophyPins(passThruArray)
 
-
+        console.log("UID",uid,"PROF PAGE UID",profilePageUID)
         if (uid == profilePageUID) {setButtonType("Edit")}
         else {
             // Get an array of all friend UIDs

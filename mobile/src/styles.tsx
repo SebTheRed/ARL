@@ -583,10 +583,6 @@ profilePageEmptyTrophyPin:{
   borderColor:"#fff",
   borderWidth:1,
 },
-profilePageStreakContainer:{
-  flexDirection:"row",
-  alignItems:"flex-start",
-},
 profilePagePictureBox:{
   width:100,
   height:100,
@@ -633,26 +629,50 @@ profilePageRealName:{
   color:"white"
 },
 profilePageStatsContainer:{
-  borderColor:"#fff",
-  borderWidth:2,
+  marginTop:15,
   width:"100%",
   alignItems:"center"
 },
 profilePageStatsTop:{
-  width:"95%"
+  width:"97.5%",
+  height:30,
+  flexDirection:"row",
+  justifyContent:"space-between",
 },
-profilePageJoinDateContainer:{},
-profilePageFriendsContainer:{},
+profilePageJoinDateContainer:{
+  width:"40%",
+  flexDirection:"row",
+  justifyContent:"flex-end",
+  alignItems:"center"
+},
+profilePageStreakContainer:{
+  flexDirection:"row",
+  alignItems:"center",
+  justifyContent:"center",
+  width:"20%"
+},
+profilePageFriendsContainer:{
+  width:"40%",
+  flexDirection:"row",
+  alignItems:"center"
+},
 profilePageStatsbottom:{
   width:"100%",
   flexDirection:"row",
-  flexWrap:"wrap"
+  flexWrap:"wrap",
+  borderColor:"#fff",
+  borderBottomWidth:2,
+  borderStartWidth:2,
+  borderEndWidth:2,
+  borderEndStartRadius:10,
+  borderEndEndRadius:10,
 },
 profilePageTraitBox:{
   // borderColor:"#fff",
   // borderEndWidth:2,
   height:30,
   margin:1.5,
+  marginBottom:10,
   flex:1,
   alignItems:"center",
   justifyContent:"center"

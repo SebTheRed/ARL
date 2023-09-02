@@ -152,15 +152,17 @@ const Profile = ({route}:any):JSX.Element => {
 
         <View style={styles.profilePageStatsContainer}>
             <View style={styles.profilePageStatsTop}>
-                <View style={styles.profilePageJoinDateContainer}>
-                    {/*Icon & Date*/}
-                </View>
-                 {/* <View style={styles.profilePageStreakContainer}>
-                    <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
-                    <Text style={{...styles.postTopStreak}}>69</Text>
-                </View> */}
                 <View style={styles.profilePageFriendsContainer}>
-                    {/*Icon & Friends*/}
+                    <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friends.png')} />
+                    <Text style={{...styles.postTopStreak}}>{matchingProfileData.friendCount.toLocaleString()}</Text>
+                </View>
+                 <View style={styles.profilePageStreakContainer}>
+                    <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
+                    <Text style={{...styles.postTopStreak}}>{matchingProfileData.streak.toLocaleString()}</Text>
+                </View>
+                <View style={styles.profilePageJoinDateContainer}>
+                    <Text style={{...styles.postTopStreak}}>{matchingProfileData.accountCreationDate}</Text>
+                    <Image style={styles.postTopStreakIcon} source={require('../../IconBin/calendar.png')} />
                 </View>
             </View>
             <View style={styles.profilePageStatsbottom}>
@@ -178,6 +180,12 @@ const Profile = ({route}:any):JSX.Element => {
             </View>
             
         </View>
+
+
+
+
+        
+
     </ScrollView>
     )
 }

@@ -620,6 +620,7 @@ postTopButtonText:{
 },
 profilePageNamesContainer:{
   alignItems:"center",
+  marginTop:10,
 },
 profilePageUserName:{
   color:"white",
@@ -662,14 +663,11 @@ profilePageStatsbottom:{
   flexWrap:"wrap",
   borderColor:"#fff",
   borderBottomWidth:2,
-  borderStartWidth:2,
-  borderEndWidth:2,
-  borderEndStartRadius:10,
-  borderEndEndRadius:10,
 },
 profilePageTraitBox:{
-  // borderColor:"#fff",
-  // borderEndWidth:2,
+  borderColor:"#fff",
+  borderWidth:2,
+  borderRadius:2,
   height:30,
   margin:1.5,
   marginBottom:10,

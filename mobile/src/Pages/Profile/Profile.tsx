@@ -53,6 +53,7 @@ const Profile = ({route}:any):JSX.Element => {
             })
         if (Object.keys(passThruArray[i]).length === 0) {passThruArray.push()}
         })
+        console.log(passThruArray)
         setMatchedTrophyPins(passThruArray)
 
 
@@ -114,9 +115,12 @@ const Profile = ({route}:any):JSX.Element => {
         <View style={styles.profilePageTopContainer}>
             <View style={styles.profilePageTopLeftContainer}>
                     {matchedTrophyPins.map((trophy:any,i:number)=>{
-                        if (trophy.title == "") {
+                        if (Object.keys(trophy).length == 0) {
                             return(
-                                <Text>+</Text>
+                                <TouchableOpacity style={styles.profilePageEmptyTrophyButton}>
+                                    <View style={styles.profilePageEmptyTrophyPin}></View>
+                                </TouchableOpacity>
+                                
                             )
                         }
                         return(
@@ -125,10 +129,7 @@ const Profile = ({route}:any):JSX.Element => {
                             </TouchableOpacity>
                         )
                     })}
-                {/* <View style={styles.profilePageStreakContainer}>
-                    <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
-                    <Text style={{...styles.postTopStreak}}>69</Text>
-                </View> */}
+               
             </View>
             
             <View style={styles.profilePagePictureBox}>
@@ -151,8 +152,12 @@ const Profile = ({route}:any):JSX.Element => {
                 <View style={styles.profilePageJoinDateContainer}>
                     {/*Icon & Date*/}
                 </View>
+                 {/* <View style={styles.profilePageStreakContainer}>
+                    <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
+                    <Text style={{...styles.postTopStreak}}>69</Text>
+                </View> */}
                 <View style={styles.profilePageFriendsContainer}>
-                    {/*Icon & Date*/}
+                    {/*Icon & Friends*/}
                 </View>
             </View>
             <View style={styles.profilePageStatsbottom}>

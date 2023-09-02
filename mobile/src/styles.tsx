@@ -560,14 +560,28 @@ profilePageTopLeftContainer:{
   // borderColor:"#fff",
 },
 profilePageTrophyButton:{
-  width:43,
-  height:43,
+  width:45,
+  height:45,
 },
 profilePageTrophyPin:{
   tintColor:"white",
-  width: 43,  // desired width
-  height: 43, // desired height
+  width: 45,  // desired width
+  height: 45, // desired height
   resizeMode: 'contain', // or 'cover'
+},
+profilePageEmptyTrophyButton:{
+  width:45,
+  height:45,
+  alignItems:"center",
+  justifyContent:"center",
+},
+profilePageEmptyTrophyPin:{
+  width:20,
+  height:20,
+  borderRadius:50,
+  backgroundColor:"#656565",
+  borderColor:"#fff",
+  borderWidth:2,
 },
 profilePageStreakContainer:{
   flexDirection:"row",
@@ -589,14 +603,19 @@ profilePagePicture:{
 profilePageMultiBox:{
   width:"30%",
   alignItems:"flex-end",
+  justifyContent:"center"
 },
 profilePageMultiButton:{
+  justifyContent:"space-evenly",
+  alignItems:"center",
   flexDirection:"row",
-  borderWidth:1,
-  borderColor:"#656565",
+  borderWidth:2,
+  borderColor:"#fff",
   borderRadius:5,
   padding:5,
   margin:2.5,
+  width:135,
+  height:30,
 },
 postTopButtonText:{
   color:"white"

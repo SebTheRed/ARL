@@ -94,7 +94,7 @@ sectionTextContainer:{
 sectionTitle: {
   fontSize: 28,
   fontWeight: '600',
-  fontFamily: "X Company Regular",
+  // fontFamily: "Phosphate",
   color:"white",
 },
 sectionFlare:{

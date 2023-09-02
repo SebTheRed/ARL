@@ -154,11 +154,12 @@ const Profile = ({route}:any):JSX.Element => {
             <View style={styles.profilePageStatsTop}>
                 <View style={styles.profilePageFriendsContainer}>
                     <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friends.png')} />
-                    <Text style={{...styles.postTopStreak}}>{matchingProfileData.friendCount.toLocaleString()}</Text>
+                        <Text style={{...styles.postTopStreak}}>{matchingProfileData.friends.length.toLocaleString()}</Text>
                 </View>
                  <View style={styles.profilePageStreakContainer}>
                     <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
-                    <Text style={{...styles.postTopStreak}}>{matchingProfileData.streak.toLocaleString()}</Text>
+
+                        <Text style={{...styles.postTopStreak}}>{matchingProfileData.streak.toLocaleString()}</Text>
                 </View>
                 <View style={styles.profilePageJoinDateContainer}>
                     <Text style={{...styles.postTopStreak}}>{matchingProfileData.accountCreationDate}</Text>

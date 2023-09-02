@@ -20,7 +20,12 @@ const Feed = ({ route }:any) => {
 	const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
 	const { skillsList } = route.params;
 	const [refreshing, setRefreshing] = useState(false);
-  
+	const [interpretedFeed,setInterpretedFeed] = useState([])
+
+	useEffect(()=>{
+		setInterpretedFeed(currentFeed)
+	},[currentFeed])
+
 	const handleRefresh = async () => {
 	  setRefreshing(true);
 	  await refreshFeed();
@@ -33,7 +38,7 @@ const Feed = ({ route }:any) => {
   
 	return (
 	  <FlatList
-		data={currentFeed}
+		data={interpretedFeed}
 		renderItem={({ item }) => <FeedPost skillsList={skillsList} data={item} />}
 		keyExtractor={item => item.id.toString()}
 		style={styles.feedFlatList}

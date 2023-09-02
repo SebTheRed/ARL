@@ -16,24 +16,30 @@ type DocumentData = undefined
 export const FeedProvider = ({ children }:any) => {
   const { uid }:any = useUID();
   const [currentFeed, setCurrentFeed] = useState<any>([]);
-  const [lastVisible, setLastVisible] = useState(null);
+  const [isFetching, setIsFetching] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
+  // const [lastVisible, setLastVisible] = useState(null);
+  let lastVisible:any = null
   const PAGE_SIZE = 5;
 
   useEffect(() => {
     fetchData();
   }, [uid]);
 
-  const refreshFeed = () => {
-    setLastVisible(null);
-    setCurrentFeed([])
-    fetchData();
+  const refreshFeed = async() => {
+    lastVisible = null;
+    setHasMore(true)
+    setCurrentFeed([]);
+    console.log('REFRESH')
+    fetchData()
   };
   const paginateFeed = () => {
     fetchData()
   }
 
   const fetchData = async (refresh = false) => {
-
+    if (!hasMore) return;
+    setIsFetching(true)
     let feedQuery = query(
       collection(db, "posts"),
       orderBy("timeStamp", "desc"),  // Change to descending order
@@ -53,9 +59,12 @@ export const FeedProvider = ({ children }:any) => {
     const newDocs = snapshot.docs.map(doc => doc.data());
 
     if (newDocs.length > 0) {
-      setLastVisible(newDocs[newDocs.length - 1].timeStamp);
+      lastVisible = newDocs[newDocs.length - 1].timeStamp;
       setCurrentFeed((prevFeed:any) => [...prevFeed, ...newDocs]);
+    } else {
+      setHasMore(false)
     }
+    setIsFetching(false)
   };
 
   return (

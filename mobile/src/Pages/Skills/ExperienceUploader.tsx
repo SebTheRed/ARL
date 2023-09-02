@@ -31,8 +31,9 @@ type RootStackParamList = {
     Feed:undefined,
 }
 const ExperienceUploader = ():JSX.Element => {
+    const {userData}:any = useUserData()
     const {currentEvent, setCurrentEvent}:any = useCurrentEvent()
-    const {refreshFeed}:any = useFeed()
+    const {newPostHandler}:any = useFeed()
     const {uid}:any = useUID()
     const [utilityType,setUtilityType] = useState("")
     const [text, setText] = useState('');
@@ -86,7 +87,11 @@ const ExperienceUploader = ():JSX.Element => {
         if (text.length>15) {     
             const postObj = {
                 posterUID:uid,
+                posterUserName:userData.userName,
+                streak:userData.streak,
                 postSkill:currentEvent.skillTitle,
+                picURL: userData.picURL,
+                uniqueStamp:"",
                 eventTitle:currentEvent.title,
                 xp:currentEvent.xp,
                 score:0,
@@ -106,7 +111,7 @@ const ExperienceUploader = ():JSX.Element => {
                 .then(() => {
                     console.log("Post Success!");
                     // Go back to the root navigator
-                    refreshFeed()
+                    newPostHandler()
                     navigation.dispatch(
                         CommonActions.reset({
                           index: 0,

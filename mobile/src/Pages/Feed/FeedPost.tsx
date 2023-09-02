@@ -22,7 +22,7 @@ type RootStackParamList = {
 
 const FeedPost = ({data, skillsList}:any):JSX.Element => {
 	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-	const {findPageUserID}:any = useProfilePageUID()
+	const {findPageUserID, }:any = useProfilePageUID()
 	const [matchingSkillData,setMatchingSkillData] = useState({title:"",color:"#fff",flare:"",level:0})
 	const [translatedTimestamp,setTranslatedTimestamp] = useState("")
 
@@ -99,11 +99,11 @@ const PostContentSplitter = ():JSX.Element => {
 					<TouchableOpacity style={{...styles.postProfPic}} onPress={handleProfilePress}>
 						{/* ADD IMG TAG WITH HOOK TO USER PROFILE USER ID IMG */}
 					</TouchableOpacity>
-					<Text style={{...styles.postTopName}}>SebTheRed </Text>
+					<Text style={{...styles.postTopName}}>{data.posterUserName} </Text>
 				</View>
 				<View style={{...styles.postTopStreakIconContainer}}>
 					<Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
-					<Text style={{...styles.postTopStreak}}>69</Text>
+					<Text style={{...styles.postTopStreak}}>{data.streak}</Text>
 				</View>
 				
 				<View style={{...styles.postTopTrophyBox}}>

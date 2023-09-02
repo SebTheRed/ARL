@@ -89,7 +89,7 @@ const Profile = ({route}:any):JSX.Element => {
         switch(buttonType){
             case "Edit": return(
             <>
-                <Text style={styles.postTopButtonText}>Edit</Text>
+                <Text style={styles.postTopButtonText}>Edit Profile</Text>
                 <Image style={styles.postTopStreakIcon} source={require('../../IconBin/edit.png')} />
             </>
             
@@ -101,7 +101,10 @@ const Profile = ({route}:any):JSX.Element => {
             </>
             )
             case "Remove": return(
-            <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friendRemove.png')} />
+            <>
+                <Text style={styles.postTopButtonText}>Remove Friend</Text>
+                <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friendRemove.png')} />
+            </>
             )
             default:return(<Text>Sorry?</Text>)
         }
@@ -165,9 +168,11 @@ const Profile = ({route}:any):JSX.Element => {
                 {skillsList.map((data:any,index:any)=>{
                     const currentLevel = calculateCurrentLevel(data.title.toLowerCase(), )
                     return(
-                        <View style={{...styles.profilePageTraitBox, backgroundColor:data.color}} key={index}>
-                            <Text style={styles.profilePageTraitNumber}>{currentLevel}</Text>
-                        </View>
+                        <TouchableOpacity style={{...styles.profilePageTraitBox, backgroundColor:data.color}} key={index}>
+                            {/* <Text style={styles.profilePageTraitTitle}>{data.title}</Text> */}
+                            <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:25, fontWeight:"bold"}}>{currentLevel}</Text>
+                            <Text style={{...styles.borderedTextShadow, fontSize:25,fontWeight:"bold", color:"#fff"}}>{currentLevel}</Text>
+                        </TouchableOpacity>
                     )
                 })}
             </View>

@@ -20,31 +20,33 @@ const Feed = ({ route }:any) => {
 	const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
 	const { skillsList } = route.params;
 	const [refreshing, setRefreshing] = useState(false);
-	const [interpretedFeed,setInterpretedFeed] = useState([])
+	const [startAfter,setStartAfter] = useState()
 
 	useEffect(()=>{
-		setInterpretedFeed(currentFeed)
+		setStartAfter(currentFeed[currentFeed.length - 1])
 	},[currentFeed])
 
 	const handleRefresh = async () => {
 	  setRefreshing(true);
 	  await refreshFeed();
+	  setStartAfter(null)
 	  setRefreshing(false);
 	};
   
 	const handleLoadMore = () => {
-	  paginateFeed()
+	  paginateFeed(startAfter)
 	};
   
 	return (
 	  <FlatList
-		data={interpretedFeed}
+		data={currentFeed}
 		renderItem={({ item }) => <FeedPost skillsList={skillsList} data={item} />}
 		keyExtractor={item => item.id.toString()}
 		style={styles.feedFlatList}
 		contentContainerStyle={{ alignItems: 'center' }}
 		onEndReached={handleLoadMore}
 		onEndReachedThreshold={0.1}
+		scrollEventThrottle={150}
 		refreshControl={
 		  <RefreshControl
 			refreshing={refreshing}

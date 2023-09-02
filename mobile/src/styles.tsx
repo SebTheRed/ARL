@@ -536,11 +536,50 @@ profilePageContainer:{
   backgroundColor:"#1c1c1c",
   flex:1,
 },
-profilePageCover:{},
-profilePageTopContainer:{},
-profilePageStreakContainer:{},
-profilePagePicture:{},
-profilePageMultiButton:{},
+profilePageCover:{
+  width:"100%",
+  height:150,
+  backgroundColor:"gray",
+  borderBottomWidth:2,
+  borderColor:"#fff"
+},
+profilePageTopContainer:{ 
+  flexDirection:"row",
+  justifyContent:"space-between"
+},
+profilePageStreakContainer:{
+  flexDirection:"row",
+  alignItems:"flex-start",
+  width:"30%",
+},
+profilePagePictureBox:{
+  width:100,
+  height:100,
+},
+profilePagePicture:{
+  width: 100,  // desired width
+  height: 100, // desired height
+  resizeMode: 'contain', // or 'cover'
+  borderRadius:50,
+  borderWidth:2,
+  borderColor:"#fff",
+  marginTop:-50,
+},
+profilePageMultiBox:{
+  width:"30%",
+  alignItems:"flex-end",
+},
+profilePageMultiButton:{
+  flexDirection:"row",
+  borderWidth:1,
+  borderColor:"#656565",
+  borderRadius:5,
+  padding:5,
+  margin:2.5,
+},
+postTopButtonText:{
+  color:"white"
+},
 profilePageNamesContainer:{},
 profilePageUserName:{},
 profilePageRealName:{},

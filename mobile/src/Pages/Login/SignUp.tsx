@@ -87,6 +87,7 @@ const createAccount = async(e:any) => {
         //ADD LOADING
         // SCREEN HERE
 		await setDoc(doc(db, "users", uid), {
+            uid: uid,
 			email: email,
             accountCreationDate:getCurrentDate(),
 			name: name, 
@@ -158,8 +159,7 @@ const createAccount = async(e:any) => {
             },
             friends:{},
             blockedUsers:{},
-        }
-        );
+        })
 		console.log("User document created in Firestore");
         navigation.navigate("Login")
 	} catch(error){
@@ -210,3 +210,4 @@ const createAccount = async(e:any) => {
 }
 
 export default SignUp
+

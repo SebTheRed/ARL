@@ -17,13 +17,30 @@ import { useFeed } from '../../Contexts/FeedContext';
 // import FeedPost from './FeedPost';
 import styles from '../../styles'
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
+import { useUserData } from '../../Contexts/UserDataContext';
+import { useUID } from '../../Contexts/UIDContext';
 
 const Profile = ({route}:any):JSX.Element => {
     const {skillsList, XPScale}:any = route.params;
-    const {matchingProfileData}:any = useProfilePageUID()
+    const {matchingProfileData, profilePageUID}:any = useProfilePageUID()
+    const {userData}:any = useUserData()
+    const {uid}:any = useUID()
+    const [buttonType,setButtonType] = useState("")
     
     useEffect(()=>{
-        console.log(matchingProfileData)
+        // console.log(matchingProfileData)
+        if (uid == profilePageUID) {setButtonType("Edit")}
+        else {
+            // Get an array of all friend UIDs
+            const friendUIDs = Object.keys(userData.friends);
+        
+            // Check if the current profile's UID is in the friendUIDs array
+            if (friendUIDs.includes(matchingProfileData.uid)) {
+              setButtonType("Remove");
+            } else {
+              setButtonType("Add");
+            }
+        }
     },[])
 
     const calculateCurrentLevel = (skillName: string) => {
@@ -40,16 +57,52 @@ const Profile = ({route}:any):JSX.Element => {
       };
 
 
+      const MultiButtonSplitter = ():JSX.Element => {
+        switch(buttonType){
+            case "Edit": return(
+            <>
+                <Text style={styles.postTopButtonText}>Edit</Text>
+                <Image style={styles.postTopStreakIcon} source={require('../../IconBin/edit.png')} />
+            </>
+            
+            )
+            case "Add": return(
+            <>
+                <Text style={styles.postTopButtonText}>Add Friend</Text>
+                <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friendAdd.png')} />
+            </>
+            )
+            case "Remove": return(
+            <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friendRemove.png')} />
+            )
+            default:return(<Text>Sorry?</Text>)
+        }
+      }
+
+
+
+
+
+
+
+
+
     return(
-    <View style={styles.profilePageContainer}>
+    <ScrollView style={styles.profilePageContainer}>
         <View style={styles.profilePageCover}></View>
         
         <View style={styles.profilePageTopContainer}>
             <View style={styles.profilePageStreakContainer}>
-                {/* Icon & number */}
+                <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
+				<Text style={{...styles.postTopStreak}}>69</Text>
             </View>
-            <View style={styles.profilePagePicture}></View>
-            <View style={styles.profilePageMultiButton}>
+            <View style={styles.profilePagePictureBox}>
+                <Image style={styles.profilePagePicture} source={require('./mochi.png')} />
+            </View>
+            <View style={styles.profilePageMultiBox}>
+                <TouchableOpacity style={styles.profilePageMultiButton}>
+                    <MultiButtonSplitter />
+                </TouchableOpacity>
                 {/* Some kind of switch logic here instead */}
             </View>
         </View>
@@ -81,7 +134,7 @@ const Profile = ({route}:any):JSX.Element => {
             </View>
             
         </View>
-    </View>
+    </ScrollView>
     )
 }
 

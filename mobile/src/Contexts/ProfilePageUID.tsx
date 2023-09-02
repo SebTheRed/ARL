@@ -25,12 +25,11 @@ export const ProfilePageUIDProvider = ({children}:any) => {
             const userDocRef = doc(db,"users",chosenUID);
             console.log(userDocRef)
             // setMatchingProfileData()
-
         }
     }
 
     return(
-        <ProfilePageUIDContext.Provider value={{matchingProfileData,setProfilePageUID, findPageUserID}}>
+        <ProfilePageUIDContext.Provider value={{matchingProfileData,setProfilePageUID,profilePageUID, findPageUserID}}>
             {children}
         </ProfilePageUIDContext.Provider>
     )

@@ -16,8 +16,6 @@ type DocumentData = undefined
 export const FeedProvider = ({ children }:any) => {
   const { uid }:any = useUID();
   const [currentFeed, setCurrentFeed] = useState<any>([]);
-  const [isFetching, setIsFetching] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
   // const [lastVisible, setLastVisible] = useState(null);
   
   const PAGE_SIZE = 5;
@@ -27,7 +25,6 @@ export const FeedProvider = ({ children }:any) => {
   }, [uid]);
 
   const refreshFeed = async() => {
-    setHasMore(true)
     setCurrentFeed([]);
     console.log('REFRESH')
     fetchData(null)
@@ -38,9 +35,7 @@ export const FeedProvider = ({ children }:any) => {
 
   const fetchData = async (lastVisible:any,refresh = false) => {
     console.log(lastVisible)
-    if (!hasMore) return;
     let feedQuery = null
-    setIsFetching(true)
     if (lastVisible) {
       feedQuery = query(
         collection(db, "posts"),
@@ -63,9 +58,8 @@ export const FeedProvider = ({ children }:any) => {
       lastVisible = newDocs[newDocs.length - 1];
       setCurrentFeed((prevFeed:any) => [...prevFeed, ...newDocs]);
     } else {
-      setHasMore(false)
+
     }
-    setIsFetching(false)
   };
 
   return (

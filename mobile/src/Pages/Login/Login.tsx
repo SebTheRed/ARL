@@ -28,8 +28,8 @@ type RootStackParamList = {
 	SignUp:undefined,
 }
 const Login = ({route}:any):JSX.Element => {
-	const [email,setEmail] = useState("")
-	const [password,setPassword] = useState("")
+	const [email,setEmail] = useState("Seb.belfonti@gmail.com")
+	const [password,setPassword] = useState("punspaye")
 	const {setUID}:any = useUID();
 	const {setUserData}:any = useUserData()
 	// const animatedValue = new Animated.Value(0);

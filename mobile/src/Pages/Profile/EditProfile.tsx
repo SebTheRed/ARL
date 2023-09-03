@@ -17,12 +17,16 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
 import {useUserData} from '../../Contexts/UserDataContext'
+import { useUID } from '../../Contexts/UIDContext';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../../styles'
+import {db, auth,} from '../../Firebase/firebase'
+import {updateDoc,doc} from 'firebase/firestore'
 
 const EditProfile = ():JSX.Element => {
 	const navigation = useNavigation<any>();
 	const {userData}:any = useUserData()
+	const {uid}:any = useUID()
 	const [isEditing, setIsEditing] = useState<string | null>(null);
 	const [name, setName] = useState(userData.name);
 	const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber);
@@ -31,6 +35,44 @@ const EditProfile = ():JSX.Element => {
 		navigation.navigate("Profile")
 	}
 
+
+
+	const handleTextInputBlur = async (label: string) => {
+		setIsEditing(null);
+		const userDocRef = doc(db, "users", uid); // Replace 'db' and 'uid' with your actual Firestore database instance and user ID
+	  
+		switch (label) {
+		  case "Name":
+			if (userData.name === name) return;
+			try {
+			  await updateDoc(userDocRef, {
+				name: name, // Update the 'name' field in Firestore
+			  });
+			  console.log("Name updated successfully");
+			} catch (error) {
+			  console.error("Error updating name: ", error);
+			}
+			break;
+	  
+		  case "Phone Number":
+			if (userData.phoneNumber === phoneNumber) return;
+			try {
+			  await updateDoc(userDocRef, {
+				phoneNumber: phoneNumber, // Update the 'phoneNumber' field in Firestore
+			  });
+			  console.log("Phone Number updated successfully");
+			} catch (error) {
+			  console.error("Error updating phone number: ", error);
+			}
+			break;
+	  
+		  default:
+			console.log("Unknown label");
+			break;
+		}
+	  };
+
+	
 	const ProfileHeader = ():JSX.Element => {
 
 		const [option1,setOption1] = useState(true)
@@ -58,7 +100,7 @@ const renderField = (label: string, value: string, setValue: any) => (
 		<TextInput
 			value={value}
 			onChangeText={setValue}
-			onBlur={() => setIsEditing(null)}
+			onBlur={()=>handleTextInputBlur(label)}
 			autoFocus
 			style={{color:"white", fontSize:16}}
 		/>
@@ -156,7 +198,7 @@ return(
 		<View style={styles.editProfileBox}>
 				<Text style={{...styles.profilePageRealName, fontSize:24}}>Edit Personal Information</Text>
 				{renderField('Name', name, setName)}
-          		{renderField('Phone #', phoneNumber, setPhoneNumber)}
+          		{renderField('Phone Number', phoneNumber, setPhoneNumber)}
 		</View>
 		<View style={styles.editProfileBox}>
 			

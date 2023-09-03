@@ -47,7 +47,7 @@ export const ProfilePageUIDProvider = ({children}:any) => {
                   ); 
                 const snapshot = await getDocs(feedQuery);
                 let newDocs = snapshot.docs.map(doc => doc.data());
-                console.log("profile posts: ", newDocs)
+                // console.log("profile posts: ", newDocs)
                 setProfileFeed(newDocs)
                 
             } else {
@@ -65,7 +65,7 @@ export const ProfilePageUIDProvider = ({children}:any) => {
                           ); 
                         const snapshot = await getDocs(feedQuery);
                         let newDocs = snapshot.docs.map(doc => doc.data());
-                        console.log("profile posts: ", newDocs)
+                        // console.log("profile posts: ", newDocs)
                         setProfileFeed(newDocs)
                     } else {
                         console.log("No such document!");

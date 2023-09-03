@@ -152,6 +152,8 @@ const createAccount = async(e:any) => {
             },
             settings:{
                 darkMode:true,
+                geoLocation:true,
+                notifications:true,
             },
             friends:[],
             blockedUsers:[],

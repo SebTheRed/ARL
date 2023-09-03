@@ -30,13 +30,57 @@ const EditProfile = ():JSX.Element => {
 	const [isEditing, setIsEditing] = useState<string | null>(null);
 	const [name, setName] = useState(userData.name);
 	const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber);
+	const [option1,setOption1] = useState(true)
+	const [option2,setOption2] = useState(true)
+	const [option3,setOption3] = useState(true)
+	// const [option4,setOption4] = useState(false)
+	// const [option5,setOption5] = useState(false)
+	// const [option6,setOption6] = useState(false)
+	// const [option7,setOption7] = useState(false)
+	// const [option8,setOption8] = useState(false)
+	// const [option9,setOption9] = useState(false)
+
+	useEffect(()=>{
+		setOption1(userData.settings.geoLocation)
+		setOption2(userData.settings.darkMode)
+		setOption3(userData.settings.notifications)
+		console.log(userData.settings.geoLocation)
+		console.log(userData.settings.darkMode)
+		console.log(userData.settings.notifications)
+	},[userData])
+	useEffect(()=>{
+		const userDocRef = doc(db, "users", uid);
+		const changeToggle = async()=>{
+			try {
+				await updateDoc(userDocRef, {
+				settings:{darkMode: option2, notifications: option3, geoLocation: option1}, // Update the 'name' field in Firestore
+				});
+				console.log("Settings toggled successfully");
+			} catch (error) {
+				console.error("Error updating settings: ", error);
+			}
+		}
+		changeToggle()
+	},[option1,option2,option3])
 
 	const handleReturnPress = () => {
 		navigation.navigate("Profile")
 	}
+	const handleSwitch = async(switchVal:string) => {
+		
+	// 	switch(switchVal){
+	// 		case"option1":
+				
+	// 		break;
+	// 		case"option2":
 
+	// 		break;
+	// 		case"option3":
 
-
+	// 		break;
+	// 	}
+	// }
+	}
 	const handleTextInputBlur = async (label: string) => {
 		setIsEditing(null);
 		const userDocRef = doc(db, "users", uid); // Replace 'db' and 'uid' with your actual Firestore database instance and user ID
@@ -70,47 +114,34 @@ const EditProfile = ():JSX.Element => {
 			console.log("Unknown label");
 			break;
 		}
-	  };
-
-	
-	const ProfileHeader = ():JSX.Element => {
-
-		const [option1,setOption1] = useState(true)
-		const [option2,setOption2] = useState(true)
-		const [option3,setOption3] = useState(true)
-		// const [option4,setOption4] = useState(false)
-		// const [option5,setOption5] = useState(false)
-		// const [option6,setOption6] = useState(false)
-		// const [option7,setOption7] = useState(false)
-		// const [option8,setOption8] = useState(false)
-		// const [option9,setOption9] = useState(false)
-const renderField = (label: string, value: string, setValue: any) => (
-	<TouchableOpacity
-		style={{...styles.editProfileRow,}}
-		onPress={() => setIsEditing(label)}
-	>
-		<Text style={{ ...styles.profilePageRealName, fontSize: 18 }}>
-		<Image
-			style={{ ...styles.editProfilePencil }}
-			source={require('../../IconBin/edit.png')}
-		/>
-		{label}:
-		</Text>
-		{isEditing === label ? (
-		<TextInput
-			value={value}
-			onChangeText={setValue}
-			onBlur={()=>handleTextInputBlur(label)}
-			autoFocus
-			style={{color:"white", fontSize:16}}
-		/>
-		) : (
-		<Text style={{ ...styles.profilePageRealName, fontSize: 16}}>
-			{value}
-		</Text>
-		)}
-	</TouchableOpacity>
-	);
+	  };	
+		const renderField = (label: string, value: string, setValue: any) => (
+			<TouchableOpacity
+				style={{...styles.editProfileRow,}}
+				onPress={() => setIsEditing(label)}
+			>
+				<Text style={{ ...styles.profilePageRealName, fontSize: 18 }}>
+				<Image
+					style={{ ...styles.editProfilePencil }}
+					source={require('../../IconBin/edit.png')}
+				/>
+				{label}:
+				</Text>
+				{isEditing === label ? (
+				<TextInput
+					value={value}
+					onChangeText={setValue}
+					onBlur={()=>handleTextInputBlur(label)}
+					autoFocus
+					style={{color:"white", fontSize:16}}
+				/>
+				) : (
+				<Text style={{ ...styles.profilePageRealName, fontSize: 16}}>
+					{value}
+				</Text>
+				)}
+			</TouchableOpacity>
+			);
 
 
 		
@@ -203,23 +234,7 @@ return(
 		<View style={styles.editProfileBox}>
 			
 
-			<View style={{...styles.eventTileWrapper,borderColor:`${option1?"#1cb012":"#656565"}`}}>
-				<View style={{...styles.eventTileMain}}>
-					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
-						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Access & Data</Text>
-					</View>
-					<Text style={{...styles.eventTileText, fontSize:16,}}>Switch off to disable geo-tracking for all of your posts.</Text>
-				</View>
-				<View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
-					<View style={styles.eventButtonWrapper}>
-					<Switch
-						ios_backgroundColor="#3e3e3e"
-						onValueChange={(newVal) => setOption1((prev) => !prev)}
-						value={option1}
-					/>
-					</View>
-				</View>
-			</View>
+			
 			<View style={{...styles.eventTileWrapper,borderColor:`${option2?"#1cb012":"#656565"}`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
@@ -231,7 +246,10 @@ return(
 					<View style={styles.eventButtonWrapper}>
 					<Switch
 						ios_backgroundColor="#3e3e3e"
-						onValueChange={(newVal) => setOption2((prev) => !prev)}
+						onValueChange={(newVal) => {
+							setOption2((prev) => !prev)
+							handleSwitch("option2")
+						}}
 						value={option2}
 					/>
 					</View>
@@ -248,8 +266,31 @@ return(
 					<View style={styles.eventButtonWrapper}>
 					<Switch
 						ios_backgroundColor="#3e3e3e"
-						onValueChange={(newVal) => setOption3((prev) => !prev)}
+						onValueChange={(newVal) => {
+							setOption3((prev) => !prev)
+							handleSwitch("option3")
+						}}
 						value={option3}
+					/>
+					</View>
+				</View>
+			</View>
+			<View style={{...styles.eventTileWrapper,borderColor:`${option1?"#1cb012":"#656565"}`}}>
+				<View style={{...styles.eventTileMain}}>
+					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
+						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Access & Data</Text>
+					</View>
+					<Text style={{...styles.eventTileText, fontSize:16,}}>Switch off to disable geo-tracking for all of your posts.</Text>
+				</View>
+				<View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+					<View style={styles.eventButtonWrapper}>
+					<Switch
+						ios_backgroundColor="#3e3e3e"
+						onValueChange={(newVal) => {
+							setOption1((prev) => !prev)
+							handleSwitch("option1")
+						}}
+						value={option1}
 					/>
 					</View>
 				</View>
@@ -273,18 +314,6 @@ return(
 
 		</View>
     </ScrollView>
-        )
-    }
-
-
-
-
-
-
-	return(
-		<View>
-			<ProfileHeader />
-		</View>
 	)
 }
 

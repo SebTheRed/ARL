@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
 // import FeedPost from './FeedPost';
 import styles from '../../styles'
+import { useNavigation } from '@react-navigation/native';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
@@ -33,6 +34,7 @@ type TrophyDataObj = {
 
 const Profile = ({route}:any):JSX.Element => {
     // const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
     const {skillsList, XPScale, trophyData}:any = route.params;
     const {matchingProfileData,refreshProfileFeed, profilePageUID, setProfilePageUID, profileFeed}:any = useProfilePageUID()
@@ -41,7 +43,6 @@ const Profile = ({route}:any):JSX.Element => {
     const [buttonType,setButtonType] = useState("")
     const [matchedTrophyPins,setMatchedTrophyPins] = useState([{},{},{}])
     const [refreshing, setRefreshing] = useState(false);
-	const [startAfter,setStartAfter] = useState(null)
     
     useEffect(()=>{
         // console.log(matchingProfileData)
@@ -81,9 +82,17 @@ const Profile = ({route}:any):JSX.Element => {
     const handleRefresh = async () => {
 	  setRefreshing(true);
 	  await refreshProfileFeed();
-	  setStartAfter(null)
 	  setRefreshing(false);
 	};
+    const handleEditButtonPress = () => {
+        navigation.navigate("EditProfile")
+    }
+    const handleAddFriendPress = () => {
+
+    }
+    const handleRemoveFriendPress = () => {
+
+    }
   
 	// const handleLoadMore = () => {
 	//   paginateFeed(startAfter)
@@ -107,23 +116,23 @@ const Profile = ({route}:any):JSX.Element => {
       const MultiButtonSplitter = ():JSX.Element => {
         switch(buttonType){
             case "Edit": return(
-            <>
+            <TouchableOpacity onPress={handleEditButtonPress} style={styles.profilePageMultiButton}>
                 <Text style={styles.postTopButtonText}>Edit Profile</Text>
                 <Image style={styles.postTopStreakIcon} source={require('../../IconBin/edit.png')} />
-            </>
+            </ TouchableOpacity>
             
             )
             case "Add": return(
-            <>
+            <TouchableOpacity style={styles.profilePageMultiButton}>
                 <Text style={styles.postTopButtonText}>Add Friend</Text>
                 <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friendAdd.png')} />
-            </>
+            </ TouchableOpacity>
             )
             case "Remove": return(
-            <>
+            <TouchableOpacity style={styles.profilePageMultiButton}>
                 <Text style={styles.postTopButtonText}>Remove Friend</Text>
                 <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friendRemove.png')} />
-            </>
+            </ TouchableOpacity>
             )
             default:return(<Text>Sorry?</Text>)
         }
@@ -159,9 +168,7 @@ const Profile = ({route}:any):JSX.Element => {
                 <Image style={styles.profilePagePicture} source={require('./mochi.png')} />
             </View>
             <View style={styles.profilePageMultiBox}>
-                <TouchableOpacity style={styles.profilePageMultiButton}>
-                    <MultiButtonSplitter />
-                </TouchableOpacity>
+                <MultiButtonSplitter />
             </View>
         </View>
 

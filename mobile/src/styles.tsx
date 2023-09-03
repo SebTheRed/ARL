@@ -543,7 +543,7 @@ profilePageContainer:{
 profilePageCover:{
   width:"100%",
   height:150,
-  backgroundColor:"gray",
+  backgroundColor:"darkseagreen",
   borderBottomWidth:4,
   borderColor:"#fff"
 },
@@ -593,7 +593,7 @@ profilePagePicture:{
   height: 100, // desired height
   resizeMode: 'contain', // or 'cover'
   borderRadius:50,
-  borderWidth:2,
+  borderWidth:4,
   borderColor:"#fff",
   marginTop:-50,
 },
@@ -678,6 +678,30 @@ profilePageTraitBox:{
 },
 profilePageTraitNumber:{
 },
+editProfileBox:{
+  borderColor:"#fff",
+  borderWidth:2,
+  borderRadius:10,
+  margin:"2.5%",
+  alignItems:"center",
+},
+editProfileRow:{
+  flexDirection:"row",
+  justifyContent:"space-between",
+  borderColor:"#656565",
+  borderWidth:2,
+  borderRadius:6,
+  padding:5,
+  margin:2.5,
+  width:"97.5%",
+},
+editProfilePencil:{
+  tintColor:"white",
+  width: 20,  // desired width
+  height: 20, // desired height
+  resizeMode: 'contain', // or 'cover'
+},
+
 
 
 

@@ -206,7 +206,9 @@ const Profile = ({route}:any):JSX.Element => {
         )
     }
 
-
+    if (matchingProfileData){
+        
+    }
     return(
         <FlatList
 		data={currentFeed}

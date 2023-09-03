@@ -64,7 +64,7 @@ export const FeedProvider = ({ children }:any) => {
       //     index === self.findIndex((t) => t.id === doc.id)
       // );
       console.log(newDocs.length)
-      currentFeed.map((doc,index)=>{
+      currentFeed.map((doc:any,index:number)=>{
         newDocs.map((post,i)=>{
           if (post.id == doc.id){
             newDocs.splice(i, 1)
@@ -90,7 +90,7 @@ export const FeedProvider = ({ children }:any) => {
 
     if (newDocs.length > 0) {
       setLastVisible(snapshot.docs[snapshot.docs.length - 1]); // Update lastVisible
-      currentFeed.map((doc,index)=>{
+      currentFeed.map((doc:any,index:number)=>{
         newDocs.map((post,i)=>{
           if (post.id == doc.id){
             newDocs.splice(i, 1)

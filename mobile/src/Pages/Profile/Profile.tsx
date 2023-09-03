@@ -10,8 +10,10 @@ import {
 	TouchableOpacity,
 	FlatList,
 	RefreshControl,
+    SectionList,
 } from 'react-native'
 import React from 'react'
+import FeedPost from '../Feed/FeedPost';
 import { useEffect, useState } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
 // import FeedPost from './FeedPost';
@@ -27,33 +29,35 @@ type TrophyDataObj = {
     desc:string,
     progressQTY:number,
 }
-type MatchingTrophyType = [
-    {},{},{}
-]
+
 
 const Profile = ({route}:any):JSX.Element => {
+    // const navigation = useNavigation();
+    const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
     const {skillsList, XPScale, trophyData}:any = route.params;
-    const {matchingProfileData, profilePageUID}:any = useProfilePageUID()
+    const {matchingProfileData, profilePageUID, setProfilePageUID, setMatchingProfileData}:any = useProfilePageUID()
     const {userData}:any = useUserData()
     const {uid}:any = useUID()
     const [buttonType,setButtonType] = useState("")
     const [matchedTrophyPins,setMatchedTrophyPins] = useState([{},{},{}])
+    const [refreshing, setRefreshing] = useState(false);
+	const [startAfter,setStartAfter] = useState(null)
     
     useEffect(()=>{
         // console.log(matchingProfileData)
         const trophyPinTitles = matchingProfileData.trophyPins
         let passThruArray = [{},{},{}]
         trophyPinTitles.map((title:string,i:number)=>{
-            console.log("in de loop")
+            // console.log("in de loop")
             trophyData.map((trophy:TrophyDataObj)=>{
                 if (title === trophy.title){
                     passThruArray[i] = trophy
-                    console.log(trophy)
+                    // console.log(trophy)
                 }
             })
         if (Object.keys(passThruArray[i]).length === 0) {passThruArray.push()}
         })
-        console.log(passThruArray)
+        // console.log(passThruArray)
         setMatchedTrophyPins(passThruArray)
 
         console.log("UID",uid,"PROF PAGE UID",profilePageUID)
@@ -70,6 +74,21 @@ const Profile = ({route}:any):JSX.Element => {
             }
         }
     },[userData])
+    useEffect(()=>{
+		setStartAfter(currentFeed[currentFeed.length - 1])
+	},[currentFeed])
+
+    const handleRefresh = async () => {
+	  setRefreshing(true);
+	  await refreshFeed();
+	  setStartAfter(null)
+	  setRefreshing(false);
+	};
+  
+	const handleLoadMore = () => {
+	  paginateFeed(startAfter)
+	};
+
 
     const calculateCurrentLevel = (skillName: string) => {
         const currentXP = matchingProfileData.xpData[skillName]; // Assuming skillData.title is 'Family', 'Friends', etc.
@@ -111,8 +130,9 @@ const Profile = ({route}:any):JSX.Element => {
       }
 
 
-    return(
-    <ScrollView style={styles.profilePageContainer}>
+    const ProfileHeader = ():JSX.Element => {
+        return(
+    <View style={styles.profilePageContainer}>
         <View style={styles.profilePageCover}></View>
         
         <View style={styles.profilePageTopContainer}>
@@ -120,7 +140,7 @@ const Profile = ({route}:any):JSX.Element => {
                     {matchedTrophyPins.map((trophy:any,i:number)=>{
                         if (Object.keys(trophy).length == 0) {
                             return(
-                                <TouchableOpacity style={styles.profilePageEmptyTrophyButton}>
+                                <TouchableOpacity key={i} style={styles.profilePageEmptyTrophyButton}>
                                     <View style={styles.profilePageEmptyTrophyPin}></View>
                                 </TouchableOpacity>
                                 
@@ -182,13 +202,36 @@ const Profile = ({route}:any):JSX.Element => {
             
         </View>
 
+    </View>
+        )
+    }
 
-{/* FEED GOES HERE */}
 
-        
-
-    </ScrollView>
+    return(
+        <FlatList
+		data={currentFeed}
+		renderItem={({ item }) => <FeedPost skillsList={skillsList} data={item} />}
+		keyExtractor={item => item.id.toString()}
+		style={styles.feedFlatList}
+		contentContainerStyle={{ alignItems: 'center' }}
+		onEndReached={handleLoadMore}
+		onEndReachedThreshold={0.1}
+		scrollEventThrottle={150}
+		refreshControl={
+		  <RefreshControl
+			refreshing={refreshing}
+			onRefresh={handleRefresh}
+			colors={['#FFF']}
+			tintColor="#FFF"
+		  />
+		}
+        ListHeaderComponent={<ProfileHeader />}
+	  />
+       
     )
+
+
+    
 }
 
 export default Profile

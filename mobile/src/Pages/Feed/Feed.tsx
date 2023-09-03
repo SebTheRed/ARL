@@ -20,7 +20,7 @@ const Feed = ({ route }:any) => {
 	const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
 	const { skillsList } = route.params;
 	const [refreshing, setRefreshing] = useState(false);
-	const [startAfter,setStartAfter] = useState()
+	const [startAfter,setStartAfter] = useState(null)
 
 	useEffect(()=>{
 		setStartAfter(currentFeed[currentFeed.length - 1])

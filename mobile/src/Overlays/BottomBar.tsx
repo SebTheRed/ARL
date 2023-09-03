@@ -12,7 +12,9 @@ import {
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
+import { useProfilePageUID } from '../Contexts/ProfilePageUID';
 import styles from '../styles'
+
 type RootStackParamList = {
 	Feed: undefined;
 	Map: undefined;
@@ -23,13 +25,15 @@ type RootStackParamList = {
 
 ////// COMPONENT FUNCTION BEGINNING //////
 const BottomBar = ():JSX.Element => {
-
+const {matchingProfileData, profilePageUID, setProfilePageUID, setMatchingProfileData}:any = useProfilePageUID()
   // 2. Use the useNavigation hook with the type
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   // 3. Update the handlePress function
   const handlePress = (val: keyof RootStackParamList) => {
     navigation.navigate(val);
+	setProfilePageUID(null)
+	// setMatchingProfileData(null)
   }
 
 

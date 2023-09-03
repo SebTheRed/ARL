@@ -12,12 +12,11 @@ export const useProfilePageUID = () => {
 export const ProfilePageUIDProvider = ({children}:any) => {
     const {uid}: any = useUID();
     const {userData}:any = useUserData()
-    const [profilePageUID,setProfilePageUID] = useState({})
-    const [matchingProfileData,setMatchingProfileData] = useState()
+    const [profilePageUID,setProfilePageUID] = useState("")
+    const [matchingProfileData,setMatchingProfileData] = useState<any>()
     useEffect(()=>{
         //IDK IF I NEED THIS EFFECT
     },[])
-
     const findPageUserID = (chosenUID:string) => {
         setProfilePageUID(chosenUID)
         if (uid === chosenUID) {
@@ -30,7 +29,7 @@ export const ProfilePageUIDProvider = ({children}:any) => {
     }
 
     return(
-        <ProfilePageUIDContext.Provider value={{matchingProfileData,setProfilePageUID,profilePageUID, findPageUserID}}>
+        <ProfilePageUIDContext.Provider value={{matchingProfileData,setProfilePageUID,setMatchingProfileData,profilePageUID, findPageUserID}}>
             {children}
         </ProfilePageUIDContext.Provider>
     )

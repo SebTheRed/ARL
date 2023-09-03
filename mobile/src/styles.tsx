@@ -537,13 +537,14 @@ postBottomCommentsContainer:{
 
 profilePageContainer:{
   backgroundColor:"#1c1c1c",
-  flex:1,
+  // flex:1,
+  height:380,
 },
 profilePageCover:{
   width:"100%",
   height:150,
   backgroundColor:"gray",
-  borderBottomWidth:2,
+  borderBottomWidth:4,
   borderColor:"#fff"
 },
 profilePageTopContainer:{ 
@@ -662,7 +663,7 @@ profilePageStatsbottom:{
   flexDirection:"row",
   flexWrap:"wrap",
   borderColor:"#fff",
-  borderBottomWidth:2,
+  borderBottomWidth:4,
 },
 profilePageTraitBox:{
   borderColor:"#fff",

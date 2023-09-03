@@ -35,7 +35,7 @@ const Profile = ({route}:any):JSX.Element => {
     // const navigation = useNavigation();
     const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
     const {skillsList, XPScale, trophyData}:any = route.params;
-    const {matchingProfileData, profilePageUID, setProfilePageUID, setMatchingProfileData}:any = useProfilePageUID()
+    const {matchingProfileData, profilePageUID, setProfilePageUID, profileFeed}:any = useProfilePageUID()
     const {userData}:any = useUserData()
     const {uid}:any = useUID()
     const [buttonType,setButtonType] = useState("")
@@ -74,9 +74,9 @@ const Profile = ({route}:any):JSX.Element => {
             }
         }
     },[userData])
-    useEffect(()=>{
-		setStartAfter(currentFeed[currentFeed.length - 1])
-	},[currentFeed])
+    // useEffect(()=>{
+	// 	setStartAfter(currentFeed[currentFeed.length - 1])
+	// },[currentFeed])
 
     const handleRefresh = async () => {
 	  setRefreshing(true);
@@ -85,9 +85,9 @@ const Profile = ({route}:any):JSX.Element => {
 	  setRefreshing(false);
 	};
   
-	const handleLoadMore = () => {
-	  paginateFeed(startAfter)
-	};
+	// const handleLoadMore = () => {
+	//   paginateFeed(startAfter)
+	// };
 
 
     const calculateCurrentLevel = (skillName: string) => {
@@ -211,13 +211,13 @@ const Profile = ({route}:any):JSX.Element => {
     }
     return(
         <FlatList
-		data={currentFeed}
+		data={profileFeed}
 		renderItem={({ item }) => <FeedPost skillsList={skillsList} data={item} />}
 		keyExtractor={item => item.id.toString()}
 		style={styles.feedFlatList}
 		contentContainerStyle={{ alignItems: 'center' }}
-		onEndReached={handleLoadMore}
-		onEndReachedThreshold={0.1}
+		// onEndReached={handleLoadMore}
+		// onEndReachedThreshold={0.1}
 		scrollEventThrottle={150}
 		refreshControl={
 		  <RefreshControl

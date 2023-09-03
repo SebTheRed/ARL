@@ -18,75 +18,93 @@ export const FeedProvider = ({ children }:any) => {
   const {profilePageUID}:any = useProfilePageUID()
   const { uid }:any = useUID();
   const [currentFeed, setCurrentFeed] = useState<any>([]);
-  // const [lastVisible, setLastVisible] = useState(null);
+  const [lastVisible, setLastVisible] = useState<any>(null);
   
-  const PAGE_SIZE = 2;
+// THE PROBLEM EXISTS SOMEWHERE IN HERE! D:
+
+
+  const PAGE_SIZE = 5;
 
   useEffect(() => {
-    fetchData(null);
+    fetchDataFresh();
   }, [uid,profilePageUID]);
-  const newPostHandler = () => {
-    setCurrentFeed([]);
+  const feedButtonHandler = () => {
     console.log('REFRESH')
-    fetchData(null)
+    fetchDataFresh()
   }
-  const refreshFeed = async() => {
-    setCurrentFeed([]);
+  const newPostHandler = () => {
     console.log('REFRESH')
-    fetchData(null)
+    fetchDataFresh()
+  }
+  const refreshFeed = () => {
+    console.log('REFRESH')
+    fetchDataFresh()
   };
   const paginateFeed = (startAfter:any) => {
-    fetchData(startAfter)
+    console.log('PAGINATE')
+    fetchDataPaginate()
+    // setLastVisible(startAfter)
   }
+  const fetchDataPaginate = async () => {
+    let feedQuery;
+    feedQuery = query(
+      collection(db, "posts"),
+      orderBy("timeStamp", "desc"),
+      startAfter(lastVisible),
+      limit(PAGE_SIZE)
+    );
+    const snapshot = await getDocs(feedQuery);
+    let newDocs = snapshot.docs.map(doc => doc.data());
+    console.log("newdocs", newDocs.length)
 
-  const fetchData = async (lastVisible:any,refresh = false) => {
-    let feedQuery = null
-    if (lastVisible) {
-      if (profilePageUID != "") {
-        feedQuery = query(
-          collection(db, "posts"),
-          where("uid","==",profilePageUID),
-          orderBy("timeStamp", "desc"),  // Change to descending order
-          startAfter(lastVisible.timeStamp),  // Use startAfter for pagination
-          limit(PAGE_SIZE)
-        );
-      } else {
-        feedQuery = query(
-          collection(db, "posts"),
-          orderBy("timeStamp", "desc"),  // Change to descending order
-          startAfter(lastVisible.timeStamp),  // Use startAfter for pagination
-          limit(PAGE_SIZE)
-        );
-      }
+    if (newDocs.length > 0) {
+      setLastVisible(snapshot.docs[snapshot.docs.length - 1]); // Update lastVisible
+      // const uniqueDocs = newDocs.filter(
+      //   (doc, index, self) =>
+      //     index === self.findIndex((t) => t.id === doc.id)
+      // );
+      console.log(newDocs.length)
+      currentFeed.map((doc,index)=>{
+        newDocs.map((post,i)=>{
+          if (post.id == doc.id){
+            newDocs.splice(i, 1)
+          }
+        })
+      })
+      console.log(newDocs.length)
+      setCurrentFeed((prevFeed: any) => [...prevFeed, ...newDocs]);
       
-    } else if (profilePageUID != ""){
-      feedQuery = query(
-        collection(db,"posts"),
-        where("uid","==",profilePageUID),
-        orderBy("timeStamp","desc"),
-        limit(PAGE_SIZE)
-      )
-    } else {
+    }
+  }
+  const fetchDataFresh = async () => {
+    let feedQuery;
       feedQuery = query(
         collection(db, "posts"),
-        orderBy("timeStamp", "desc"),  // Change to descending order
+        orderBy("timeStamp", "desc"),
         limit(PAGE_SIZE)
       );
-    }
 
     const snapshot = await getDocs(feedQuery);
-    const newDocs = snapshot.docs.map(doc => doc.data());
-    console.log(newDocs.length)
-    if (newDocs.length > 0) {
-      lastVisible = newDocs[newDocs.length - 1];
-      setCurrentFeed((prevFeed:any) => [...prevFeed, ...newDocs]);
-    } else {
+    let newDocs = snapshot.docs.map(doc => doc.data());
+    console.log("newdocs", newDocs.length)
 
+    if (newDocs.length > 0) {
+      setLastVisible(snapshot.docs[snapshot.docs.length - 1]); // Update lastVisible
+      currentFeed.map((doc,index)=>{
+        newDocs.map((post,i)=>{
+          if (post.id == doc.id){
+            newDocs.splice(i, 1)
+          }
+        })
+      })
+      console.log(newDocs.length)
+      setCurrentFeed((prevFeed: any) => [...prevFeed, ...newDocs]);
+      
     }
   };
 
   return (
-    <FeedContextProvider.Provider value={{ currentFeed, refreshFeed, paginateFeed, newPostHandler }}>
+    <FeedContextProvider.Provider value={{ currentFeed, refreshFeed, paginateFeed, newPostHandler,feedButtonHandler }}>
       {children}
     </FeedContextProvider.Provider>
   );

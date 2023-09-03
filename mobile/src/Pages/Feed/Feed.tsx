@@ -20,21 +20,21 @@ const Feed = ({ route }:any) => {
 	const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
 	const { skillsList } = route.params;
 	const [refreshing, setRefreshing] = useState(false);
-	const [startAfter,setStartAfter] = useState(null)
+	// const [startAfter,setStartAfter] = useState(null)
 
 	useEffect(()=>{
-		setStartAfter(currentFeed[currentFeed.length - 1])
+		// setStartAfter(currentFeed[currentFeed.length - 1])
 	},[currentFeed])
 
 	const handleRefresh = async () => {
 	  setRefreshing(true);
 	  await refreshFeed();
-	  setStartAfter(null)
+	//   setStartAfter(null)
 	  setRefreshing(false);
 	};
   
 	const handleLoadMore = () => {
-	  paginateFeed(startAfter)
+	  paginateFeed()
 	};
   
 	return (

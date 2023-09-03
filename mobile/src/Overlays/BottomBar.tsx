@@ -13,6 +13,7 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import { useProfilePageUID } from '../Contexts/ProfilePageUID';
+import { useFeed } from '../Contexts/FeedContext';
 import styles from '../styles'
 
 type RootStackParamList = {
@@ -26,6 +27,7 @@ type RootStackParamList = {
 ////// COMPONENT FUNCTION BEGINNING //////
 const BottomBar = ():JSX.Element => {
 const {matchingProfileData, profilePageUID, setProfilePageUID, setMatchingProfileData}:any = useProfilePageUID()
+const {feedButtonHandler}:any = useFeed()
   // 2. Use the useNavigation hook with the type
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -45,7 +47,10 @@ const {matchingProfileData, profilePageUID, setProfilePageUID, setMatchingProfil
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/travel.png')} />
 				<Text style={styles.bottomBarText}>Map</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Feed")}>
+			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>{
+				handlePress("Feed")
+				feedButtonHandler()
+			}}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/feed.png')} />
 				<Text style={styles.bottomBarText}>Feed</Text>
 			</TouchableOpacity>

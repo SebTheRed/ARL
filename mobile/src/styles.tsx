@@ -615,6 +615,12 @@ profilePageMultiButton:{
   height:30,
   marginRight:5,
 },
+profilePageButtonIcon:{
+  tintColor:"white",
+  width: 20,  // desired width
+  height: 20, // desired height
+  resizeMode: 'contain', // or 'cover'
+},
 postTopButtonText:{
   color:"white",
   fontSize:14,

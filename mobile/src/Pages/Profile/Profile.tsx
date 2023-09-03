@@ -117,21 +117,21 @@ const Profile = ({route}:any):JSX.Element => {
         switch(buttonType){
             case "Edit": return(
             <TouchableOpacity onPress={handleEditButtonPress} style={styles.profilePageMultiButton}>
+                <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/edit.png')} />
                 <Text style={styles.postTopButtonText}>Edit Profile</Text>
-                <Image style={styles.postTopStreakIcon} source={require('../../IconBin/edit.png')} />
             </ TouchableOpacity>
             
             )
             case "Add": return(
             <TouchableOpacity style={styles.profilePageMultiButton}>
+                <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/friendAdd.png')} />
                 <Text style={styles.postTopButtonText}>Add Friend</Text>
-                <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friendAdd.png')} />
             </ TouchableOpacity>
             )
             case "Remove": return(
             <TouchableOpacity style={styles.profilePageMultiButton}>
+                <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/friendRemove.png')} />
                 <Text style={styles.postTopButtonText}>Remove Friend</Text>
-                <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friendRemove.png')} />
             </ TouchableOpacity>
             )
             default:return(<Text>Sorry?</Text>)

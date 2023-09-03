@@ -11,19 +11,29 @@ import {
 	FlatList,
 	RefreshControl,
 	Switch,
+	TextInput,	
 } from 'react-native'
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
 import {useUserData} from '../../Contexts/UserDataContext'
+import { useNavigation } from '@react-navigation/native';
 import styles from '../../styles'
 
 const EditProfile = ():JSX.Element => {
+	const navigation = useNavigation<any>();
 	const {userData}:any = useUserData()
+	const [isEditing, setIsEditing] = useState<string | null>(null);
+	const [name, setName] = useState(userData.name);
+	const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber);
+
+	const handleReturnPress = () => {
+		navigation.navigate("Profile")
+	}
 
 	const ProfileHeader = ():JSX.Element => {
 
-		const [option1,setOption1] = useState(false)
+		const [option1,setOption1] = useState(true)
 		const [option2,setOption2] = useState(true)
 		const [option3,setOption3] = useState(true)
 		// const [option4,setOption4] = useState(false)
@@ -32,11 +42,37 @@ const EditProfile = ():JSX.Element => {
 		// const [option7,setOption7] = useState(false)
 		// const [option8,setOption8] = useState(false)
 		// const [option9,setOption9] = useState(false)
-
+const renderField = (label: string, value: string, setValue: any) => (
+	<TouchableOpacity
+		style={{...styles.editProfileRow,}}
+		onPress={() => setIsEditing(label)}
+	>
+		<Text style={{ ...styles.profilePageRealName, fontSize: 18 }}>
+		<Image
+			style={{ ...styles.editProfilePencil }}
+			source={require('../../IconBin/edit.png')}
+		/>
+		{label}:
+		</Text>
+		{isEditing === label ? (
+		<TextInput
+			value={value}
+			onChangeText={setValue}
+			onBlur={() => setIsEditing(null)}
+			autoFocus
+			style={{color:"white", fontSize:16}}
+		/>
+		) : (
+		<Text style={{ ...styles.profilePageRealName, fontSize: 16}}>
+			{value}
+		</Text>
+		)}
+	</TouchableOpacity>
+	);
 
 
 		
-        return(
+return(
     <ScrollView style={{...styles.profilePageContainer, height:"100%"}}>
         <View style={styles.profilePageCover}>
 		<View
@@ -109,8 +145,9 @@ const EditProfile = ():JSX.Element => {
 				</TouchableOpacity>
             </View>
             <View style={styles.profilePageMultiBox}>
-                {/* <MultiButtonSplitter /> */}
-				{/* GO BACK BUTTON PROBABLY */}
+				<TouchableOpacity onPress={handleReturnPress} style={styles.profilePageMultiButton}>
+					<Text style={styles.postTopButtonText}>⇦ Back to Profile</Text>
+				</ TouchableOpacity>
             </View>
         </View>
 		<View style={styles.profilePageNamesContainer}>
@@ -118,15 +155,8 @@ const EditProfile = ():JSX.Element => {
         </View>
 		<View style={styles.editProfileBox}>
 				<Text style={{...styles.profilePageRealName, fontSize:24}}>Edit Personal Information</Text>
-				<TouchableOpacity style={styles.editProfileRow}>
-					<Text style={{...styles.profilePageRealName, fontSize:20,}}><Image style={{...styles.editProfilePencil,}} source={require('../../IconBin/edit.png')}/> Name:</Text>
-					<Text style={{...styles.profilePageRealName, fontSize:20,}}>{userData.name}</Text>
-				</TouchableOpacity>
-				<TouchableOpacity style={styles.editProfileRow}>
-					
-					<Text style={{...styles.profilePageRealName, fontSize:20,}}><Image style={{...styles.editProfilePencil,}} source={require('../../IconBin/edit.png')}/> Phone #:</Text>
-					<Text style={{...styles.profilePageRealName, fontSize:20,}}>{userData.phoneNumber}</Text>
-				</TouchableOpacity>
+				{renderField('Name', name, setName)}
+          		{renderField('Phone #', phoneNumber, setPhoneNumber)}
 		</View>
 		<View style={styles.editProfileBox}>
 			

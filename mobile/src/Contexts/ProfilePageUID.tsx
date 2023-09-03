@@ -32,6 +32,16 @@ export const ProfilePageUIDProvider = ({children}:any) => {
         try {
             if (uid == chosenUID) {
                 setMatchingProfileData(userData)
+                let feedQuery = query(
+                    collection(db, "posts"),
+                    where("posterUID","==",chosenUID),
+                    orderBy("timeStamp", "desc"),
+                  ); 
+                const snapshot = await getDocs(feedQuery);
+                let newDocs = snapshot.docs.map(doc => doc.data());
+                console.log("profile posts: ", newDocs)
+                setProfileFeed(newDocs)
+                
             } else {
                 try{
                     const userDocRef = doc(db,"users",chosenUID);

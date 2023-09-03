@@ -35,7 +35,7 @@ const Profile = ({route}:any):JSX.Element => {
     // const navigation = useNavigation();
     const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
     const {skillsList, XPScale, trophyData}:any = route.params;
-    const {matchingProfileData, profilePageUID, setProfilePageUID, profileFeed}:any = useProfilePageUID()
+    const {matchingProfileData,refreshProfileFeed, profilePageUID, setProfilePageUID, profileFeed}:any = useProfilePageUID()
     const {userData}:any = useUserData()
     const {uid}:any = useUID()
     const [buttonType,setButtonType] = useState("")
@@ -80,7 +80,7 @@ const Profile = ({route}:any):JSX.Element => {
 
     const handleRefresh = async () => {
 	  setRefreshing(true);
-	  await refreshFeed();
+	  await refreshProfileFeed();
 	  setStartAfter(null)
 	  setRefreshing(false);
 	};

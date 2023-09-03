@@ -27,6 +27,14 @@ export const ProfilePageUIDProvider = ({children}:any) => {
     useEffect(()=>{
         //IDK IF I NEED THIS EFFECT
     },[])
+    const refreshProfileFeed = () => {
+
+    }
+
+    const matchUIDtoPosts = async() => {
+        findPageUserID(profilePageUID)
+    }
+
     const findPageUserID = async(chosenUID:string) => {
         setProfilePageUID(chosenUID)
         try {
@@ -74,7 +82,7 @@ export const ProfilePageUIDProvider = ({children}:any) => {
     }
 
     return(
-        <ProfilePageUIDContext.Provider value={{matchingProfileData,setProfilePageUID,setMatchingProfileData,profilePageUID, findPageUserID,profileFeed}}>
+        <ProfilePageUIDContext.Provider value={{matchingProfileData,setProfilePageUID,setMatchingProfileData,profilePageUID, findPageUserID,profileFeed,refreshProfileFeed}}>
             {children}
         </ProfilePageUIDContext.Provider>
     )

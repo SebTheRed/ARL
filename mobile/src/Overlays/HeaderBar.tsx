@@ -32,11 +32,11 @@ const HeaderBar = ():JSX.Element => {
 			  index: 0,
 			  routes: [
 				{
-				  name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
+				  name: 'AuthedApp', // Navigate back to the root of the app (not technically root, but the app after login.)
 				  state: {
 					routes: [
 					  {
-						name: 'Profile', // The name of the child navigator
+						name: 'Profile', // The name of the page to navigate to, within the AuthedApp.
 					  },
 					],
 				  },

@@ -28,14 +28,11 @@ type RootStackParamList = {
 const BottomBar = ():JSX.Element => {
 const {matchingProfileData, profilePageUID, setProfilePageUID, setMatchingProfileData}:any = useProfilePageUID()
 const {feedButtonHandler}:any = useFeed()
-  // 2. Use the useNavigation hook with the type
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  // 3. Update the handlePress function
   const handlePress = (val: keyof RootStackParamList) => {
     navigation.navigate(val);
 	setProfilePageUID(null)
-	// setMatchingProfileData(null)
   }
 
 

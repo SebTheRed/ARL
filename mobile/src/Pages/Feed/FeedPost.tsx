@@ -22,10 +22,18 @@ type RootStackParamList = {
 
 const FeedPost = ({data, skillsList}:any):JSX.Element => {
 	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+	//findPageUserID is a function call that sets a unique, profile-filtered, feed on the profile page.
 	const {findPageUserID, }:any = useProfilePageUID()
+
+	//matchingSkillData contains relevant data to the "matched skill". This is to show the proper color, title, flare, etc. Per post.
 	const [matchingSkillData,setMatchingSkillData] = useState({title:"",color:"#fff",flare:"",level:0})
+
+	//translatedTimestamp takes my stupid YYYY-MM-DD-HH-MM-SS timestamp and sets it to a 24 hour "time remaining" string val.
 	const [translatedTimestamp,setTranslatedTimestamp] = useState("")
 
+//This useEffect simply maps over the skillsList, seeking a match.
+//Also, it will set the translated timestamp, using the function timeRemainingUntil24Hours
 useEffect(()=>{
 	skillsList.map((skill:any)=>{
 		if (skill.title === data.postSkill){setMatchingSkillData(skill)}
@@ -34,6 +42,7 @@ useEffect(()=>{
 	
 },[])
 
+//Chat GPT is GOAT for writing this for me. Too lazy *yawn* CHAT-GPT already commented this for me <3
 function timeRemainingUntil24Hours(timestamp: string): string {
 	// Parse the timestamp string into its components
 	const [year, month, day, hour, minute, second] = timestamp.split('-').map(Number);
@@ -54,6 +63,10 @@ function timeRemainingUntil24Hours(timestamp: string): string {
 	return formattedTime;
   }
 
+//handleProfilePress does two things:
+// fist, it runs the function findPageUseriD which is explained above.
+//second, it navigates to the profile page, which uses the matched user's data.
+//reading on, you'll notice that the Profile page is a single .tsx file, which reduces the need for any kind of seperate profile page.
 const handleProfilePress = () => {
 	findPageUserID(data.posterUID)
 	navigation.dispatch(
@@ -61,11 +74,11 @@ const handleProfilePress = () => {
 		  index: 0,
 		  routes: [
 			{
-			  name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
+			  name: 'AuthedApp', // The name of the root (after login root)
 			  state: {
 				routes: [
 				  {
-					name: 'Profile', // The name of the child navigator
+					name: 'Profile', // The name of the page we're navigating to.
 				  },
 				],
 			  },
@@ -76,6 +89,8 @@ const handleProfilePress = () => {
 	}
 
 
+//PostContentSplitter simplly returns different "bodies" of the post, depending on the post type.
+//This needs much more work, and will be updated more-so after I've finalized ExperienceUPloader.
 const PostContentSplitter = ():JSX.Element => {
 	switch(data.type){
 		case "log":return(

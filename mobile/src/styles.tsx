@@ -2,6 +2,11 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
 
+/* 
+
+HEADER BAR/BACKGROUND/BOTTOM BAR 
+
+*/
 backgroundStyle:{
   backgroundColor: '#1c1c1c',
   flex:1,
@@ -44,9 +49,6 @@ bottomBarIconBox:{
   height:"100%",
   width:"20%",
   alignItems:"center",
-  // color:"white",
-  // borderWidth:2,
-  // borderColor:"white",
 },
 bottomBarIcon:{
   tintColor:"white",
@@ -67,6 +69,14 @@ backHeaderText:{
   color:"white",
   fontSize:20,
 },
+
+/* 
+
+TRAITS & SKILLS/TRAITS 
+EXPERIENCE UPLOADER
+INDIVIDUAL TRAIT PAGES.
+
+*/
 sectionContainer: {
   margin: 5,
   borderWidth:2,
@@ -112,7 +122,6 @@ sectionDescription: {
 sectionLevelBox:{
   height:"96%",
   width:"20%",
-  // backgroundColor:"red",
   borderRadius:7,
   alignItems:"center",
   marginRight:0,
@@ -152,10 +161,6 @@ eventTileText:{
   color:"white",
   fontSize:18
 },
-
-
-
-
 borderedText:{
   fontSize:45,
   position:"absolute",
@@ -268,10 +273,17 @@ togglesContainer:{
   // borderRadius:10,
 },
 headerIdk:{
-  color:"blue",
+  // color:"blue",
 },
 sectionDescriptionContainer:{
 },
+
+
+/*
+
+TROPHY SHELF & TROPHIES
+
+*/
 trophyBoxWrapper:{
   flexDirection:"column",
   width:"100%",
@@ -299,6 +311,13 @@ trophyIcon:{
   height: 80, // desired height
   resizeMode: 'contain', // or 'cover'
 },
+
+/*
+
+LOGIN AND SIGN UP
+
+*/
+
 logincontainer: {
   flex: 1,
   justifyContent: 'center',
@@ -387,6 +406,11 @@ loginbuttonText: {
 },
 
 
+/**
+ 
+POSTS & FEED
+
+ */
 feedFlatList:{
   backgroundColor:"#1c1c1c",
   flex:1,
@@ -535,6 +559,11 @@ postBottomCommentsContainer:{
 },
 
 
+/*
+ 
+PROFILE PAGE
+
+ */
 profilePageContainer:{
   backgroundColor:"#1c1c1c",
   // flex:1,

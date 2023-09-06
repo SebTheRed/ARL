@@ -114,7 +114,10 @@ const PostContentSplitter = ():JSX.Element => {
 					<TouchableOpacity style={{...styles.postProfPic}} onPress={handleProfilePress}>
 						{/* ADD IMG TAG WITH HOOK TO USER PROFILE USER ID IMG */}
 					</TouchableOpacity>
-					<Text style={{...styles.postTopName}}>{data.posterUserName} </Text>
+					<TouchableOpacity onPress={handleProfilePress}>
+						<Text style={{...styles.postTopName}}>{data.posterUserName} </Text>
+					</TouchableOpacity>
+					
 				</View>
 				<View style={{...styles.postTopStreakIconContainer}}>
 					<Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />

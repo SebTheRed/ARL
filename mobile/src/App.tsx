@@ -52,6 +52,7 @@ import { useUID } from './Contexts/UIDContext';
 import ExperienceUploader from './Pages/Skills/ExperienceUploader';
 import {db} from './Firebase/firebase'
 import {UserDataProvider, useUserData} from './Contexts/UserDataContext';
+import UserPassPopup from './Pages/Profile/UserPassPopup';
 const Stack = createStackNavigator();
 const SkillStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -336,6 +337,7 @@ const AuthApp = ()=>{
             <Stack.Screen name="Feed" initialParams={{skillsList: skillsList}} component={Feed} />
             <Stack.Screen name="Profile" initialParams={{skillsList:skillsList, XPScale, trophyData}} component={Profile} />
             <Stack.Screen name="EditProfile" component={EditProfile} />
+            <Stack.Screen name="UserPassPopup" component={UserPassPopup} />
           </Stack.Navigator>
         <BottomBar/>
       </>

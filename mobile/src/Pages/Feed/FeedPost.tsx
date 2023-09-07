@@ -149,7 +149,7 @@ const PostContentSplitter = ():JSX.Element => {
 						<Image style={styles.postBottomIcon} source={require('../../IconBin/upvote.png')} />
 						{/* <Text style={styles.postBottomText}></Text> */}
 					</TouchableOpacity>
-					<Text style={styles.postBottomScore}>3</Text>
+					<Text style={styles.postBottomScore}>{data.score}</Text>
 					<TouchableOpacity style={styles.postBottomIconContainer} >
 						<Image style={styles.postBottomIcon} source={require('../../IconBin/downvote.png')} />
 						{/* <Text style={styles.postBottomText}></Text> */}

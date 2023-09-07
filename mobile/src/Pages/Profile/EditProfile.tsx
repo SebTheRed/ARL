@@ -295,20 +295,12 @@ return(
 					</View>
 				</View>
 			</View>
-			<TouchableOpacity style={{...styles.eventTileWrapper,borderColor:`#656565`}}>
+			<TouchableOpacity style={{...styles.eventTileWrapper,borderColor:`#ff4000`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
-						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Change Email</Text>
+						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Change Email / Password</Text>
 					</View>
-					<Text style={{...styles.eventTileText, fontSize:16,}}>Click here to change your email.</Text>
-				</View>
-			</TouchableOpacity>
-			<TouchableOpacity style={{...styles.eventTileWrapper,borderColor:`#656565`}}>
-				<View style={{...styles.eventTileMain}}>
-					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
-						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Change Password</Text>
-					</View>
-					<Text style={{...styles.eventTileText, fontSize:16,}}>Click here to change your password.</Text>
+					<Text style={{...styles.eventTileText, fontSize:16,}}>Click here to change your email and/or password.</Text>
 				</View>
 			</TouchableOpacity>
 

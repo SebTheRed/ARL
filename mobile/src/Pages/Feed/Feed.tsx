@@ -53,7 +53,7 @@ const Feed = ({ route }:any) => {
 	//sixth, refreshControl.. A func component that hosts the "loading" spinner. This triggers automatically thru FlatList.
 	return (
 	  <FlatList
-		data={currentFeed}
+		data={currentFeed.reverse()}
 		renderItem={({ item }) => <FeedPost skillsList={skillsList} data={item} />}
 		keyExtractor={item => item.id.toString()}
 		style={styles.feedFlatList}

@@ -37,7 +37,7 @@ const Profile = ({route}:any):JSX.Element => {
     // const navigation = useNavigation();
     const navigation = useNavigation<any>();
     const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
-    const {setCurrentTraitStat}:any = useCurrentTraitStat()
+    const {setCurrentTraitTitle}:any = useCurrentTraitStat()
     const {skillsList, XPScale, trophyData}:any = route.params;
     const {matchingProfileData,refreshProfileFeed, profilePageUID, setProfilePageUID, profileFeed}:any = useProfilePageUID()
     const {userData}:any = useUserData()
@@ -97,7 +97,7 @@ const Profile = ({route}:any):JSX.Element => {
     }
     const handleTraitStatsPress = (traitName:String) => {
         navigation.navigate("Stats")
-        setCurrentTraitStat(traitName)
+        setCurrentTraitTitle(traitName)
     }
   
 	// const handleLoadMore = () => {

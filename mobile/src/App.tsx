@@ -13,7 +13,7 @@ import { NavigationContainer, StackActions,} from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators} from '@react-navigation/stack';
 import Skills from './Pages/Skills/Skills';
 import SkillsPage from './Pages/Skills/SkillsPage'
-import Stats from './Pages/Stats';
+import Stats from './Pages/Profile/Stats';
 import Map from './Pages/Map/Map';
 import Profile from './Pages/Profile/Profile';
 import EditProfile from './Pages/Profile/EditProfile'

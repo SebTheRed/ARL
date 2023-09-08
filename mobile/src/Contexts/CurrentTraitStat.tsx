@@ -11,6 +11,12 @@ export const useCurrentTraitStat = () => {
   };
   
   export const CurrentTraitStatProvider = ({ children }:any) => {
-    const [currentTraitStat, setCurrentTraitStat] = useState<String>();
-    return <CurrentTraitStat.Provider value={{ currentTraitStat, setCurrentTraitStat }}>{children}</CurrentTraitStat.Provider>;
+    const [currentTraitTitle, setCurrentTraitTitle] = useState<String>();
+    const [currentStats,setCurrentStats] = useState<Object>()
+
+    const generateStats = () => {
+        //THIS IS WHERE WE PULL ALL XP LOGS AND DO MATH ON 'EM
+    }
+
+    return <CurrentTraitStat.Provider value={{ currentTraitTitle, setCurrentTraitTitle,generateStats }}>{children}</CurrentTraitStat.Provider>;
   };

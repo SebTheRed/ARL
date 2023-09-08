@@ -28,6 +28,7 @@ import { UIDProvider } from './Contexts/UIDContext';
 import { FeedProvider } from './Contexts/FeedContext';
 import {CurrentEventProvider} from './Contexts/CurrentEventContext'
 import {ProfilePageUIDProvider} from './Contexts/ProfilePageUID'
+import {CurrentTraitStatProvider} from './Contexts/CurrentTraitStat'
 import {
   SafeAreaView,
   ScrollView,
@@ -358,6 +359,7 @@ const ProfilePages = () => {
       <ProfileStack.Screen name="Profile" initialParams={{skillsList:skillsList, XPScale, trophyData}} component={Profile} />
       <ProfileStack.Screen name="EditProfile" component={EditProfile} />
       <ProfileStack.Screen name="UserPassPopup" component={UserPassPopup} />
+      <ProfileStack.Screen name="Stats" component={Stats} />
     </ProfileStack.Navigator>
   )
 }
@@ -368,6 +370,7 @@ const ProfilePages = () => {
         <ProfilePageUIDProvider>
         <CurrentEventProvider>
           <FeedProvider>
+            <CurrentTraitStatProvider>
             <SafeAreaView style={styles.backgroundStyle}>
               <NavigationContainer >
                 <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
@@ -377,6 +380,7 @@ const ProfilePages = () => {
                 </AuthStack.Navigator>
               </NavigationContainer>
             </SafeAreaView>
+            </CurrentTraitStatProvider>
           </FeedProvider>
         </CurrentEventProvider>
         </ProfilePageUIDProvider>

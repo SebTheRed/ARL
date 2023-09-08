@@ -22,6 +22,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
+import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 
 type TrophyDataObj = {
     title:string,
@@ -36,6 +37,7 @@ const Profile = ({route}:any):JSX.Element => {
     // const navigation = useNavigation();
     const navigation = useNavigation<any>();
     const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
+    const {setCurrentTraitStat}:any = useCurrentTraitStat()
     const {skillsList, XPScale, trophyData}:any = route.params;
     const {matchingProfileData,refreshProfileFeed, profilePageUID, setProfilePageUID, profileFeed}:any = useProfilePageUID()
     const {userData}:any = useUserData()
@@ -92,6 +94,10 @@ const Profile = ({route}:any):JSX.Element => {
     }
     const handleRemoveFriendPress = () => {
 
+    }
+    const handleTraitStatsPress = (traitName:String) => {
+        navigation.navigate("Stats")
+        setCurrentTraitStat(traitName)
     }
   
 	// const handleLoadMore = () => {
@@ -198,7 +204,7 @@ const Profile = ({route}:any):JSX.Element => {
                 {skillsList.map((data:any,index:any)=>{
                     const currentLevel = calculateCurrentLevel(data.title.toLowerCase(), )
                     return(
-                        <TouchableOpacity style={{...styles.profilePageTraitBox, backgroundColor:data.color}} key={index}>
+                        <TouchableOpacity onPress={()=>handleTraitStatsPress(data.title.toLowerCase())} style={{...styles.profilePageTraitBox, backgroundColor:data.color}} key={index}>
                             {/* <Text style={styles.profilePageTraitTitle}>{data.title}</Text> */}
                             <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:25, fontWeight:"bold"}}>{currentLevel}</Text>
                             {/* <Text style={{...styles.borderedTextShadow, fontSize:25,fontWeight:"bold", color:"#fff"}}>{currentLevel}</Text> */}

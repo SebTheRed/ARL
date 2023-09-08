@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
 import {db, auth,} from '../../Firebase/firebase'
-import {setDoc,doc} from 'firebase/firestore'
+import {setDoc,doc, Timestamp} from 'firebase/firestore'
 import { useUserData } from '../../Contexts/UserDataContext';
 import LinearGradient from 'react-native-linear-gradient';
 import { useUID } from '../../Contexts/UIDContext';
@@ -82,8 +82,8 @@ const ExperienceUploader = ():JSX.Element => {
         });
       };
     const handlePostSubmit = async() => {
-        
         let timeStamp = generateTimestamp()
+        const postID = `${uid}_${timeStamp}`
         if (text.length>15) {     
             const postObj = {
                 posterUID:uid,
@@ -101,13 +101,15 @@ const ExperienceUploader = ():JSX.Element => {
                 publicPost:settingOne,
                 mapPost:settingTwo,
                 globalPost:settingThree,
-                id: `${uid}_${timeStamp}`,
+                id: postID,
                 uid: uid,
                 type:currentEvent.type
             }
             if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
             try {
-                await setDoc(doc(db, "posts", `${uid}_${timeStamp}`),postObj)
+                const uniqueUserPath = `users/${uid}/xpLog`
+                await setDoc(doc(db,uniqueUserPath, postID), {id: postID, timeStamp:timeStamp, eventTitle:currentEvent.title, traitType:currentEvent.skillTitle, xp:currentEvent.xp })
+                await setDoc(doc(db, "posts", postID),postObj)
                 .then(() => {
                     console.log("Post Success!");
                     // Go back to the root navigator

@@ -36,7 +36,7 @@ const HeaderBar = ():JSX.Element => {
 				  state: {
 					routes: [
 					  {
-						name: 'Profile', // The name of the page to navigate to, within the AuthedApp.
+						name: 'ProfileStack', // The name of the page to navigate to, within the AuthedApp.
 					  },
 					],
 				  },

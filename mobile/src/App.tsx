@@ -56,6 +56,7 @@ import UserPassPopup from './Pages/Profile/UserPassPopup';
 const Stack = createStackNavigator();
 const SkillStack = createStackNavigator();
 const AuthStack = createStackNavigator();
+const ProfileStack = createStackNavigator()
 type RootStackParamList = {
   Profile: undefined;
   Map: undefined;
@@ -335,9 +336,7 @@ const AuthApp = ()=>{
             <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
             <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces,}} component={Map} />
             <Stack.Screen name="Feed" initialParams={{skillsList: skillsList}} component={Feed} />
-            <Stack.Screen name="Profile" initialParams={{skillsList:skillsList, XPScale, trophyData}} component={Profile} />
-            <Stack.Screen name="EditProfile" component={EditProfile} />
-            <Stack.Screen name="UserPassPopup" component={UserPassPopup} />
+            <Stack.Screen name="ProfileStack" component={ProfilePages} />
           </Stack.Navigator>
         <BottomBar/>
       </>
@@ -351,6 +350,16 @@ const AuthApp = ()=>{
         </ScrollView>
     )
   }
+}
+
+const ProfilePages = () => {
+  return(
+    <ProfileStack.Navigator initialRouteName='Profile' screenOptions={{headerShown:false}}>
+      <ProfileStack.Screen name="Profile" initialParams={{skillsList:skillsList, XPScale, trophyData}} component={Profile} />
+      <ProfileStack.Screen name="EditProfile" component={EditProfile} />
+      <ProfileStack.Screen name="UserPassPopup" component={UserPassPopup} />
+    </ProfileStack.Navigator>
+  )
 }
 
   return(

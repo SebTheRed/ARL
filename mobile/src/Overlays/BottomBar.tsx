@@ -55,10 +55,10 @@ const {feedButtonHandler}:any = useFeed()
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/addChart.png')} />
 				<Text style={styles.bottomBarText}>Traits</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Stats")}>
+			{/* <TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Stats")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/areaChart.png')} />
 				<Text style={styles.bottomBarText}>Stats</Text>
-			</TouchableOpacity>
+			</TouchableOpacity> */}
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Trophies")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/trophy.png')} />
 				<Text style={styles.bottomBarText}>Trophies</Text>

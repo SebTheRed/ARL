@@ -78,7 +78,7 @@ const handleProfilePress = () => {
 			  state: {
 				routes: [
 				  {
-					name: 'Profile', // The name of the page we're navigating to.
+					name: 'ProfileStack', // The name of the page we're navigating to.
 				  },
 				],
 			  },

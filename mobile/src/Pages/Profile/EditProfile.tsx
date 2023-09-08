@@ -11,7 +11,7 @@ import {
 	FlatList,
 	RefreshControl,
 	Switch,
-	TextInput,	
+	TextInput,
 } from 'react-native'
 import React from 'react'
 import { useEffect, useState } from 'react';
@@ -48,6 +48,7 @@ const EditProfile = ():JSX.Element => {
 		console.log(userData.settings.darkMode)
 		console.log(userData.settings.notifications)
 	},[userData])
+	
 	useEffect(()=>{
 		const userDocRef = doc(db, "users", uid);
 		const changeToggle = async()=>{
@@ -61,11 +62,11 @@ const EditProfile = ():JSX.Element => {
 			}
 		}
 		changeToggle()
-	},[option1,option2,option3])
+	},[option1,option2,option3]);
 
 	const handleReturnPress = () => {
 		navigation.navigate("Profile")
-	}
+	};
 	const handleSwitch = async(switchVal:string) => {
 		
 	// 	switch(switchVal){
@@ -80,7 +81,7 @@ const EditProfile = ():JSX.Element => {
 	// 		break;
 	// 	}
 	// }
-	}
+	};
 	const handleTextInputBlur = async (label: string) => {
 		setIsEditing(null);
 		const userDocRef = doc(db, "users", uid); // Replace 'db' and 'uid' with your actual Firestore database instance and user ID
@@ -114,34 +115,37 @@ const EditProfile = ():JSX.Element => {
 			console.log("Unknown label");
 			break;
 		}
-	  };	
-		const renderField = (label: string, value: string, setValue: any) => (
-			<TouchableOpacity
-				style={{...styles.editProfileRow,}}
-				onPress={() => setIsEditing(label)}
-			>
-				<Text style={{ ...styles.profilePageRealName, fontSize: 18 }}>
-				<Image
-					style={{ ...styles.editProfilePencil }}
-					source={require('../../IconBin/edit.png')}
-				/>
-				{label}:
-				</Text>
-				{isEditing === label ? (
-				<TextInput
-					value={value}
-					onChangeText={setValue}
-					onBlur={()=>handleTextInputBlur(label)}
-					autoFocus
-					style={{color:"white", fontSize:16}}
-				/>
-				) : (
-				<Text style={{ ...styles.profilePageRealName, fontSize: 16}}>
-					{value}
-				</Text>
-				)}
-			</TouchableOpacity>
-			);
+	};
+	const handleChangeCredentialsPress = ()=>{
+		navigation.navigate("UserPassPopup")
+	};
+	const renderField = (label: string, value: string, setValue: any) => (
+		<TouchableOpacity
+			style={{...styles.editProfileRow,}}
+			onPress={() => setIsEditing(label)}
+		>
+			<Text style={{ ...styles.profilePageRealName, fontSize: 18 }}>
+			<Image
+				style={{ ...styles.editProfilePencil }}
+				source={require('../../IconBin/edit.png')}
+			/>
+			{label}:
+			</Text>
+			{isEditing === label ? (
+			<TextInput
+				value={value}
+				onChangeText={setValue}
+				onBlur={()=>handleTextInputBlur(label)}
+				autoFocus
+				style={{color:"white", fontSize:16}}
+			/>
+			) : (
+			<Text style={{ ...styles.profilePageRealName, fontSize: 16}}>
+				{value}
+			</Text>
+			)}
+		</TouchableOpacity>
+	);
 
 
 		
@@ -295,7 +299,7 @@ return(
 					</View>
 				</View>
 			</View>
-			<TouchableOpacity style={{...styles.eventTileWrapper,borderColor:`#ff4000`}}>
+			<TouchableOpacity onPress={handleChangeCredentialsPress} style={{...styles.eventTileWrapper,borderColor:`#ff4000`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
 						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Change Email / Password</Text>

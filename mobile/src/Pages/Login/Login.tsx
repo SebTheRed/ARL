@@ -113,7 +113,7 @@ const signIn = async(e:any) => {
 				
 				<View style={styles.logininputContainer}>
 					<Text style={styles.loginlabel}>email</Text>
-					<TextInput onChangeText={(text)=>setEmail(text)} style={styles.logininput}  />
+					<TextInput autoCapitalize='none' onChangeText={(text)=>setEmail(text)} style={styles.logininput}  />
 				</View>
 				<View style={styles.logininputContainer}>
 					<Text style={styles.loginlabel}>password</Text>

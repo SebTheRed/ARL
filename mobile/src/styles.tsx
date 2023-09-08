@@ -736,6 +736,15 @@ editProfilePencil:{
   height: 20, // desired height
   resizeMode: 'contain', // or 'cover'
 },
+popUpModal:{
+  backgroundColor:"#1c1c1c",
+  height:"100%"
+},
+changeCredsWrapper:{
+  backgroundColor:"#1c1c1c",
+  height:"100%"
+},
+
 
 
 

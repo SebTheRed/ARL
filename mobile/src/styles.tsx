@@ -228,6 +228,14 @@ skillPageTitle:{
   color:"white",
   fontSize:40,
 },
+skillsStatsButton:{
+  borderRadius:4,
+  width:"95%",
+  alignItems:"center",
+  height:30,
+  justifyContent:"center",
+  margin:10,
+},
 expUploaderTop:{
   backgroundColor:"#1c1c1c",
   flex:1,

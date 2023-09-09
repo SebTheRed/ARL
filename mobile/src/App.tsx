@@ -333,7 +333,6 @@ const AuthApp = ()=>{
         <HeaderBar />
           <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Skills"  component={SkillsNav} />
-            <Stack.Screen name="Stats"  component={Stats} />
             <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
             <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces,}} component={Map} />
             <Stack.Screen name="Feed" initialParams={{skillsList: skillsList}} component={Feed} />

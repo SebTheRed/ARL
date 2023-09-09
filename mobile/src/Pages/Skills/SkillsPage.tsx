@@ -12,16 +12,18 @@ import {
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import EventTile from './EventTile'
 import {useUserData} from '../../Contexts/UserDataContext'
+import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 type SkillPageProps = PropsWithChildren<{
     route:any
 }>
 type RootStackParamList = {
   SkillsMain:undefined,
   ExperienceUploader:undefined,
+  Stats:undefined,
 }
 
 
@@ -31,6 +33,7 @@ type RootStackParamList = {
 ////// JSX START FUN COMPONENT //////
 const SkillsPage = ({route}:SkillPageProps):JSX.Element => {
 const {userData}:any = useUserData()
+const {setCurrentTraitTitle}:any = useCurrentTraitStat()
 const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 const {skillData, XPScale, XPTriggerEvents} = route.params;
 
@@ -75,6 +78,33 @@ const sideXPVals = calculateXPInfo(currentLevel)
 const handlePress = () => { //REALLY SHOULD NOT USE ANY HERE
   navigation.navigate("SkillsMain");
 }
+const handleStatsPress = () => {
+  setCurrentTraitTitle(skillData.title)
+  navigation.dispatch(
+    CommonActions.reset({
+      index: 0,
+      routes: [
+        {
+          name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
+          state: {
+            routes: [
+              {
+                name: 'ProfileStack', // The name of the child navigator
+                state:{
+                  routes:[
+                    {
+                      name:'Stats'
+                    }
+                  ]
+                }
+              },
+            ],
+          },
+        },
+      ],
+    })
+  );
+}
 
 // useEffect(()=>{
 //   const findSkillByTitle = (title:string) => skillsLlist.find(skill => skill.title === title);
@@ -103,6 +133,9 @@ if (skillData) {
               <Text style={styles.skillPageXPText}>XP- {matchingSkillXp}</Text>
               <Text style={styles.skillPageXPText}>NEXT- {sideXPVals.next}</Text>
             </View>
+            <TouchableOpacity onPress={handleStatsPress} style={{...styles.skillsStatsButton, backgroundColor:`${skillData.color}`}}>
+              <Text style={{color:"#1c1c1c",fontSize:18}}>Press here to view your {skillData.title} stats</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.eventTileBox}>
             <Text style={styles.skillPageTitle}>Post an Experience</Text>

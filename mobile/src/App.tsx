@@ -29,6 +29,7 @@ import { FeedProvider } from './Contexts/FeedContext';
 import {CurrentEventProvider} from './Contexts/CurrentEventContext'
 import {ProfilePageUIDProvider} from './Contexts/ProfilePageUID'
 import {CurrentTraitStatProvider} from './Contexts/CurrentTraitStat'
+import {LastPageProvider} from './Contexts/LastPageContext'
 import {
   SafeAreaView,
   ScrollView,
@@ -364,27 +365,29 @@ const ProfilePages = () => {
 }
 
   return(
-    <UIDProvider>
-      <UserDataProvider>
-        <ProfilePageUIDProvider>
-        <CurrentEventProvider>
-          <FeedProvider>
-            <CurrentTraitStatProvider>
-            <SafeAreaView style={styles.backgroundStyle}>
-              <NavigationContainer >
-                <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
-                  <AuthStack.Screen name="Login" component={Login}/>
-                  <AuthStack.Screen name="AuthedApp" component={AuthApp} />
-                  <AuthStack.Screen name="SignUp" component={SignUp} />
-                </AuthStack.Navigator>
-              </NavigationContainer>
-            </SafeAreaView>
-            </CurrentTraitStatProvider>
-          </FeedProvider>
-        </CurrentEventProvider>
-        </ProfilePageUIDProvider>
-      </UserDataProvider>
-    </UIDProvider>
+    <LastPageProvider>
+      <UIDProvider>
+        <UserDataProvider>
+          <ProfilePageUIDProvider>
+          <CurrentEventProvider>
+            <FeedProvider>
+              <CurrentTraitStatProvider>
+              <SafeAreaView style={styles.backgroundStyle}>
+                <NavigationContainer >
+                  <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
+                    <AuthStack.Screen name="Login" component={Login}/>
+                    <AuthStack.Screen name="AuthedApp" component={AuthApp} />
+                    <AuthStack.Screen name="SignUp" component={SignUp} />
+                  </AuthStack.Navigator>
+                </NavigationContainer>
+              </SafeAreaView>
+              </CurrentTraitStatProvider>
+            </FeedProvider>
+          </CurrentEventProvider>
+          </ProfilePageUIDProvider>
+        </UserDataProvider>
+      </UIDProvider>
+    </LastPageProvider>
   )
 }
 

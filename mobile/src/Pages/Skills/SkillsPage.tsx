@@ -18,6 +18,7 @@ import EventTile from './EventTile'
 import {useUserData} from '../../Contexts/UserDataContext'
 import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
+import { useLastPage } from '../../Contexts/LastPageContext';
 import {useUID} from '../../Contexts/UIDContext'
 type SkillPageProps = PropsWithChildren<{
     route:any
@@ -35,6 +36,7 @@ type RootStackParamList = {
 ////// JSX START FUN COMPONENT //////
 const SkillsPage = ({route}:SkillPageProps):JSX.Element => {
 const {uid}:any = useUID()
+const {setLastPage}:any = useLastPage()
 const {setProfilePageUID}:any = useProfilePageUID()
 const {userData}:any = useUserData()
 const {setCurrentTraitTitle}:any = useCurrentTraitStat()
@@ -83,6 +85,7 @@ const handlePress = () => { //REALLY SHOULD NOT USE ANY HERE
   navigation.navigate("SkillsMain");
 }
 const handleStatsPress = () => {
+  setLastPage(skillData.title)
   setProfilePageUID(uid)
   setCurrentTraitTitle(skillData.title)
   navigation.dispatch(

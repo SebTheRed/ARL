@@ -7,7 +7,8 @@ import {
     useColorScheme,
     View,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    FlatList
   } from 'react-native';
 import {
   LineChart,
@@ -19,10 +20,11 @@ import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 // import { useUID } from '../../Contexts/UIDContext';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import styles from '../../styles'
-import { useNavigation } from '@react-navigation/native';
-import { FlatList } from 'react-native-gesture-handler';
+import { useNavigation, CommonActions } from '@react-navigation/native';
+import { useLastPage } from '../../Contexts/LastPageContext';
 
 const Stats = ({route}:any):JSX.Element => {
+  const {lastPage}:any = useLastPage()
   const {skillsList, XPScale, trophyData}:any = route.params;
   const navigation = useNavigation<any>();
   // const {uid}:any = useUID()
@@ -69,8 +71,36 @@ const Stats = ({route}:any):JSX.Element => {
   },[])
 
   const handleGoBack = () => {
-    navigation.navigate("Profile")
+    if (lastPage == "profile") {
+      navigation.navigate("Profile")
+    } else {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
+                state: {
+                  routes: [
+                    {
+                      name: 'Skills', // The name of the child navigator
+                      state:{
+                        routes:[
+                          {
+                            name:`${lastPage}`
+                          }
+                        ]
+                      }
+                    },
+                  ],
+                },
+              },
+            ],
+          })
+        );
+    
   }
+}
 
   const calculateLineGraphData = (logList:Object[]) => {
     // let testXPMonthData = [100,99,98,97,96,95,94,93,92,91,90,79,78,77,76,75,74,73,72,71,70,59,58,57,56,55,54,53,52,51]

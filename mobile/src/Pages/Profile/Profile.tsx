@@ -22,6 +22,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
+import { useLastPage } from '../../Contexts/LastPageContext';
 import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 
 type TrophyDataObj = {
@@ -36,6 +37,7 @@ type TrophyDataObj = {
 const Profile = ({route}:any):JSX.Element => {
     // const navigation = useNavigation();
     const navigation = useNavigation<any>();
+    const {setLastPage}:any = useLastPage()
     const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
     const {setCurrentTraitTitle}:any = useCurrentTraitStat()
     const {skillsList, XPScale, trophyData}:any = route.params;
@@ -96,6 +98,7 @@ const Profile = ({route}:any):JSX.Element => {
 
     }
     const handleTraitStatsPress = (traitName:String) => {
+        setLastPage("profile")
         navigation.navigate("Stats")
         setCurrentTraitTitle(traitName)
     }

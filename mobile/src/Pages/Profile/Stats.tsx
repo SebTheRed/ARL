@@ -16,7 +16,8 @@ import React, {useEffect, useState} from 'react'
 import { db } from '../../Firebase/firebase';
 import { getDocs, query, orderBy, startAt, endAt,where, collection, limit,startAfter } from "firebase/firestore"; // Import onSnapshot
 import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
-import { useUID } from '../../Contexts/UIDContext';
+// import { useUID } from '../../Contexts/UIDContext';
+import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import styles from '../../styles'
 import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -24,7 +25,8 @@ import { FlatList } from 'react-native-gesture-handler';
 const Stats = ({route}:any):JSX.Element => {
   const {skillsList, XPScale, trophyData}:any = route.params;
   const navigation = useNavigation<any>();
-  const {uid}:any = useUID()
+  // const {uid}:any = useUID()
+  const {profilePageUID}:any = useProfilePageUID()
   const {currentTraitTitle}:any = useCurrentTraitStat()
   const [currentLog,setCurrentLog] = useState<any>()
   const [allMatchingLogData,setAllMatchingLogData] = useState<any>([])
@@ -41,7 +43,7 @@ const Stats = ({route}:any):JSX.Element => {
   }
   const fetchDataFresh = async () => {
     let feedQuery;
-    const collectionPath = `users/${uid}/xpLog`
+    const collectionPath = `users/${profilePageUID}/xpLog`
       feedQuery = query(
         collection(db, collectionPath),
         orderBy("timeStamp", "desc"),

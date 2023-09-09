@@ -55,7 +55,7 @@ const Stats = ({route}:any):JSX.Element => {
     if (newDocs.length > 0) {
       calculateLineGraphData(newDocs)
       skillSwitch()
-      let sortedByTraitDocs:any = []
+      let sortedByTraitDocs:any = [{eventTitle:"Experience", xp:"XP", timeStamp:"Timestamp", id:"HEADEROFLIST"}]
       newDocs.map((doc)=>{
         if (doc.traitType !== currentTraitTitle) { return; }
         sortedByTraitDocs.push(doc)
@@ -147,7 +147,16 @@ const Stats = ({route}:any):JSX.Element => {
   const handleLoadMoreLogs = () => {
 
   }
-
+  const convertTimestampToMMDDYY = (timestamp:string) => {
+    if (timestamp === "Timestamp") {return "Date"};
+    // Split the timestamp by '-' to get each component
+    const [year, month, day] = timestamp.split('-').slice(0, 3);
+  
+    // Convert to MM/DD/YY format
+    const formattedDate = `${month}/${day}/${year.slice(-2)}`;
+  
+    return formattedDate;
+  };
 
   const StatsHeader = ():JSX.Element => {
     return(
@@ -183,23 +192,23 @@ const Stats = ({route}:any):JSX.Element => {
     )
   }
 
-const LogPost = ():JSX.Element => {
+const LogPost = ({data}:any):JSX.Element => {
   return(
-    <View>
-      <Text>hi</Text>
+    <View style={{...styles.logPostContainer, width:(Dimensions.get("window").width)-20}}>
+      <Text style={styles.logPostTitle}>{data.eventTitle}</Text>
+      <Text style={{...styles.logPostTitle, color:`${matchingColor}`}}>{data.xp}</Text>
+      <Text style={styles.logPostTitle}>{convertTimestampToMMDDYY(data.timeStamp)}</Text>
     </View>
   )
 }
 
     return(
       <FlatList
-      renderItem={({item})=><LogPost  />}
+      renderItem={({item})=><LogPost data={item} />}
       style={{...styles.feedFlatList}}
       ListHeaderComponent={StatsHeader}
       data={allMatchingLogData}
       keyExtractor={item=>item.id.toString()}
-      onEndReached={handleLoadMoreLogs}
-      onEndReachedThreshold={0.1}
       />
     )
 } 

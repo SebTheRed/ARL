@@ -750,7 +750,8 @@ changeCredsWrapper:{
 
 statsHeaderContainer:{
   flex:1,
-  alignItems:"center"
+  alignItems:"center",
+  height:320,
 },
 statsTitle:{
   color:"white",
@@ -763,7 +764,21 @@ statsGraphContainer:{
 statsLogContainer:{},
 
 
-
+logPostContainer:{
+  width:"90%",
+  borderWidth:2,
+  borderColor:"#656565",
+  borderRadius:4,
+  marginVertical:2.5,
+  marginHorizontal:10,
+  flexDirection:"row",
+  height:30,
+  justifyContent:"space-between"
+},
+logPostTitle:{
+  color:"#fff",
+  fontSize:20,
+},
 
 
 

@@ -17,6 +17,8 @@ import { NavigationProp } from '@react-navigation/native';
 import EventTile from './EventTile'
 import {useUserData} from '../../Contexts/UserDataContext'
 import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
+import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
+import {useUID} from '../../Contexts/UIDContext'
 type SkillPageProps = PropsWithChildren<{
     route:any
 }>
@@ -32,6 +34,8 @@ type RootStackParamList = {
 
 ////// JSX START FUN COMPONENT //////
 const SkillsPage = ({route}:SkillPageProps):JSX.Element => {
+const {uid}:any = useUID()
+const {setProfilePageUID}:any = useProfilePageUID()
 const {userData}:any = useUserData()
 const {setCurrentTraitTitle}:any = useCurrentTraitStat()
 const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -79,6 +83,7 @@ const handlePress = () => { //REALLY SHOULD NOT USE ANY HERE
   navigation.navigate("SkillsMain");
 }
 const handleStatsPress = () => {
+  setProfilePageUID(uid)
   setCurrentTraitTitle(skillData.title)
   navigation.dispatch(
     CommonActions.reset({

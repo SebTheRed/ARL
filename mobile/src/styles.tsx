@@ -748,6 +748,22 @@ changeCredsWrapper:{
 
 
 
+statsHeaderContainer:{
+  flex:1,
+},
+statsTitle:{
+  color:"white",
+  fontSize:24,
+},
+statsGraphContainer:{
+  height:30
+},
+statsLogContainer:{},
+
+
+
+
+
 
 });
 

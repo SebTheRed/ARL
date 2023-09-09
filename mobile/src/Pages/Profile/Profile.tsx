@@ -204,7 +204,7 @@ const Profile = ({route}:any):JSX.Element => {
                 {skillsList.map((data:any,index:any)=>{
                     const currentLevel = calculateCurrentLevel(data.title.toLowerCase(), )
                     return(
-                        <TouchableOpacity onPress={()=>handleTraitStatsPress(data.title.toLowerCase())} style={{...styles.profilePageTraitBox, backgroundColor:data.color}} key={index}>
+                        <TouchableOpacity onPress={()=>handleTraitStatsPress(data.title)} style={{...styles.profilePageTraitBox, backgroundColor:data.color}} key={index}>
                             {/* <Text style={styles.profilePageTraitTitle}>{data.title}</Text> */}
                             <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:25, fontWeight:"bold"}}>{currentLevel}</Text>
                             {/* <Text style={{...styles.borderedTextShadow, fontSize:25,fontWeight:"bold", color:"#fff"}}>{currentLevel}</Text> */}

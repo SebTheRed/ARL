@@ -751,11 +751,11 @@ changeCredsWrapper:{
 statsHeaderContainer:{
   flex:1,
   alignItems:"center",
-  height:320,
+  height:360,
 },
 statsTitle:{
   color:"white",
-  fontSize:28,
+  fontSize:30,
 },
 statsGraphContainer:{
   marginVertical:10,

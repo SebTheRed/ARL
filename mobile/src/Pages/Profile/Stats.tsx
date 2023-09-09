@@ -55,7 +55,7 @@ const Stats = ({route}:any):JSX.Element => {
     if (newDocs.length > 0) {
       calculateLineGraphData(newDocs)
       skillSwitch()
-      let sortedByTraitDocs:any = [{eventTitle:"Experience", xp:"XP", timeStamp:"Timestamp", id:"HEADEROFLIST"}]
+      let sortedByTraitDocs:any = [{eventTitle:"Event Name", xp:"XP", timeStamp:"Timestamp", id:"HEADEROFLIST"}]
       newDocs.map((doc)=>{
         if (doc.traitType !== currentTraitTitle) { return; }
         sortedByTraitDocs.push(doc)
@@ -169,7 +169,7 @@ const Stats = ({route}:any):JSX.Element => {
           <View style={styles.statsGraphContainer}>
             {Object.keys(lineChartData).length > 0 && 
               <View style={{alignItems:"center"}}>
-                <Text style={{...styles.statsTitle, fontSize:18,}}>XP over the last 30 days:</Text>
+                <Text style={{...styles.statsTitle, fontSize:22,}}>{currentTraitTitle} XP over the last 30 days:</Text>
                 <LineChart
                   data={lineChartData}
                   width={(Dimensions.get("window").width)-20}
@@ -184,10 +184,13 @@ const Stats = ({route}:any):JSX.Element => {
                     borderWidth:2,
                   }}
                 />
+                <View style={{height:20,}}></View>
+                <Text style={{...styles.statsTitle, fontSize:22,}}>All of your {currentTraitTitle} Experiences:</Text>
               </View>
             }
           </View>
       </View>
+      
     </>
     )
   }
@@ -195,9 +198,9 @@ const Stats = ({route}:any):JSX.Element => {
 const LogPost = ({data}:any):JSX.Element => {
   return(
     <View style={{...styles.logPostContainer, width:(Dimensions.get("window").width)-20}}>
-      <Text style={styles.logPostTitle}>{data.eventTitle}</Text>
-      <Text style={{...styles.logPostTitle, color:`${matchingColor}`}}>{data.xp}</Text>
-      <Text style={styles.logPostTitle}>{convertTimestampToMMDDYY(data.timeStamp)}</Text>
+      <Text style={{...styles.logPostTitle, width:"45%"}}>{data.eventTitle}</Text>
+      <Text style={{...styles.logPostTitle, width:"10%", color:`${matchingColor}`}}>{data.xp}</Text>
+      <Text style={{...styles.logPostTitle, width:"25%"}}>{convertTimestampToMMDDYY(data.timeStamp)}</Text>
     </View>
   )
 }

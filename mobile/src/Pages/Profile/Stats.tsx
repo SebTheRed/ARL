@@ -21,17 +21,24 @@ import styles from '../../styles'
 import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
 
-const Stats = ():JSX.Element => {
+const Stats = ({route}:any):JSX.Element => {
+  const {skillsList, XPScale, trophyData}:any = route.params;
   const navigation = useNavigation<any>();
   const {uid}:any = useUID()
   const {currentTraitTitle}:any = useCurrentTraitStat()
   const [currentLog,setCurrentLog] = useState<any>()
   const [allLogData,setAllLogData] = useState<any>()
   const [lineChartData,setLineChartData] = useState<any>({})
+  const [matchingColor,setMatchingColor] = useState(String)
 
 
   useEffect(()=>{
 //FETCH ALL DATA
+  const skillSwitch = ()=>{
+    skillsList.map((skill:any,i:number)=>{
+      if (skill.title == currentTraitTitle){setMatchingColor(skill.color)}
+    })
+  }
   const fetchDataFresh = async () => {
     let feedQuery;
     const collectionPath = `users/${uid}/xpLog`
@@ -49,6 +56,7 @@ const Stats = ():JSX.Element => {
       // setAllLogData(() => [...newDocs]);
       calculateHeatMapData(newDocs)
       calculateLineGraphData(newDocs)
+      skillSwitch()
     }
   };
   fetchDataFresh()
@@ -69,20 +77,23 @@ const Stats = ():JSX.Element => {
       datasets:[
         {
           data: testXPMonthData,//PUT ARRAY OF COMBINED TOTAL OF EACH 30 DAYS HERE!!
-          color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-          strokeWidth: 2 // optional
-        }
-      ]
+        },
+      ],
     }
     setLineChartData(data)
   }
   
   const chartConfig = {
-    backgroundGradientFrom: "#1E2923",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#08130D",
-    backgroundGradientToOpacity: 0.5,
+    backgroundGradientFrom: "#656565",
+    backgroundGradientFromOpacity: 0.3,
+    backgroundGradientTo: "#656565",
+    backgroundGradientToOpacity: 0.3,
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    propsForDots: {
+      r: "1",
+      strokeWidth: "3",
+      stroke: matchingColor
+    },
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false // optional

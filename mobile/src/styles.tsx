@@ -757,6 +757,7 @@ statsTitle:{
   fontSize:28,
 },
 statsGraphContainer:{
+  marginVertical:10,
   height:280,
 },
 statsLogContainer:{},

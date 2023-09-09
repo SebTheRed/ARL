@@ -27,7 +27,7 @@ const Stats = ({route}:any):JSX.Element => {
   const {uid}:any = useUID()
   const {currentTraitTitle}:any = useCurrentTraitStat()
   const [currentLog,setCurrentLog] = useState<any>()
-  const [allLogData,setAllLogData] = useState<any>()
+  const [allMatchingLogData,setAllMatchingLogData] = useState<any>([])
   const [lineChartData,setLineChartData] = useState<any>({})
   const [matchingColor,setMatchingColor] = useState(String)
 
@@ -53,9 +53,14 @@ const Stats = ({route}:any):JSX.Element => {
     console.log("newdocs", newDocs.length)
 
     if (newDocs.length > 0) {
-      // setAllLogData(() => [...newDocs]);
       calculateLineGraphData(newDocs)
       skillSwitch()
+      let sortedByTraitDocs:any = []
+      newDocs.map((doc)=>{
+        if (doc.traitType !== currentTraitTitle) { return; }
+        sortedByTraitDocs.push(doc)
+      })
+      setAllMatchingLogData(sortedByTraitDocs)
     }
   };
   fetchDataFresh()
@@ -128,20 +133,6 @@ const Stats = ({route}:any):JSX.Element => {
     barPercentage: 0.5,
     useShadowColorFromDataset: false // optional
   };
-  const heatMapConfig = {
-    color: (opacity = 1, value:any) => {
-      if (value && value.count > 0) {
-        const adjustedOpacity = Math.min(value.count / 10, 1); // Adjust this divisor to control the color intensity
-        return `rgba(255, 255, 0, ${adjustedOpacity})`; // Yellow color with varying opacity
-      }
-      return `rgba(128, 128, 128, ${opacity})`; // Gray color for empty days
-    },
-    backgroundGradientFrom: "#1c1c1c",
-    backgroundGradientFromOpacity: 0.3,
-    backgroundGradientTo: "#656565",
-    backgroundGradientToOpacity: 0.3,
-    
-  }
   const breakOutLogArray = () => {
 
   }
@@ -153,19 +144,23 @@ const Stats = ({route}:any):JSX.Element => {
     const hundredDays = new Date(today)
     return hundredDays.setDate(today.getDate()-100)
   }
+  const handleLoadMoreLogs = () => {
+
+  }
 
 
   const StatsHeader = ():JSX.Element => {
     return(
       <>
-      <TouchableOpacity onPress={()=>handleGoBack()} style={{...styles.closeUploaderButton, height:80,}}>
+      <TouchableOpacity onPress={()=>handleGoBack()} style={{...styles.closeUploaderButton, paddingTop:0,}}>
         <Text style={{...styles.backHeaderText}}>⇦Go Back</Text>
       </TouchableOpacity>
       <View style={styles.statsHeaderContainer}>
+        <Text style={{...styles.statsTitle, color:`${matchingColor}`}}>{currentTraitTitle}</Text>
           <View style={styles.statsGraphContainer}>
             {Object.keys(lineChartData).length > 0 && 
-              <View style={{}}>
-                <Text style={{...styles.statsTitle, fontSize:16,}}> •XP over the last 30 days:</Text>
+              <View style={{alignItems:"center"}}>
+                <Text style={{...styles.statsTitle, fontSize:18,}}>XP over the last 30 days:</Text>
                 <LineChart
                   data={lineChartData}
                   width={(Dimensions.get("window").width)-20}
@@ -188,17 +183,24 @@ const Stats = ({route}:any):JSX.Element => {
     )
   }
 
-
+const LogPost = ():JSX.Element => {
+  return(
+    <View>
+      <Text>hi</Text>
+    </View>
+  )
+}
 
     return(
       <FlatList
+      renderItem={({item})=><LogPost  />}
       style={{...styles.feedFlatList}}
       ListHeaderComponent={StatsHeader}
-      >
-          <View style={styles.statsLogContainer}>
-            {/* WELL OF OLD XP POSTS. PAGINATE THRU THEM!! IT'LL BE HUGE!! */}
-          </View>
-      </FlatList>
+      data={allMatchingLogData}
+      keyExtractor={item=>item.id.toString()}
+      onEndReached={handleLoadMoreLogs}
+      onEndReachedThreshold={0.1}
+      />
     )
 } 
 

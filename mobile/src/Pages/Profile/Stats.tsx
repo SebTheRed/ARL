@@ -27,6 +27,7 @@ const Stats = ():JSX.Element => {
   const {currentTraitTitle}:any = useCurrentTraitStat()
   const [currentLog,setCurrentLog] = useState<any>()
   const [allLogData,setAllLogData] = useState<any>()
+  const [lineChartData,setLineChartData] = useState<any>({})
 
 
   useEffect(()=>{
@@ -45,7 +46,9 @@ const Stats = ():JSX.Element => {
     console.log("newdocs", newDocs.length)
 
     if (newDocs.length > 0) {
-      setAllLogData(() => [...newDocs]);
+      // setAllLogData(() => [...newDocs]);
+      calculateHeatMapData(newDocs)
+      calculateLineGraphData(newDocs)
     }
   };
   fetchDataFresh()
@@ -55,13 +58,35 @@ const Stats = ():JSX.Element => {
     navigation.navigate("Profile")
   }
 
-  const calculateHeatMapData = () => {
+  const calculateHeatMapData = (logList:Object[]) => {
 
   }
 
-  const calculateLineGraphData = () => {
-
+  const calculateLineGraphData = (logList:Object[]) => {
+    let testXPMonthData = [100,99,98,97,96,95,94,93,92,91,90,79,78,77,76,75,74,73,72,71,70,59,58,57,56,55,54,53,52,51]
+    let data = {
+      labels: [30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,19,9,8,7,6,5,4,3,2,1],
+      datasets:[
+        {
+          data: testXPMonthData,//PUT ARRAY OF COMBINED TOTAL OF EACH 30 DAYS HERE!!
+          color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+          strokeWidth: 2 // optional
+        }
+      ]
+    }
+    setLineChartData(data)
   }
+  
+  const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#08130D",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false // optional
+  };
   const breakOutLogArray = () => {
 
   }
@@ -78,7 +103,7 @@ const Stats = ():JSX.Element => {
           {/* HEATMAP */}
         </View>
         <View style={styles.statsGraphContainer}>
-          {/* LINE GRAPH */}
+          {Object.keys(lineChartData).length > 0 && <LineChart data={lineChartData} width={300} height={200} chartConfig={chartConfig} />}
         </View>
     </View>
     )

@@ -750,13 +750,14 @@ changeCredsWrapper:{
 
 statsHeaderContainer:{
   flex:1,
+  alignItems:"center"
 },
 statsTitle:{
   color:"white",
-  fontSize:24,
+  fontSize:28,
 },
 statsGraphContainer:{
-  height:30,
+  height:280,
 },
 statsLogContainer:{},
 

@@ -756,7 +756,7 @@ statsTitle:{
   fontSize:24,
 },
 statsGraphContainer:{
-  height:30
+  height:30,
 },
 statsLogContainer:{},
 

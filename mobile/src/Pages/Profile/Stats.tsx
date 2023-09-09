@@ -7,6 +7,7 @@ import {
     useColorScheme,
     View,
     TouchableOpacity,
+    Dimensions
   } from 'react-native';
 import {
   LineChart,
@@ -71,12 +72,46 @@ const Stats = ({route}:any):JSX.Element => {
   }
 
   const calculateLineGraphData = (logList:Object[]) => {
-    let testXPMonthData = [100,99,98,97,96,95,94,93,92,91,90,79,78,77,76,75,74,73,72,71,70,59,58,57,56,55,54,53,52,51]
+    // let testXPMonthData = [100,99,98,97,96,95,94,93,92,91,90,79,78,77,76,75,74,73,72,71,70,59,58,57,56,55,54,53,52,51]
+    // const xpPerDay = {};
+    const calculated30Days = () => {
+      const today = new Date();
+      const xpArray = new Array(30).fill(0); // Initialize an array of 30 nulls
+  
+      for (let i = 0; i < 30; i++) {
+        const targetDate = new Date(today);
+        targetDate.setDate(today.getDate() - i); // Go back i days from today
+        const targetDateString = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}`;
+  
+        let totalXP = 0;
+        let hasData = false;
+  
+        logList.forEach((doc:any) => {
+          if (doc.traitType !== currentTraitTitle) { return; }
+          const docDate = doc.timeStamp.split('-').slice(0, 3).join('-'); // Extract the date part from the timestamp
+          if (docDate === targetDateString) {
+            totalXP += doc.xp;
+            hasData = true;
+          }
+        });
+  
+        if (hasData) {
+          xpArray[29 - i] = totalXP; // Fill in the XP for that day
+        }
+      }
+  
+      return xpArray;
+    };
+  
+
+
+
+    
     let data = {
-      labels: [30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,19,9,8,7,6,5,4,3,2,1],
+      labels: [30,""," Days","","","","","","","",20,""," Days","","","","","","","",10,""," Days","","","","","","","Today",""],
       datasets:[
         {
-          data: testXPMonthData,//PUT ARRAY OF COMBINED TOTAL OF EACH 30 DAYS HERE!!
+          data: calculated30Days(),//PUT ARRAY OF COMBINED TOTAL OF EACH 30 DAYS HERE!!
         },
       ],
     }
@@ -88,6 +123,7 @@ const Stats = ({route}:any):JSX.Element => {
     backgroundGradientFromOpacity: 0.3,
     backgroundGradientTo: "#656565",
     backgroundGradientToOpacity: 0.3,
+    decimalPlaces: 0, // optional, defaults to 2dp
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
     propsForDots: {
       r: "1",
@@ -106,7 +142,7 @@ const Stats = ({route}:any):JSX.Element => {
   const StatsHeader = ():JSX.Element => {
     return(
     <View style={styles.statsHeaderContainer}>
-      <TouchableOpacity onPress={()=>handleGoBack()} style={styles.closeUploaderButton}>
+      <TouchableOpacity onPress={()=>handleGoBack()} style={{...styles.closeUploaderButton, height:80,}}>
           <Text style={{...styles.backHeaderText}}>⇦Go Back</Text>
         </TouchableOpacity>
         <Text style={styles.statsTitle}>{currentTraitTitle}</Text>
@@ -114,7 +150,21 @@ const Stats = ({route}:any):JSX.Element => {
           {/* HEATMAP */}
         </View>
         <View style={styles.statsGraphContainer}>
-          {Object.keys(lineChartData).length > 0 && <LineChart data={lineChartData} width={300} height={200} chartConfig={chartConfig} />}
+          {Object.keys(lineChartData).length > 0 && 
+            <LineChart
+              data={lineChartData}
+              width={(Dimensions.get("window").width)}
+              height={220} chartConfig={chartConfig}
+              yAxisSuffix="XP"
+              style={{
+                alignItems:"center",
+                marginVertical: 8,
+                borderRadius: 16,
+                borderColor:"#fff",
+                borderWidth:2,
+              }}
+            />
+          }
         </View>
     </View>
     )

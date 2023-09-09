@@ -11,7 +11,6 @@ import {
   } from 'react-native';
 import {
   LineChart,
-  ContributionGraph,
   } from "react-native-chart-kit";
 import React, {useEffect, useState} from 'react'
 import { db } from '../../Firebase/firebase';
@@ -30,7 +29,6 @@ const Stats = ({route}:any):JSX.Element => {
   const [currentLog,setCurrentLog] = useState<any>()
   const [allLogData,setAllLogData] = useState<any>()
   const [lineChartData,setLineChartData] = useState<any>({})
-  const [heatMapData,setHeatMapData] = useState<any>([])
   const [matchingColor,setMatchingColor] = useState(String)
 
 
@@ -56,7 +54,6 @@ const Stats = ({route}:any):JSX.Element => {
 
     if (newDocs.length > 0) {
       // setAllLogData(() => [...newDocs]);
-      calculateHeatMapData(newDocs)
       calculateLineGraphData(newDocs)
       skillSwitch()
     }
@@ -67,29 +64,6 @@ const Stats = ({route}:any):JSX.Element => {
   const handleGoBack = () => {
     navigation.navigate("Profile")
   }
-
-  const calculateHeatMapData = (logList:Object[]) => {
-      const heatMapList:any = [];
-    
-      logList.forEach((doc:any) => {
-        if (doc.traitType !== currentTraitTitle) { return; }
-        const docDate = doc.timeStamp.split('-').slice(0, 3).join('-'); // Extract the date part from the timestamp
-    
-        // Check if this date already exists in heatmapData
-        const existingDate = heatMapList.find((data:any) => data.date === docDate);
-    
-        if (existingDate) {
-          // If the date already exists, increment the count
-          existingDate.count += doc.xp;
-        } else {
-          // If the date doesn't exist, add it to heatmapData
-          heatMapList.push({ date: docDate, count: doc.xp });
-        }
-      });
-      console.log(heatMapData)
-      setHeatMapData(heatMapList)
-      // return heatmapData;
-  };
 
   const calculateLineGraphData = (logList:Object[]) => {
     // let testXPMonthData = [100,99,98,97,96,95,94,93,92,91,90,79,78,77,76,75,74,73,72,71,70,59,58,57,56,55,54,53,52,51]
@@ -154,7 +128,20 @@ const Stats = ({route}:any):JSX.Element => {
     barPercentage: 0.5,
     useShadowColorFromDataset: false // optional
   };
-  const heatMapConfig = {}
+  const heatMapConfig = {
+    color: (opacity = 1, value:any) => {
+      if (value && value.count > 0) {
+        const adjustedOpacity = Math.min(value.count / 10, 1); // Adjust this divisor to control the color intensity
+        return `rgba(255, 255, 0, ${adjustedOpacity})`; // Yellow color with varying opacity
+      }
+      return `rgba(128, 128, 128, ${opacity})`; // Gray color for empty days
+    },
+    backgroundGradientFrom: "#1c1c1c",
+    backgroundGradientFromOpacity: 0.3,
+    backgroundGradientTo: "#656565",
+    backgroundGradientToOpacity: 0.3,
+    
+  }
   const breakOutLogArray = () => {
 
   }
@@ -164,8 +151,7 @@ const Stats = ({route}:any):JSX.Element => {
   const calculateOneHundredDaysAgo = () => {
     const today = new Date()
     const hundredDays = new Date(today)
-    hundredDays.setFullYear(today.getDate()-100)
-    return hundredDays
+    return hundredDays.setDate(today.getDate()-100)
   }
 
 
@@ -176,31 +162,6 @@ const Stats = ({route}:any):JSX.Element => {
         <Text style={{...styles.backHeaderText}}>⇦Go Back</Text>
       </TouchableOpacity>
       <View style={styles.statsHeaderContainer}>
-        
-          <Text style={{...styles.statsTitle, color:`${matchingColor}`}}>{currentTraitTitle}</Text>
-          <View style={styles.statsGraphContainer}>
-            {heatMapData.length > 0 &&
-              <View>
-                <Text style={{...styles.statsTitle, fontSize:16,}}> •Post frequency over the last 100 days:</Text>
-                <ContributionGraph
-                tooltipDataAttrs={(value)=>{handleToolTipDataAttrs}}
-                values={heatMapData}
-                endDate={calculateOneHundredDaysAgo()} //MAKE THIS A YEAR AGO FROM TODAY
-                numDays={100}
-                width={(Dimensions.get("window").width)-20}
-                height={220}
-                chartConfig={chartConfig}
-                style={{
-                  alignItems:"center",
-                  marginVertical: 8,
-                  borderRadius: 8,
-                  borderColor:"#fff",
-                  borderWidth:2,
-                }}
-                />
-              </View>
-            }
-          </View>
           <View style={styles.statsGraphContainer}>
             {Object.keys(lineChartData).length > 0 && 
               <View style={{}}>

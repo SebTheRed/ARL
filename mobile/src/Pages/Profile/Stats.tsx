@@ -119,12 +119,12 @@ const Stats = ({route}:any):JSX.Element => {
   }
   
   const chartConfig = {
-    backgroundGradientFrom: "#656565",
+    backgroundGradientFrom: "#1c1c1c",
     backgroundGradientFromOpacity: 0.3,
     backgroundGradientTo: "#656565",
     backgroundGradientToOpacity: 0.3,
     decimalPlaces: 0, // optional, defaults to 2dp
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     propsForDots: {
       r: "1",
       strokeWidth: "3",

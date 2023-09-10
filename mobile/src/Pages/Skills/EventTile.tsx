@@ -20,7 +20,7 @@ import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
 type RootStackParamList = {
     ExperienceUploader:undefined,
   }
-const EventTile = ({d, i, color,skillTitle, uid}:any):JSX.Element => {
+const EventTile = ({d,locked, i, color,skillTitle, uid}:any):JSX.Element => {
     const {setCurrentEvent}:any = useCurrentEvent()
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 const returnImgRequire = () => {
@@ -42,7 +42,7 @@ const handlePress = async() => {
 }
     
 
-
+if (locked == false) {
     return(
         <TouchableOpacity onPress={handlePress} style={styles.eventTileWrapper}>
             <View style={{...styles.eventTileMain}}>
@@ -59,6 +59,24 @@ const handlePress = async() => {
             </View>
         </TouchableOpacity>
     )
+} else {
+    return(
+        <TouchableOpacity style={styles.eventTileWrapper}>
+            <View style={{...styles.eventTileMain}}>
+                <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                    <Text style={{...styles.eventTileText,fontSize:24,textDecorationColor:"#656565",textDecorationLine:"underline", color:"#656565"}}>{d.title}</Text>
+                </View>
+                <Text style={{...styles.eventTileText, color:color}}>Unlocks at {skillTitle} level {d.unlocksAt}</Text>
+            </View>
+            <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+                <View style={styles.eventButtonWrapper}>
+                    <Image style={{...styles.eventButtonIcon}} source={require("../../IconBin/lock.png")} />
+                </View>
+            </View>
+        </TouchableOpacity>
+    )
+}
+    
 }
 
 export default EventTile

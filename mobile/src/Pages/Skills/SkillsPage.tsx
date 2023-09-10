@@ -151,8 +151,8 @@ if (skillData) {
             <Text style={styles.skillPageXPText}>Press any of the experiences below to begin posting</Text>
             {Object.keys(XPTriggerEvents[skillTitle.toLowerCase()]).map((d:any,i:number)=>{
               const nextUnlock = ""
-              console.log(XPTriggerEvents[skillTitle.toLowerCase()][d].unlocksAt, userData.xpData[skillTitle.toLowerCase()])
-              if (XPTriggerEvents[skillTitle.toLowerCase()][d].unlocksAt > userData.xpData[skillTitle.toLowerCase()]) {return(
+              console.log(XPScale[XPTriggerEvents[skillTitle.toLowerCase()][d].unlocksAt], userData.xpData[skillTitle.toLowerCase()])
+              if (XPScale[XPTriggerEvents[skillTitle.toLowerCase()][d].unlocksAt] > userData.xpData[skillTitle.toLowerCase()]) {return(
                 <EventTile skillTitle={skillData.title} locked={true} color={skillData.color} d={XPTriggerEvents[skillTitle.toLowerCase()][d]} key={i} />
               )}
               return(<EventTile skillTitle={skillData.title} locked={false} color={skillData.color} d={XPTriggerEvents[skillTitle.toLowerCase()][d]} key={i} />)

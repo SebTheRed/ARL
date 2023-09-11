@@ -451,6 +451,14 @@ postProfPic:{
   borderWidth:2,
   width:35,
   height:35,
+  alignItems:'center',
+  justifyContent:"center",
+  backgroundColor:"transparent"
+},
+postProfPicImg:{
+  width: 35,  // desired width
+  height: 35, // desired height
+  resizeMode: 'contain', // or 'cover'
 },
 postTopTitleContainer:{
   flexDirection:"row",

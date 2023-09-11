@@ -94,7 +94,7 @@ const createAccount = async(e:any) => {
 			phoneNumber: phoneNumber, 
 			userName:userName,
             streak:0,
-            picURL:"",
+            picURL:"gs://appreallife-ea3d9.appspot.com/user_prof_pics/default.png",
             trophyPins:["","",""],
             xpData:{
                 family:1,friends:1,fitness:1,

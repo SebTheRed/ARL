@@ -10,6 +10,7 @@ import {
 	TouchableOpacity,
 	FlatList,
 } from 'react-native'
+import storage from 'firebase/storage';
 import React, { useEffect, useState } from 'react';
 import styles from '../../styles'
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
@@ -89,6 +90,8 @@ const handleProfilePress = () => {
 	}
 
 
+	
+
 //PostContentSplitter simplly returns different "bodies" of the post, depending on the post type.
 //This needs much more work, and will be updated more-so after I've finalized ExperienceUPloader.
 const PostContentSplitter = ():JSX.Element => {
@@ -113,6 +116,7 @@ const PostContentSplitter = ():JSX.Element => {
 				<View style={{...styles.postProfileAndNameContainer}}>
 					<TouchableOpacity style={{...styles.postProfPic}} onPress={handleProfilePress}>
 						{/* ADD IMG TAG WITH HOOK TO USER PROFILE USER ID IMG */}
+						<Image style={styles.postProfPicImg} source={{uri: "https://en.wikipedia.org/wiki/Mochi#/media/File:Mochi_002.jpg"}} />
 					</TouchableOpacity>
 					<TouchableOpacity onPress={handleProfilePress}>
 						<Text style={{...styles.postTopName}}>{data.posterUserName} </Text>

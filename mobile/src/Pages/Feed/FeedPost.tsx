@@ -40,10 +40,9 @@ useEffect(()=>{
 	setTranslatedTimestamp(timeRemainingUntil24Hours(data.timeStamp))
 	const translateURL = async () => {
 		const storage = getStorage()
-		const pathRef = ref(storage, "gs://appreallife-ea3d9.appspot.com/user_prof_pics/default.png")
+		const pathRef = ref(storage, data.picURL)
 		getDownloadURL(pathRef)
-		.then((url:any)=>{setProfilePicState(url)
-			console.log(url)})
+		.then((url:any)=>{setProfilePicState(url)})
 	};
 	translateURL()
 },[])

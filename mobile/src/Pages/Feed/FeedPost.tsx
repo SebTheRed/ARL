@@ -10,7 +10,7 @@ import {
 	TouchableOpacity,
 	FlatList,
 } from 'react-native'
-import storage from 'firebase/storage';
+import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import React, { useEffect, useState } from 'react';
 import styles from '../../styles'
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
@@ -23,15 +23,13 @@ type RootStackParamList = {
 
 const FeedPost = ({data, skillsList}:any):JSX.Element => {
 	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
 	//findPageUserID is a function call that sets a unique, profile-filtered, feed on the profile page.
 	const {findPageUserID, }:any = useProfilePageUID()
-
 	//matchingSkillData contains relevant data to the "matched skill". This is to show the proper color, title, flare, etc. Per post.
 	const [matchingSkillData,setMatchingSkillData] = useState({title:"",color:"#fff",flare:"",level:0})
-
 	//translatedTimestamp takes my stupid YYYY-MM-DD-HH-MM-SS timestamp and sets it to a 24 hour "time remaining" string val.
 	const [translatedTimestamp,setTranslatedTimestamp] = useState("")
+	const [profilePicState,setProfilePicState] = useState(null)
 
 //This useEffect simply maps over the skillsList, seeking a match.
 //Also, it will set the translated timestamp, using the function timeRemainingUntil24Hours
@@ -40,7 +38,14 @@ useEffect(()=>{
 		if (skill.title === data.postSkill){setMatchingSkillData(skill)}
 	})
 	setTranslatedTimestamp(timeRemainingUntil24Hours(data.timeStamp))
-	
+	const translateURL = async () => {
+		const storage = getStorage()
+		const pathRef = ref(storage, "gs://appreallife-ea3d9.appspot.com/user_prof_pics/default.png")
+		getDownloadURL(pathRef)
+		.then((url:any)=>{setProfilePicState(url)
+			console.log(url)})
+	};
+	translateURL()
 },[])
 
 //Chat GPT is GOAT for writing this for me. Too lazy *yawn* CHAT-GPT already commented this for me <3
@@ -90,7 +95,7 @@ const handleProfilePress = () => {
 	}
 
 
-	
+
 
 //PostContentSplitter simplly returns different "bodies" of the post, depending on the post type.
 //This needs much more work, and will be updated more-so after I've finalized ExperienceUPloader.
@@ -116,7 +121,9 @@ const PostContentSplitter = ():JSX.Element => {
 				<View style={{...styles.postProfileAndNameContainer}}>
 					<TouchableOpacity style={{...styles.postProfPic}} onPress={handleProfilePress}>
 						{/* ADD IMG TAG WITH HOOK TO USER PROFILE USER ID IMG */}
-						<Image style={styles.postProfPicImg} source={{uri: "https://en.wikipedia.org/wiki/Mochi#/media/File:Mochi_002.jpg"}} />
+						{profilePicState && (
+							<Image style={styles.postProfPicImg} source={{uri: profilePicState}} />
+						)}
 					</TouchableOpacity>
 					<TouchableOpacity onPress={handleProfilePress}>
 						<Text style={{...styles.postTopName}}>{data.posterUserName} </Text>

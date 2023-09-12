@@ -14,8 +14,10 @@ import {
   } from 'react-native';
   import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
   import {useState} from 'react'
-const ProfilePicModal = ():JSX.Element => {
+  import styles from '../../styles';
+const ProfilePicModal = ({setModalVisibility}:any):JSX.Element => {
         const [imageSource, setImageSource] = useState(null);
+        const [selectedImage,setSelectedImage] = useState(null)
       
         const selectImage = async() => {
           const options = {
@@ -34,7 +36,8 @@ const ProfilePicModal = ():JSX.Element => {
                     console.log('Image picker error: ', response.error);
                   } else {
                     let imageUri = response.uri || response.assets?.[0]?.uri;
-                    // setSelectedImage(imageUri);
+                    console.log(imageUri)
+                    setImageSource(imageUri);
                   }
             })
 
@@ -46,39 +49,35 @@ const ProfilePicModal = ():JSX.Element => {
         }
 
         const onClose = () => {
-
+            setModalVisibility(false)
         }
 
     return(
-        <Modal
-        animationType="slide"
-        transparent={true}
-        visible={true}
-        >
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
-            <Text style={{ fontSize: 18, marginBottom: 10 }}>Change Profile Picture</Text>
-            <TouchableOpacity onPress={selectImage}>
-                <Text>Select Image</Text>
-            </TouchableOpacity>
-            {imageSource && (
-                <View style={{ alignItems: 'center' }}>
-                <View style={{ width: 100, height: 100, borderRadius: 50, overflow: 'hidden', marginTop: 10 }}>
-                    <Image
-                    source={imageSource}
-                    style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
-                    />
-                </View>
-                <TouchableOpacity onPress={confirmImage}>
-                    <Text>Confirm</Text>
+        <Modal animationType="slide" transparent={true} visible={true}>
+            <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>Change Profile Picture</Text>
+                <TouchableOpacity onPress={selectImage} style={styles.selectButton}>
+                <Text style={styles.modalTitle}>Select Image</Text>
                 </TouchableOpacity>
+                {imageSource && (
+                <View style={styles.imageContainer}>
+                    <View style={styles.imagePreview}>
+                    <Image
+                        source={{ uri: imageSource }}
+                        style={styles.previewImage}
+                    />
+                    </View>
+                    <TouchableOpacity onPress={confirmImage} style={styles.confirmButton}>
+                    <Text style={styles.modalTitle}>Confirm</Text>
+                    </TouchableOpacity>
                 </View>
-            )}
-            <TouchableOpacity onPress={onClose}>
-                <Text>Close</Text>
-            </TouchableOpacity>
+                )}
+                <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+                <Text style={styles.modalTitle}>Close</Text>
+                </TouchableOpacity>
             </View>
-        </View>
+            </View>
         </Modal>
     )
 }

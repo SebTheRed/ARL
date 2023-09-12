@@ -798,7 +798,52 @@ logPostTitle:{
   color:"#fff",
   fontSize:20,
 },
-
+modalContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'rgba(0,0,0,0.5)',
+},
+modalContent: {
+  backgroundColor: '#1c1c1c',
+  height:'80%',
+  width:'90%',
+  padding: 20,
+  borderRadius: 10,
+  borderColor:"#fff",
+  borderWidth:4
+},
+modalTitle: {
+  fontSize: 18,
+  marginBottom: 10,
+  color:"#fff"
+},
+selectButton: {
+  marginBottom: 10,
+},
+imageContainer: {
+  alignItems: 'center',
+},
+imagePreview: {
+  width: 300,
+  height: 300,
+  borderRadius: 150,
+  overflow: 'hidden',
+  marginTop: 10,
+  borderColor:"white",
+  borderWidth:4,
+},
+previewImage: {
+  width: '100%',
+  height: '100%',
+  resizeMode: 'cover',
+},
+confirmButton: {
+  marginTop: 10,
+},
+closeButton: {
+  marginTop: 10,
+},
 
 
 });

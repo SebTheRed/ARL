@@ -361,7 +361,6 @@ const ProfilePages = () => {
       <ProfileStack.Screen name="EditProfile" component={EditProfile} />
       <ProfileStack.Screen name="UserPassPopup" component={UserPassPopup} />
       <ProfileStack.Screen name="Stats" initialParams={{skillsList:skillsList}} component={Stats} />
-      <ProfileStack.Screen name="ProfilePicModal" component={ProfilePicModal} />
     </ProfileStack.Navigator>
   )
 }

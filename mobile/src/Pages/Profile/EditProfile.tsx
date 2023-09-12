@@ -22,11 +22,13 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../../styles'
 import {db, auth,} from '../../Firebase/firebase'
 import {updateDoc,doc} from 'firebase/firestore'
+import ProfilePicModal from './ProfPicModal';
 
 const EditProfile = ():JSX.Element => {
 	const navigation = useNavigation<any>();
 	const {userData}:any = useUserData()
 	const {uid}:any = useUID()
+	const [modalVisibility,setModalVisibility] = useState(false)
 	const [isEditing, setIsEditing] = useState<string | null>(null);
 	const [name, setName] = useState(userData.name);
 	const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber);
@@ -120,7 +122,7 @@ const EditProfile = ():JSX.Element => {
 		navigation.navigate("UserPassPopup")
 	};
 	const handleProfPicPress = () => {
-		navigation.navigate("ProfilePicModal")
+		setModalVisibility(true)
 	}
 	const renderField = (label: string, value: string, setValue: any) => (
 		<TouchableOpacity
@@ -153,6 +155,7 @@ const EditProfile = ():JSX.Element => {
 
 		
 return(
+	<>
     <ScrollView style={{...styles.profilePageContainer, height:"100%"}}>
         <View style={styles.profilePageCover}>
 		<View
@@ -315,6 +318,10 @@ return(
 
 		</View>
     </ScrollView>
+	{modalVisibility == true && (
+		<ProfilePicModal setModalVisibility={setModalVisibility} />
+	)}
+	</>
 	)
 }
 

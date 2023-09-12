@@ -19,6 +19,7 @@ import Profile from './Pages/Profile/Profile';
 import EditProfile from './Pages/Profile/EditProfile'
 import Trophies from './Pages/Trophies/Trophies'
 import HeaderBar from './Overlays/HeaderBar';
+import ProfilePicModal from './Pages/Profile/ProfPicModal'
 import { useState } from 'react';
 import styles from './styles';
 import Feed from './Pages/Feed/Feed';
@@ -360,6 +361,7 @@ const ProfilePages = () => {
       <ProfileStack.Screen name="EditProfile" component={EditProfile} />
       <ProfileStack.Screen name="UserPassPopup" component={UserPassPopup} />
       <ProfileStack.Screen name="Stats" initialParams={{skillsList:skillsList}} component={Stats} />
+      <ProfileStack.Screen name="ProfilePicModal" component={ProfilePicModal} />
     </ProfileStack.Navigator>
   )
 }

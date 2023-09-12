@@ -16,7 +16,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx"
-  ],
+, "src/Firebase/firebase.js"  ],
   "exclude": [
     "node_modules",
     "dist"

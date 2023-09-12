@@ -119,6 +119,9 @@ const EditProfile = ():JSX.Element => {
 	const handleChangeCredentialsPress = ()=>{
 		navigation.navigate("UserPassPopup")
 	};
+	const handleProfPicPress = () => {
+		navigation.navigate("ProfilePicModal")
+	}
 	const renderField = (label: string, value: string, setValue: any) => (
 		<TouchableOpacity
 			style={{...styles.editProfileRow,}}
@@ -216,7 +219,9 @@ return(
 					height:50,
 					alignItems:"center",
 					justifyContent:"center"
-				}}>
+				}}
+				onPress={handleProfPicPress}
+				>
 					<Image style={{...styles.bottomBarIcon,}} source={require('../../IconBin/camera_add.png')} 
 					/>
 				</TouchableOpacity>

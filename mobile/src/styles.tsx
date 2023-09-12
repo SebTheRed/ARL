@@ -459,6 +459,9 @@ postProfPicImg:{
   width: 35,  // desired width
   height: 35, // desired height
   resizeMode: 'contain', // or 'cover'
+  borderWidth:2,
+  borderColor:"#fff",
+  borderRadius:50,
 },
 postTopTitleContainer:{
   flexDirection:"row",

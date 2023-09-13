@@ -10,9 +10,11 @@ import {
 	TouchableOpacity
 } from 'react-native';
 import { useUID } from '../Contexts/UIDContext';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../styles';
+import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import { useProfilePageUID } from '../Contexts/ProfilePageUID';
+import { useUserData } from '../Contexts/UserDataContext';
 import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 
@@ -23,7 +25,19 @@ type RootStackParamList = {
 const HeaderBar = ():JSX.Element => {
 	const {uid}:any = useUID()
 	const {findPageUserID}:any = useProfilePageUID()
+	const {userData}:any = useUserData()
 	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+	const [profilePicState,setProfilePicState] = useState(null)
+
+useEffect(()=>{
+	const translateURL = async () => {
+		const storage = getStorage()
+		const pathRef = ref(storage, userData.picURL)
+		getDownloadURL(pathRef)
+		.then((url:any)=>{setProfilePicState(url)})
+	};
+	translateURL()
+})
 
 	const handleProfilePress = () => {
 		findPageUserID(uid)
@@ -51,7 +65,10 @@ return(
 		<Image style={styles.headerBarIcon} source={require('../IconBin/hamburger.png')} />
 		<Text style={styles.headerBarText}>appRealLife</Text>
 		<TouchableOpacity onPress={handleProfilePress}>
-			<Image style={styles.headerBarIcon} source={require('../IconBin/account.png')} />
+			{profilePicState && (
+				<Image style={{...styles.headerBarProfilePic}} source={{uri: profilePicState}} />
+			)}
+			
 		</TouchableOpacity>
 	</View>
 )

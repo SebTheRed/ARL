@@ -32,6 +32,14 @@ headerBarIcon:{
   height: 25, // desired height
   resizeMode: 'contain', // or 'cover'
 },
+headerBarProfilePic:{
+  width:25,
+  height:25,
+  resizeMode:'contain',
+  borderColor:"#fff",
+  borderRadius:50,
+  borderWidth:2,
+},
 statusBar:{
   backgroundColor:"white",
 },

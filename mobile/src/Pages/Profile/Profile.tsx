@@ -16,6 +16,7 @@ import React from 'react'
 import FeedPost from '../Feed/FeedPost';
 import { useEffect, useState } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
+import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 // import FeedPost from './FeedPost';
 import styles from '../../styles'
 import { useNavigation } from '@react-navigation/native';
@@ -46,6 +47,7 @@ const Profile = ({route}:any):JSX.Element => {
     const {uid}:any = useUID()
     const [buttonType,setButtonType] = useState("")
     const [matchedTrophyPins,setMatchedTrophyPins] = useState([{},{},{}])
+    const [profilePicState,setProfilePicState] = useState(null)
     const [refreshing, setRefreshing] = useState(false);
     
     useEffect(()=>{
@@ -79,6 +81,15 @@ const Profile = ({route}:any):JSX.Element => {
             }
         }
     },[userData])
+    useEffect(()=>{
+        const translateURL = async () => {
+            const storage = getStorage()
+            const pathRef = ref(storage, userData.picURL)
+            getDownloadURL(pathRef)
+            .then((url:any)=>{setProfilePicState(url)})
+        };
+        translateURL()
+    },[])
     // useEffect(()=>{
 	// 	setStartAfter(currentFeed[currentFeed.length - 1])
 	// },[currentFeed])
@@ -174,7 +185,7 @@ const Profile = ({route}:any):JSX.Element => {
             </View>
             
             <View style={styles.profilePagePictureBox}>
-                <Image style={styles.profilePagePicture} source={require('./mochi.png')} />
+                {profilePicState&&(<Image style={styles.profilePagePicture} source={{uri: profilePicState}} />)}
             </View>
             <View style={styles.profilePageMultiBox}>
                 <MultiButtonSplitter />

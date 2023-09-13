@@ -16,12 +16,14 @@ import {
   import {getStorage,ref, getDownloadURL, uploadBytes} from 'firebase/storage';
   import {useState,useEffect} from 'react'
   import { useUserData } from '../../Contexts/UserDataContext';
+  import {updateDoc,doc} from 'firebase/firestore'
   import { useUID } from '../../Contexts/UIDContext';
+  import {db, auth,} from '../../Firebase/firebase'
   import styles from '../../styles';
 const ProfilePicModal = ({setModalVisibility}:any):JSX.Element => {
         const {userData}:any = useUserData()
         const {uid}:any = useUID()
-        const [imageSource, setImageSource] = useState(null);
+        const [imageSource, setImageSource] = useState<any>(null);
         const [selectedImage,setSelectedImage] = useState(null)
         const [profilePicState,setProfilePicState] = useState(String)
         useEffect(()=>{
@@ -66,6 +68,17 @@ const ProfilePicModal = ({setModalVisibility}:any):JSX.Element => {
 
             uploadBytes(storageRef, blob).then((snapshot) => {
                 console.log('Uploaded a blob or file!');
+                const gsLink = `gs://${snapshot.ref.bucket}/${snapshot.ref.fullPath}`;
+                console.log("Internal Firebase link: ", gsLink);
+                const userDocRef = doc(db, "users", uid); // Replace 'db' and 'uid' with your actual Firestore database instance and user ID
+                try {
+                    updateDoc(userDocRef, {
+                      picURL: gsLink, // Update the 'name' field in Firestore
+                    });
+                    console.log("Pic Link updated successfully");
+                  } catch (error) {
+                    console.error("Error updating Pic Link: ", error);
+                  }
             }).catch((error) => {
                 console.log('Upload failed: ', error);
             });

@@ -235,7 +235,7 @@ return(
 				}}
 				onPress={handleProfPicPress}
 				>
-					<Image style={{...styles.bottomBarIcon,}} source={require('../../IconBin/camera_add.png')} 
+					<Image style={{...styles.bottomBarIcon,width:"100%",height:"100%",resizeMode: 'cover',}} source={require('../../IconBin/camera_add.png')} 
 					/>
 				</TouchableOpacity>
             </View>

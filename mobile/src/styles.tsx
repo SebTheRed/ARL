@@ -28,17 +28,22 @@ headerBarText:{
 ,},
 headerBarIcon:{
   tintColor:"white",
-  width: 25,  // desired width
-  height: 25, // desired height
+  width: 30,  // desired width
+  height: 30, // desired height
   resizeMode: 'contain', // or 'cover'
 },
 headerBarProfilePic:{
-  width:25,
-  height:25,
-  resizeMode:'contain',
+  width:"100%",
+  height:"100%",
   borderColor:"#fff",
   borderRadius:50,
   borderWidth:2,
+  resizeMode:"cover",
+},
+headerProfilePicContainer:{
+  width:30,
+  height:30,
+  overflow:"hidden"
 },
 statusBar:{
   backgroundColor:"white",
@@ -464,11 +469,9 @@ postProfPic:{
   backgroundColor:"transparent"
 },
 postProfPicImg:{
-  width: 35,  // desired width
-  height: 35, // desired height
-  resizeMode: 'contain', // or 'cover'
-  borderWidth:2,
-  borderColor:"#fff",
+  width:"100%",
+  height:"100%",
+  resizeMode: 'cover', // or 'cover'
   borderRadius:50,
 },
 postTopTitleContainer:{
@@ -645,9 +648,9 @@ profilePagePictureBox:{
   height:100,
 },
 profilePagePicture:{
-  width: 100,  // desired width
-  height: 100, // desired height
-  resizeMode: 'contain', // or 'cover'
+  width:"100%",
+  height:"100%",
+  resizeMode: 'cover', // or 'cover'
   borderRadius:50,
   borderWidth:4,
   borderColor:"#fff",

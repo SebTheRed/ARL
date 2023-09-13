@@ -64,7 +64,7 @@ return(
   <View style={styles.headerBar}>
 		<Image style={styles.headerBarIcon} source={require('../IconBin/hamburger.png')} />
 		<Text style={styles.headerBarText}>appRealLife</Text>
-		<TouchableOpacity onPress={handleProfilePress}>
+		<TouchableOpacity style={styles.headerProfilePicContainer} onPress={handleProfilePress}>
 			{profilePicState && (
 				<Image style={{...styles.headerBarProfilePic}} source={{uri: profilePicState}} />
 			)}

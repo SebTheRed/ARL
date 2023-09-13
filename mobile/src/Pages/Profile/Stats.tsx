@@ -33,7 +33,7 @@ const Stats = ({route}:any):JSX.Element => {
   const [currentLog,setCurrentLog] = useState<any>()
   const [allMatchingLogData,setAllMatchingLogData] = useState<any>([])
   const [lineChartData,setLineChartData] = useState<any>({})
-  const [matchingColor,setMatchingColor] = useState(String)
+  const [matchingColor,setMatchingColor] = useState("#fff")
 
 
   useEffect(()=>{

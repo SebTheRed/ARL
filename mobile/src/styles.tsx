@@ -600,11 +600,15 @@ profilePageContainer:{
   height:380,
 },
 profilePageCover:{
-  width:"100%",
-  height:150,
-  backgroundColor:"darkseagreen",
+  height:180,
+  // backgroundColor:"darkseagreen",
   borderBottomWidth:4,
   borderColor:"#fff"
+},
+profilePageCoverPicture:{
+  width: "100%",  // desired width
+  height: "100%", // desired height
+  resizeMode: 'cover', // or 'cover'
 },
 profilePageTopContainer:{ 
   flexDirection:"row",

@@ -11,6 +11,7 @@ import {
 	FlatList,
 	RefreshControl,
     SectionList,
+    Dimensions,
 } from 'react-native'
 import React from 'react'
 import FeedPost from '../Feed/FeedPost';
@@ -34,7 +35,7 @@ type TrophyDataObj = {
     progressQTY:number,
 }
 
-
+const screenWidth = Dimensions.get('window').width;
 const Profile = ({route}:any):JSX.Element => {
     // const navigation = useNavigation();
     const navigation = useNavigation<any>();
@@ -48,6 +49,7 @@ const Profile = ({route}:any):JSX.Element => {
     const [buttonType,setButtonType] = useState("")
     const [matchedTrophyPins,setMatchedTrophyPins] = useState([{},{},{}])
     const [profilePicState,setProfilePicState] = useState(null)
+    const [coverPicState,setCoverPicState] = useState(null)
     const [refreshing, setRefreshing] = useState(false);
     
     useEffect(()=>{
@@ -85,8 +87,11 @@ const Profile = ({route}:any):JSX.Element => {
         const translateURL = async () => {
             const storage = getStorage()
             const pathRef = ref(storage, userData.picURL)
+            const coverPathRef = ref(storage,userData.coverURL)
             getDownloadURL(pathRef)
             .then((url:any)=>{setProfilePicState(url)})
+            getDownloadURL(coverPathRef)
+            .then((url:any)=>{setCoverPicState(url)})
         };
         translateURL()
     },[])
@@ -162,7 +167,9 @@ const Profile = ({route}:any):JSX.Element => {
     const ProfileHeader = ():JSX.Element => {
         return(
     <View style={styles.profilePageContainer}>
-        <View style={styles.profilePageCover}></View>
+        <View style={{...styles.profilePageCover, width:screenWidth}}>
+            {coverPicState&&(<Image style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />)}
+        </View>
         
         <View style={styles.profilePageTopContainer}>
             <View style={styles.profilePageTopLeftContainer}>

@@ -35,6 +35,7 @@ const EditProfile = ():JSX.Element => {
 	const [name, setName] = useState(userData.name);
 	const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber);
 	const [profilePicState,setProfilePicState] = useState(null)
+	const [coverPicState,setCoverPicState] = useState(null)
 	const [option1,setOption1] = useState(true)
 	const [option2,setOption2] = useState(true)
 	const [option3,setOption3] = useState(true)
@@ -48,8 +49,11 @@ const EditProfile = ():JSX.Element => {
 		const translateURL = async () => {
             const storage = getStorage()
             const pathRef = ref(storage, userData.picURL)
+            const coverPathRef = ref(storage,userData.coverURL)
             getDownloadURL(pathRef)
             .then((url:any)=>{setProfilePicState(url)})
+            getDownloadURL(coverPathRef)
+            .then((url:any)=>{setCoverPicState(url)})
         };
         translateURL()
 	},[])
@@ -172,6 +176,7 @@ return(
 	<>
     <ScrollView style={{...styles.profilePageContainer, height:"100%"}}>
         <View style={styles.profilePageCover}>
+		{coverPicState&&(<Image style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />)}
 		<View
 			style={{
 			position: 'absolute',
@@ -181,7 +186,7 @@ return(
 			bottom: 0,
 			backgroundColor: 'black',
 			opacity: 0.5,
-			height:146,
+			height:176,
 			width:"100%",
 			}}
 		/>

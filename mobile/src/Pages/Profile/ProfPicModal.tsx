@@ -81,6 +81,29 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
                 console.log('Upload failed: ', error);
             });
         }
+        const confirmCoverImage = async() => {
+            console.log('1')
+            const responseBlob = await fetch(imageSource);
+            const blob = await responseBlob.blob();
+            console.log('2')
+            // Upload to Firebase Storage
+            const storage = getStorage();
+            const storageRef = ref(storage, `user_prof_pics/${uid}/cover_actual`);
+            console.log('3')
+            uploadBytes(storageRef, blob).then((snapshot) => {
+                console.log('Uploaded a blob or file!');
+                const gsLink = `gs://${snapshot.ref.bucket}/${snapshot.ref.fullPath}`;
+                console.log("Internal Firebase link: ", gsLink);
+                const userDocRef = doc(db, "users", uid);
+                updateDoc(userDocRef, {
+                    coverURL: gsLink, // Update the 'name' field in Firestore
+                });
+                console.log("Pic Link updated successfully");
+                setModalType("")
+            }).catch((error) => {
+                console.log('Upload failed: ', error);
+            });
+        }
 
         const onClose = () => {
             setModalType("")
@@ -96,25 +119,54 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
                 </TouchableOpacity>
                 {imageSource && (
                 <View style={styles.imageContainer}>
-                    <View style={styles.imagePreview}>
-                    <Image
-                        source={{ uri: imageSource }}
-                        style={styles.previewImage}
-                    />
-                    </View>
-                    <TouchableOpacity onPress={confirmImage} style={{...styles.selectButton, backgroundColor:"#00e800"}}>
-                        <Text style={styles.modalTitle}>Confirm</Text>
-                    </TouchableOpacity>
+                    {modalType=="profilePic"&&(
+                        <>
+                            <View style={styles.imagePreview}>
+                                <Image
+                                    source={{ uri: imageSource }}
+                                    style={styles.previewImage}
+                                />
+                            </View>
+                            <TouchableOpacity onPress={confirmImage} style={{...styles.selectButton, backgroundColor:"#00e800"}}>
+                                <Text style={styles.modalTitle}>Confirm</Text>
+                            </TouchableOpacity>
+                        </>
+                    )}
+                    {modalType=="coverPic"&&(
+                        <>
+                            <View style={styles.imagePreviewCover}>
+                                <Image
+                                    source={{ uri: imageSource }}
+                                    style={styles.previewImage}
+                                />
+                            </View>
+                            <TouchableOpacity onPress={confirmCoverImage} style={{...styles.selectButton, backgroundColor:"#00e800"}}>
+                                <Text style={styles.modalTitle}>Confirm</Text>
+                            </TouchableOpacity>
+                        </>
+                    )}
+                    
                 </View>
                 )}
                 {(!imageSource && profilePicState) && (
                 <View style={styles.imageContainer}>
-                    <View style={styles.imagePreview}>
-                    <Image
-                        source={{ uri: profilePicState }}
-                        style={styles.previewImage}
-                    />
-                    </View>
+                    {modalType=="profilePic"&&(
+                        <View style={styles.imagePreview}>
+                        <Image
+                            source={{ uri: profilePicState }}
+                            style={styles.previewImage}
+                        />
+                        </View>
+                    )}
+                    {modalType=="coverPic"&&(
+                        <View style={styles.imagePreviewCover}>
+                        <Image
+                            source={{ uri: profilePicState }}
+                            style={styles.previewImage}
+                        />
+                        </View>
+                    )}
+                    
                 </View>
                 )}
                 <View></View>

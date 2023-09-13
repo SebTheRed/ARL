@@ -852,7 +852,8 @@ imagePreview: {
   marginTop: 10,
   borderColor:"white",
   borderWidth:4,
-},imagePreviewCover:{
+},
+imagePreviewCover:{
   width:300,
   height:150,
   borderColor:"#fff",

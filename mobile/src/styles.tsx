@@ -819,15 +819,24 @@ modalContent: {
   padding: 20,
   borderRadius: 10,
   borderColor:"#fff",
-  borderWidth:4
+  borderWidth:4,
+  justifyContent:"space-between",
 },
 modalTitle: {
-  fontSize: 18,
+  fontSize: 24,
   marginBottom: 10,
   color:"#fff"
 },
 selectButton: {
   marginBottom: 10,
+  width:"95%",
+  borderWidth:2,
+  borderRadius:10,
+  borderColor:"#fff",
+  alignItems:"center",
+  marginTop:10,
+  justifyContent:"center",
+  height:40,
 },
 imageContainer: {
   alignItems: 'center',

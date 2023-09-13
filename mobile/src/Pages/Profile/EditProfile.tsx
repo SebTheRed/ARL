@@ -13,6 +13,7 @@ import {
 	Switch,
 	TextInput,
 } from 'react-native'
+import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
@@ -32,6 +33,7 @@ const EditProfile = ():JSX.Element => {
 	const [isEditing, setIsEditing] = useState<string | null>(null);
 	const [name, setName] = useState(userData.name);
 	const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber);
+	const [profilePicState,setProfilePicState] = useState(null)
 	const [option1,setOption1] = useState(true)
 	const [option2,setOption2] = useState(true)
 	const [option3,setOption3] = useState(true)
@@ -41,7 +43,15 @@ const EditProfile = ():JSX.Element => {
 	// const [option7,setOption7] = useState(false)
 	// const [option8,setOption8] = useState(false)
 	// const [option9,setOption9] = useState(false)
-
+	useEffect(()=>{
+		const translateURL = async () => {
+            const storage = getStorage()
+            const pathRef = ref(storage, userData.picURL)
+            getDownloadURL(pathRef)
+            .then((url:any)=>{setProfilePicState(url)})
+        };
+        translateURL()
+	},[])
 	useEffect(()=>{
 		setOption1(userData.settings.geoLocation)
 		setOption2(userData.settings.darkMode)
@@ -194,7 +204,7 @@ return(
             </View>
             
             <View style={{...styles.profilePagePictureBox, position:"relative"}}>
-                <Image style={{...styles.profilePagePicture}} source={require('./mochi.png')} />
+				{profilePicState&&(<Image style={styles.profilePagePicture} source={{uri: profilePicState}} />)}
 				<View
 					style={{
 					position: 'absolute',

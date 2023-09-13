@@ -30,6 +30,7 @@ const EditProfile = ():JSX.Element => {
 	const {userData}:any = useUserData()
 	const {uid}:any = useUID()
 	const [modalVisibility,setModalVisibility] = useState(false)
+	const [modalType,setModalType] = useState(String)
 	const [isEditing, setIsEditing] = useState<string | null>(null);
 	const [name, setName] = useState(userData.name);
 	const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber);
@@ -132,7 +133,10 @@ const EditProfile = ():JSX.Element => {
 		navigation.navigate("UserPassPopup")
 	};
 	const handleProfPicPress = () => {
-		setModalVisibility(true)
+		setModalType("profilePic")
+	}
+	const handleCoverPhotoChange = () => {
+		setModalType("coverPic")
 	}
 	const renderField = (label: string, value: string, setValue: any) => (
 		<TouchableOpacity
@@ -181,7 +185,9 @@ return(
 			width:"100%",
 			}}
 		/>
-		<TouchableOpacity style={{
+		<TouchableOpacity
+		onPress={handleCoverPhotoChange}
+		style={{
 			position: 'absolute',
 			top: 0,
 			left: 150,
@@ -328,8 +334,8 @@ return(
 
 		</View>
     </ScrollView>
-	{modalVisibility == true && (
-		<ProfilePicModal setModalVisibility={setModalVisibility} />
+	{modalType!="" && (
+		<ProfilePicModal setModalType={setModalType} modalType={modalType} />
 	)}
 	</>
 	)

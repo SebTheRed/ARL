@@ -26,12 +26,17 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
         const [imageSource, setImageSource] = useState<any>(null);
         const [selectedImage,setSelectedImage] = useState(null)
         const [profilePicState,setProfilePicState] = useState(String)
+        const [coverPhotoState,setCoverPhotoState] = useState(String)
         useEffect(()=>{
             const translateURL = async () => {
                 const storage = getStorage()
                 const pathRef = ref(storage, userData.picURL)
+                const coverPathRef = ref(storage,userData.coverURL)
                 getDownloadURL(pathRef)
                 .then((url:any)=>{setProfilePicState(url)})
+                getDownloadURL(coverPathRef)
+                .then((url:any)=>{setCoverPhotoState(url)})
+                
             };
             translateURL()
         },[])
@@ -77,8 +82,12 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
                 });
                 console.log("Pic Link updated successfully");
                 setModalType("")
+                setImageSource("")
+                setProfilePicState("")
             }).catch((error) => {
                 console.log('Upload failed: ', error);
+                setImageSource("")
+                setProfilePicState("")
             });
         }
         const confirmCoverImage = async() => {
@@ -100,13 +109,19 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
                 });
                 console.log("Pic Link updated successfully");
                 setModalType("")
+                setImageSource("")
+                setProfilePicState("")
             }).catch((error) => {
                 console.log('Upload failed: ', error);
+                setImageSource("")
+                setProfilePicState("")
             });
         }
 
         const onClose = () => {
             setModalType("")
+            setImageSource("")
+                setProfilePicState("")
         }
 
     return(
@@ -148,9 +163,9 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
                     
                 </View>
                 )}
-                {(!imageSource && profilePicState) && (
+                {(!imageSource) && (
                 <View style={styles.imageContainer}>
-                    {modalType=="profilePic"&&(
+                    {(modalType=="profilePic" && profilePicState!="")&&(
                         <View style={styles.imagePreview}>
                         <Image
                             source={{ uri: profilePicState }}
@@ -158,10 +173,10 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
                         />
                         </View>
                     )}
-                    {modalType=="coverPic"&&(
+                    {(modalType=="coverPic" && coverPhotoState!="")&&(
                         <View style={styles.imagePreviewCover}>
                         <Image
-                            source={{ uri: profilePicState }}
+                            source={{ uri: coverPhotoState }}
                             style={styles.previewImage}
                         />
                         </View>

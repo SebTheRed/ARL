@@ -13,12 +13,14 @@ import {
     Image,
   } from 'react-native';
   import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-  import {getStorage,ref, getDownloadURL} from 'firebase/storage';
+  import {getStorage,ref, getDownloadURL, uploadBytes} from 'firebase/storage';
   import {useState,useEffect} from 'react'
   import { useUserData } from '../../Contexts/UserDataContext';
+  import { useUID } from '../../Contexts/UIDContext';
   import styles from '../../styles';
 const ProfilePicModal = ({setModalVisibility}:any):JSX.Element => {
         const {userData}:any = useUserData()
+        const {uid}:any = useUID()
         const [imageSource, setImageSource] = useState(null);
         const [selectedImage,setSelectedImage] = useState(null)
         const [profilePicState,setProfilePicState] = useState(String)
@@ -54,8 +56,19 @@ const ProfilePicModal = ({setModalVisibility}:any):JSX.Element => {
 
         };
       
-        const confirmImage = () => {
-            //HERE WE GO
+        const confirmImage = async() => {
+            const responseBlob = await fetch(imageSource);
+            const blob = await responseBlob.blob();
+
+            // Upload to Firebase Storage
+            const storage = getStorage();
+            const storageRef = ref(storage, `user_prof_pics/${uid}/picture_actual`);
+
+            uploadBytes(storageRef, blob).then((snapshot) => {
+                console.log('Uploaded a blob or file!');
+            }).catch((error) => {
+                console.log('Upload failed: ', error);
+            });
         }
 
         const onClose = () => {
@@ -79,11 +92,11 @@ const ProfilePicModal = ({setModalVisibility}:any):JSX.Element => {
                     />
                     </View>
                     <TouchableOpacity onPress={confirmImage} style={{...styles.selectButton, backgroundColor:"#00e800"}}>
-                    <Text style={styles.modalTitle}>Confirm</Text>
+                        <Text style={styles.modalTitle}>Confirm</Text>
                     </TouchableOpacity>
                 </View>
                 )}
-                {!imageSource && (
+                {(!imageSource && profilePicState) && (
                 <View style={styles.imageContainer}>
                     <View style={styles.imagePreview}>
                     <Image

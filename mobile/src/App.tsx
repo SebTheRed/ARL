@@ -339,6 +339,7 @@ const AuthApp = ()=>{
             <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces,}} component={Map} />
             <Stack.Screen name="Feed" initialParams={{skillsList: skillsList}} component={Feed} />
             <Stack.Screen name="ProfileStack" component={ProfilePages} />
+            <Stack.Screen name="UserStats" initialParams={{skillsList:skillsList}} component={Stats} />
           </Stack.Navigator>
         <BottomBar/>
       </>
@@ -360,7 +361,7 @@ const ProfilePages = () => {
       <ProfileStack.Screen name="Profile" initialParams={{skillsList:skillsList, XPScale, trophyData}} component={Profile} />
       <ProfileStack.Screen name="EditProfile" component={EditProfile} />
       <ProfileStack.Screen name="UserPassPopup" component={UserPassPopup} />
-      <ProfileStack.Screen name="Stats" initialParams={{skillsList:skillsList}} component={Stats} />
+      <ProfileStack.Screen name="ProfileStats" initialParams={{skillsList:skillsList}} component={Stats} />
     </ProfileStack.Navigator>
   )
 }

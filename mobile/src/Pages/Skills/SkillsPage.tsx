@@ -26,7 +26,7 @@ type SkillPageProps = PropsWithChildren<{
 type RootStackParamList = {
   SkillsMain:undefined,
   ExperienceUploader:undefined,
-  Stats:undefined,
+  UserStats:undefined,
 }
 
 
@@ -89,30 +89,7 @@ const handleStatsPress = () => {
   setLastPage(skillData.title)
   setProfilePageUID(uid)
   setCurrentTraitTitle(skillData.title)
-  navigation.dispatch(
-    CommonActions.reset({
-      index: 0,
-      routes: [
-        {
-          name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
-          state: {
-            routes: [
-              {
-                name: 'ProfileStack', // The name of the child navigator
-                state:{
-                  routes:[
-                    {
-                      name:'Stats'
-                    }
-                  ]
-                }
-              },
-            ],
-          },
-        },
-      ],
-    })
-  );
+  navigation.navigate("UserStats");
 }
 
 // useEffect(()=>{

@@ -118,7 +118,7 @@ const Profile = ({route}:any):JSX.Element => {
     }
     const handleTraitStatsPress = (traitName:String) => {
         setLastPage("profile")
-        navigation.navigate("Stats")
+        navigation.navigate("ProfileStats")
         setCurrentTraitTitle(traitName)
     }
   

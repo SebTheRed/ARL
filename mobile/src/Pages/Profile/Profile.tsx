@@ -86,8 +86,8 @@ const Profile = ({route}:any):JSX.Element => {
     useEffect(()=>{
         const translateURL = async () => {
             const storage = getStorage()
-            const pathRef = ref(storage, userData.picURL)
-            const coverPathRef = ref(storage,userData.coverURL)
+            const pathRef = ref(storage, matchingProfileData.picURL)
+            const coverPathRef = ref(storage,matchingProfileData.coverURL)
             getDownloadURL(pathRef)
             .then((url:any)=>{setProfilePicState(url)})
             getDownloadURL(coverPathRef)

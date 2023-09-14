@@ -94,7 +94,7 @@ const Profile = ({route}:any):JSX.Element => {
             .then((url:any)=>{setCoverPicState(url)})
         };
         translateURL()
-    },[])
+    },[matchingProfileData])
     // useEffect(()=>{
 	// 	setStartAfter(currentFeed[currentFeed.length - 1])
 	// },[currentFeed])

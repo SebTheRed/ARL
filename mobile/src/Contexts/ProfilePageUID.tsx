@@ -59,10 +59,7 @@ export const ProfilePageUIDProvider = ({children}:any) => {
 
 
                 // console.log("profile posts: ", newDocs)
-                setProfileFeed((prevFeed: any) => {
-                    const updatedFeed = [...prevFeed, ...newDocs];
-                    return updatedFeed.sort((a, b) => b.timeStamp.localeCompare(a.timeStamp));
-                  });
+                setProfileFeed(newDocs)
                 
             } else {
                 try{

@@ -90,15 +90,13 @@ const Profile = ({route}:any):JSX.Element => {
             const storage = getStorage();
             const pathRef = ref(storage, matchingProfileData.picURL);
             const coverPathRef = ref(storage, matchingProfileData.coverURL);
-        
             const profilePicUrl = await getDownloadURL(pathRef);
             const coverPicUrl = await getDownloadURL(coverPathRef);
-        
             setProfilePicState(profilePicUrl);
             setCoverPicState(coverPicUrl);
             setIsLoading(false); // Set loading state to false after fetching
-            };
-            translateURL()
+        };
+        translateURL()
     },[matchingProfileData])
     // useEffect(()=>{
 	// 	setStartAfter(currentFeed[currentFeed.length - 1])

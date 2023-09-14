@@ -27,14 +27,17 @@ const HeaderBar = ():JSX.Element => {
 	const {findPageUserID}:any = useProfilePageUID()
 	const {userData}:any = useUserData()
 	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-	const [profilePicState,setProfilePicState] = useState(null)
+	const [profilePicState,setProfilePicState] = useState<any>(null)
+	const [isLoading,setIsLoading] = useState<any>()
 
 useEffect(()=>{
 	const translateURL = async () => {
-		const storage = getStorage()
-		const pathRef = ref(storage, userData.picURL)
-		getDownloadURL(pathRef)
-		.then((url:any)=>{setProfilePicState(url)})
+		setIsLoading(true); // Set loading state to true before fetching
+		const storage = getStorage();
+		const pathRef = ref(storage, userData.picURL);
+		const profilePicUrl = await getDownloadURL(pathRef);
+		setProfilePicState(profilePicUrl);
+		setIsLoading(false); // Set loading state to false after fetching
 	};
 	translateURL()
 })

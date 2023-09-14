@@ -34,8 +34,9 @@ const EditProfile = ():JSX.Element => {
 	const [isEditing, setIsEditing] = useState<string | null>(null);
 	const [name, setName] = useState(userData.name);
 	const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber);
-	const [profilePicState,setProfilePicState] = useState(null)
-	const [coverPicState,setCoverPicState] = useState(null)
+	const [profilePicState,setProfilePicState] = useState<any>(null)
+	const [coverPicState,setCoverPicState] = useState<any>(null)
+	const [isLoading,setIsLoading] = useState(true)
 	const [option1,setOption1] = useState(true)
 	const [option2,setOption2] = useState(true)
 	const [option3,setOption3] = useState(true)
@@ -47,13 +48,17 @@ const EditProfile = ():JSX.Element => {
 	// const [option9,setOption9] = useState(false)
 	useEffect(()=>{
 		const translateURL = async () => {
-            const storage = getStorage()
-            const pathRef = ref(storage, userData.picURL)
-            const coverPathRef = ref(storage,userData.coverURL)
-            getDownloadURL(pathRef)
-            .then((url:any)=>{setProfilePicState(url)})
-            getDownloadURL(coverPathRef)
-            .then((url:any)=>{setCoverPicState(url)})
+            setIsLoading(true); // Set loading state to true before fetching
+            const storage = getStorage();
+            const pathRef = ref(storage, userData.picURL);
+            const coverPathRef = ref(storage, userData.coverURL);
+        
+            const profilePicUrl = await getDownloadURL(pathRef);
+            const coverPicUrl = await getDownloadURL(coverPathRef);
+        
+            setProfilePicState(profilePicUrl);
+            setCoverPicState(coverPicUrl);
+            setIsLoading(false); // Set loading state to false after fetching
         };
         translateURL()
 	},[])
@@ -176,7 +181,7 @@ return(
 	<>
     <ScrollView style={{...styles.profilePageContainer, height:"100%"}}>
         <View style={styles.profilePageCover}>
-		{coverPicState&&(<Image style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />)}
+		{(coverPicState&&!isLoading)&&(<Image style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />)}
 		<View
 			style={{
 			position: 'absolute',
@@ -215,7 +220,7 @@ return(
             </View>
             
             <View style={{...styles.profilePagePictureBox, position:"relative"}}>
-				{profilePicState&&(<Image style={styles.profilePagePicture} source={{uri: profilePicState}} />)}
+				{(profilePicState&&!isLoading)&&(<Image style={styles.profilePagePicture} source={{uri: profilePicState}} />)}
 				<View
 					style={{
 					position: 'absolute',

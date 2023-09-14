@@ -29,7 +29,8 @@ const FeedPost = ({data, skillsList}:any):JSX.Element => {
 	const [matchingSkillData,setMatchingSkillData] = useState({title:"",color:"#fff",flare:"",level:0})
 	//translatedTimestamp takes my stupid YYYY-MM-DD-HH-MM-SS timestamp and sets it to a 24 hour "time remaining" string val.
 	const [translatedTimestamp,setTranslatedTimestamp] = useState("")
-	const [profilePicState,setProfilePicState] = useState(null)
+	const [profilePicState,setProfilePicState] = useState<any>(null)
+	const [isLoading,setIsLoading]=useState(true)
 
 //This useEffect simply maps over the skillsList, seeking a match.
 //Also, it will set the translated timestamp, using the function timeRemainingUntil24Hours
@@ -38,13 +39,18 @@ useEffect(()=>{
 		if (skill.title === data.postSkill){setMatchingSkillData(skill)}
 	})
 	setTranslatedTimestamp(timeRemainingUntil24Hours(data.timeStamp))
+
+
 	const translateURL = async () => {
-		const storage = getStorage()
-		const pathRef = ref(storage, data.picURL)
-		getDownloadURL(pathRef)
-		.then((url:any)=>{setProfilePicState(url)})
-	};
-	translateURL()
+            setIsLoading(true); // Set loading state to true before fetching
+            const storage = getStorage();
+            const pathRef = ref(storage, data.picURL);
+            const profilePicUrl = await getDownloadURL(pathRef);
+
+            setProfilePicState(profilePicUrl);
+            setIsLoading(false); // Set loading state to false after fetching
+        };
+        translateURL()
 },[])
 
 //Chat GPT is GOAT for writing this for me. Too lazy *yawn* CHAT-GPT already commented this for me <3
@@ -120,7 +126,7 @@ const PostContentSplitter = ():JSX.Element => {
 				<View style={{...styles.postProfileAndNameContainer}}>
 					<TouchableOpacity style={{...styles.postProfPic}} onPress={handleProfilePress}>
 						{/* ADD IMG TAG WITH HOOK TO USER PROFILE USER ID IMG */}
-						{profilePicState && (
+						{(profilePicState&&!isLoading) && (
 							<Image style={styles.postProfPicImg} source={{uri: profilePicState}} />
 						)}
 					</TouchableOpacity>

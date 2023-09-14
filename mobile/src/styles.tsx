@@ -598,6 +598,7 @@ profilePageContainer:{
   backgroundColor:"#1c1c1c",
   // flex:1,
   height:380,
+  width:"100%"
 },
 profilePageCover:{
   height:180,

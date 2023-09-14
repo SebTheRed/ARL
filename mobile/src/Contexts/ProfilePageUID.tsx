@@ -56,7 +56,7 @@ export const ProfilePageUIDProvider = ({children}:any) => {
                     const userDocSnap = await getDoc(userDocRef)
                     if (userDocSnap.exists()) {
                         const userDocData = userDocSnap.data();
-                        console.log("Document data:", userDocData);
+                        // console.log("Document data:", userDocData);
                         setMatchingProfileData(userDocData);
                         let feedQuery = query(
                             collection(db, "posts"),

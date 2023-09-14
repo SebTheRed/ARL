@@ -35,7 +35,7 @@ type TrophyDataObj = {
     progressQTY:number,
 }
 
-const screenWidth = Dimensions.get('window').width;
+// const screenWidth = Dimensions.get('window').width;
 const Profile = ({route}:any):JSX.Element => {
     // const navigation = useNavigation();
     const navigation = useNavigation<any>();
@@ -48,9 +48,10 @@ const Profile = ({route}:any):JSX.Element => {
     const {uid}:any = useUID()
     const [buttonType,setButtonType] = useState("")
     const [matchedTrophyPins,setMatchedTrophyPins] = useState([{},{},{}])
-    const [profilePicState,setProfilePicState] = useState(null)
-    const [coverPicState,setCoverPicState] = useState(null)
+    const [profilePicState,setProfilePicState] = useState<any>(null)
+    const [coverPicState,setCoverPicState] = useState<any>(null)
     const [refreshing, setRefreshing] = useState(false);
+    const [isLoading,setIsLoading] = useState(true)
     
     useEffect(()=>{
         // console.log(matchingProfileData)
@@ -85,15 +86,19 @@ const Profile = ({route}:any):JSX.Element => {
     },[userData])
     useEffect(()=>{
         const translateURL = async () => {
-            const storage = getStorage()
-            const pathRef = ref(storage, matchingProfileData.picURL)
-            const coverPathRef = ref(storage,matchingProfileData.coverURL)
-            getDownloadURL(pathRef)
-            .then((url:any)=>{setProfilePicState(url)})
-            getDownloadURL(coverPathRef)
-            .then((url:any)=>{setCoverPicState(url)})
-        };
-        translateURL()
+            setIsLoading(true); // Set loading state to true before fetching
+            const storage = getStorage();
+            const pathRef = ref(storage, matchingProfileData.picURL);
+            const coverPathRef = ref(storage, matchingProfileData.coverURL);
+        
+            const profilePicUrl = await getDownloadURL(pathRef);
+            const coverPicUrl = await getDownloadURL(coverPathRef);
+        
+            setProfilePicState(profilePicUrl);
+            setCoverPicState(coverPicUrl);
+            setIsLoading(false); // Set loading state to false after fetching
+            };
+            translateURL()
     },[matchingProfileData])
     // useEffect(()=>{
 	// 	setStartAfter(currentFeed[currentFeed.length - 1])
@@ -167,8 +172,8 @@ const Profile = ({route}:any):JSX.Element => {
     const ProfileHeader = ():JSX.Element => {
         return(
     <View style={styles.profilePageContainer}>
-        <View style={{...styles.profilePageCover, width:screenWidth}}>
-            {coverPicState&&(<Image style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />)}
+        <View style={{...styles.profilePageCover}}>
+            {(coverPicState && !isLoading)&&(<Image style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />)}
         </View>
         
         <View style={styles.profilePageTopContainer}>
@@ -192,7 +197,7 @@ const Profile = ({route}:any):JSX.Element => {
             </View>
             
             <View style={styles.profilePagePictureBox}>
-                {profilePicState&&(<Image style={styles.profilePagePicture} source={{uri: profilePicState}} />)}
+                {(profilePicState&&!isLoading)&&(<Image style={styles.profilePagePicture} source={{uri: profilePicState}} />)}
             </View>
             <View style={styles.profilePageMultiBox}>
                 <MultiButtonSplitter />

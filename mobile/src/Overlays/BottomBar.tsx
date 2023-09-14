@@ -22,6 +22,7 @@ type RootStackParamList = {
 	Skills: undefined;
 	Stats: undefined;
 	Trophies: undefined;
+	People:undefined,
   };
 
 ////// COMPONENT FUNCTION BEGINNING //////
@@ -43,6 +44,10 @@ const {feedButtonHandler}:any = useFeed()
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Map")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/travel.png')} />
 				<Text style={styles.bottomBarText}>Map</Text>
+			</TouchableOpacity>
+			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("People")}>
+				<Image style={styles.bottomBarIcon} source={require('../IconBin/friends.png')} />
+				<Text style={styles.bottomBarText}>People</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>{
 				handlePress("Feed")

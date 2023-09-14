@@ -47,6 +47,17 @@ export const ProfilePageUIDProvider = ({children}:any) => {
                   ); 
                 const snapshot = await getDocs(feedQuery);
                 let newDocs = snapshot.docs.map(doc => doc.data());
+
+
+                const currentTime = new Date();
+                const oneDayAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000)); // 24 hours ago
+                newDocs = newDocs.filter((doc: any) => {
+                    const [year, month, day, hour, minute, second] = doc.timeStamp.split('-').map(Number);
+                    const postDate = new Date(year, month - 1, day, hour, minute, second);
+                    return postDate >= oneDayAgo;
+                });
+
+
                 // console.log("profile posts: ", newDocs)
                 setProfileFeed(newDocs)
                 
@@ -66,6 +77,17 @@ export const ProfilePageUIDProvider = ({children}:any) => {
                         const snapshot = await getDocs(feedQuery);
                         let newDocs = snapshot.docs.map(doc => doc.data());
                         // console.log("profile posts: ", newDocs)
+
+
+                        const currentTime = new Date();
+                        const oneDayAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000)); // 24 hours ago
+                        newDocs = newDocs.filter((doc: any) => {
+                            const [year, month, day, hour, minute, second] = doc.timeStamp.split('-').map(Number);
+                            const postDate = new Date(year, month - 1, day, hour, minute, second);
+                            return postDate >= oneDayAgo;
+                          });
+
+
                         setProfileFeed(newDocs)
                     } else {
                         console.log("No such document!");

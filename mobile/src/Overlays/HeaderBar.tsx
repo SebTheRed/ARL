@@ -36,11 +36,12 @@ useEffect(()=>{
 		const storage = getStorage();
 		const pathRef = ref(storage, userData.picURL);
 		const profilePicUrl = await getDownloadURL(pathRef);
+		console.log("header image promise")
 		setProfilePicState(profilePicUrl);
 		setIsLoading(false); // Set loading state to false after fetching
 	};
 	translateURL()
-})
+},[])
 
 	const handleProfilePress = () => {
 		findPageUserID(uid)

@@ -46,7 +46,7 @@ useEffect(()=>{
             const storage = getStorage();
             const pathRef = ref(storage, data.picURL);
             const profilePicUrl = await getDownloadURL(pathRef);
-
+			console.log("feed post image promise")
             setProfilePicState(profilePicUrl);
             setIsLoading(false); // Set loading state to false after fetching
         };

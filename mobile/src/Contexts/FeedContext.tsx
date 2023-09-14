@@ -55,6 +55,14 @@ export const FeedProvider = ({ children }:any) => {
     );
     const snapshot = await getDocs(feedQuery);
     let newDocs = snapshot.docs.map(doc => doc.data());
+    const currentTime = new Date();
+    const oneDayAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000)); // 24 hours ago
+
+    newDocs = newDocs.filter((doc: any) => {
+      const [year, month, day, hour, minute, second] = doc.timeStamp.split('-').map(Number);
+      const postDate = new Date(year, month - 1, day, hour, minute, second);
+      return postDate >= oneDayAgo;
+    });
     console.log("newdocs", newDocs.length)
 
     if (newDocs.length > 0) {
@@ -86,6 +94,14 @@ export const FeedProvider = ({ children }:any) => {
 
     const snapshot = await getDocs(feedQuery);
     let newDocs = snapshot.docs.map(doc => doc.data());
+    const currentTime = new Date();
+    const oneDayAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000)); // 24 hours ago
+  
+    newDocs = newDocs.filter((doc: any) => {
+      const [year, month, day, hour, minute, second] = doc.timeStamp.split('-').map(Number);
+      const postDate = new Date(year, month - 1, day, hour, minute, second);
+      return postDate >= oneDayAgo;
+    });
     console.log("newdocs", newDocs.length)
 
     if (newDocs.length > 0) {

@@ -80,7 +80,10 @@ export const FeedProvider = ({ children }:any) => {
         })
       })
       console.log(newDocs.length)
-      setCurrentFeed((prevFeed: any) => [...prevFeed, ...newDocs]);
+      setCurrentFeed((prevFeed: any) => {
+        const updatedFeed = [...prevFeed, ...newDocs];
+        return updatedFeed.sort((a, b) => b.timeStamp.localeCompare(a.timeStamp));
+      });
       
     }
   }
@@ -114,7 +117,10 @@ export const FeedProvider = ({ children }:any) => {
         })
       })
       console.log(newDocs.length)
-      setCurrentFeed((prevFeed: any) => [...prevFeed, ...newDocs]);
+      setCurrentFeed((prevFeed: any) => {
+        const updatedFeed = [...prevFeed, ...newDocs];
+        return updatedFeed.sort((a, b) => b.timeStamp.localeCompare(a.timeStamp));
+      });
       
     }
   };

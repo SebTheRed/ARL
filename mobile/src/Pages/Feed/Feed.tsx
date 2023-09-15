@@ -44,6 +44,14 @@ const Feed = ({ route }:any) => {
 	  paginateFeed()
 	};
   
+
+	const FeedHeader = ():JSX.Element => {
+		return(
+			<View>
+			</View>
+		)
+	}
+
 	//I will explain this in great detail, because this is one of the keystones of the app.
 	//first, data={currentFeed}.. The data param is what is actually mapped over to create the FlatList.
 	//second, renderItem.. The JSX return for each item of currentFeed that is rendered (mapped in my mind).
@@ -54,6 +62,7 @@ const Feed = ({ route }:any) => {
 	return (
 	  <FlatList
 		data={currentFeed}
+		ListHeaderComponent={<FeedHeader />}
 		renderItem={({ item }) => <FeedPost skillsList={skillsList} data={item} />}
 		keyExtractor={item => item.id.toString()}
 		style={styles.feedFlatList}

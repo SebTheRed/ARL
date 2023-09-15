@@ -249,6 +249,7 @@ const Profile = ({route}:any):JSX.Element => {
     return(
         <FlatList
 		data={profileFeed}
+        ListHeaderComponent={<ProfileHeader />}
 		renderItem={({ item }) => <FeedPost skillsList={skillsList} data={item} />}
 		keyExtractor={item => item.id.toString()}
 		style={styles.feedFlatList}
@@ -264,7 +265,7 @@ const Profile = ({route}:any):JSX.Element => {
 			tintColor="#FFF"
 		  />
 		}
-        ListHeaderComponent={<ProfileHeader />}
+        
 	  />
        
     )

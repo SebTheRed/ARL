@@ -219,11 +219,11 @@ function App(): JSX.Element {
       converse_foreign_language: {type:"log",title:"Foreign Language Conversation",desc:"Log about a conversation you had in your non-native language.", xp: 5, unlocksAt: 10, perDay: 2, perWeek: 0, perMonth:0 ,lockedBy:""},
       tutor: {type:"camera",title:"Language Mentorship",desc:"Spend a decent amount of time helping someone learn their non-native language.", xp: 10, unlocksAt: 15, perDay: 0, perWeek: 1, perMonth:0 ,lockedBy:""},
       watch_foreign_movie: {type:"camera",title:"Watch Foreign Movie",desc:"Watch a foreign movie.", xp: 25, unlocksAt: 20, perDay: 1, perWeek: 0, perMonth:0 ,lockedBy:""},
+      public_speaking: {type:"camera",title:"Honored Speaker",desc:"Speak publicly before a crowd.", xp: 150, unlocksAt: 55, perDay: 0, perWeek: 0, perMonth:1 },
       read_foreign_book: {type:"log",title:"Read Foreign Book",desc:"Log about a book you are reading that is written in your non-native language.", xp: 10, unlocksAt: 30, perDay: 1, perWeek: 0, perMonth:0 ,lockedBy:""},
       duolingo_month: {type:"api",title:"Duolingo Month",desc:"Complete your daily Duolingo challenge every day for each month. Counter resets on the 1st.", xp: 100, unlocksAt: 40, perDay: 0, perWeek: 0, perMonth:1 ,lockedBy:""},
       travel_foreign_country: {type:"timeline",title:"Travel to Foreign Country",desc:"Spread your wings! Share your travels with the world.", xp: 250, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 ,lockedBy:""},
       record_speaking_language: {type:"camera",title:"Babbel",desc:"Upload your foreign language skills for the world to hear!", xp: 50, unlocksAt: 50, perDay: 0, perWeek: 1, perMonth:0 ,lockedBy:""},
-      // master_language_exam: {type:"exam",title:"",desc:"", xp: 250, unlocksAt: 50, perDay: 0, perWeek: 0, perMonth:1 }
     },
     humanity: {
       vote: {type:"camera",title:"Your Vote Matters",desc:"Cast your vote for an official Federal or State election. Must use the Map.",xp: 2000, unlocksAt: 0, perDay: 0, perMonth: 0,lockedBy:""},

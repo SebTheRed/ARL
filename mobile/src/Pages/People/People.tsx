@@ -9,15 +9,32 @@ import {
 	Image,
 	TouchableOpacity,
 	FlatList,
-	RefreshControl
+	RefreshControl,
+	TextInput,
 } from 'react-native'
 import React from 'react'
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
 
 const People = ():JSX.Element => {
+
+	const SearchBar = () => {
+		return (
+		  <View style={styles.searchContainer}>
+			<TextInput
+			  style={styles.searchInput}
+			  placeholder="Search For People..."
+			  placeholderTextColor="#999"
+			/>
+		  </View>
+		);
+	  };
+
+
     return(
-        <View></View>
+        <ScrollView style={styles.peoplePageContainer}>
+			<SearchBar />
+		</ScrollView>
     )
 }
 

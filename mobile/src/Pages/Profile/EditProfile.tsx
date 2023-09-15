@@ -37,11 +37,11 @@ const EditProfile = ():JSX.Element => {
 	const [profilePicState,setProfilePicState] = useState<any>(null)
 	const [coverPicState,setCoverPicState] = useState<any>(null)
 	const [isLoading,setIsLoading] = useState(true)
-	const [option1,setOption1] = useState(true)
-	const [option2,setOption2] = useState(true)
-	const [option3,setOption3] = useState(true)
-	// const [option4,setOption4] = useState(false)
-	// const [option5,setOption5] = useState(false)
+	const [option1,setOption1] = useState(null)
+	const [option2,setOption2] = useState(null)
+	const [option3,setOption3] = useState(null)
+	const [option4,setOption4] = useState(null)
+	const [option5,setOption5] = useState(null)
 	// const [option6,setOption6] = useState(false)
 	// const [option7,setOption7] = useState(false)
 	// const [option8,setOption8] = useState(false)
@@ -66,43 +66,43 @@ const EditProfile = ():JSX.Element => {
 		setOption1(userData.settings.geoLocation)
 		setOption2(userData.settings.darkMode)
 		setOption3(userData.settings.notifications)
+		setOption4(userData.settings.privateSkills)
+		setOption5(userData.settings.privateProfile)
 		console.log(userData.settings.geoLocation)
 		console.log(userData.settings.darkMode)
 		console.log(userData.settings.notifications)
-	},[userData])
+	},[])
 	
 	useEffect(()=>{
 		const userDocRef = doc(db, "users", uid);
-		const changeToggle = async()=>{
-			try {
-				await updateDoc(userDocRef, {
-				settings:{darkMode: option2, notifications: option3, geoLocation: option1}, // Update the 'name' field in Firestore
-				});
-				console.log("Settings toggled successfully");
-			} catch (error) {
-				console.error("Error updating settings: ", error);
+		// if (option1&&option2&&option3&&option4&&option5) {
+			const changeToggle = async()=>{
+				try {
+					await updateDoc(userDocRef, {
+					settings:{darkMode: option2, notifications: option3, geoLocation: option1, privateSkills:option4,privateProfile:option5}, // Update the 'name' field in Firestore
+					});
+					console.log("Settings toggled successfully");
+				} catch (error) {
+					console.error("Error updating settings: ", error);
+				}
 			}
-		}
-		changeToggle()
-	},[option1,option2,option3]);
+			changeToggle()
+		// }
+	},[option1,option2,option3,option4,option5]);
 
 	const handleReturnPress = () => {
 		navigation.navigate("Profile")
 	};
 	const handleSwitch = async(switchVal:string) => {
-		
-	// 	switch(switchVal){
-	// 		case"option1":
-				
-	// 		break;
-	// 		case"option2":
-
-	// 		break;
-	// 		case"option3":
-
-	// 		break;
-	// 	}
-	// }
+		// const userDocRef = doc(db, "users", uid);
+		// try {
+		// 	await updateDoc(userDocRef, {
+		// 	settings:{darkMode: option2, notifications: option3, geoLocation: option1, privateSkills:option4,privateProfile:option5}, // Update the 'name' field in Firestore
+		// 	});
+		// 	console.log("Settings toggled successfully");
+		// } catch (error) {
+		// 	console.error("Error updating settings: ", error);
+		// }
 	};
 	const handleTextInputBlur = async (label: string) => {
 		setIsEditing(null);
@@ -329,6 +329,46 @@ return(
 							handleSwitch("option1")
 						}}
 						value={option1}
+					/>
+					</View>
+				</View>
+			</View>
+			<View style={{...styles.eventTileWrapper,borderColor:`${option4?"#1cb012":"#656565"}`}}>
+				<View style={{...styles.eventTileMain}}>
+					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
+						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Skill Set</Text>
+					</View>
+					<Text style={{...styles.eventTileText, fontSize:16,}}>Keep on to show off your Levels to anyone who views your profile.</Text>
+				</View>
+				<View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+					<View style={styles.eventButtonWrapper}>
+					<Switch
+						ios_backgroundColor="#3e3e3e"
+						onValueChange={(newVal) => {
+							setOption4((prev) => !prev)
+							handleSwitch("option4")
+						}}
+						value={option4}
+					/>
+					</View>
+				</View>
+			</View>
+			<View style={{...styles.eventTileWrapper,borderColor:`${option5?"#1cb012":"#656565"}`}}>
+				<View style={{...styles.eventTileMain}}>
+					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
+						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Public Facing Profile</Text>
+					</View>
+					<Text style={{...styles.eventTileText, fontSize:16,}}>Keep on to enable users to search and view your profile.</Text>
+				</View>
+				<View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+					<View style={styles.eventButtonWrapper}>
+					<Switch
+						ios_backgroundColor="#3e3e3e"
+						onValueChange={(newVal) => {
+							setOption5((prev) => !prev)
+							handleSwitch("option5")
+						}}
+						value={option5}
 					/>
 					</View>
 				</View>

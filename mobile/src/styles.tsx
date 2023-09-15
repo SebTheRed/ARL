@@ -878,6 +878,25 @@ closeButton: {
 },
 
 
+
+peoplePageContainer:{
+  backgroundColor:"#1c1c1c",
+  height:"100%",
+},
+searchContainer:{
+  padding:10,
+},
+searchInput:{
+  height: 40,
+  borderRadius: 20,
+  borderWidth: 2,
+  borderColor: 'white',
+  paddingLeft: 20,
+  paddingRight: 20,
+  backgroundColor: '#333', // Change this to your preferred input background color
+  color: 'white',
+},
+
 });
 
 export default styles

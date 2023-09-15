@@ -254,34 +254,13 @@ const ExperienceUploader = ():JSX.Element => {
                         </View>
                     </View>
                     )}
-                    { settingTwo == true &&
-                    (<View style={{...styles.eventTileWrapper,borderColor:`${settingThree?currentEvent.skillColor:"#656565"}`}}>
-                        <View style={{...styles.eventTileMain}}>
-                            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
-                            </View>
-                            <Text style={{...styles.eventTileText, fontSize:16,}}>Switch on to make post visible to the Global Feed & Map. Post delayed one hour for privacy.</Text>
-                        </View>
-                        <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
-                            <View style={styles.eventButtonWrapper}>
-                            <Switch
-                                trackColor={{ false: '#767577', true: currentEvent.skillColor }}  // Change '#81b0ff' to your desired color
-                                thumbColor={settingTwo ? '#fff' : '#fff'}  // Change '#f5dd4b' to your desired color
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={(newVal)=>setSettingThree((prev)=>!prev)}
-                                value={settingThree}
-                            />
-                            </View>
-                        </View>
-                    </View>
-                    )}
                     { (settingTwo == true && userData.settings.privateProfile == true) &&
                     (<View style={{...styles.eventTileWrapper,borderColor:`${settingThree?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                                 <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
                             </View>
-                            <Text style={{...styles.eventTileText, fontSize:16,}}>Switch on to make post visible to the Global Feed & Map. Post delayed one hour for privacy.</Text>
+                            <Text style={{...styles.eventTileText, fontSize:16,}}>Switch on to make post visible to the Global Feed & Map.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                             <View style={styles.eventButtonWrapper}>
@@ -297,38 +276,43 @@ const ExperienceUploader = ():JSX.Element => {
                     </View>
                     )}
                     { (settingTwo == true && userData.settings.privateProfile == false) &&
-                    (<View style={{...styles.eventTileWrapper,borderColor:`${settingThree?currentEvent.skillColor:"#656565"}`}}>
-                        <View style={{...styles.eventTileMain}}>
-                            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
-                            </View>
-                            <Text style={{...styles.eventTileText, fontSize:16,}}>Your account is private. Private accounts cannot make Global posts!</Text>
-                        </View>
-                        <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
-                            <View style={styles.eventButtonWrapper}>
-                            <Switch
-                                trackColor={{ false: '#767577', true: currentEvent.skillColor }}  // Change '#81b0ff' to your desired color
-                                thumbColor={settingTwo ? '#fff' : '#fff'}  // Change '#f5dd4b' to your desired color
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={(newVal)=>setSettingThree((prev)=>!prev)}
-                                value={settingThree}
-                            />
-                            </View>
-                        </View>
-                    </View>
-                    )}
-                    { (settingTwo == false) &&
                     (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                                 <Text style={{...styles.eventTileText,color:"gray",fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
                             </View>
-                            <Text style={{...styles.eventTileText,color:"gray", fontSize:16,}}>Switch on to make post visible to the Global Feed & Map. Post delayed one hour for privacy.</Text>
+                            <Text style={{...styles.eventTileText,color:"gray", fontSize:16,}}>Your account is private. Private accounts cannot make Global posts!</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
 
                         </View>
                     </View>
+                    )}
+                    { (settingTwo == false && userData.settings.privateProfile == true) &&
+                    (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
+                        <View style={{...styles.eventTileMain}}>
+                            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                                <Text style={{...styles.eventTileText,color:"gray",fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
+                            </View>
+                            <Text style={{...styles.eventTileText,color:"gray", fontSize:16,}}>Switch on to make post visible to the Global Feed & Map.</Text>
+                        </View>
+                        <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+
+                        </View>
+                    </View>
+                    )}
+                    { (settingTwo == false && userData.settings.privateProfile == false) &&
+                    (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
+                    <View style={{...styles.eventTileMain}}>
+                        <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                            <Text style={{...styles.eventTileText,color:"gray",fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
+                        </View>
+                        <Text style={{...styles.eventTileText,color:"gray", fontSize:16,}}>Your account is private. Private accounts cannot make Global posts!</Text>
+                    </View>
+                    <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+
+                    </View>
+                </View>
                     )}
 
                     

@@ -9,7 +9,7 @@ export const useHamburgerBar = () => {
     }
     return context;
 }
-export const LastPageProvider = ({children}:any) => {
-    const [hamburgerToggle,setHamburgerToggle] = useState("");
+export const HamburgerBarProvider = ({children}:any) => {
+    const [hamburgerToggle,setHamburgerToggle] = useState(false);
     return (<HamburgerBarContext.Provider value={{hamburgerToggle,setHamburgerToggle}}>{children}</HamburgerBarContext.Provider>)
 }

@@ -28,11 +28,11 @@ const HeaderBar = ():JSX.Element => {
 	const {uid}:any = useUID()
 	const {findPageUserID}:any = useProfilePageUID()
 	const {userData}:any = useUserData()
+	const {setHamburgerToggle}:any = useHamburgerBar()
 	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 	const [profilePicState,setProfilePicState] = useState<any>(null)
 	const [sideBarState,setSideBarState] = useState<boolean>()
 	const [isLoading,setIsLoading] = useState<any>()
-	const [menuWidth] = useState(new Animated.Value(-250)); // Initial hidden position
 
 
 useEffect(()=>{
@@ -49,7 +49,7 @@ useEffect(()=>{
 },[])
 
 const handleHamburgerPress = () => {
-	openMenu()
+	setHamburgerToggle((prev:boolean)=>!prev)
 }
 
 const handleProfilePress = () => {
@@ -73,34 +73,7 @@ const handleProfilePress = () => {
 		);
 	}
 
-const HamburgerSideBar = ():JSX.Element => {
-	return(
-		<Animated.View style={[styles.menu, { left: menuWidth }]}>
-			<TouchableOpacity onPress={closeMenu} style={styles.closeSideBar}>
-			<Text style={styles.closeText}>Close</Text>
-			</TouchableOpacity>
-			{/* Your menu items here */}
-			<Text style={styles.menuItem}>Item 1</Text>
-			<Text style={styles.menuItem}>Item 2</Text>
-			<Text style={styles.menuItem}>Item 3</Text>
-		</Animated.View>
-	)
-}
-const openMenu = () => {
-    Animated.timing(menuWidth, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  };
 
-  const closeMenu = () => {
-    Animated.timing(menuWidth, {
-      toValue: -250,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  };
 
 return(
   <View style={styles.headerBar}>

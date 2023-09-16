@@ -33,7 +33,7 @@ import {CurrentEventProvider} from './Contexts/CurrentEventContext'
 import {ProfilePageUIDProvider} from './Contexts/ProfilePageUID'
 import {CurrentTraitStatProvider} from './Contexts/CurrentTraitStat'
 import {LastPageProvider} from './Contexts/LastPageContext'
-
+import {HamburgerBarProvider} from './Contexts/HamburgerBarContext'
 import {
   SafeAreaView,
   ScrollView,
@@ -409,15 +409,17 @@ const ProfilePages = () => {
           <CurrentEventProvider>
             <FeedProvider>
               <CurrentTraitStatProvider>
-              <SafeAreaView style={styles.backgroundStyle}>
-                <NavigationContainer >
-                  <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
-                    <AuthStack.Screen name="Login" component={Login}/>
-                    <AuthStack.Screen name="AuthedApp" component={AuthApp} />
-                    <AuthStack.Screen name="SignUp" component={SignUp} />
-                  </AuthStack.Navigator>
-                </NavigationContainer>
-              </SafeAreaView>
+              <HamburgerBarProvider>
+                <SafeAreaView style={styles.backgroundStyle}>
+                  <NavigationContainer >
+                    <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
+                      <AuthStack.Screen name="Login" component={Login}/>
+                      <AuthStack.Screen name="AuthedApp" component={AuthApp} />
+                      <AuthStack.Screen name="SignUp" component={SignUp} />
+                    </AuthStack.Navigator>
+                  </NavigationContainer>
+                </SafeAreaView>
+              </HamburgerBarProvider>
               </CurrentTraitStatProvider>
             </FeedProvider>
           </CurrentEventProvider>

@@ -907,6 +907,27 @@ searchInput:{
   backgroundColor: '#333', // Change this to your preferred input background color
   color: 'white',
 },
+userTileContainer:{
+  width:"95%",
+  height:"100%",
+  alignItems:"center"
+},
+sectionProfPicContainer:{
+  width:50,
+  height:50,
+  alignItems:"center",
+  overflow:"hidden",
+  borderRadius:50,
+  borderWidth:2,
+  borderColor:"#fff",
+  marginLeft:10,
+},
+sectionProfPic:{
+  width: 50,  // desired width
+  height: 50, // desired height
+  resizeMode: 'cover', // or 'cover'
+  
+},
 hamburgerMenu: {
   position: 'absolute',
   width: 250,

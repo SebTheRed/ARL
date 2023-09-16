@@ -104,7 +104,7 @@ const UserTile = ({userDoc, XPScale, skillsList}:any):JSX.Element => {
       }
       
     return(
-        <TouchableOpacity onPress={handlePress} style={{...styles.sectionContainer, width:"100%"}}>
+        <TouchableOpacity onPress={handlePress} style={{...styles.sectionContainer, width:"90%"}}>
             <View style={styles.sectionProfPicContainer}>
                 <Image style={styles.sectionProfPic} source={{uri:profilePicState}} />
             </View>

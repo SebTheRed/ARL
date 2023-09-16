@@ -896,6 +896,40 @@ searchInput:{
   backgroundColor: '#333', // Change this to your preferred input background color
   color: 'white',
 },
+menu: {
+  position: 'absolute',
+  width: 250,
+  height: '100%',
+  backgroundColor: '#333',
+},
+closeSideBar: {
+  padding: 15,
+  borderBottomWidth: 1,
+  borderBottomColor: '#fff',
+},
+closeText: {
+  color: '#fff',
+  fontSize: 18,
+},
+menuItem: {
+  padding: 15,
+  color: '#fff',
+  fontSize: 16,
+},
+content: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+openButton: {
+  padding: 10,
+  backgroundColor: '#007bff',
+  borderRadius: 5,
+},
+openText: {
+  color: '#fff',
+  fontSize: 18,
+},
 
 });
 

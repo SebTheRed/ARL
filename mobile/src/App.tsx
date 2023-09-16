@@ -26,12 +26,14 @@ import Feed from './Pages/Feed/Feed';
 import Login from './Pages/Login/Login'
 import SignUp from './Pages/Login/SignUp';
 import People from './Pages/People/People'
+import HamburgerBar from './Overlays/HamburgerBar';
 import { UIDProvider } from './Contexts/UIDContext';
 import { FeedProvider } from './Contexts/FeedContext';
 import {CurrentEventProvider} from './Contexts/CurrentEventContext'
 import {ProfilePageUIDProvider} from './Contexts/ProfilePageUID'
 import {CurrentTraitStatProvider} from './Contexts/CurrentTraitStat'
 import {LastPageProvider} from './Contexts/LastPageContext'
+
 import {
   SafeAreaView,
   ScrollView,
@@ -102,7 +104,7 @@ function App(): JSX.Element {
     71: 38340, 72: 39420, 73: 40515, 74: 41625, 75: 42750, 76: 43890, 77: 45045, 78: 46215, 79: 47400, 80: 48600,
     81: 49815, 82: 51045, 83: 52290, 84: 53550, 85: 54825, 86: 56115, 87: 57420, 88: 58740, 89: 60075, 90: 61425,
     91: 62790, 92: 64170, 93: 65565, 94: 66975, 95: 68400, 96: 69840, 97: 71295, 98: 72765, 99: 74250, 100: 100000,
-});
+  });
 
   const [XPTriggerEvents,setXPTriggerEvents] = useState({
     family:{
@@ -364,6 +366,7 @@ const AuthApp = ()=>{
     return(
       <>
         <HeaderBar />
+        <HamburgerBar />
           <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Skills"  component={SkillsNav} />
             <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />

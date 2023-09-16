@@ -13,10 +13,17 @@ import {
 import React, { useEffect, useState } from 'react'
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import styles from '../../styles';
+import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
+import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
+type RootStackParamList = {
+	Profile:undefined,
+}
 const UserTile = ({userDoc, XPScale, skillsList}:any):JSX.Element => {
+    const {findPageUserID, }:any = useProfilePageUID()
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const [isLoading,setIsLoading] = useState(true)
     const [profilePicState,setProfilePicState] = useState<any>(null)
-    const [highestSkillTitle,setHighestSkillTitle] = useState("")
     const [highestSkillLevel,setHighestSkillLevel] = useState(0)
     const [highestColor,setHighestColor] = useState("")
     
@@ -42,7 +49,6 @@ const UserTile = ({userDoc, XPScale, skillsList}:any):JSX.Element => {
                 setHighestColor(skill.color)
             }
         })
-        setHighestSkillTitle(cappedTitle)
         setHighestSkillLevel(highestLevel)
     },[])
 
@@ -74,14 +80,31 @@ const UserTile = ({userDoc, XPScale, skillsList}:any):JSX.Element => {
         
         return level;
       };
-      
-      // Find the skill with the highest XP
-      
-      
-      // Convert the highest XP to a level
+
+      const handlePress =()=>{
+            findPageUserID(userDoc.uid)
+            navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [
+                    {
+                      name: 'AuthedApp', // The name of the root (after login root)
+                      state: {
+                        routes: [
+                          {
+                            name: 'ProfileStack', // The name of the page we're navigating to.
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                })
+              );
+        
+      }
       
     return(
-        <TouchableOpacity  style={{...styles.sectionContainer, width:"100%"}}>
+        <TouchableOpacity onPress={handlePress} style={{...styles.sectionContainer, width:"100%"}}>
             <View style={styles.sectionProfPicContainer}>
                 <Image style={styles.sectionProfPic} source={{uri:profilePicState}} />
             </View>

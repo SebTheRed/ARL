@@ -381,7 +381,7 @@ const AuthApp = ()=>{
             <Stack.Screen name="Search" initialParams={{XPScale:XPScale, skillsList:skillsList}} component={Search} />
             <Stack.Screen name="Notifications" component={Notifications} />
             <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
-            <Stack.Screen name="Friends" component={Friends} />
+            <Stack.Screen name="Friends" initialParams={{XPScale:XPScale, skillsList:skillsList}} component={Friends} />
           </Stack.Navigator>
         <HamburgerBar />
         <BottomBar/>

@@ -100,9 +100,9 @@ const Search = ({route}:any):JSX.Element => {
                 data={users}
                 renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={XPScale} userDoc={item} key={item.uid} />}
                 contentContainerStyle={{ alignItems: 'center' }}
-                style={styles.userTileContainer}>
+                style={styles.userTileContainer}
                 scrollEventThrottle={150}
-                </FlatList>
+                />
             )} 
         </View>
     )

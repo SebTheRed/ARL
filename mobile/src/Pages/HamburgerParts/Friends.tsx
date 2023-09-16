@@ -9,13 +9,21 @@ import {
 	Image,
 	TouchableOpacity,
 	Animated,
+	FlatList
 } from 'react-native';
 import React, { useEffect, useState } from 'react'
+import UserTile from './UserTile';
 import styles from '../../styles';
 
-const Friends = ():JSX.Element => {
-
+const Friends = ({route}:any):JSX.Element => {
+	const { XPScale,skillsList} = route.params;
+	const [currentList,setCurrentList] = useState<any>()
+	const [currentRequests,setCurrentRequests] = useState<any>()
 	const [chosenTab,setChosenTab] = useState<boolean>(true)
+
+	useEffect(()=>{
+		
+	},[])
 
     return(
         <View style={styles.peoplePageContainer}>
@@ -28,8 +36,25 @@ const Friends = ():JSX.Element => {
 					<Text style={{...styles.choiceTabLabel, color:`${chosenTab==false?"#1c1c1c":"#fff"}`}}>Requests</Text>
 				</TouchableOpacity>
 			</View>
+			{chosenTab==true&&(
+				<FlatList 
+				data={currentList}
+                renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={XPScale} userDoc={item} key={item.uid} />}
+                contentContainerStyle={{ alignItems: 'center' }}
+                style={styles.userTileContainer}
+                scrollEventThrottle={150}
+				/>
+			)}
+			{chosenTab==false&&(
+				<FlatList 
+				data={currentRequests}
+                renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={XPScale} userDoc={item} key={item.uid} />}
+                contentContainerStyle={{ alignItems: 'center' }}
+                style={styles.userTileContainer}
+                scrollEventThrottle={150}
+				/>
+			)}
 
-			
 		</View>
     )
 }

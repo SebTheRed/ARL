@@ -900,7 +900,7 @@ hamburgerMenu: {
   position: 'absolute',
   width: 250,
   height: '100%',
-  backgroundColor: '#333',
+  backgroundColor: '#1c1c1c',
   top:"5%",
   borderRightWidth:4,
   borderColor:"#fff",
@@ -924,7 +924,7 @@ menuItemContainer:{
   margin:3,
   alignItems:"center",
   borderWidth:1,
-  borderColor:"#656565",
+  borderColor:"#fff",
   borderRadius:4,
 },
 menuIcon:{

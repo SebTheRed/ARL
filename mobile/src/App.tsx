@@ -27,6 +27,10 @@ import Login from './Pages/Login/Login'
 import SignUp from './Pages/Login/SignUp';
 import People from './Pages/People/People'
 import HamburgerBar from './Overlays/HamburgerBar';
+import TrophyGrading from './Pages/HamburgerParts/TrophyGrading';
+import Search from './Pages/HamburgerParts/Search';
+import PendingFriends from './Pages/HamburgerParts/PendingFriends';
+import Notifications from './Pages/HamburgerParts/Notifications';
 import { UIDProvider } from './Contexts/UIDContext';
 import { FeedProvider } from './Contexts/FeedContext';
 import {CurrentEventProvider} from './Contexts/CurrentEventContext'
@@ -374,8 +378,12 @@ const AuthApp = ()=>{
             <Stack.Screen name="People" component={People} />
             <Stack.Screen name="ProfileStack" component={ProfilePages} />
             <Stack.Screen name="UserStats" initialParams={{skillsList:skillsList}} component={Stats} />
+            <Stack.Screen name="Search" component={Search} />
+            <Stack.Screen name="Notifications" component={Notifications} />
+            <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
+            <Stack.Screen name="PendingFriends" component={PendingFriends} />
           </Stack.Navigator>
-          <HamburgerBar />
+        <HamburgerBar />
         <BottomBar/>
       </>
     )

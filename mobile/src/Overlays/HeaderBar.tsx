@@ -10,9 +10,10 @@ import {
 	TouchableOpacity,
 	Animated,
 } from 'react-native';
-import { useUID } from '../Contexts/UIDContext';
 import React, { useEffect, useState } from 'react'
 import styles from '../styles';
+
+import { useUID } from '../Contexts/UIDContext';
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import { useProfilePageUID } from '../Contexts/ProfilePageUID';
 import { useUserData } from '../Contexts/UserDataContext';

@@ -20,6 +20,7 @@ import styles from '../../styles';
 const Search = ({route}:any):JSX.Element => {
     const { XPScale,skillsList} = route.params;
     const [searchTerm,setSearchTerm] = useState("")
+    const [errorMessage,setErrorMessage] = useState("")
     const [users,setUsers] = useState<any>()
     const PAGE_SIZE = 10
 
@@ -29,7 +30,10 @@ const Search = ({route}:any):JSX.Element => {
     
     const fetchSearch = async(text:string) => {
         let results:any;
-
+      if (text.length < 3) {
+        setErrorMessage("Search at least 3 letters")
+        return}
+        setErrorMessage("")
         // Query by name
         const nameQuery = query(
           collection(db, "users"),
@@ -56,6 +60,9 @@ const Search = ({route}:any):JSX.Element => {
       
         // Merge and remove duplicates
         results = [...nameDocs, ...userNameDocs];
+        if (results.length < 1) {
+          setErrorMessage("No one was found by that name or username")
+        }
         const uniqueResults = Array.from(new Set(results.map(a => a.uid)))
           .map(uid => results.find(a => a.uid === uid));
       
@@ -85,6 +92,9 @@ const Search = ({route}:any):JSX.Element => {
                 {/* <Image style={styles.searchIcon} source={require("../../IconBin/search.png")} /> */}
                 <SearchBar />
             </View>
+            {errorMessage&&(<View style={{height:30,width:"90%",backgroundColor:"rgba(255,0,0,0.5)", alignItems:"center", justifyContent:"center", borderColor:"#ff0000",borderWidth:2}}>
+              <Text style={{color:"#fff",fontSize:14}}>!! {errorMessage} !!</Text>
+            </View>)}
             {users && (
                 <FlatList
                 data={users}

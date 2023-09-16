@@ -19,7 +19,7 @@ type RootStackParamList = {
     Search:undefined,
     Notifications:undefined,
     TrophyGrading:undefined,
-    PendingFriends:undefined,
+    Friends:undefined,
 }
 
 const HamburgerBar = ():JSX.Element => {
@@ -79,9 +79,9 @@ const HamburgerBar = ():JSX.Element => {
                     <Image style={styles.menuIcon} source={require("../IconBin/trophy_grading.png")} />
                     <Text style={styles.menuItem}>Trophy Grading</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{handleOptionPress("PendingFriends")}} style={styles.menuItemContainer}>
+                <TouchableOpacity onPress={()=>{handleOptionPress("Friends")}} style={styles.menuItemContainer}>
                     <Image style={styles.menuIcon} source={require("../IconBin/friends.png")} />
-                    <Text style={styles.menuItem}>Pending Friends</Text>
+                    <Text style={styles.menuItem}>Friends</Text>
                 </TouchableOpacity>
             </Animated.View>
         )

@@ -29,7 +29,7 @@ import People from './Pages/People/People'
 import HamburgerBar from './Overlays/HamburgerBar';
 import TrophyGrading from './Pages/HamburgerParts/TrophyGrading';
 import Search from './Pages/HamburgerParts/Search';
-import PendingFriends from './Pages/HamburgerParts/PendingFriends';
+import Friends from './Pages/HamburgerParts/Friends';
 import Notifications from './Pages/HamburgerParts/Notifications';
 import { UIDProvider } from './Contexts/UIDContext';
 import { FeedProvider } from './Contexts/FeedContext';
@@ -381,7 +381,7 @@ const AuthApp = ()=>{
             <Stack.Screen name="Search" initialParams={{XPScale:XPScale, skillsList:skillsList}} component={Search} />
             <Stack.Screen name="Notifications" component={Notifications} />
             <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
-            <Stack.Screen name="PendingFriends" component={PendingFriends} />
+            <Stack.Screen name="Friends" component={Friends} />
           </Stack.Navigator>
         <HamburgerBar />
         <BottomBar/>

@@ -910,7 +910,6 @@ searchInput:{
 userTileContainer:{
   width:"95%",
   height:"100%",
-  alignItems:"center"
 },
 sectionProfPicContainer:{
   width:50,

@@ -9,6 +9,7 @@ import {
 	Image,
 	TouchableOpacity,
 	TextInput,
+  FlatList,
 } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import UserTile from './UserTile';
@@ -85,11 +86,13 @@ const Search = ({route}:any):JSX.Element => {
                 <SearchBar />
             </View>
             {users && (
-                <View style={styles.userTileContainer}>
-                    {users.map((userDoc:any,i:any)=>{
-                        return(<UserTile skillsList={skillsList} XPScale={XPScale} userDoc={userDoc} key={i} />)
-                    })}
-                </View>
+                <FlatList
+                data={users}
+                renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={XPScale} userDoc={item} key={item.uid} />}
+                contentContainerStyle={{ alignItems: 'center' }}
+                style={styles.userTileContainer}>
+                scrollEventThrottle={150}
+                </FlatList>
             )} 
         </View>
     )

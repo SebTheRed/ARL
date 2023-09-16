@@ -13,10 +13,10 @@ import {
 import React, { useEffect, useState } from 'react'
 import styles from '../../styles';
 
-const PendingFriends = ():JSX.Element => {
+const Friends = ():JSX.Element => {
     return(
         <View></View>
     )
 }
 
-export default PendingFriends
+export default Friends

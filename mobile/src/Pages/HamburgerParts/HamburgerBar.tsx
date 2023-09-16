@@ -10,8 +10,8 @@ import {
 	TouchableOpacity,
 	Animated,
 } from 'react-native';
-import { useHamburgerBar } from '../Contexts/HamburgerBarContext';
-import styles from '../styles';
+import { useHamburgerBar } from '../../Contexts/HamburgerBarContext';
+import styles from '../../styles';
 import {useEffect, useState} from 'react'
 import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
@@ -68,19 +68,19 @@ const HamburgerBar = ():JSX.Element => {
                 {/* Your menu items here */}
                 <View style={{height:10,}}></View>
                 <TouchableOpacity onPress={()=>{handleOptionPress("Search")}} style={styles.menuItemContainer}>
-                    <Image style={styles.menuIcon} source={require("../IconBin/search.png")} />
+                    <Image style={styles.menuIcon} source={require("../../IconBin/search.png")} />
                     <Text style={styles.menuItem}>Search</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{handleOptionPress("Notifications")}} style={styles.menuItemContainer}>
-                    <Image style={styles.menuIcon} source={require("../IconBin/notifications.png")} />
+                    <Image style={styles.menuIcon} source={require("../../IconBin/notifications.png")} />
                     <Text style={styles.menuItem}>Notifications</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{handleOptionPress("TrophyGrading")}} style={styles.menuItemContainer}>
-                    <Image style={styles.menuIcon} source={require("../IconBin/trophy_grading.png")} />
+                    <Image style={styles.menuIcon} source={require("../../IconBin/trophy_grading.png")} />
                     <Text style={styles.menuItem}>Trophy Grading</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{handleOptionPress("Friends")}} style={styles.menuItemContainer}>
-                    <Image style={styles.menuIcon} source={require("../IconBin/friends.png")} />
+                    <Image style={styles.menuIcon} source={require("../../IconBin/friends.png")} />
                     <Text style={styles.menuItem}>Friends</Text>
                 </TouchableOpacity>
             </Animated.View>

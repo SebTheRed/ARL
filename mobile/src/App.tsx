@@ -26,7 +26,7 @@ import Feed from './Pages/Feed/Feed';
 import Login from './Pages/Login/Login'
 import SignUp from './Pages/Login/SignUp';
 import People from './Pages/People/People'
-import HamburgerBar from './Overlays/HamburgerBar';
+import HamburgerBar from './Pages/HamburgerParts/HamburgerBar';
 import TrophyGrading from './Pages/HamburgerParts/TrophyGrading';
 import Search from './Pages/HamburgerParts/Search';
 import Friends from './Pages/HamburgerParts/Friends';

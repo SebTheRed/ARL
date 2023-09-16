@@ -88,6 +88,10 @@ backHeaderText:{
   fontSize:20,
 },
 
+
+
+
+
 /* 
 
 TRAITS & SKILLS/TRAITS 
@@ -884,10 +888,7 @@ closeButton: {
 
 
 
-peoplePageContainer:{
-  backgroundColor:"#1c1c1c",
-  height:"100%",
-},
+
 searchContainer:{
   padding:10,
   width:"95%",
@@ -959,14 +960,14 @@ menuItemContainer:{
   borderRadius:4,
 },
 menuIcon:{
-  width: 25,  // desired width
-  height: 25, // desired height
+  width: 30,  // desired width
+  height: 30, // desired height
   resizeMode: 'contain', // or 'cover'
 },
 menuItem: {
   padding: 15,
   color: '#fff',
-  fontSize: 16,
+  fontSize: 20,
 },
 content: {
   flex: 1,
@@ -982,6 +983,37 @@ openText: {
   color: '#fff',
   fontSize: 18,
 },
+
+peoplePageContainer:{
+  backgroundColor:"#1c1c1c",
+  height:"100%",
+  justifyContent:"flex-start",
+  alignItems:"center",
+},
+choiceTabContainer:{
+  width:"95%",
+  height:40,
+  borderRadius:50,
+  alignItems:"center",
+  justifyContent:"space-evenly",
+  flexDirection:"row",
+  borderWidth:2,
+  borderColor:"#fff",
+  marginTop:10,
+  overflow:"hidden",
+},
+choiceTabTab:{
+  width:"50%",
+  alignItems:"center",
+  height:"100%",
+  justifyContent:'center',
+  
+},
+choiceTabLabel:{
+  fontSize:20,
+},
+
+
 
 });
 

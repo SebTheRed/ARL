@@ -378,7 +378,7 @@ const AuthApp = ()=>{
             <Stack.Screen name="People" component={People} />
             <Stack.Screen name="ProfileStack" component={ProfilePages} />
             <Stack.Screen name="UserStats" initialParams={{skillsList:skillsList}} component={Stats} />
-            <Stack.Screen name="Search" component={Search} />
+            <Stack.Screen name="Search" initialParams={{XPScale:XPScale, skillsList:skillsList}} component={Search} />
             <Stack.Screen name="Notifications" component={Notifications} />
             <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
             <Stack.Screen name="PendingFriends" component={PendingFriends} />

@@ -16,7 +16,8 @@ import { db } from '../../Firebase/firebase';
 import { getDocs, query, orderBy, startAt, endAt,where, collection, limit,startAfter } from "firebase/firestore";
 import styles from '../../styles';
 
-const Search = ():JSX.Element => {
+const Search = ({route}:any):JSX.Element => {
+    const { XPScale,skillsList} = route.params;
     const [searchTerm,setSearchTerm] = useState("")
     const [users,setUsers] = useState<any>()
     const PAGE_SIZE = 10
@@ -33,6 +34,7 @@ const Search = ():JSX.Element => {
           collection(db, "users"),
           where("name", ">=", text),
           where("name", "<=", text + "\uf8ff"),
+          where("settings.privateProfile", "==", true),
           limit(PAGE_SIZE)
         );
       
@@ -44,6 +46,7 @@ const Search = ():JSX.Element => {
           collection(db, "users"),
           where("userName", ">=", text),
           where("userName", "<=", text + "\uf8ff"),
+          where("settings.privateProfile", "==", true),
           limit(PAGE_SIZE)
         );
       
@@ -84,7 +87,7 @@ const Search = ():JSX.Element => {
             {users && (
                 <View style={styles.userTileContainer}>
                     {users.map((userDoc:any,i:any)=>{
-                        return(<UserTile userDoc={userDoc} key={i} />)
+                        return(<UserTile skillsList={skillsList} XPScale={XPScale} userDoc={userDoc} key={i} />)
                     })}
                 </View>
             )} 

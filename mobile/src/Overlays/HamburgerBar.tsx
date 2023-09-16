@@ -17,20 +17,14 @@ const HamburgerBar = ():JSX.Element => {
 
     const {hamburgerToggle,setHamburgerToggle}:any = useHamburgerBar()
     const [menuWidth] = useState(new Animated.Value(-250)); // Initial hidden position
+    const [overlayOpacity] = useState(new Animated.Value(0)); // Initial opacity
+
 
     useEffect(()=>{
     if (hamburgerToggle==true) {
-        Animated.timing(menuWidth, {
-            toValue: 0,
-            duration: 300,
-            useNativeDriver: false,
-        }).start();
+        openMenu()
     } else if (hamburgerToggle==false) {
-        Animated.timing(menuWidth, {
-            toValue: -250,
-            duration: 300,
-            useNativeDriver: false,
-        }).start();
+        closeMenu()
     }
     },[hamburgerToggle])
     const closeMenu = () => {
@@ -41,17 +35,35 @@ const HamburgerBar = ():JSX.Element => {
         }).start();
         setHamburgerToggle(false)
     };
+    const openMenu = () => {
+        Animated.timing(menuWidth, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: false,
+        }).start();
+    }
 
     const HamburgerSideBar = ():JSX.Element => {
         return(
-            <Animated.View style={[styles.menu, { left: menuWidth }]}>
-                <TouchableOpacity onPress={closeMenu} style={styles.closeSideBar}>
-                <Text style={styles.closeText}>Close</Text>
-                </TouchableOpacity>
+            <Animated.View style={[styles.hamburgerMenu, { left: menuWidth }]}>
                 {/* Your menu items here */}
-                <Text style={styles.menuItem}>Item 1</Text>
-                <Text style={styles.menuItem}>Item 2</Text>
-                <Text style={styles.menuItem}>Item 3</Text>
+                <View style={{height:10,}}></View>
+                <TouchableOpacity style={styles.menuItemContainer}>
+                    <Image style={styles.menuIcon} source={require("../IconBin/search.png")} />
+                    <Text style={styles.menuItem}>Search</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuItemContainer}>
+                    <Image style={styles.menuIcon} source={require("../IconBin/notifications.png")} />
+                    <Text style={styles.menuItem}>Notifications</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuItemContainer}>
+                    <Image style={styles.menuIcon} source={require("../IconBin/trophy_grading.png")} />
+                    <Text style={styles.menuItem}>Trophy Grading</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuItemContainer}>
+                    <Image style={styles.menuIcon} source={require("../IconBin/friends.png")} />
+                    <Text style={styles.menuItem}>Pending Friends</Text>
+                </TouchableOpacity>
             </Animated.View>
         )
     }

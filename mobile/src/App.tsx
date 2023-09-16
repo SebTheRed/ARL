@@ -366,7 +366,6 @@ const AuthApp = ()=>{
     return(
       <>
         <HeaderBar />
-        <HamburgerBar />
           <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Skills"  component={SkillsNav} />
             <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
@@ -376,6 +375,7 @@ const AuthApp = ()=>{
             <Stack.Screen name="ProfileStack" component={ProfilePages} />
             <Stack.Screen name="UserStats" initialParams={{skillsList:skillsList}} component={Stats} />
           </Stack.Navigator>
+          <HamburgerBar />
         <BottomBar/>
       </>
     )
@@ -384,7 +384,7 @@ const AuthApp = ()=>{
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.backgroundStyle}>
-          <Text>LOADING</Text>
+          <Text style={{fontSize:40,color:"#fff"}}>LOADING...</Text>
         </ScrollView>
     )
   }

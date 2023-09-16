@@ -45,10 +45,10 @@ const {feedButtonHandler}:any = useFeed()
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/travel.png')} />
 				<Text style={styles.bottomBarText}>Map</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("People")}>
+			{/* <TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("People")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/friends.png')} />
 				<Text style={styles.bottomBarText}>People</Text>
-			</TouchableOpacity>
+			</TouchableOpacity> */}
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>{
 				handlePress("Feed")
 				feedButtonHandler()

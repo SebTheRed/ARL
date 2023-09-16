@@ -551,11 +551,11 @@ postBottomWrapper:{
   position:"absolute",
   bottom:0,
   width:"100%",
-  backgroundColor:"#656565",
+  backgroundColor:"#333",
   borderBottomEndRadius:8,
   borderBottomLeftRadius:8,
-  // borderTopWidth:2,
-  // borderColor:"white"
+  borderTopWidth:1,
+  borderColor:"white"
 },
 postBottomIconContainer:{
   alignItems:"center"
@@ -896,11 +896,15 @@ searchInput:{
   backgroundColor: '#333', // Change this to your preferred input background color
   color: 'white',
 },
-menu: {
+hamburgerMenu: {
   position: 'absolute',
   width: 250,
   height: '100%',
   backgroundColor: '#333',
+  top:"5%",
+  borderRightWidth:4,
+  borderColor:"#fff",
+  alignItems:"center",
 },
 closeSideBar: {
   padding: 15,
@@ -910,6 +914,23 @@ closeSideBar: {
 closeText: {
   color: '#fff',
   fontSize: 18,
+},
+menuItemContainer:{
+  width:"95%",
+  justifyContent:"flex-start",
+  flexDirection:"row",
+  padding:1,
+  paddingHorizontal:3,
+  margin:3,
+  alignItems:"center",
+  borderWidth:1,
+  borderColor:"#656565",
+  borderRadius:4,
+},
+menuIcon:{
+  width: 25,  // desired width
+  height: 25, // desired height
+  resizeMode: 'contain', // or 'cover'
 },
 menuItem: {
   padding: 15,

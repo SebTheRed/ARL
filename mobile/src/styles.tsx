@@ -7,6 +7,11 @@ const styles = StyleSheet.create({
 HEADER BAR/BACKGROUND/BOTTOM BAR 
 
 */
+defaultPageBackground:{
+backgroundColor:"#1c1c1c",
+alignItems:"center",
+height:"100%",
+},
 backgroundStyle:{
   backgroundColor: '#1c1c1c',
   flex:1,
@@ -885,11 +890,17 @@ peoplePageContainer:{
 },
 searchContainer:{
   padding:10,
+  width:"95%",
+},
+searchIcon:{
+  width: 35,  // desired width
+  height: 35, // desired height
+  resizeMode: 'contain', // or 'cover'
 },
 searchInput:{
   height: 40,
   borderRadius: 20,
-  borderWidth: 2,
+  borderWidth: 1,
   borderColor: 'white',
   paddingLeft: 20,
   paddingRight: 20,

@@ -38,6 +38,7 @@ import {ProfilePageUIDProvider} from './Contexts/ProfilePageUID'
 import {CurrentTraitStatProvider} from './Contexts/CurrentTraitStat'
 import {LastPageProvider} from './Contexts/LastPageContext'
 import {HamburgerBarProvider} from './Contexts/HamburgerBarContext'
+import { FriendsProvider } from './Contexts/FriendsContext';
 import {
   SafeAreaView,
   ScrollView,
@@ -412,6 +413,7 @@ const ProfilePages = () => {
   return(
     <LastPageProvider>
       <UIDProvider>
+      <FriendsProvider>
         <UserDataProvider>
           <ProfilePageUIDProvider>
           <CurrentEventProvider>
@@ -433,6 +435,7 @@ const ProfilePages = () => {
           </CurrentEventProvider>
           </ProfilePageUIDProvider>
         </UserDataProvider>
+        </FriendsProvider>
       </UIDProvider>
     </LastPageProvider>
   )

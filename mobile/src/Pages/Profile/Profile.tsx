@@ -215,9 +215,9 @@ const Profile = ({route}:any):JSX.Element => {
             </ View>
             )
             case "friends": return(
-            <TouchableOpacity onPress={handleRemoveFriendPress} style={styles.profilePageMultiButton}>
-                <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/friendRemove.png')} />
-                <Text style={styles.postTopButtonText}>Remove Friend</Text>
+            <TouchableOpacity onPress={handleRemoveFriendPress} style={{...styles.profilePageMultiButton, borderColor:"#333"}}>
+                <Image style={{...styles.profilePageButtonIcon,tintColor:"#656565"}} source={require('../../IconBin/friendRemove.png')} />
+                <Text style={{...styles.postTopButtonText, color:"#656565"}}>Remove Friend</Text>
             </ TouchableOpacity>
             )
             default:return(<Text>Sorry?</Text>)

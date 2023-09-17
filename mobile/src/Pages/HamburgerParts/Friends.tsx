@@ -14,15 +14,17 @@ import {
 import React, { useEffect, useState } from 'react'
 import UserTile from './UserTile';
 import styles from '../../styles';
+import { useFriends } from '../../Contexts/FriendsContext';
 
 const Friends = ({route}:any):JSX.Element => {
 	const { XPScale,skillsList} = route.params;
+	const friendsUIDs:any = useFriends()
 	const [currentList,setCurrentList] = useState<any>()
 	const [currentRequests,setCurrentRequests] = useState<any>()
 	const [chosenTab,setChosenTab] = useState<boolean>(true)
 
 	useEffect(()=>{
-		
+		console.log("These are my friends: ", friendsUIDs)
 	},[])
 
     return(

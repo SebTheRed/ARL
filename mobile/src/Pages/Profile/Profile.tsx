@@ -208,10 +208,15 @@ const Profile = ({route}:any):JSX.Element => {
             
             )
             case "none": return(
-            <TouchableOpacity onPress={handleAddFriendPress} style={styles.profilePageMultiButton}>
-                <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/friendAdd.png')} />
-                <Text style={styles.postTopButtonText}>Add Friend</Text>
-            </ TouchableOpacity>
+            <View style={{flexDirection:"row", justifyContent:"flex-end",alignItems:"center"}}>
+                <TouchableOpacity onPress={handleAddFriendPress} style={{...styles.profilePageMultiButton, width:105}}>
+                    <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/friendAdd.png')} />
+                    <Text style={styles.postTopButtonText}>Add Friend</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleBlockPersonPress} style={{...styles.profilePageMultiButton, width:25, borderColor:"#fe0000", backgroundColor:"rgba(255, 0, 0, 0.3)"}}>
+                    <Image style={{...styles.profilePageButtonIcon, tintColor:"#fe0000"}} source={require('../../IconBin/block.png')} />
+                </TouchableOpacity>
+            </View>
             )
             case "pending": return(
             <View style={styles.profilePageMultiButton}>

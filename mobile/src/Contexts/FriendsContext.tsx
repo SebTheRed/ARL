@@ -56,37 +56,40 @@ export const FriendsProvider = ({ children }:any) => {
                 const allFriendData = [...requestingData, ...receivingData];
                 
                 const pendingFriends = allFriendData.filter(item => item.pending === true).map(item => item.requestingUser);
-                const trueFriends = allFriendData.filter(item => item.pending === false).map(item => {
+                const trueFriendsList = allFriendData.filter(item => item.pending === false).map(item => {
                   if (item.requestingUser===uid){return item.receivingUser} else {return item.requestingUser}
                 });
                 const filteredPending = pendingFriends.filter(item=>item!==uid)
                 // console.log("FRANDS")
                 // console.log(allFriendUIDs)
-                console.log("true friends", trueFriends)
+                console.log("true friends", trueFriendsList)
                 console.log("pending friends", filteredPending)
-                
-                setTrueFriends(trueFriends);
-                setPendingFriends(filteredPending)
+                console.log("useEffect triggered", { uid, friendsRefresh });
+                // setTrueFriends(trueFriends);
+                // setPendingFriends(filteredPending)
+                if (trueFriendsList.length > 0) {fetchUserDocs(trueFriendsList,"trueFriends")} else {setTrueFriendDocs([])}
+                if (filteredPending.length > 0) {fetchUserDocs(filteredPending,"pendingFriends")} else {setPendingFriendDocs([])}
               };
       
           fetchFriendUIDs();
-        }
+          const fetchUserDocs = async(uids:string[],type:string) =>{
+            const userDocs = await Promise.all(
+                uids.map(async (userID) => {
+                  const userDocRef = doc(db,"users",userID);
+                  const userDocSnap = await getDoc(userDocRef);
+                  return userDocSnap.exists() ? userDocSnap.data() : null
+                })
+              )
+              if (type=="trueFriends"){console.log("TRUE FRIENDS SET", userDocs)
+                setTrueFriendDocs(userDocs)}
+              else if (type=="pendingFriends"){console.log("PENDING FRIENDS SET", userDocs)
+                setPendingFriendDocs(userDocs)}
+            }
+          }
     }, [uid, friendsRefresh]);
   
     useEffect(()=>{
-      const fetchUserDocs = async(uids:string[],type:string) =>{
-        const userDocs = await Promise.all(
-          uids.map(async (userID) => {
-            const userDocRef = doc(db,"users",userID);
-            const userDocSnap = await getDoc(userDocRef);
-            return userDocSnap.exists() ? userDocSnap.data() : null
-          })
-        )
-        if (type=="trueFriends"){setTrueFriendDocs(userDocs)}
-        else if (type=="pendingFriends"){setPendingFriendDocs(userDocs)}
-      }
-      if (trueFriends.length > 0) {fetchUserDocs(trueFriends,"trueFriends")}
-      if (pendingFriends.length > 0) {fetchUserDocs(pendingFriends,"pendingFriends")}
+      
     },[trueFriends, pendingFriends])
 
     return (

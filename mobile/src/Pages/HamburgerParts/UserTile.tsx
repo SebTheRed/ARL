@@ -117,14 +117,14 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
       pending:false,
     })
     console.log("ACCEPTED !")
-    setFriendsRefresh(!friendsRefresh)
+    setFriendsRefresh((friendsRefresh:boolean)=>!friendsRefresh)
   }
   const handleDeny = async() => {
     const sortedUIDString = [uid, userDoc.uid].sort().join('_'); 
     const docRef = doc(db, "friendships", sortedUIDString);
     await deleteDoc(docRef)
     console.log("ACCEPTED !")
-    setFriendsRefresh(!friendsRefresh)
+    setFriendsRefresh((friendsRefresh:boolean)=>!friendsRefresh)
   }
       
     return(

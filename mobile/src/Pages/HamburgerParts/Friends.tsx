@@ -18,7 +18,7 @@ import { useFriends } from '../../Contexts/FriendsContext';
 
 const Friends = ({route}:any):JSX.Element => {
 	const { XPScale,skillsList} = route.params;
-	const {trueFriends,pendingFriends,trueFriendDocs,pendingFriendDocs,}:any = useFriends()
+	const {trueFriends,pendingFriends,trueFriendDocs,pendingFriendDocs,friendsRefresh}:any = useFriends()
 	const [currentList,setCurrentList] = useState<any>()
 	const [currentRequests,setCurrentRequests] = useState<any>()
 	const [chosenTab,setChosenTab] = useState<boolean>(false)
@@ -28,7 +28,7 @@ const Friends = ({route}:any):JSX.Element => {
 		console.log("These are my friends docs: ", trueFriendDocs)
 		console.log("These are my pending uids: ", pendingFriends)
 		console.log("These are my pending docs: ", pendingFriendDocs)
-	},[])
+	},[friendsRefresh])
 
     return(
         <View style={styles.peoplePageContainer}>
@@ -43,6 +43,7 @@ const Friends = ({route}:any):JSX.Element => {
 			{chosenTab==true&&(
 				<FlatList 
 				data={trueFriendDocs}
+				keyExtractor={(item)=>item.uid}
                 renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={XPScale} userDoc={item} key={item.uid} />}
                 contentContainerStyle={{ alignItems: 'center' }}
                 style={styles.userTileContainer}
@@ -53,6 +54,7 @@ const Friends = ({route}:any):JSX.Element => {
 				<FlatList 
 				data={pendingFriendDocs}
                 renderItem={({item})=>< UserTile skillsList={skillsList} type={"pending"} XPScale={XPScale} userDoc={item} key={item.uid} />}
+				keyExtractor={(item)=>item.uid}
                 contentContainerStyle={{ alignItems: 'center' }}
                 style={styles.userTileContainer}
                 scrollEventThrottle={150}

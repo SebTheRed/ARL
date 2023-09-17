@@ -20,6 +20,7 @@ type RootStackParamList = {
     Notifications:undefined,
     TrophyGrading:undefined,
     Friends:undefined,
+    Streak:undefined,
 }
 
 const HamburgerBar = ():JSX.Element => {
@@ -82,6 +83,10 @@ const HamburgerBar = ():JSX.Element => {
                 <TouchableOpacity onPress={()=>{handleOptionPress("Friends")}} style={styles.menuItemContainer}>
                     <Image style={styles.menuIcon} source={require("../../IconBin/friends.png")} />
                     <Text style={styles.menuItem}>Friends</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>{handleOptionPress("Streak")}} style={styles.menuItemContainer}>
+                    <Image style={styles.menuIcon} source={require("../../IconBin/streak.png")} />
+                    <Text style={styles.menuItem}>Streak</Text>
                 </TouchableOpacity>
             </Animated.View>
         )

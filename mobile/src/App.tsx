@@ -31,6 +31,7 @@ import TrophyGrading from './Pages/HamburgerParts/TrophyGrading';
 import Search from './Pages/HamburgerParts/Search';
 import Friends from './Pages/HamburgerParts/Friends';
 import Notifications from './Pages/HamburgerParts/Notifications';
+import Streak from './Pages/HamburgerParts/Streak'
 import { UIDProvider } from './Contexts/UIDContext';
 import { FeedProvider } from './Contexts/FeedContext';
 import {CurrentEventProvider} from './Contexts/CurrentEventContext'
@@ -383,6 +384,7 @@ const AuthApp = ()=>{
             <Stack.Screen name="Notifications" component={Notifications} />
             <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
             <Stack.Screen name="Friends" initialParams={{XPScale:XPScale, skillsList:skillsList}} component={Friends} />
+            <Stack.Screen name="Streak" initialParams={{XPScale:XPScale,skillsList:skillsList}} component={Streak} />
           </Stack.Navigator>
         <HamburgerBar />
         <BottomBar/>

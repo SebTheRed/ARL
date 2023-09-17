@@ -235,8 +235,8 @@ const Profile = ({route}:any):JSX.Element => {
                 <Image style={{...styles.profilePageButtonIcon}} source={require('../../IconBin/verified.png')} />
                 <Text style={{...styles.postTopButtonText}}>Friends</Text>
             </ View>
-            <TouchableOpacity onPress={handleRemoveFriendPress} style={{...styles.profilePageMultiButton, width:25, borderColor:"#fe0000", backgroundColor:"rgba(255, 0, 0, 0.3)"}}>
-                <Image style={{...styles.profilePageButtonIcon, tintColor:"#fe0000"}} source={require('../../IconBin/friendRemove.png')} />
+            <TouchableOpacity onPress={handleRemoveFriendPress} style={{...styles.profilePageMultiButton, width:25, borderColor:"#fe0000"}}>
+                <Image style={{...styles.profilePageButtonIcon, tintColor:"#fff"}} source={require('../../IconBin/friendRemove.png')} />
             </TouchableOpacity>
         </View>
             )

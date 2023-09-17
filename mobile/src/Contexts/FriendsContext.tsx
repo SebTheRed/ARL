@@ -8,8 +8,9 @@ interface IFriendsContext {
   pendingFriends:any[],
   trueFriendDocs:any[],
   pendingFriendDocs:any[],
+  setFriendsRefresh:any,
+  friendsRefresh:boolean,
 }
-
 export const FriendsContext = createContext<IFriendsContext | null>(null);
 
 export const useFriends = () => {
@@ -89,7 +90,7 @@ export const FriendsProvider = ({ children }:any) => {
     },[trueFriends, pendingFriends])
 
     return (
-      <FriendsContext.Provider value={{trueFriends, pendingFriends, trueFriendDocs, pendingFriendDocs}}>
+      <FriendsContext.Provider value={{trueFriends, pendingFriends, trueFriendDocs, pendingFriendDocs,friendsRefresh, setFriendsRefresh,}}>
         {children}
       </FriendsContext.Provider>
     );

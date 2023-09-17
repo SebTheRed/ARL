@@ -11,16 +11,22 @@ import {
 	TextInput,
 } from 'react-native';
 import React, { useEffect, useState } from 'react'
+import {doc,getDoc,updateDoc,deleteDoc} from 'firebase/firestore'
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
+import {db, auth,} from '../../Firebase/firebase'
 import styles from '../../styles';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
+import { useUID } from '../../Contexts/UIDContext';
 import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
+import {useFriends} from '../../Contexts/FriendsContext'
 type RootStackParamList = {
 	Profile:undefined,
 }
 const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
     const {findPageUserID, }:any = useProfilePageUID()
+    const {uid}:any = useUID()
+    const {setFriendsRefresh,friendsRefresh}:any = useFriends()
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const [isLoading,setIsLoading] = useState(true)
     const [profilePicState,setProfilePicState] = useState<any>(null)
@@ -104,12 +110,22 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
         
       }
 
-      const handleAccept = () => {
-
-      }
-      const handleDeny = () => {
-        
-      }
+  const handleAccept = async() => {
+    const sortedUIDString = [uid, userDoc.uid].sort().join('_'); 
+    const docRef = doc(db, "friendships", sortedUIDString);
+    await updateDoc(docRef, {
+      pending:false,
+    })
+    console.log("ACCEPTED !")
+    setFriendsRefresh(!friendsRefresh)
+  }
+  const handleDeny = async() => {
+    const sortedUIDString = [uid, userDoc.uid].sort().join('_'); 
+    const docRef = doc(db, "friendships", sortedUIDString);
+    await deleteDoc(docRef)
+    console.log("ACCEPTED !")
+    setFriendsRefresh(!friendsRefresh)
+  }
       
     return(
         <TouchableOpacity onPress={handlePress} style={{...styles.sectionContainer, width:"90%"}}>

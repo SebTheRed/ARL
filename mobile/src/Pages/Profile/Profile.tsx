@@ -72,20 +72,6 @@ const Profile = ({route}:any):JSX.Element => {
         })
         // console.log(passThruArray)
         setMatchedTrophyPins(passThruArray)
-
-        console.log("UID",uid,"PROF PAGE UID",profilePageUID)
-        if (uid == profilePageUID) {setButtonType("Edit")}
-        else {
-            // Get an array of all friend UIDs
-            const friendUIDs = Object.keys(userData.friends);
-        
-            // Check if the current profile's UID is in the friendUIDs array
-            if (friendUIDs.includes(matchingProfileData.uid)) {
-              setButtonType("Remove");
-            } else {
-              setButtonType("Add");
-            }
-        }
     },[userData])
     useEffect(()=>{
         const translateURL = async () => {
@@ -133,10 +119,11 @@ const Profile = ({route}:any):JSX.Element => {
             }
             } else {
               console.log("No such friendship exists.");
+              setRelation("none")
               // Add your logic here for when no friendship exists
             }
           };
-        if (uid != profilePageUID) {checkFriendStatus()}
+        if (uid != profilePageUID) {checkFriendStatus()} else (setRelation("self"))
     },[])
     const handleRefresh = async () => {
 	  setRefreshing(true);
@@ -208,21 +195,26 @@ const Profile = ({route}:any):JSX.Element => {
 
 
       const MultiButtonSplitter = ():JSX.Element => {
-        switch(buttonType){
-            case "Edit": return(
+        switch(relation){
+            case "self": return(
             <TouchableOpacity onPress={handleEditButtonPress} style={styles.profilePageMultiButton}>
                 <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/edit.png')} />
                 <Text style={styles.postTopButtonText}>Edit Profile</Text>
             </ TouchableOpacity>
             
             )
-            case "Add": return(
+            case "none": return(
             <TouchableOpacity onPress={handleAddFriendPress} style={styles.profilePageMultiButton}>
                 <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/friendAdd.png')} />
                 <Text style={styles.postTopButtonText}>Add Friend</Text>
             </ TouchableOpacity>
             )
-            case "Remove": return(
+            case "pending": return(
+            <View style={styles.profilePageMultiButton}>
+                <Text style={styles.postTopButtonText}>Pending. . .</Text>
+            </ View>
+            )
+            case "friends": return(
             <TouchableOpacity onPress={handleRemoveFriendPress} style={styles.profilePageMultiButton}>
                 <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/friendRemove.png')} />
                 <Text style={styles.postTopButtonText}>Remove Friend</Text>

@@ -53,16 +53,19 @@ export const FriendsProvider = ({ children }:any) => {
 
                 // Merge and deduplicate the data
                 const allFriendData = [...requestingData, ...receivingData];
-
-                const pendingFriends = allFriendData.filter(item => item.pending === true).map(item => item.requestingUser || item.receivingUser);
-                const trueFriends = allFriendData.filter(item => item.pending === false).map(item => item.requestingUser || item.receivingUser);
+                
+                const pendingFriends = allFriendData.filter(item => item.pending === true).map(item => item.requestingUser);
+                const trueFriends = allFriendData.filter(item => item.pending === false).map(item => {
+                  if (item.requestingUser===uid){return item.receivingUser} else {return item.requestingUser}
+                });
+                const filteredPending = pendingFriends.filter(item=>item!==uid)
                 // console.log("FRANDS")
                 // console.log(allFriendUIDs)
                 console.log("true friends", trueFriends)
-                console.log("pending friends", pendingFriends)
+                console.log("pending friends", filteredPending)
                 
                 setTrueFriends(trueFriends);
-                setPendingFriends(pendingFriends)
+                setPendingFriends(filteredPending)
               };
       
           fetchFriendUIDs();

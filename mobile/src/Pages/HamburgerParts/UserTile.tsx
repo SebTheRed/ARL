@@ -19,7 +19,7 @@ import { NavigationProp } from '@react-navigation/native';
 type RootStackParamList = {
 	Profile:undefined,
 }
-const UserTile = ({userDoc, XPScale, skillsList}:any):JSX.Element => {
+const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
     const {findPageUserID, }:any = useProfilePageUID()
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const [isLoading,setIsLoading] = useState(true)
@@ -50,6 +50,7 @@ const UserTile = ({userDoc, XPScale, skillsList}:any):JSX.Element => {
             }
         })
         setHighestSkillLevel(highestLevel)
+
     },[])
 
     const findHighestXP = () => {
@@ -102,6 +103,13 @@ const UserTile = ({userDoc, XPScale, skillsList}:any):JSX.Element => {
               );
         
       }
+
+      const handleAccept = () => {
+
+      }
+      const handleDeny = () => {
+        
+      }
       
     return(
         <TouchableOpacity onPress={handlePress} style={{...styles.sectionContainer, width:"90%"}}>
@@ -113,12 +121,24 @@ const UserTile = ({userDoc, XPScale, skillsList}:any):JSX.Element => {
                 <Text style={styles.sectionDescription}>{userDoc.name}</Text>
                 
             </View>
-            <View style={{...styles.sectionLevelBox, backgroundColor:highestColor}}>
-                <View style={styles.offsetWrapper}>
-                </View>
+            {type=="pending"&&(
+              <View style={{flexDirection:"column",width:80}}>
+                <TouchableOpacity onPress={handleAccept} style={{...styles.sectionLevelBox, backgroundColor:"green",height:"45%", width:70,justifyContent:"space-evenly", margin:2.5}}>
+                  <Text style={{color:"#fff", fontWeight:"bold"}}>Accept</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleDeny} style={{...styles.sectionLevelBox, backgroundColor:"red",height:"45%",width:70,justifyContent:"space-evenly", margin:2.5}}>
+                  <Text style={{color:"#fff", fontWeight:"bold"}}>Deny</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            {!type&&(
+              <View style={{...styles.sectionLevelBox, backgroundColor:highestColor}}>
+                <View style={styles.offsetWrapper}></View>
                 <Text style={{...styles.borderedTextShadow, color: 'black',}}>{highestSkillLevel}</Text>
                 <Text style={{...styles.borderedText, color: 'white' }}>{highestSkillLevel}</Text>
             </View>
+            )}
+            
         </TouchableOpacity>
     )
 }

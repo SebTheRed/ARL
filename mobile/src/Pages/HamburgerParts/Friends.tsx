@@ -52,7 +52,7 @@ const Friends = ({route}:any):JSX.Element => {
 			{chosenTab==false&&(
 				<FlatList 
 				data={pendingFriendDocs}
-                renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={XPScale} userDoc={item} key={item.uid} />}
+                renderItem={({item})=>< UserTile skillsList={skillsList} type={"pending"} XPScale={XPScale} userDoc={item} key={item.uid} />}
                 contentContainerStyle={{ alignItems: 'center' }}
                 style={styles.userTileContainer}
                 scrollEventThrottle={150}

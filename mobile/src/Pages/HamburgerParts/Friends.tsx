@@ -26,10 +26,10 @@ const Friends = ({route}:any):JSX.Element => {
 	const [refreshing,setRefreshing] = useState<boolean>(false)
 
 	useEffect(()=>{
-		console.log("These are my friends uids: ", trueFriends)
-		console.log("These are my friends docs: ", trueFriendDocs)
-		console.log("These are my pending uids: ", pendingFriends)
-		console.log("These are my pending docs: ", pendingFriendDocs)
+		// console.log("These are my friends uids: ", trueFriends)
+		// console.log("These are my friends docs: ", trueFriendDocs)
+		// console.log("These are my pending uids: ", pendingFriends)
+		// console.log("These are my pending docs: ", pendingFriendDocs)
 	},[friendsRefresh])
 
 	const handleRefresh=async()=>{

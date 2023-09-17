@@ -26,12 +26,13 @@ type RootStackParamList = {
 const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
     const {findPageUserID, }:any = useProfilePageUID()
     const {uid}:any = useUID()
-    const {setFriendsRefresh,friendsRefresh}:any = useFriends()
+    const {setFriendsRefresh,friendsRefresh,trueFriends}:any = useFriends()
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const [isLoading,setIsLoading] = useState(true)
     const [profilePicState,setProfilePicState] = useState<any>(null)
     const [highestSkillLevel,setHighestSkillLevel] = useState(0)
     const [highestColor,setHighestColor] = useState("")
+    const [areWeFriends,setAreWeFriends] = useState(false)
     
 
     useEffect(()=>{
@@ -56,8 +57,16 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
             }
         })
         setHighestSkillLevel(highestLevel)
-
     },[])
+
+    useEffect(()=>{
+      if (trueFriends.includes(userDoc.uid)) {
+        setAreWeFriends(true);
+      } else {
+        setAreWeFriends(false);
+      }
+
+    },[trueFriends])
 
     const findHighestXP = () => {
         let highestXP = 0;
@@ -133,7 +142,7 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
                 <Image style={styles.sectionProfPic} source={{uri:profilePicState}} />
             </View>
             <View style={styles.sectionTextContainer}>
-                <Text style={styles.sectionTitle}>{userDoc.userName}</Text>
+                <Text style={{...styles.sectionTitle, color:`${areWeFriends==true?"green":"#fff"}`}}>{userDoc.userName}</Text>
                 <Text style={styles.sectionDescription}>{userDoc.name}</Text>
                 
             </View>

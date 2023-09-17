@@ -60,13 +60,9 @@ export const FriendsProvider = ({ children }:any) => {
                   if (item.requestingUser===uid){return item.receivingUser} else {return item.requestingUser}
                 });
                 const filteredPending = pendingFriends.filter(item=>item!==uid)
-                // console.log("FRANDS")
-                // console.log(allFriendUIDs)
-                console.log("true friends", trueFriendsList)
-                console.log("pending friends", filteredPending)
-                console.log("useEffect triggered", { uid, friendsRefresh });
-                // setTrueFriends(trueFriends);
-                // setPendingFriends(filteredPending)
+                // console.log("true friends", trueFriendsList)
+                // console.log("pending friends", filteredPending)
+                // console.log("useEffect triggered", { uid, friendsRefresh });
                 if (trueFriendsList.length > 0) {fetchUserDocs(trueFriendsList,"trueFriends")} else {setTrueFriendDocs([])}
                 if (filteredPending.length > 0) {fetchUserDocs(filteredPending,"pendingFriends")} else {setPendingFriendDocs([])}
               };
@@ -80,9 +76,9 @@ export const FriendsProvider = ({ children }:any) => {
                   return userDocSnap.exists() ? userDocSnap.data() : null
                 })
               )
-              if (type=="trueFriends"){console.log("TRUE FRIENDS SET", userDocs)
+              if (type=="trueFriends"){
                 setTrueFriendDocs(userDocs)}
-              else if (type=="pendingFriends"){console.log("PENDING FRIENDS SET", userDocs)
+              else if (type=="pendingFriends"){
                 setPendingFriendDocs(userDocs)}
             }
           }

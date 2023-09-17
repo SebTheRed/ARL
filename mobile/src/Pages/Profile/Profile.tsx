@@ -171,6 +171,7 @@ const Profile = ({route}:any):JSX.Element => {
                 timestamp: new Date().toISOString()
             })
             await updateDoc(doc(db,`users/${uid}`), {blockedUsers:arrayUnion(profilePageUID)})
+            setFriendsRefresh((prevState:boolean)=>!prevState)
         }catch(error){console.error(error)}
     }
     const handleTraitStatsPress = (traitName:String) => {
@@ -209,7 +210,7 @@ const Profile = ({route}:any):JSX.Element => {
             )
             case "none": return(
             <View style={{flexDirection:"row", justifyContent:"flex-end",alignItems:"center"}}>
-                <TouchableOpacity onPress={handleAddFriendPress} style={{...styles.profilePageMultiButton, width:105}}>
+                <TouchableOpacity onPress={handleAddFriendPress} style={{...styles.profilePageMultiButton, width:100}}>
                     <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/friendAdd.png')} />
                     <Text style={styles.postTopButtonText}>Add Friend</Text>
                 </TouchableOpacity>
@@ -219,15 +220,25 @@ const Profile = ({route}:any):JSX.Element => {
             </View>
             )
             case "pending": return(
-            <View style={styles.profilePageMultiButton}>
-                <Text style={styles.postTopButtonText}>Pending. . .</Text>
-            </ View>
+            <View style={{flexDirection:"row", justifyContent:"flex-end",alignItems:"center"}}>
+                <View style={{...styles.profilePageMultiButton,width:100}}>
+                    <Text style={styles.postTopButtonText}>Pending. . .</Text>
+                </ View>
+                <TouchableOpacity onPress={handleBlockPersonPress} style={{...styles.profilePageMultiButton, width:25, borderColor:"#fe0000", backgroundColor:"rgba(255, 0, 0, 0.3)"}}>
+                    <Image style={{...styles.profilePageButtonIcon, tintColor:"#fe0000"}} source={require('../../IconBin/block.png')} />
+                </TouchableOpacity>
+            </View>
             )
             case "friends": return(
-            <TouchableOpacity onPress={handleRemoveFriendPress} style={{...styles.profilePageMultiButton, borderColor:"#333"}}>
-                <Image style={{...styles.profilePageButtonIcon,tintColor:"#656565"}} source={require('../../IconBin/friendRemove.png')} />
-                <Text style={{...styles.postTopButtonText, color:"#656565"}}>Remove Friend</Text>
-            </ TouchableOpacity>
+        <View style={{flexDirection:"row", justifyContent:"flex-end",alignItems:"center"}}>
+            <View style={{...styles.profilePageMultiButton, width:100}}>
+                <Image style={{...styles.profilePageButtonIcon}} source={require('../../IconBin/verified.png')} />
+                <Text style={{...styles.postTopButtonText}}>Friends</Text>
+            </ View>
+            <TouchableOpacity onPress={handleRemoveFriendPress} style={{...styles.profilePageMultiButton, width:25, borderColor:"#fe0000", backgroundColor:"rgba(255, 0, 0, 0.3)"}}>
+                <Image style={{...styles.profilePageButtonIcon, tintColor:"#fe0000"}} source={require('../../IconBin/friendRemove.png')} />
+            </TouchableOpacity>
+        </View>
             )
             default:return(<Text>Sorry?</Text>)
         }

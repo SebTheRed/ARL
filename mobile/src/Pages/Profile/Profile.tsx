@@ -19,6 +19,8 @@ import { useEffect, useState } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 // import FeedPost from './FeedPost';
+import {db, auth,} from '../../Firebase/firebase'
+import {setDoc,doc,addDoc,getDoc,deleteDoc, Timestamp} from 'firebase/firestore'
 import styles from '../../styles'
 import { useNavigation } from '@react-navigation/native';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
@@ -51,7 +53,8 @@ const Profile = ({route}:any):JSX.Element => {
     const [profilePicState,setProfilePicState] = useState<any>(null)
     const [coverPicState,setCoverPicState] = useState<any>(null)
     const [refreshing, setRefreshing] = useState(false);
-    const [isLoading,setIsLoading] = useState(true)
+    const [isLoading,setIsLoading] = useState(true);
+    const [relation,setRelation] = useState("")
     
     useEffect(()=>{
         // console.log(matchingProfileData)
@@ -98,10 +101,22 @@ const Profile = ({route}:any):JSX.Element => {
         };
         translateURL()
     },[matchingProfileData])
-    // useEffect(()=>{
-	// 	setStartAfter(currentFeed[currentFeed.length - 1])
-	// },[currentFeed])
-
+    useEffect(()=>{
+        const checkFriendStatus = async () => {
+            const sortedUIDString = [uid, profilePageUID].sort().join('_'); 
+            const docRef1 = doc(db, "friendships", sortedUIDString);
+            const docSnap1 = await getDoc(docRef1);
+            if (docSnap1.exists()) {
+              const friendshipData = docSnap1.data();
+              console.log("Friendship data:", friendshipData);
+              // Add your logic here for when the friendship exists in the first format
+            } else {
+              console.log("No such friendship exists.");
+              // Add your logic here for when no friendship exists
+            }
+          };
+        if (uid != profilePageUID) {checkFriendStatus()}
+    },[])
     const handleRefresh = async () => {
 	  setRefreshing(true);
 	  await refreshProfileFeed();
@@ -110,11 +125,40 @@ const Profile = ({route}:any):JSX.Element => {
     const handleEditButtonPress = () => {
         navigation.navigate("EditProfile")
     }
-    const handleAddFriendPress = () => {
+    const handleAddFriendPress = async() => {
+        const sortedUIDString = [uid, profilePageUID].sort().join('_');
+        try{
+            await setDoc(doc(db,"friendships",sortedUIDString), 
+            {
+                requestingUser:uid,
+                receivingUser:profilePageUID,
+                blocked:false,
+                pending:true,
+                timestamp: new Date().toISOString()
+            })
+        }catch(error){console.error(error)}
 
     }
-    const handleRemoveFriendPress = () => {
-
+    const handleRemoveFriendPress = async() => {
+        const sortedUIDString = [uid, profilePageUID].sort().join('_');
+        try{
+            await deleteDoc(doc(db,"friendships",sortedUIDString))
+        }catch(error){console.error(error)}
+        
+        
+    }
+    const handleBlockPersonPress = async() => {
+        const sortedUIDString = [uid, profilePageUID].sort().join('_');
+        try{
+            await setDoc(doc(db,"friendships",sortedUIDString), 
+            {
+                requestingUser:uid,
+                receivingUser:profilePageUID,
+                blocked:true,
+                pending:false,
+                timestamp: new Date().toISOString()
+            })
+        }catch(error){console.error(error)}
     }
     const handleTraitStatsPress = (traitName:String) => {
         setLastPage("profile")
@@ -151,13 +195,13 @@ const Profile = ({route}:any):JSX.Element => {
             
             )
             case "Add": return(
-            <TouchableOpacity style={styles.profilePageMultiButton}>
+            <TouchableOpacity onPress={handleAddFriendPress} style={styles.profilePageMultiButton}>
                 <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/friendAdd.png')} />
                 <Text style={styles.postTopButtonText}>Add Friend</Text>
             </ TouchableOpacity>
             )
             case "Remove": return(
-            <TouchableOpacity style={styles.profilePageMultiButton}>
+            <TouchableOpacity onPress={handleRemoveFriendPress} style={styles.profilePageMultiButton}>
                 <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/friendRemove.png')} />
                 <Text style={styles.postTopButtonText}>Remove Friend</Text>
             </ TouchableOpacity>

@@ -9,7 +9,8 @@ import {
 	Image,
 	TouchableOpacity,
 	Animated,
-	FlatList
+	FlatList,
+	RefreshControl
 } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import UserTile from './UserTile';
@@ -18,10 +19,11 @@ import { useFriends } from '../../Contexts/FriendsContext';
 
 const Friends = ({route}:any):JSX.Element => {
 	const { XPScale,skillsList} = route.params;
-	const {trueFriends,pendingFriends,trueFriendDocs,pendingFriendDocs,friendsRefresh}:any = useFriends()
+	const {trueFriends,pendingFriends,trueFriendDocs,pendingFriendDocs,friendsRefresh,setFriendsRefresh}:any = useFriends()
 	const [currentList,setCurrentList] = useState<any>()
 	const [currentRequests,setCurrentRequests] = useState<any>()
 	const [chosenTab,setChosenTab] = useState<boolean>(false)
+	const [refreshing,setRefreshing] = useState<boolean>(false)
 
 	useEffect(()=>{
 		console.log("These are my friends uids: ", trueFriends)
@@ -29,6 +31,12 @@ const Friends = ({route}:any):JSX.Element => {
 		console.log("These are my pending uids: ", pendingFriends)
 		console.log("These are my pending docs: ", pendingFriendDocs)
 	},[friendsRefresh])
+
+	const handleRefresh=async()=>{
+		setRefreshing(true)
+		await setFriendsRefresh((prev:boolean)=>!prev)
+		setRefreshing(false)
+	}
 
     return(
         <View style={styles.peoplePageContainer}>
@@ -58,6 +66,14 @@ const Friends = ({route}:any):JSX.Element => {
                 contentContainerStyle={{ alignItems: 'center' }}
                 style={styles.userTileContainer}
                 scrollEventThrottle={150}
+				refreshControl={
+					<RefreshControl
+					  refreshing={refreshing}
+					  onRefresh={handleRefresh}
+					  colors={['#FFF']}
+					  tintColor="#FFF"
+					/>
+				  }
 				/>
 			)}
 

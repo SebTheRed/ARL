@@ -20,9 +20,9 @@ import { useFeed } from '../../Contexts/FeedContext';
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 // import FeedPost from './FeedPost';
 import {db, auth,} from '../../Firebase/firebase'
-import {setDoc,doc,addDoc,getDoc,deleteDoc, Timestamp} from 'firebase/firestore'
+import {setDoc,doc,addDoc,getDoc,deleteDoc, Timestamp, updateDoc, arrayUnion} from 'firebase/firestore'
 import styles from '../../styles'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
@@ -109,7 +109,28 @@ const Profile = ({route}:any):JSX.Element => {
             if (docSnap1.exists()) {
               const friendshipData = docSnap1.data();
               console.log("Friendship data:", friendshipData);
-              // Add your logic here for when the friendship exists in the first format
+              if (friendshipData.pending===true){setRelation("pending")}
+              if (friendshipData.pending===false){setRelation("friends")}
+              if (friendshipData.blocked===true){
+                setRelation("blocked")
+                navigation.dispatch(
+                    CommonActions.reset({
+                      index: 0,
+                      routes: [
+                        {
+                          name: 'AuthedApp', 
+                          state: {
+                            routes: [
+                              {
+                                name: 'Search', // NEED TO TEST BLOCKING TO ENSURE THIS WORKS!!!
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    })
+                  );
+            }
             } else {
               console.log("No such friendship exists.");
               // Add your logic here for when no friendship exists
@@ -158,6 +179,7 @@ const Profile = ({route}:any):JSX.Element => {
                 pending:false,
                 timestamp: new Date().toISOString()
             })
+            await updateDoc(doc(db,`users/${uid}`), {blockedUsers:arrayUnion(profilePageUID)})
         }catch(error){console.error(error)}
     }
     const handleTraitStatsPress = (traitName:String) => {
@@ -291,6 +313,8 @@ const Profile = ({route}:any):JSX.Element => {
         
     }
     return(
+    <>
+    {(relation!="blocked")&&(
         <FlatList
 		data={profileFeed}
         ListHeaderComponent={<ProfileHeader />}
@@ -307,10 +331,10 @@ const Profile = ({route}:any):JSX.Element => {
 			onRefresh={handleRefresh}
 			colors={['#FFF']}
 			tintColor="#FFF"
-		  />
-		}
-        
-	  />
+		  />}
+        />
+    )}
+    </>
        
     )
 

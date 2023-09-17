@@ -1,17 +1,27 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { db } from '../Firebase/firebase';
-import { getDocs, query, collection, where } from "firebase/firestore";
+import { doc,getDocs, query, collection, where, getDoc } from "firebase/firestore";
 import { useUID } from './UIDContext';
 
-export const FriendsContext = createContext([]);
+interface IFriendsContext {
+  trueFriends:any[],
+  pendingFriends:any[],
+  trueFriendDocs:any[],
+  pendingFriendDocs:any[],
+}
+
+export const FriendsContext = createContext<IFriendsContext | null>(null);
 
 export const useFriends = () => {
   return useContext(FriendsContext);
 };
 
 export const FriendsProvider = ({ children }:any) => {
-    const [friendUIDs, setFriendUIDs] = useState<any>([]);
-    const [friendsRefresh,setFriendsRefresh] = useState(false)
+    const [trueFriends, setTrueFriends] = useState<any>([]);
+    const [pendingFriends,setPendingFriends] = useState<any>([])
+    const [trueFriendDocs, setTrueFriendDocs] = useState<any[]>([]);
+    const [pendingFriendDocs, setPendingFriendDocs] = useState<any[]>([]);
+    const [friendsRefresh,setFriendsRefresh] = useState<boolean>(false)
     const { uid }:any = useUID();
   
     useEffect(() => {
@@ -22,7 +32,6 @@ export const FriendsProvider = ({ children }:any) => {
                   collection(db, "friendships"),
                   where("requestingUser", "==", uid),
                   where("blocked", "==", false),
-                  where("pending", "==", false)
                 );
           
                 // Query where the user is the receivingUser
@@ -30,7 +39,6 @@ export const FriendsProvider = ({ children }:any) => {
                   collection(db, "friendships"),
                   where("receivingUser", "==", uid),
                   where("blocked", "==", false),
-                  where("pending", "==", false)
                 );
           
                 // Execute both queries
@@ -40,22 +48,45 @@ export const FriendsProvider = ({ children }:any) => {
                 ]);
           
                 // Extract the UIDs
-                const requestingUIDs = requestingSnapshot.docs.map(doc => doc.data().receivingUser);
-                const receivingUIDs = receivingSnapshot.docs.map(doc => doc.data().requestingUser);
-          
-                // Merge and deduplicate the UIDs
-                const allFriendUIDs = Array.from(new Set([...requestingUIDs, ...receivingUIDs]));
-                console.log("FRANDS")
-                console.log(allFriendUIDs)
-                setFriendUIDs(allFriendUIDs);
+                const requestingData = requestingSnapshot.docs.map(doc => doc.data());
+                const receivingData = receivingSnapshot.docs.map(doc => doc.data());
+
+                // Merge and deduplicate the data
+                const allFriendData = [...requestingData, ...receivingData];
+
+                const pendingFriends = allFriendData.filter(item => item.pending === true).map(item => item.requestingUser || item.receivingUser);
+                const trueFriends = allFriendData.filter(item => item.pending === false).map(item => item.requestingUser || item.receivingUser);
+                // console.log("FRANDS")
+                // console.log(allFriendUIDs)
+                console.log("true friends", trueFriends)
+                console.log("pending friends", pendingFriends)
+                
+                setTrueFriends(trueFriends);
+                setPendingFriends(pendingFriends)
               };
       
           fetchFriendUIDs();
         }
     }, [uid, friendsRefresh]);
   
+    useEffect(()=>{
+      const fetchUserDocs = async(uids:string[],type:string) =>{
+        const userDocs = await Promise.all(
+          uids.map(async (userID) => {
+            const userDocRef = doc(db,"users",userID);
+            const userDocSnap = await getDoc(userDocRef);
+            return userDocSnap.exists() ? userDocSnap.data() : null
+          })
+        )
+        if (type=="trueFriends"){setTrueFriendDocs(userDocs)}
+        else if (type=="pendingFriends"){setPendingFriendDocs(userDocs)}
+      }
+      if (trueFriends.length > 0) {fetchUserDocs(trueFriends,"trueFriends")}
+      if (pendingFriends.length > 0) {fetchUserDocs(pendingFriends,"pendingFriends")}
+    },[trueFriends, pendingFriends])
+
     return (
-      <FriendsContext.Provider value={friendUIDs}>
+      <FriendsContext.Provider value={{trueFriends, pendingFriends, trueFriendDocs, pendingFriendDocs}}>
         {children}
       </FriendsContext.Provider>
     );

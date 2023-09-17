@@ -28,6 +28,7 @@ import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
 import { useLastPage } from '../../Contexts/LastPageContext';
 import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
+import {useFriends} from '../../Contexts/FriendsContext'
 
 type TrophyDataObj = {
     title:string,
@@ -41,6 +42,7 @@ type TrophyDataObj = {
 const Profile = ({route}:any):JSX.Element => {
     // const navigation = useNavigation();
     const navigation = useNavigation<any>();
+    const {friendsRefresh,setFriendsRefresh}:any = useFriends()
     const {setLastPage}:any = useLastPage()
     const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
     const {setCurrentTraitTitle}:any = useCurrentTraitStat()
@@ -124,7 +126,7 @@ const Profile = ({route}:any):JSX.Element => {
             }
           };
         if (uid != profilePageUID) {checkFriendStatus()} else (setRelation("self"))
-    },[])
+    },[friendsRefresh])
     const handleRefresh = async () => {
 	  setRefreshing(true);
 	  await refreshProfileFeed();
@@ -144,6 +146,7 @@ const Profile = ({route}:any):JSX.Element => {
                 pending:true,
                 timestamp: new Date().toISOString()
             })
+            setFriendsRefresh((prevState:boolean)=>!prevState)
         }catch(error){console.error(error)}
 
     }
@@ -151,6 +154,7 @@ const Profile = ({route}:any):JSX.Element => {
         const sortedUIDString = [uid, profilePageUID].sort().join('_');
         try{
             await deleteDoc(doc(db,"friendships",sortedUIDString))
+            setFriendsRefresh((prevState:boolean)=>!prevState)
         }catch(error){console.error(error)}
         
         

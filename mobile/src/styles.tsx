@@ -955,9 +955,9 @@ menuItemContainer:{
   paddingHorizontal:3,
   margin:3,
   alignItems:"center",
-  borderWidth:1,
-  borderColor:"#fff",
-  borderRadius:4,
+  borderBottomWidth:1,
+  borderColor:"#656565",
+  borderRadius:0,
 },
 menuIcon:{
   width: 30,  // desired width

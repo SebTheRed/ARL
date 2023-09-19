@@ -10,6 +10,7 @@ import {
 	TextInput,
     Modal,
     Switch,
+    Keyboard,
   } from 'react-native';
   import React from 'react'
   import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
@@ -196,6 +197,9 @@ const ExperienceUploader = ():JSX.Element => {
                         onChangeText={(text) => setText(text)}
                         value={text}
                         maxLength={256}
+                        returnKeyType="done"
+                        blurOnSubmit={true}
+                        onSubmitEditing={()=>Keyboard.dismiss()}
                     />
                     
                 </View>

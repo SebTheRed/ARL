@@ -12,6 +12,7 @@ import {
 	RefreshControl,
 	Switch,
 	TextInput,
+	Keyboard
 } from 'react-native'
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import React from 'react'
@@ -166,6 +167,9 @@ const EditProfile = ():JSX.Element => {
 				onBlur={()=>handleTextInputBlur(label)}
 				autoFocus
 				style={{color:"white", fontSize:16}}
+				returnKeyType="done"
+				blurOnSubmit={true}
+				onSubmitEditing={()=>Keyboard.dismiss()}
 			/>
 			) : (
 			<Text style={{ ...styles.profilePageRealName, fontSize: 16}}>

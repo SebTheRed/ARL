@@ -25,7 +25,6 @@ import styles from './styles';
 import Feed from './Pages/Feed/Feed';
 import Login from './Pages/Login/Login'
 import SignUp from './Pages/Login/SignUp';
-import People from './Pages/People/People'
 import HamburgerBar from './Pages/HamburgerParts/HamburgerBar';
 import TrophyGrading from './Pages/HamburgerParts/TrophyGrading';
 import Search from './Pages/HamburgerParts/Search';
@@ -377,7 +376,6 @@ const AuthApp = ()=>{
             <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
             <Stack.Screen name="Map" initialParams={{arrayOPlaces: arrayOPlaces,}} component={Map} />
             <Stack.Screen name="Feed" initialParams={{skillsList: skillsList}} component={Feed} />
-            <Stack.Screen name="People" component={People} />
             <Stack.Screen name="ProfileStack" component={ProfilePages} />
             <Stack.Screen name="UserStats" initialParams={{skillsList:skillsList}} component={Stats} />
             <Stack.Screen name="Search" initialParams={{XPScale:XPScale, skillsList:skillsList}} component={Search} />

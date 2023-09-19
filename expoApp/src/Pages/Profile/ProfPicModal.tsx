@@ -20,6 +20,7 @@ import {
   import { useUID } from '../../Contexts/UIDContext';
   import {db, auth,} from '../../Firebase/firebase'
   import styles from '../../styles';
+  import {scaleFont} from '../../Utilities/fontSizing'
 const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
         const {userData}:any = useUserData()
         const {uid}:any = useUID()
@@ -128,7 +129,7 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
         <Modal animationType="slide" transparent={true} visible={true}>
             <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
-                <Text style={{...styles.modalTitle, fontSize:30,}}>Change Profile Picture</Text>
+                <Text style={{...styles.modalTitle, fontSize:scaleFont(30),}}>Change Profile Picture</Text>
                 <TouchableOpacity onPress={selectImage} style={{...styles.selectButton, backgroundColor:"#007bff"}}>
                     <Text style={styles.modalTitle}>Select New Image</Text>
                 </TouchableOpacity>

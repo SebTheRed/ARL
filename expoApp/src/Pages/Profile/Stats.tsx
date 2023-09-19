@@ -22,7 +22,7 @@ import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import styles from '../../styles'
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useLastPage } from '../../Contexts/LastPageContext';
-
+import {scaleFont} from '../../Utilities/fontSizing'
 const Stats = ({route}:any):JSX.Element => {
   const {lastPage}:any = useLastPage()
   const {skillsList, XPScale, trophyData}:any = route.params;
@@ -201,7 +201,7 @@ const Stats = ({route}:any):JSX.Element => {
           <View style={styles.statsGraphContainer}>
             {Object.keys(lineChartData).length > 0 && 
               <View style={{alignItems:"center"}}>
-                <Text style={{...styles.statsTitle, fontSize:22,}}>{currentTraitTitle} XP over the last 30 days:</Text>
+                <Text style={{...styles.statsTitle, fontSize:scaleFont(22),}}>{currentTraitTitle} XP over the last 30 days:</Text>
                 <LineChart
                   data={lineChartData}
                   width={(Dimensions.get("window").width)-20}
@@ -217,7 +217,7 @@ const Stats = ({route}:any):JSX.Element => {
                   }}
                 />
                 <View style={{height:20,}}></View>
-                <Text style={{...styles.statsTitle, fontSize:22,}}>All of your {currentTraitTitle} Experiences:</Text>
+                <Text style={{...styles.statsTitle, fontSize:scaleFont(22),}}>All of your {currentTraitTitle} Experiences:</Text>
               </View>
             }
           </View>

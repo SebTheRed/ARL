@@ -16,6 +16,7 @@ import UserTile from './UserTile';
 import { db } from '../../Firebase/firebase';
 import { getDocs, query, orderBy, startAt, endAt,where, collection, limit,startAfter } from "firebase/firestore";
 import styles from '../../styles';
+import {scaleFont} from '../../Utilities/fontSizing'
 
 const Search = ({route}:any):JSX.Element => {
     const { XPScale,skillsList} = route.params;
@@ -93,7 +94,7 @@ const Search = ({route}:any):JSX.Element => {
                 <SearchBar />
             </View>
             {errorMessage&&(<View style={{height:30,width:"90%",backgroundColor:"rgba(255,0,0,0.5)", alignItems:"center", justifyContent:"center", borderColor:"#ff0000",borderWidth:2}}>
-              <Text style={{color:"#fff",fontSize:14}}>!! {errorMessage} !!</Text>
+              <Text style={{color:"#fff",fontSize:scaleFont(14)}}>!! {errorMessage} !!</Text>
             </View>)}
             {users && (
                 <FlatList

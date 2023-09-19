@@ -25,7 +25,7 @@ import styles from '../../styles'
 import {db, auth,} from '../../Firebase/firebase'
 import {updateDoc,doc} from 'firebase/firestore'
 import ProfilePicModal from './ProfPicModal';
-
+import {scaleFont} from './Utilities/fontSizing'
 const EditProfile = ():JSX.Element => {
 	const navigation = useNavigation<any>();
 	const {userData}:any = useUserData()
@@ -153,7 +153,7 @@ const EditProfile = ():JSX.Element => {
 			style={{...styles.editProfileRow,}}
 			onPress={() => setIsEditing(label)}
 		>
-			<Text style={{ ...styles.profilePageRealName, fontSize: 18 }}>
+			<Text style={{ ...styles.profilePageRealName, fontSize: scaleFont(18) }}>
 			<Image
 				style={{ ...styles.editProfilePencil }}
 				source={require('../../IconBin/edit.png')}
@@ -166,13 +166,13 @@ const EditProfile = ():JSX.Element => {
 				onChangeText={setValue}
 				onBlur={()=>handleTextInputBlur(label)}
 				autoFocus
-				style={{color:"white", fontSize:16}}
+				style={{color:"white", fontSize:scaleFont(16)}}
 				returnKeyType="done"
 				blurOnSubmit={true}
 				onSubmitEditing={()=>Keyboard.dismiss()}
 			/>
 			) : (
-			<Text style={{ ...styles.profilePageRealName, fontSize: 16}}>
+			<Text style={{ ...styles.profilePageRealName, fontSize: scaleFont(16)}}>
 				{value}
 			</Text>
 			)}
@@ -269,7 +269,7 @@ return(
             <Text style={styles.profilePageUserName}>@{userData.userName}</Text>
         </View>
 		<View style={styles.editProfileBox}>
-				<Text style={{...styles.profilePageRealName, fontSize:24}}>Edit Personal Information</Text>
+				<Text style={{...styles.profilePageRealName, fontSize:scaleFont(24)}}>Edit Personal Information</Text>
 				{renderField('Name', name, setName)}
           		{renderField('Phone Number', phoneNumber, setPhoneNumber)}
 		</View>
@@ -280,9 +280,9 @@ return(
 			<View style={{...styles.eventTileWrapper,borderColor:`${option2?"#1cb012":"#656565"}`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
-						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Dark Mode</Text>
+						<Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Dark Mode</Text>
 					</View>
-					<Text style={{...styles.eventTileText, fontSize:16,}}>Switch on to make the app's styling change to dark mode.</Text>
+					<Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Switch on to make the app's styling change to dark mode.</Text>
 				</View>
 				<View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
 					<View style={styles.eventButtonWrapper}>
@@ -300,9 +300,9 @@ return(
 			<View style={{...styles.eventTileWrapper,borderColor:`${option3?"#1cb012":"#656565"}`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
-						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Notifications</Text>
+						<Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Notifications</Text>
 					</View>
-					<Text style={{...styles.eventTileText, fontSize:16,}}>Switch off to disable all App Real Life notifications.</Text>
+					<Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Switch off to disable all App Real Life notifications.</Text>
 				</View>
 				<View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
 					<View style={styles.eventButtonWrapper}>
@@ -320,9 +320,9 @@ return(
 			<View style={{...styles.eventTileWrapper,borderColor:`${option1?"#1cb012":"#656565"}`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
-						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Access & Data</Text>
+						<Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Access & Data</Text>
 					</View>
-					<Text style={{...styles.eventTileText, fontSize:16,}}>Switch off to disable geo-tracking for all of your posts.</Text>
+					<Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Switch off to disable geo-tracking for all of your posts.</Text>
 				</View>
 				<View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
 					<View style={styles.eventButtonWrapper}>
@@ -340,9 +340,9 @@ return(
 			<View style={{...styles.eventTileWrapper,borderColor:`${option4?"#1cb012":"#656565"}`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
-						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Skill Set</Text>
+						<Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Skill Set</Text>
 					</View>
-					<Text style={{...styles.eventTileText, fontSize:16,}}>Keep on to show off your Levels to anyone who views your profile.</Text>
+					<Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Keep on to show off your Levels to anyone who views your profile.</Text>
 				</View>
 				<View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
 					<View style={styles.eventButtonWrapper}>
@@ -360,9 +360,9 @@ return(
 			<View style={{...styles.eventTileWrapper,borderColor:`${option5?"#1cb012":"#656565"}`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
-						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Public Facing Profile</Text>
+						<Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Public Facing Profile</Text>
 					</View>
-					<Text style={{...styles.eventTileText, fontSize:16,}}>Keep on to enable users to search and view your profile.</Text>
+					<Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Keep on to enable users to search and view your profile.</Text>
 				</View>
 				<View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
 					<View style={styles.eventButtonWrapper}>

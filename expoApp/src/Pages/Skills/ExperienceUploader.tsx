@@ -26,6 +26,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useUID } from '../../Contexts/UIDContext';
 import { useFeed } from '../../Contexts/FeedContext';
 // import Geolocation from '@react-native-community/geolocation';
+import {scaleFont} from '../../Utilities/fontSizing'
 
 type RootStackParamList = {
     SkillsPage:undefined,
@@ -207,9 +208,9 @@ const ExperienceUploader = ():JSX.Element => {
                     <View style={{...styles.eventTileWrapper,borderColor:`${settingOne?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Friends Post</Text>
+                                <Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Friends Post</Text>
                             </View>
-                            <Text style={{...styles.eventTileText, fontSize:16,}}>Switch off to hide post from friends. Disabling any additional XP from their Upvotes.</Text>
+                            <Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Switch off to hide post from friends. Disabling any additional XP from their Upvotes.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                             <View style={styles.eventButtonWrapper}>
@@ -227,9 +228,9 @@ const ExperienceUploader = ():JSX.Element => {
                     (<View style={{...styles.eventTileWrapper,borderColor:`${settingTwo?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Post</Text>
+                                <Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Post</Text>
                             </View>
-                            <Text style={{...styles.eventTileText, fontSize:16,}}>Switch on to have your post appear on the Map for friends to find.</Text>
+                            <Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Switch on to have your post appear on the Map for friends to find.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                             <View style={styles.eventButtonWrapper}>
@@ -248,9 +249,9 @@ const ExperienceUploader = ():JSX.Element => {
                     (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:20,color:"gray",textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Post</Text>
+                                <Text style={{...styles.eventTileText,fontSize:scaleFont(20),color:"gray",textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Post</Text>
                             </View>
-                            <Text style={{...styles.eventTileText,color:"gray", fontSize:16,}}>Switch on to have your post appear on the Map for friends to find.</Text>
+                            <Text style={{...styles.eventTileText,color:"gray", fontSize:scaleFont(16),}}>Switch on to have your post appear on the Map for friends to find.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                             <View style={styles.eventButtonWrapper}>
@@ -262,9 +263,9 @@ const ExperienceUploader = ():JSX.Element => {
                     (<View style={{...styles.eventTileWrapper,borderColor:`${settingThree?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
+                                <Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
                             </View>
-                            <Text style={{...styles.eventTileText, fontSize:16,}}>Switch on to make post visible to the Global Feed & Map.</Text>
+                            <Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Switch on to make post visible to the Global Feed & Map.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                             <View style={styles.eventButtonWrapper}>
@@ -283,9 +284,9 @@ const ExperienceUploader = ():JSX.Element => {
                     (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,color:"gray",fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
+                                <Text style={{...styles.eventTileText,color:"gray",fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
                             </View>
-                            <Text style={{...styles.eventTileText,color:"gray", fontSize:16,}}>Your account is private. Private accounts cannot make Global posts!</Text>
+                            <Text style={{...styles.eventTileText,color:"gray", fontSize:scaleFont(16),}}>Your account is private. Private accounts cannot make Global posts!</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
 
@@ -296,9 +297,9 @@ const ExperienceUploader = ():JSX.Element => {
                     (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,color:"gray",fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
+                                <Text style={{...styles.eventTileText,color:"gray",fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
                             </View>
-                            <Text style={{...styles.eventTileText,color:"gray", fontSize:16,}}>Switch on to make post visible to the Global Feed & Map.</Text>
+                            <Text style={{...styles.eventTileText,color:"gray", fontSize:scaleFont(16),}}>Switch on to make post visible to the Global Feed & Map.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
 
@@ -309,9 +310,9 @@ const ExperienceUploader = ():JSX.Element => {
                     (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
                     <View style={{...styles.eventTileMain}}>
                         <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                            <Text style={{...styles.eventTileText,color:"gray",fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
+                            <Text style={{...styles.eventTileText,color:"gray",fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
                         </View>
-                        <Text style={{...styles.eventTileText,color:"gray", fontSize:16,}}>Your account is private. Private accounts cannot make Global posts!</Text>
+                        <Text style={{...styles.eventTileText,color:"gray", fontSize:scaleFont(16),}}>Your account is private. Private accounts cannot make Global posts!</Text>
                     </View>
                     <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
 

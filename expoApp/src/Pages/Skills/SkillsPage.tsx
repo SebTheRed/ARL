@@ -20,6 +20,8 @@ import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import { useLastPage } from '../../Contexts/LastPageContext';
 import {useUID} from '../../Contexts/UIDContext'
+import {scaleFont} from '../../Utilities/fontSizing'
+
 type SkillPageProps = PropsWithChildren<{
     route:any
 }>
@@ -120,7 +122,7 @@ if (skillData) {
               <Text style={styles.skillPageXPText}>NEXT- {sideXPVals.next}</Text>
             </View>
             <TouchableOpacity onPress={handleStatsPress} style={{...styles.skillsStatsButton, backgroundColor:`${skillData.color}`}}>
-              <Text style={{color:"#1c1c1c",fontSize:18}}>Press here to view your {skillData.title} stats</Text>
+              <Text style={{color:"#1c1c1c",fontSize:scaleFont(18)}}>Press here to view your {skillData.title} stats</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.eventTileBox}>

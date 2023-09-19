@@ -29,7 +29,7 @@ import { useUID } from '../../Contexts/UIDContext';
 import { useLastPage } from '../../Contexts/LastPageContext';
 import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 import {useFriends} from '../../Contexts/FriendsContext'
-
+import {scaleFont} from '../../Utilities/fontSizing'
 type TrophyDataObj = {
     title:string,
     tier:string,
@@ -308,7 +308,7 @@ const Profile = ({route}:any):JSX.Element => {
                     return(
                         <TouchableOpacity onPress={()=>handleTraitStatsPress(data.title)} style={{...styles.profilePageTraitBox, backgroundColor:data.color}} key={index}>
                             {/* <Text style={styles.profilePageTraitTitle}>{data.title}</Text> */}
-                            <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:25, fontWeight:"bold"}}>{currentLevel}</Text>
+                            <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:scaleFont(25), fontWeight:"bold"}}>{currentLevel}</Text>
                             {/* <Text style={{...styles.borderedTextShadow, fontSize:25,fontWeight:"bold", color:"#fff"}}>{currentLevel}</Text> */}
                         </TouchableOpacity>
                     )

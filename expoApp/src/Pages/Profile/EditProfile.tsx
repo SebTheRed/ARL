@@ -25,7 +25,7 @@ import styles from '../../styles'
 import {db, auth,} from '../../Firebase/firebase'
 import {updateDoc,doc} from 'firebase/firestore'
 import ProfilePicModal from './ProfPicModal';
-import {scaleFont} from './Utilities/fontSizing'
+import {scaleFont} from '../../Utilities/fontSizing'
 const EditProfile = ():JSX.Element => {
 	const navigation = useNavigation<any>();
 	const {userData}:any = useUserData()

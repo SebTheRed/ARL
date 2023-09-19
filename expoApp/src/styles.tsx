@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-
+import {scaleFont} from './Utilities/fontSizing'
 const styles = StyleSheet.create({
 
 /* 
@@ -29,7 +29,7 @@ headerBar:{
 },
 headerBarText:{
   color:"white",
-  fontSize:16
+  fontSize:scaleFont(16)
 ,},
 headerBarIcon:{
   tintColor:"white",
@@ -76,7 +76,7 @@ bottomBarIcon:{
 },
 bottomBarText:{
   color:"white",
-  fontSize:18,
+  fontSize:scaleFont(18),
 },
 backHeaderBar:{
   height:26,
@@ -85,7 +85,7 @@ backHeaderBar:{
 },
 backHeaderText:{
   color:"white",
-  fontSize:20,
+  fontSize:scaleFont(20),
 },
 
 
@@ -124,19 +124,19 @@ sectionTextContainer:{
   marginHorizontal:24,
 },
 sectionTitle: {
-  fontSize: 28,
+  fontSize: scaleFont(28),
   fontWeight: '600',
   // fontFamily: "Phosphate",
   color:"white",
 },
 sectionFlare:{
-  fontSize:16,
+  fontSize:scaleFont(16),
   fontWeight:'400',
   color:"white",
 },
 sectionDescription: {
   marginTop: 8,
-  fontSize: 18,
+  fontSize: scaleFont(18),
   fontWeight: '400',
   flexDirection:"column",
   color:"white",
@@ -151,7 +151,7 @@ sectionLevelBox:{
   borderWidth:2
 },
 borderedTextShadow:{
-  fontSize:48,
+  fontSize:scaleFont(48),
   paddingLeft:5,
   position:"absolute",
   zIndex:9,
@@ -181,10 +181,10 @@ eventTileMain:{
 eventTileText:{
   padding:2,
   color:"white",
-  fontSize:18
+  fontSize:scaleFont(18)
 },
 borderedText:{
-  fontSize:45,
+  fontSize:scaleFont(45),
   position:"absolute",
   zIndex:10,
 },
@@ -248,7 +248,7 @@ skillPageXPText:{
 },
 skillPageTitle:{
   color:"white",
-  fontSize:40,
+  fontSize:scaleFont(40),
 },
 skillsStatsButton:{
   borderRadius:4,
@@ -275,7 +275,7 @@ actionBox:{
 },
 actionText:{
   color:"white",
-  fontSize:30
+  fontSize:scaleFont(30)
 },
 logContainer:{
   marginTop:20,
@@ -380,7 +380,7 @@ ARLLogoWrapper:{
 
 },
 logintitle: {
-  fontSize: 32,
+  fontSize: scaleFont(32),
   fontWeight: 'bold',
   marginBottom: 20,
   color:"white",
@@ -390,7 +390,7 @@ logininputContainer: {
   marginBottom: 15,
 },
 loginlabel: {
-  fontSize: 16,
+  fontSize: scaleFont(16),
   marginBottom: 5,
   color:"white",
 },
@@ -432,7 +432,7 @@ whatIsARLButton:{
 },
 loginbuttonText: {
   color: '#fff',
-  fontSize: 18,
+  fontSize: scaleFont(18),
 },
 
 
@@ -492,7 +492,7 @@ postTopTitleContainer:{
 },
 postTopName:{
   color:"white",
-  fontSize:24,
+  fontSize:scaleFont(24),
 },
 postTopStreakIconContainer:{
   flexDirection:"row",
@@ -515,14 +515,14 @@ postTopMapIcon:{
 },
 postTopStreak:{
   color:"white",
-  fontSize:18,
+  fontSize:scaleFont(18),
 },
 postTopTrophyBox:{
 
 },
 postTopTimestamp:{
   color:"gray",
-  fontSize:18,
+  fontSize:scaleFont(18),
 },
 postTopExperienceContainer:{
   margin:2.5,
@@ -532,11 +532,11 @@ postTopExperienceContainer:{
 },
 postTopExperienceName:{
   color:"white",
-  fontSize:18,
+  fontSize:scaleFont(18),
 
 },
 postTopTraitName:{
-  fontSize:18,
+  fontSize:scaleFont(18),
 },
 postTopMapButton:{
 
@@ -552,7 +552,7 @@ postContentContainer:{
 },
 postContentLogText:{
   color:"white",
-  fontSize:18,
+  fontSize:scaleFont(18),
 },
 postBottomWrapper:{
   flexDirection:"row",
@@ -588,7 +588,7 @@ postBottomVoteContainer:{
 },
 postBottomScore:{
   color:"white",
-  fontSize:25,
+  fontSize:scaleFont(25),
 },
 postBottomCommentsContainer:{
   tintColor:"white",
@@ -696,7 +696,7 @@ profilePageButtonIcon:{
 },
 postTopButtonText:{
   color:"white",
-  fontSize:14,
+  fontSize:scaleFont(14),
 },
 profilePageNamesContainer:{
   alignItems:"center",
@@ -704,7 +704,7 @@ profilePageNamesContainer:{
 },
 profilePageUserName:{
   color:"white",
-  fontSize: 24,
+  fontSize: scaleFont(24),
 },
 profilePageRealName:{
   color:"white"
@@ -799,7 +799,7 @@ statsHeaderContainer:{
 },
 statsTitle:{
   color:"white",
-  fontSize:30,
+  fontSize:scaleFont(30),
 },
 statsGraphContainer:{
   marginVertical:10,
@@ -821,7 +821,7 @@ logPostContainer:{
 },
 logPostTitle:{
   color:"#fff",
-  fontSize:20,
+  fontSize:scaleFont(20),
 },
 modalContainer: {
   flex: 1,
@@ -840,7 +840,7 @@ modalContent: {
   justifyContent:"space-between",
 },
 modalTitle: {
-  fontSize: 24,
+  fontSize: scaleFont(24),
   marginBottom: 10,
   color:"#fff"
 },
@@ -945,7 +945,7 @@ closeSideBar: {
 },
 closeText: {
   color: '#fff',
-  fontSize: 18,
+  fontSize: scaleFont(18),
 },
 menuItemContainer:{
   width:"95%",
@@ -967,7 +967,7 @@ menuIcon:{
 menuItem: {
   padding: 15,
   color: '#fff',
-  fontSize: 20,
+  fontSize: scaleFont(20),
 },
 content: {
   flex: 1,
@@ -981,7 +981,7 @@ openButton: {
 },
 openText: {
   color: '#fff',
-  fontSize: 18,
+  fontSize: scaleFont(18),
 },
 
 peoplePageContainer:{
@@ -1010,7 +1010,7 @@ choiceTabTab:{
   
 },
 choiceTabLabel:{
-  fontSize:20,
+  fontSize:scaleFont(20),
 },
 
 

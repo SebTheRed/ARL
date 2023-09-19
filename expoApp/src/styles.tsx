@@ -349,14 +349,16 @@ LOGIN AND SIGN UP
 */
 
 logincontainer: {
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
+  // flex: 1,
+  // justifyContent: 'center',
+  // alignItems: 'center',
   // backgroundColor: '#1c1c1c',
+  height:"100%",
+  flexDirection:"column",
 },
 loginWrapper:{
   width:"80%",
-  height:"60%",
+  height:400,
   backgroundColor:"#1c1c1c",
   justifyContent:"center",
   alignContent:"center",
@@ -375,7 +377,8 @@ loginWrapper:{
 },
 ARLLogoWrapper:{
   alignItems:'center',
-  height:"10%",
+  justifyContent:"center",
+  height:150,
   
 
 },
@@ -387,7 +390,7 @@ logintitle: {
 },
 logininputContainer: {
   width: '100%',
-  marginBottom: 15,
+  marginBottom: 3,
 },
 loginlabel: {
   fontSize: scaleFont(16),
@@ -416,7 +419,7 @@ loginSignupButton:{
   marginBottom:20,
   backgroundColor:"#656565",
   paddingVertical: 10,
-  paddingHorizontal: 20,
+  paddingHorizontal: 5,
   borderRadius:5,
   alignItems:'center',
   width:"40%"

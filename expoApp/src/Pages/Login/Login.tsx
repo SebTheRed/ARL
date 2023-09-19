@@ -9,6 +9,9 @@ import {
     TouchableOpacity,
 		TextInput,
 		Animated,
+		Keyboard,
+		KeyboardAvoidingView,
+		Platform,
   } from 'react-native';
   import React from 'react'
   import { useNavigation } from '@react-navigation/native';
@@ -93,7 +96,11 @@ const signIn = async(e:any) => {
         })
 }
 	return(
-		<Animated.View style={{...styles.logincontainer,backgroundColor:"#19c6ff"}}>
+		<KeyboardAvoidingView
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+			style={{ flex: 1 }}
+		>
+		<ScrollView keyboardShouldPersistTaps='handled' style={{...styles.logincontainer,backgroundColor:"#19c6ff"}} contentContainerStyle={{alignItems:"center", justifyContent:"space-between"}}>
 			<View style={{...styles.ARLLogoWrapper, backgroundColor:"transparent"}}>
 				<View style={styles.offsetWrapper}>
 				</View>
@@ -113,11 +120,25 @@ const signIn = async(e:any) => {
 				
 				<View style={styles.logininputContainer}>
 					<Text style={styles.loginlabel}>email</Text>
-					<TextInput autoCapitalize='none' onChangeText={(text)=>setEmail(text)} style={styles.logininput}  />
+					<TextInput
+					returnKeyType="done"
+					blurOnSubmit={true}
+					onSubmitEditing={()=>Keyboard.dismiss()}
+					autoCapitalize='none' 
+					onChangeText={(text)=>setEmail(text)} 
+					style={styles.logininput}
+					  />
 				</View>
 				<View style={styles.logininputContainer}>
 					<Text style={styles.loginlabel}>password</Text>
-					<TextInput onChangeText={(text)=>setPassword(text)} style={styles.logininput} secureTextEntry />
+					<TextInput 
+						returnKeyType="done"
+                        blurOnSubmit={true}
+                        onSubmitEditing={()=>Keyboard.dismiss()}
+						onChangeText={(text)=>setPassword(text)}
+						style={styles.logininput}
+						secureTextEntry
+						/>
 				</View>
 				
 				<TouchableOpacity onPress={signIn} style={styles.loginbutton}>
@@ -127,7 +148,8 @@ const signIn = async(e:any) => {
 					<Text style={styles.loginbuttonText}>what's arl ?</Text>
 				</TouchableOpacity> */}
 			</View>
-		</Animated.View>
+		</ScrollView>
+		</KeyboardAvoidingView>
 	)
 }
 

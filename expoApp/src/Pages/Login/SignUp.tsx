@@ -10,6 +10,9 @@ import {
     TouchableOpacity,
 		TextInput,
         Animated,
+        Keyboard,
+        KeyboardAvoidingView,
+        Platform,
   } from 'react-native';
   import React from 'react'
   import { useNavigation } from '@react-navigation/native';
@@ -170,9 +173,12 @@ const createAccount = async(e:any) => {
 
     return(
 
-
-<Animated.View style={{...styles.logincontainer,backgroundColor:"#19c6ff"}}>
-    <View style={{...styles.loginWrapper, height:"90%", width:"90%"}}>
+<KeyboardAvoidingView
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+		>
+<ScrollView style={{...styles.logincontainer,backgroundColor:"#19c6ff"}} contentContainerStyle={{alignItems:"center", justifyContent:"center"}}>
+    <View style={{height:10}}></View>
+    <View style={{...styles.loginWrapper, height:550, width:"90%"}}>
         <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
             <Text style={styles.logintitle}>sign up</Text>
             <Text style={{...styles.skillPageXPText,}}> or </Text>
@@ -182,30 +188,41 @@ const createAccount = async(e:any) => {
         </View>
         <View style={styles.logininputContainer}>
             <Text style={styles.loginlabel}>user name</Text>
-            <TextInput onChangeText={(text)=>setUserName(text)} style={styles.logininput} />
+            <TextInput returnKeyType="done"
+                        blurOnSubmit={true}
+                        onSubmitEditing={()=>Keyboard.dismiss()} onChangeText={(text)=>setUserName(text)} style={styles.logininput} />
         </View>
         <View style={styles.logininputContainer}>
             <Text style={styles.loginlabel}>email</Text>
-            <TextInput onChangeText={(text)=>setEmail(text)} style={styles.logininput} />
+            <TextInput returnKeyType="done"
+                        blurOnSubmit={true}
+                        onSubmitEditing={()=>Keyboard.dismiss()} onChangeText={(text)=>setEmail(text)} style={styles.logininput} />
         </View>
         <View style={styles.logininputContainer}>
             <Text style={styles.loginlabel}>first & last Name</Text>
-            <TextInput onChangeText={(text)=>setName(text)} style={styles.logininput} />
+            <TextInput returnKeyType="done"
+                        blurOnSubmit={true}
+                        onSubmitEditing={()=>Keyboard.dismiss()} onChangeText={(text)=>setName(text)} style={styles.logininput} />
         </View>
         <View style={styles.logininputContainer}>
             <Text style={styles.loginlabel}>phone number</Text>
-            <TextInput onChangeText={(text)=>setPhoneNumber(text)} style={styles.logininput} />
+            <TextInput returnKeyType="done"
+                        blurOnSubmit={true}
+                        onSubmitEditing={()=>Keyboard.dismiss()}onChangeText={(text)=>setPhoneNumber(text)} style={styles.logininput} />
         </View>
         <View style={styles.logininputContainer}>
             <Text style={styles.loginlabel}>password</Text>
-            <TextInput onChangeText={(text)=>setPassword(text)} style={styles.logininput} secureTextEntry />
+            <TextInput returnKeyType="done"
+                        blurOnSubmit={true}
+                        onSubmitEditing={()=>Keyboard.dismiss()} onChangeText={(text)=>setPassword(text)} style={styles.logininput} secureTextEntry />
         </View>
         <TouchableOpacity onPress={createAccount} style={styles.loginbutton}>
             <Text style={styles.loginbuttonText}>complete sign up</Text>
         </TouchableOpacity>
     </View>
-</Animated.View>
-
+    {/* <View style={{height:500,}} /> */}
+</ScrollView>
+</KeyboardAvoidingView>
 
     )
 }

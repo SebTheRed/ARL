@@ -57,7 +57,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from '@react-native-community/geolocation';
 import BottomBar from './Overlays/BottomBar';
 import { useEffect, } from 'react';
 import { useUID } from './Contexts/UIDContext';
@@ -81,7 +81,7 @@ type RootStackParamList = {
 ////// COMPONENT FUNCTION BEGINNING //////
 function AppMain(): JSX.Element {
   const [isWaitingUserData,setIsWaitingUserData] = useState(false)
-  const [userGeoData,setUserGeoData] = useState({})
+  // const [userGeoData,setUserGeoData] = useState({})
   const [arrayOPlaces, setArrayOPlaces] = useState({
     parks:[],
     gyms:[],
@@ -89,14 +89,14 @@ function AppMain(): JSX.Element {
   })
   
   
-  useEffect(()=>{
-  Geolocation.getCurrentPosition(info => {
-    console.log(info.coords.latitude, info.coords.longitude);
-    console.log("coords received")
-    setUserGeoData({latitude:info.coords.latitude, longitude:info.coords.longitude})
-    // fetchPlaces(info.coords.latitude, info.coords.longitude)
-  });
-  },[])
+  // useEffect(()=>{
+  // Geolocation.getCurrentPosition(info => {
+  //   console.log(info.coords.latitude, info.coords.longitude);
+  //   console.log("coords received")
+  //   setUserGeoData({latitude:info.coords.latitude, longitude:info.coords.longitude})
+  //   // fetchPlaces(info.coords.latitude, info.coords.longitude)
+  // });
+  // },[])
   
 
   const [XPScale, setXPScale] = useState({
@@ -375,7 +375,7 @@ const AuthApp = ()=>{
           <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Skills"  component={SkillsNav} />
             <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
-            <Stack.Screen name="Map" initialParams={{userGeoData: userGeoData, arrayOPlaces: arrayOPlaces,}} component={Map} />
+            <Stack.Screen name="Map" initialParams={{arrayOPlaces: arrayOPlaces,}} component={Map} />
             <Stack.Screen name="Feed" initialParams={{skillsList: skillsList}} component={Feed} />
             <Stack.Screen name="People" component={People} />
             <Stack.Screen name="ProfileStack" component={ProfilePages} />

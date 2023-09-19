@@ -22,9 +22,9 @@ type markerProps = {
 
 ////// COMPONENT FUNCTION BEGINNING //////
 const Map = ({route}:any):JSX.Element=>{
-const {userGeoData, arrayOPlaces} = route.params;
+// const {userGeoData, arrayOPlaces} = route.params;
 
-const [currentLocation,setCurrentLocation] = useState(userGeoData)
+// const [currentLocation,setCurrentLocation] = useState(userGeoData)
 
 
 
@@ -37,7 +37,7 @@ console.log('map')
 
     return(
         <View style={{flex:1}}>
-            <MapView
+            {/* <MapView
             // showsPointsOfInterest={false}
             style={{width:"100%",height:"100%"}}
             initialRegion={{
@@ -48,7 +48,7 @@ console.log('map')
               }}
               showsUserLocation={true}  // This will show the blue dot
               followsUserLocation={true}
-            >
+            > */}
               {/* {arrayOPlaces.parks.map((place:markerProps, index) => (
                 <Marker
                   pinColor={"green"}
@@ -97,7 +97,7 @@ console.log('map')
                   description={place.vicinity}
                 />
               ))} */}
-            </MapView >
+            {/* </MapView > */}
         </View>
     )
 }

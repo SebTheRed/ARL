@@ -24,7 +24,7 @@ import { useUserData } from '../../Contexts/UserDataContext';
 import LinearGradient from 'react-native-linear-gradient';
 import { useUID } from '../../Contexts/UIDContext';
 import { useFeed } from '../../Contexts/FeedContext';
-import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from '@react-native-community/geolocation';
 
 type RootStackParamList = {
     SkillsPage:undefined,
@@ -65,22 +65,22 @@ const ExperienceUploader = ():JSX.Element => {
         navigation.navigate(currentEvent.skillTitle)
         setCurrentEvent({})
     }
-    const getGeoLocation = () => {
-        return new Promise((resolve, reject) => {
-          Geolocation.getCurrentPosition(
-            (position) => {
-              resolve({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-              });
-            },
-            (error) => {
-              reject(error);
-            },
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-          );
-        });
-      };
+    // const getGeoLocation = () => {
+    //     return new Promise((resolve, reject) => {
+    //       Geolocation.getCurrentPosition(
+    //         (position) => {
+    //           resolve({
+    //             latitude: position.coords.latitude,
+    //             longitude: position.coords.longitude,
+    //           });
+    //         },
+    //         (error) => {
+    //           reject(error);
+    //         },
+    //         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    //       );
+    //     });
+    //   };
     const handlePostSubmit = async() => {
         let timeStamp = generateTimestamp()
         const postID = `${uid}_${timeStamp}`
@@ -105,7 +105,7 @@ const ExperienceUploader = ():JSX.Element => {
                 uid: uid,
                 type:currentEvent.type
             }
-            if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
+            // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
             try {
                 const uniqueUserPath = `users/${uid}/xpLog`
                 await setDoc(doc(db,uniqueUserPath, postID), {id: postID, timeStamp:timeStamp, eventTitle:currentEvent.title, traitType:currentEvent.skillTitle, xp:currentEvent.xp })

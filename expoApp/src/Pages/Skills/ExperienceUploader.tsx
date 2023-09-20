@@ -23,12 +23,10 @@ import type {PropsWithChildren} from 'react';
 import {db, auth,} from '../../Firebase/firebase'
 import {setDoc,doc, Timestamp} from 'firebase/firestore'
 import { useUserData } from '../../Contexts/UserDataContext';
-import LinearGradient from 'react-native-linear-gradient';
 import { useUID } from '../../Contexts/UIDContext';
 import { useFeed } from '../../Contexts/FeedContext';
-// import Geolocation from '@react-native-community/geolocation';
 import {scaleFont} from '../../Utilities/fontSizing'
-import { Camera, CameraType } from 'expo-camera';
+import CameraPage from './CameraPage'
 
 type RootStackParamList = {
     SkillsPage:undefined,
@@ -44,8 +42,7 @@ const ExperienceUploader = ():JSX.Element => {
     const [settingOne,setSettingOne] = useState(true)
     const [settingTwo,setSettingTwo] = useState(false)
     const [settingThree,setSettingThree] = useState(false)
-    const [cameraType,setCameraType] = useState(CameraType.back)
-    const [camPermissions,setCameraPermissions] = useState(Camera.useCameraPermissions())
+    const [cameraActiveBool,setCameraActiveBool] = useState(false)
 
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     useEffect(()=>{
@@ -53,9 +50,7 @@ const ExperienceUploader = ():JSX.Element => {
         console.log("expUpload")
         console.log(currentEvent)
     },[])
-    function toggleCameraType() {
-    setCameraType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
-  }
+
     function generateTimestamp() {
         const now = new Date();
         const year = now.getFullYear();
@@ -151,16 +146,7 @@ const ExperienceUploader = ():JSX.Element => {
     }
 
     const ApiAction = ():JSX.Element => {
-        return(
-        <View style={styles.cameraContainer}>
-            <Camera style={styles.cameraCamera} type={cameraType}>
-              <View style={styles.cameraButtonContainer}>
-                <TouchableOpacity style={styles.cameraButton} onPress={toggleCameraType}>
-                  <Text style={styles.cameraText}>Flip Camera</Text>
-                </TouchableOpacity>
-              </View>
-            </Camera>
-          </View>)
+        return(<View></View>)
     }
     const CameraAction = ():JSX.Element => {
         return(
@@ -168,7 +154,7 @@ const ExperienceUploader = ():JSX.Element => {
                 <View style={{flexDirection:"row",justifyContent:"space-between",width:"90%"}}>
                         <Text style={{...styles.loginlabel}}>Take a picture of the experience:</Text>
                     </View>
-                <TouchableOpacity style={{...styles.textArea, alignItems:"center",justifyContent:"center"}}>
+                <TouchableOpacity onPress={()=>{setCameraActiveBool(true)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center"}}>
                     <View style={{}}>
                         <Image style={{...styles.bottomBarIcon}} source={require("../../IconBin/camera_add.png")} />
                     </View>
@@ -355,6 +341,9 @@ const ExperienceUploader = ():JSX.Element => {
                 </View>
                 
             </ScrollView>
+            {cameraActiveBool==true&&(
+                <CameraPage />
+            )}
           
         </Modal>
     )

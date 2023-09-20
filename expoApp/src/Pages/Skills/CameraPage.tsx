@@ -7,15 +7,17 @@ import {
     useColorScheme,
     View,
     TouchableOpacity,
+    Image,
   } from 'react-native';
-  import React,{useMemo,useState} from 'react'
+  import React,{useRef,useState} from 'react'
   import { Camera, CameraType } from 'expo-camera';
   import styles from '../../styles';
 import { useEffect } from 'react';
-const CameraPage = ():JSX.Element => {
+const CameraPage = ({setCameraActiveBool,cameraImageState,setCameraImageState}:any):JSX.Element => {
 
     const [cameraType,setCameraType] = useState(CameraType.back)
     const [camPermissions,setCameraPermissions] = useState(Camera.useCameraPermissions())
+    const cameraRef = useRef(null)
     
     
     useEffect(()=>{
@@ -28,14 +30,30 @@ const CameraPage = ():JSX.Element => {
     function toggleCameraType() {
         setCameraType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
       }
+    
+    const takePicture = async()=>{
+      if (cameraRef.current) {
+        const options = {quality:0.5,base64:true};
+        const data = await cameraRef.current.takePictureAsync(options);
+        setCameraImageState(data.uri)
+        setCameraActiveBool(false)
+        console.log(data.uri)
+      }
+    }
 
 return(
 <View style={styles.cameraContainer}>
     {camPermissions && (
-      <Camera style={styles.cameraCamera} type={cameraType} onCameraReady={() => console.log('Camera is ready')}>
+      <Camera ref={cameraRef} style={styles.cameraCamera} type={cameraType} onCameraReady={() => console.log('Camera is ready')}>
         <View style={styles.cameraButtonContainer}>
+         <TouchableOpacity style={styles.cameraButton} onPress={()=>setCameraActiveBool(false)}>
+            <Image style={styles.cameraIcon} source={require("../../IconBin/close.png")} />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.cameraButton, styles.cameraTakeButton]} onPress={takePicture}>
+            <Image style={styles.cameraIcon} source={require("../../IconBin/camera.png")} />
+          </TouchableOpacity>
           <TouchableOpacity style={styles.cameraButton} onPress={toggleCameraType}>
-            <Text style={styles.cameraText}>Flip Camera</Text>
+            <Image style={styles.cameraIcon} source={require("../../IconBin/flip.png")} />
           </TouchableOpacity>
         </View>
       </Camera>      

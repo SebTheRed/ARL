@@ -43,6 +43,7 @@ const ExperienceUploader = ():JSX.Element => {
     const [settingTwo,setSettingTwo] = useState(false)
     const [settingThree,setSettingThree] = useState(false)
     const [cameraActiveBool,setCameraActiveBool] = useState(false)
+    const [cameraImageState,setCameraImageState] = useState()
 
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     useEffect(()=>{
@@ -342,7 +343,7 @@ const ExperienceUploader = ():JSX.Element => {
                 
             </ScrollView>
             {cameraActiveBool==true&&(
-                <CameraPage />
+                <CameraPage setCameraActiveBool={setCameraActiveBool} cameraImageState={cameraImageState} setCameraImageState={setCameraImageState} />
             )}
           
         </Modal>

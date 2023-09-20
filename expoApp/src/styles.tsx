@@ -1031,15 +1031,32 @@ cameraButtonContainer: {
   backgroundColor: 'transparent',
   flexDirection: 'row',
   margin: 20,
-  justifyContent: 'space-between',
+  justifyContent: 'space-evenly',
 },
 cameraButton: {
-  flex: 0.1,
   alignSelf: 'flex-end',
   alignItems: 'center',
-  backgroundColor: '#fff',
-  borderRadius: 5,
   padding: 10,
+  borderRadius:50,
+  height:80,
+  width:80,
+  backgroundColor:"#1c1c1c",
+  borderWidth:4,
+  borderColor:"#fff",
+  justifyContent:"center"
+},
+cameraTakeButton:{
+  borderRadius:50,
+  height:100,
+  width:100,
+  backgroundColor:"#1c1c1c",
+  borderWidth:4,
+  borderColor:"#fff"
+},
+cameraIcon:{
+  width: 40,  // desired width
+  height: 40, // desired height
+  resizeMode: 'contain', // or 'cover'
 },
 cameraText: {
   fontSize: 18,

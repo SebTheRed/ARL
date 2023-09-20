@@ -13,7 +13,7 @@ import {
   import { Camera, CameraType } from 'expo-camera';
   import styles from '../../styles';
 import { useEffect } from 'react';
-const CameraPage = ({setCameraActiveBool,cameraImageState,setCameraImageState}:any):JSX.Element => {
+const CameraPage = ({setCameraActiveBool,setCameraImageURL,setCameraImageState}:any):JSX.Element => {
 
     const [cameraType,setCameraType] = useState(CameraType.back)
     const [camPermissions,setCameraPermissions] = useState(Camera.useCameraPermissions())
@@ -22,7 +22,7 @@ const CameraPage = ({setCameraActiveBool,cameraImageState,setCameraImageState}:a
     
     useEffect(()=>{
       (async () => {
-        const { status } = await Camera.requestPermissionsAsync(); //IGNORE ERRORS
+        const { status } = await Camera.requestCameraPermissionsAsync(); //IGNORE ERRORS
         setCameraPermissions(status === 'granted'); //IT WORKS TOTALLY FINE ?
         //GPT PLS FIX OBNOXIOUS ERRORS
       })();
@@ -33,9 +33,12 @@ const CameraPage = ({setCameraActiveBool,cameraImageState,setCameraImageState}:a
     
     const takePicture = async()=>{
       if (cameraRef.current) {
+
         const options = {quality:0.5,base64:true};
         const data = await cameraRef.current.takePictureAsync(options);
+        const dataURL = `data:image/jpeg;base64,${data.base64}`
         setCameraImageState(data.uri)
+        setCameraImageURL(dataURL)
         setCameraActiveBool(false)
         console.log(data.uri)
       }

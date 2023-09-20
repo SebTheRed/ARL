@@ -22,6 +22,7 @@ import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
 import {db, auth,} from '../../Firebase/firebase'
+import {getStorage,ref,uploadString,getDownloadURL, uploadBytesResumable} from "firebase/storage"
 import {setDoc,doc, Timestamp} from 'firebase/firestore'
 import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
@@ -45,6 +46,7 @@ const ExperienceUploader = ():JSX.Element => {
     const [settingThree,setSettingThree] = useState(false)
     const [cameraActiveBool,setCameraActiveBool] = useState(false)
     const [cameraImageState,setCameraImageState] = useState(null)
+    const [cameraImageURL,setCameraImageURL] = useState(null)
 
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     useEffect(()=>{
@@ -88,10 +90,39 @@ const ExperienceUploader = ():JSX.Element => {
     //     });
     //   };
     const handlePostSubmit = async() => {
+        
         let timeStamp = generateTimestamp()
+        const storage = getStorage();
         const postID = `${uid}_${timeStamp}`
-        if (text.length>15) {     
+        const imageRef = ref(storage,`posts/${postID}.jpg`)
+        if (text.length>15 && cameraImageURL && cameraImageState) {
+            let pictureURL:string = ""
+            try {
+
+            // const imageRef = ref(storage, `posts/${postID}.jpg`)
+            // await uploadString(imageRef,cameraImageURL,'data_url')
+            // pictureURL = await getDownloadURL(imageRef)
+            const response = await fetch(cameraImageState)
+            const blob = await response.blob()
+            const uploadTask = uploadBytesResumable(imageRef,blob)
+            uploadTask.on('state_changed',
+            (snapshot) => {
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            },
+            (error) => {
+            console.error("Upload failed:", error);
+            },
+            async () => {
+                pictureURL = await getDownloadURL(imageRef)
+            }
+            )
+            } catch(err) {
+                console.error("upload failed",err)
+            }
             const postObj = {
+                cameraPicURL:pictureURL,
                 posterUID:uid,
                 posterUserName:userData.userName,
                 streak:userData.streak,
@@ -352,7 +383,7 @@ const ExperienceUploader = ():JSX.Element => {
                 <View style={{height:200,}} />
             </ScrollView>
             {cameraActiveBool==true&&(
-                <CameraPage setCameraActiveBool={setCameraActiveBool} cameraImageState={cameraImageState} setCameraImageState={setCameraImageState} />
+                <CameraPage setCameraImageURL={setCameraImageURL} setCameraActiveBool={setCameraActiveBool} cameraImageState={cameraImageState} setCameraImageState={setCameraImageState} />
             )}
           
         </Modal>

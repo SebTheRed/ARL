@@ -26,9 +26,14 @@ const Map = ():JSX.Element=>{
 const [cameraType,setCameraType] = useState(CameraType.back)
 const [camPermissions,setCameraPermissions] = useState(Camera.useCameraPermissions())
 
-useEffect(()=>{
 
-})
+useEffect(()=>{
+  (async () => {
+    const { status } = await Camera.requestPermissionsAsync(); //IGNORE ERRORS
+    setCameraPermissions(status === 'granted'); //IT WORKS TOTALLY FINE ?
+    //GPT PLS FIX OBNOXIOUS ERRORS
+  })();
+},[])
 
 function toggleCameraType() {
   setCameraType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
@@ -38,21 +43,19 @@ function toggleCameraType() {
 const ApiAction = ():JSX.Element => {
   return(
   <View style={styles.cameraContainer}>
+    {camPermissions && (
       <Camera style={styles.cameraCamera} type={cameraType} onCameraReady={() => console.log('Camera is ready')}>
         <View style={styles.cameraButtonContainer}>
           <TouchableOpacity style={styles.cameraButton} onPress={toggleCameraType}>
             <Text style={styles.cameraText}>Flip Camera</Text>
           </TouchableOpacity>
         </View>
-      </Camera>
+      </Camera>      
+    )}
+
     </View>)
 }
 
-useEffect(()=>{
-  
- 
-  
-},[])
 console.log('map')
 
     return(

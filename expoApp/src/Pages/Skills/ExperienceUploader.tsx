@@ -43,7 +43,7 @@ const ExperienceUploader = ():JSX.Element => {
     const [settingTwo,setSettingTwo] = useState(false)
     const [settingThree,setSettingThree] = useState(false)
     const [cameraActiveBool,setCameraActiveBool] = useState(false)
-    const [cameraImageState,setCameraImageState] = useState()
+    const [cameraImageState,setCameraImageState] = useState(null)
 
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     useEffect(()=>{
@@ -272,7 +272,7 @@ const ExperienceUploader = ():JSX.Element => {
                         </View>
                     </View>
                     )}
-                    { (settingTwo == true && userData.settings.privateProfile == true) &&
+                    { (settingTwo == true && settingOne==true && userData.settings.privateProfile == true) &&
                     (<View style={{...styles.eventTileWrapper,borderColor:`${settingThree?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
@@ -293,7 +293,7 @@ const ExperienceUploader = ():JSX.Element => {
                         </View>
                     </View>
                     )}
-                    { (settingTwo == true && userData.settings.privateProfile == false) &&
+                    { (settingTwo == true && settingOne == true && userData.settings.privateProfile == false) &&
                     (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
@@ -306,7 +306,7 @@ const ExperienceUploader = ():JSX.Element => {
                         </View>
                     </View>
                     )}
-                    { (settingTwo == false && userData.settings.privateProfile == true) &&
+                    { (settingTwo == false && settingOne == true && userData.settings.privateProfile == true) &&
                     (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>

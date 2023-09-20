@@ -6,12 +6,13 @@ import {
     Text,
     useColorScheme,
     View,
+    TouchableOpacity,
   } from 'react-native';
 import React,{useMemo,useState} from 'react'
 import styles from '../../styles'
 import MapView, {Marker} from 'react-native-maps';
 import Config from "react-native-config";
-
+import { Camera, CameraType } from 'expo-camera';
 import { useEffect } from 'react';
 
 type markerProps = {
@@ -21,12 +22,31 @@ type markerProps = {
 }
 
 ////// COMPONENT FUNCTION BEGINNING //////
-const Map = ({route}:any):JSX.Element=>{
-// const {userGeoData, arrayOPlaces} = route.params;
+const Map = ():JSX.Element=>{
+const [cameraType,setCameraType] = useState(CameraType.back)
+const [camPermissions,setCameraPermissions] = useState(Camera.useCameraPermissions())
 
-// const [currentLocation,setCurrentLocation] = useState(userGeoData)
+useEffect(()=>{
+
+})
+
+function toggleCameraType() {
+  setCameraType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+}
 
 
+const ApiAction = ():JSX.Element => {
+  return(
+  <View style={styles.cameraContainer}>
+      <Camera style={styles.cameraCamera} type={cameraType} onCameraReady={() => console.log('Camera is ready')}>
+        <View style={styles.cameraButtonContainer}>
+          <TouchableOpacity style={styles.cameraButton} onPress={toggleCameraType}>
+            <Text style={styles.cameraText}>Flip Camera</Text>
+          </TouchableOpacity>
+        </View>
+      </Camera>
+    </View>)
+}
 
 useEffect(()=>{
   
@@ -36,69 +56,7 @@ useEffect(()=>{
 console.log('map')
 
     return(
-        <View style={{flex:1}}>
-            {/* <MapView
-            // showsPointsOfInterest={false}
-            style={{width:"100%",height:"100%"}}
-            initialRegion={{
-                latitude: userGeoData.latitude,
-                longitude: userGeoData.longitude,
-                latitudeDelta: 0.0222,
-                longitudeDelta: 0.0121,
-              }}
-              showsUserLocation={true}  // This will show the blue dot
-              followsUserLocation={true}
-            > */}
-              {/* {arrayOPlaces.parks.map((place:markerProps, index) => (
-                <Marker
-                  pinColor={"green"}
-                  key={index}
-                  coordinate={{
-                    latitude: place.geometry.location.lat,
-                    longitude: place.geometry.location.lng,
-                  }}
-                  title={place.name}
-                  description={place.vicinity}
-                />
-              ))}
-              {arrayOPlaces.gyms.map((place:markerProps, index) => (
-                <Marker
-                  pinColor={"gold"}
-                  key={index}
-                  coordinate={{
-                    latitude: place.geometry.location.lat,
-                    longitude: place.geometry.location.lng,
-                  }}
-                  title={place.name}
-                  description={place.vicinity}
-                />
-              ))}
-              {arrayOPlaces.restaurants.map((place:markerProps, index) => (
-                <Marker
-                  pinColor={"red"}
-                  key={index}
-                  coordinate={{
-                    latitude: place.geometry.location.lat,
-                    longitude: place.geometry.location.lng,
-                  }}
-                  title={place.name}
-                  description={place.vicinity}
-                />
-              ))}
-              {arrayOPlaces.coffee.map((place:markerProps, index) => (
-                <Marker
-                  pinColor={"beige"}
-                  key={index}
-                  coordinate={{
-                    latitude: place.geometry.location.lat,
-                    longitude: place.geometry.location.lng,
-                  }}
-                  title={place.name}
-                  description={place.vicinity}
-                />
-              ))} */}
-            {/* </MapView > */}
-        </View>
+        <ApiAction />
     )
 }
 

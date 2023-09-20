@@ -11,6 +11,7 @@ import {
     Modal,
     Switch,
     Keyboard,
+    Image,
   } from 'react-native';
   import React from 'react'
   import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
@@ -27,6 +28,7 @@ import { useUID } from '../../Contexts/UIDContext';
 import { useFeed } from '../../Contexts/FeedContext';
 // import Geolocation from '@react-native-community/geolocation';
 import {scaleFont} from '../../Utilities/fontSizing'
+import { Camera, CameraType } from 'expo-camera';
 
 type RootStackParamList = {
     SkillsPage:undefined,
@@ -42,6 +44,8 @@ const ExperienceUploader = ():JSX.Element => {
     const [settingOne,setSettingOne] = useState(true)
     const [settingTwo,setSettingTwo] = useState(false)
     const [settingThree,setSettingThree] = useState(false)
+    const [cameraType,setCameraType] = useState(CameraType.back)
+    const [camPermissions,setCameraPermissions] = useState(Camera.useCameraPermissions())
 
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     useEffect(()=>{
@@ -49,6 +53,9 @@ const ExperienceUploader = ():JSX.Element => {
         console.log("expUpload")
         console.log(currentEvent)
     },[])
+    function toggleCameraType() {
+    setCameraType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+  }
     function generateTimestamp() {
         const now = new Date();
         const year = now.getFullYear();
@@ -143,14 +150,33 @@ const ExperienceUploader = ():JSX.Element => {
         
     }
 
-    const LogAction = ():JSX.Element => {
-        return(<Text>Log</Text>)
-    }
     const ApiAction = ():JSX.Element => {
-        return(<Text>Api</Text>)
+        return(
+        <View style={styles.cameraContainer}>
+            <Camera style={styles.cameraCamera} type={cameraType}>
+              <View style={styles.cameraButtonContainer}>
+                <TouchableOpacity style={styles.cameraButton} onPress={toggleCameraType}>
+                  <Text style={styles.cameraText}>Flip Camera</Text>
+                </TouchableOpacity>
+              </View>
+            </Camera>
+          </View>)
     }
     const CameraAction = ():JSX.Element => {
-        return(<Text>Camera</Text>)
+        return(
+            <View style={{...styles.logContainer}}>
+                <View style={{flexDirection:"row",justifyContent:"space-between",width:"90%"}}>
+                        <Text style={{...styles.loginlabel}}>Take a picture of the experience:</Text>
+                    </View>
+                <TouchableOpacity style={{...styles.textArea, alignItems:"center",justifyContent:"center"}}>
+                    <View style={{}}>
+                        <Image style={{...styles.bottomBarIcon}} source={require("../../IconBin/camera_add.png")} />
+                    </View>
+                    <Text style={{...styles.loginlabel}}>Press here to open camera.</Text>
+                </TouchableOpacity>
+                
+            </View>
+        )
     }
     const AccelerationAction = ():JSX.Element => {
         return(<Text>Acceleration</Text>)
@@ -164,10 +190,10 @@ const ExperienceUploader = ():JSX.Element => {
         switch(utilityType){
             case "api": return(<ApiAction />)
             case "camera": return(<CameraAction />)
-            case "log": return(<LogAction />)
             case "acceleration": return(<AccelerationAction />)
             case "timeline": return(<TimelineAction />)
-            default:return(<LogAction />)
+            case "log": return(<View />);
+            default:return(<View />);
         }
     }
 
@@ -176,17 +202,17 @@ const ExperienceUploader = ():JSX.Element => {
         animationType="slide"
         transparent={true}
         visible={true}>
-            <View style={{...styles.expUploaderTop}}>
+            <ScrollView style={{...styles.expUploaderTop}}>
                 <TouchableOpacity onPress={()=>handleGoBack()} style={styles.closeUploaderButton}>
                     <Text style={styles.backHeaderText}>⇦Go Back</Text>
                 </TouchableOpacity>
                 <View style={{...styles.actionBox,backgroundColor:''}}>
-                    {/* This is where the camera button/start run button / etc would be */}
+                    <ActionSplitter />
                 </View>
                 <View style={{...styles.logContainer}}>
                     <View style={{flexDirection:"row",justifyContent:"space-between",width:"90%"}}>
                         <Text style={{...styles.loginlabel}}>Write a log of the experience:</Text>
-                        <Text style={{...styles.loginlabel, color:`${(text.length === 256)?"red":"white"}`}}>{text.length} / 256</Text>
+                        <Text style={{...styles.loginlabel, color:`${(text.length === 120)?"red":"white"}`}}>{text.length} / 120</Text>
                     </View>
                     <TextInput
                         style={styles.textArea}
@@ -197,7 +223,7 @@ const ExperienceUploader = ():JSX.Element => {
                         multiline={true}
                         onChangeText={(text) => setText(text)}
                         value={text}
-                        maxLength={256}
+                        maxLength={120}
                         returnKeyType="done"
                         blurOnSubmit={true}
                         onSubmitEditing={()=>Keyboard.dismiss()}
@@ -328,7 +354,7 @@ const ExperienceUploader = ():JSX.Element => {
                     </TouchableOpacity>
                 </View>
                 
-            </View>
+            </ScrollView>
           
         </Modal>
     )

@@ -284,7 +284,7 @@ logContainer:{
   backgroundColor: '#1c1c1c',
 },
 textArea: {
-  height: 120,
+  height: 90,
   justifyContent: 'flex-start',
   borderColor: 'white',
   borderRadius:10,
@@ -1015,6 +1015,34 @@ choiceTabTab:{
 choiceTabLabel:{
   fontSize:scaleFont(20),
 },
+
+
+cameraContainer: {
+  flex: 1,
+},
+cameraCamera: {
+  flex: 1,
+},
+cameraButtonContainer: {
+  flex: 1,
+  backgroundColor: 'transparent',
+  flexDirection: 'row',
+  margin: 20,
+  justifyContent: 'space-between',
+},
+cameraButton: {
+  flex: 0.1,
+  alignSelf: 'flex-end',
+  alignItems: 'center',
+  backgroundColor: '#fff',
+  borderRadius: 5,
+  padding: 10,
+},
+cameraText: {
+  fontSize: 18,
+  color: 'black',
+},
+
 
 
 

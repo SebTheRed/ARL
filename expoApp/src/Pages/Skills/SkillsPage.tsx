@@ -127,7 +127,7 @@ if (skillData) {
           </View>
           <View style={styles.eventTileBox}>
             <Text style={styles.skillPageTitle}>Post an Experience</Text>
-            <Text style={styles.skillPageXPText}>Press any of the experiences below to begin posting</Text>
+            <Text style={styles.skillPageXPText}>Create a post to share with your friends!</Text>
             {Object.keys(XPTriggerEvents[skillTitle.toLowerCase()]).map((d:any,i:number)=>{
               const nextUnlock = ""
               console.log(XPScale[XPTriggerEvents[skillTitle.toLowerCase()][d].unlocksAt], userData.xpData[skillTitle.toLowerCase()])

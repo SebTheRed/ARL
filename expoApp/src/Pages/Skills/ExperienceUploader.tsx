@@ -12,6 +12,7 @@ import {
     Switch,
     Keyboard,
     Image,
+    ImageBackground
   } from 'react-native';
   import React from 'react'
   import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
@@ -155,11 +156,19 @@ const ExperienceUploader = ():JSX.Element => {
                 <View style={{flexDirection:"row",justifyContent:"space-between",width:"90%"}}>
                         <Text style={{...styles.loginlabel}}>Take a picture of the experience:</Text>
                     </View>
-                <TouchableOpacity onPress={()=>{setCameraActiveBool(true)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center"}}>
-                    <View style={{}}>
-                        <Image style={{...styles.bottomBarIcon}} source={require("../../IconBin/camera_add.png")} />
-                    </View>
-                    <Text style={{...styles.loginlabel}}>Press here to open camera.</Text>
+                <TouchableOpacity onPress={()=>{setCameraActiveBool(true)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(400)}}>
+                        {cameraImageState && (
+                            <ImageBackground
+                            source={{ uri: cameraImageState }}
+                            style={{ flex: 1, width: '100%', height: '100%', justifyContent: 'flex-start', alignItems: 'center' }}
+                            />
+                        )}
+                        {!cameraImageState && (
+                        <>
+                            <Image style={{...styles.bottomBarIcon}} source={require("../../IconBin/camera_add.png")} />
+                            <Text style={{...styles.loginlabel}}>Press here to open camera.</Text>
+                        </> 
+                        )}
                 </TouchableOpacity>
                 
             </View>
@@ -340,7 +349,7 @@ const ExperienceUploader = ():JSX.Element => {
                         <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Log your {currentEvent.skillTitle} Experience</Text>
                     </TouchableOpacity>
                 </View>
-                
+                <View style={{height:200,}} />
             </ScrollView>
             {cameraActiveBool==true&&(
                 <CameraPage setCameraActiveBool={setCameraActiveBool} cameraImageState={cameraImageState} setCameraImageState={setCameraImageState} />

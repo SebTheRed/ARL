@@ -126,12 +126,12 @@ const handleProfilePress = () => {
 //This needs much more work, and will be updated more-so after I've finalized ExperienceUPloader.
 const PostContentSplitter = ():JSX.Element => {
 	switch(data.type){
-		case "log":return(
+		case "log":case"api":return(
 		<View style={{...styles.postContentContainer, height:logBoxHeight}}>
 			<Text style={{...styles.postContentLogText}}>{data.textLog}</Text>
 		</View>
 		)
-		case "api":return(<View></View>)
+		// case "api":return(<View></View>)
 		case "camera":return(
 		<View style={{height:"auto", justifyContent:"space-around"}}>
 			<View style={{...styles.postContentContainer, height:scaleFont(350), borderWidth:0,marginBottom:0}}>

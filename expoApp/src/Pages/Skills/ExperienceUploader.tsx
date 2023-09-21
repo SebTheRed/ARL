@@ -179,7 +179,7 @@ const ExperienceUploader = ():JSX.Element => {
         } else {
             console.warn("LOG MUST BE AT LEAST 10 CHARACTERS")
             if (text.length<9) {setErrorMessage("Your log must be at least 10 characters!")}
-            else if (!cameraImageURL) {setErrorMessage("This experiences requires a picture!")}        }
+            else if (!cameraImageURL) {setErrorMessage("This experiences requires a picture!")}}
         
     }
 
@@ -280,11 +280,10 @@ const ExperienceUploader = ():JSX.Element => {
 
     const ActionSplitter = ():JSX.Element => {
         switch(utilityType){
-            case "api": return(<ApiAction />)
             case "camera": return(<CameraAction />)
             case "acceleration": return(<AccelerationAction />)
             case "timeline": return(<TimelineAction />)
-            case "log": return(<View />);
+            case "log": case "api": return(<View />);
             default:return(<View />);
         }
     }
@@ -446,7 +445,7 @@ const ExperienceUploader = ():JSX.Element => {
                         <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Log your {currentEvent.skillTitle} Experience</Text>
                     </TouchableOpacity>
                     )}
-                    {utilityType=="log"&&(
+                    {(utilityType=="log"||utilityType=="api")&&(
                     <TouchableOpacity onPress={handleLogPostSubmit} style={{...styles.loginbutton, width:"95%", backgroundColor:`${currentEvent.skillColor}`}}>
                         <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Log your {currentEvent.skillTitle} Experience</Text>
                     </TouchableOpacity>

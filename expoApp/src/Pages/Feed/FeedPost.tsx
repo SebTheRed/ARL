@@ -32,6 +32,7 @@ const FeedPost = ({data, skillsList}:any):JSX.Element => {
 	const [translatedTimestamp,setTranslatedTimestamp] = useState("")
 	const [profilePicState,setProfilePicState] = useState<any>(null)
 	const [isLoading,setIsLoading]=useState(true)
+	const [logBoxHeight,setLogBoxHeight] = useState(null)
 
 //This useEffect simply maps over the skillsList, seeking a match.
 //Also, it will set the translated timestamp, using the function timeRemainingUntil24Hours
@@ -41,6 +42,24 @@ useEffect(()=>{
 	})
 	setTranslatedTimestamp(timeRemainingUntil24Hours(data.timeStamp))
 
+	
+	const logLength = data.textLog;
+	if (logLength < 30) {
+		setLogBoxHeight(20)
+		return;
+	}
+	if (logLength < 60) {
+		setLogBoxHeight(40)
+		return;
+	}
+	if (logLength < 90) {
+		setLogBoxHeight(60)
+		return;
+	}
+	if (logLength <= 120) {
+		setLogBoxHeight(80)
+		return;
+	}
 
 	const translateURL = async () => {
             setIsLoading(true); // Set loading state to true before fetching
@@ -108,20 +127,26 @@ const handleProfilePress = () => {
 const PostContentSplitter = ():JSX.Element => {
 	switch(data.type){
 		case "log":return(
-		<View style={{...styles.postContentContainer}}>
+		<View style={{...styles.postContentContainer, height:logBoxHeight}}>
 			<Text style={{...styles.postContentLogText}}>{data.textLog}</Text>
 		</View>
 		)
 		case "api":return(<View></View>)
 		case "camera":return(
-		<View style={{...styles.postContentContainer, height:scaleFont(350)}}>
-			<Image style={{width:"100%", height:scaleFont(350),resizeMode:"cover"}} source={{uri:data.cameraPicURL}} /> 
+		<View style={{height:"auto", justifyContent:"space-around"}}>
+			<View style={{...styles.postContentContainer, height:scaleFont(350), borderWidth:0,marginBottom:0}}>
+				<Image style={{width:"100%", height:scaleFont(350),resizeMode:"cover"}} source={{uri:data.cameraPicURL}} /> 
+			</View>
+			<View style={{...styles.postContentContainer, height:logBoxHeight}}>
+				<Text style={{...styles.postContentLogText}}>{data.textLog}</Text>
+			</View>
 		</View>
 		)
 		case "timeline":return(<View></View>)
 		default:return(<View><Text>ERROR!!!!</Text></View>)
 	}
 }
+
   
 	
     return(
@@ -156,7 +181,8 @@ const PostContentSplitter = ():JSX.Element => {
 				<Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
 				
 			</View>
-			<PostContentSplitter />
+				<PostContentSplitter />
+			
 			<View style={{...styles.postBottomWrapper}}>
 				<View style={{...styles.postBottomReactionContainer}}>
 					<TouchableOpacity style={styles.postBottomIconContainer} >

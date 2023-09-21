@@ -445,7 +445,7 @@ POSTS & FEED
 
  */
 feedFlatList:{
-  backgroundColor:"#1c1c1c",
+  backgroundColor:"#333",
   flex:1,
   width:"100%",
 },
@@ -454,7 +454,8 @@ feedPostWrapper:{
   margin:"2.5%",
   borderRadius:10,
   borderWidth:2,
-  borderColor:"white"
+  borderColor:"white",
+  backgroundColor:"#1c1c1c"
 },
 feedPostText: {
   color:"white"
@@ -563,7 +564,7 @@ postBottomWrapper:{
   position:"absolute",
   bottom:0,
   width:"100%",
-  backgroundColor:"#333",
+  backgroundColor:"#1c1c1c",
   borderBottomEndRadius:8,
   borderBottomLeftRadius:8,
   borderTopWidth:1,

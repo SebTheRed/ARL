@@ -16,6 +16,7 @@ import styles from '../../styles'
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
+import { scaleFont } from '../../Utilities/fontSizing';
 
 type RootStackParamList = {
 	Profile:undefined,
@@ -112,7 +113,11 @@ const PostContentSplitter = ():JSX.Element => {
 		</View>
 		)
 		case "api":return(<View></View>)
-		case "camera":return(<View></View>)
+		case "camera":return(
+		<View style={{...styles.postContentContainer, height:scaleFont(350)}}>
+			<Image style={{width:"100%", height:scaleFont(350),resizeMode:"cover"}} source={{uri:data.cameraPicURL}} /> 
+		</View>
+		)
 		case "acceleration":return(<View></View>)
 		case "timeline":return(<View></View>)
 		default:return(<View><Text>ERROR!!!!</Text></View>)

@@ -205,7 +205,7 @@ function AppMain(): JSX.Element {
     games: {
       play_board_game: {type:"camera",title:"Tabletop Game",desc:"Play a board or card game with at least 2 other people.", xp: 5, unlocksAt: 0, perDay: 2, perWeek: 0, perMonth:0 ,lockedBy:""},
       retro_gaming: {type:"camera",title:"Retro Gamer",desc:"Play a classic arcade style game. Bonus points if the game is in a cabinet!", xp: 10, unlocksAt: 0, perDay: 0, perWeek: 1, perMonth:0 ,lockedBy:""},
-      playtime_hour: {type:"api",title:"Steam Playtime Hours",desc:"XP for every hour you play a Steam game.", xp: 3, unlocksAt: 0, perDay: 10, perWeek: 0, perMonth:0 ,lockedBy:""},
+      playtime_hour: {type:"api",title:"Video Game Playtime",desc:"Log the video games you're playing.", xp: 5, unlocksAt: 0, perDay: 10, perWeek: 0, perMonth:0 ,lockedBy:""},
       sports_practice: { type:"camera",title:"Practice?",desc:"Train in anything that can be considered a physical sport.",xp: 5, unlocksAt: 2, perDay: 1, perWeek: 0, perMonth:0 ,lockedBy:""},
       puzzle_master: {type:"timeline",title:"Puzzle Master",desc:"Complete a jigsaw puzzle with at least 500 pieces. Good company encouraged!", xp: 50, unlocksAt: 5, perDay: 0, perWeek: 0, perMonth:1 ,lockedBy:""},
       trivia_night: {type:"camera",title:"Trivia Einsteins",desc:"Participate in a trivia contest.", xp: 25, unlocksAt: 10, perDay: 0, perWeek: 0, perMonth:1 ,lockedBy:""},
@@ -222,6 +222,7 @@ function AppMain(): JSX.Element {
     language: {
       daily_duolingo: {type:"api",title:"Daily Duo Lesson",desc:"Complete one duolingo lesson today.", xp: 20, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth:0 ,lockedBy:""},
       daily_reading: {type:"log",title:"Daily Reading",desc:"Read at least one time today.",xp: 5, unlocksAt: 0, perDay: 1, perWeek: 0, perMonth: 0,lockedBy:""},
+      journal:{type:"log",title:"JRL", desc:"Use ARL as your little daily journal. Switching the post to private is encouraged.", xp:10, unlocksAt:2,perDay:1,perWeek:0,perMonth:0,lockedBy:""},
       language_exchange: {type:"camera",title:"Language Exchange",desc:"Attend and partake in a language exchange event.", xp: 20, unlocksAt: 5, perDay: 0, perWeek: 1, perMonth:0 ,lockedBy:""},
       converse_foreign_language: {type:"log",title:"Foreign Language Conversation",desc:"Log about a conversation you had in your non-native language.", xp: 5, unlocksAt: 10, perDay: 2, perWeek: 0, perMonth:0 ,lockedBy:""},
       tutor: {type:"camera",title:"Language Mentorship",desc:"Spend a decent amount of time helping someone learn their non-native language.", xp: 10, unlocksAt: 15, perDay: 0, perWeek: 1, perMonth:0 ,lockedBy:""},

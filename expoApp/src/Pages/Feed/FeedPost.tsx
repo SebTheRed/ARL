@@ -32,7 +32,7 @@ const FeedPost = ({data, skillsList}:any):JSX.Element => {
 	const [translatedTimestamp,setTranslatedTimestamp] = useState("")
 	const [profilePicState,setProfilePicState] = useState<any>(null)
 	const [isLoading,setIsLoading]=useState(true)
-	const [logBoxHeight,setLogBoxHeight] = useState(null)
+	const [logBoxHeight,setLogBoxHeight] = useState<number|null>(null)
 
 //This useEffect simply maps over the skillsList, seeking a match.
 //Also, it will set the translated timestamp, using the function timeRemainingUntil24Hours

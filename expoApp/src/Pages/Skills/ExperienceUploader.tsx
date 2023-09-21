@@ -47,6 +47,7 @@ const ExperienceUploader = ():JSX.Element => {
     const [cameraActiveBool,setCameraActiveBool] = useState(false)
     const [cameraImageState,setCameraImageState] = useState(null)
     const [cameraImageURL,setCameraImageURL] = useState(null)
+    const [errorMessage,setErrorMessage] = useState(String)
 
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     useEffect(()=>{
@@ -95,7 +96,7 @@ const ExperienceUploader = ():JSX.Element => {
         const storage = getStorage();
         const postID = `${uid}_${timeStamp}`
         const imageRef = ref(storage,`posts/${postID}.jpg`)
-        if (text.length>15 && cameraImageURL && cameraImageState) {
+        if (text.length>9 && cameraImageURL && cameraImageState) {
             let pictureURL:string = ""
             try {
 
@@ -166,23 +167,26 @@ const ExperienceUploader = ():JSX.Element => {
                         })
                 } catch(err){
                     console.error("Post failed to post",err)
+                    setErrorMessage("Your experiences failed to post. Please close the app & try again.")
                 }
             }
             )
             } catch(err) {
                 console.error("upload failed",err)
+                setErrorMessage("Image upload failed, please try again with a new picture.")
             }
 
         } else {
-            console.warn("LOG MUST BE AT LEAST 16 CHARACTERS")
-        }
+            console.warn("LOG MUST BE AT LEAST 10 CHARACTERS")
+            if (text.length<9) {setErrorMessage("Your log must be at least 10 characters!")}
+            else if (!cameraImageURL) {setErrorMessage("This experiences requires a picture!")}        }
         
     }
 
     const handleLogPostSubmit = async() => {
         let timeStamp = generateTimestamp()
         const postID = `${uid}_${timeStamp}`
-        if (text.length>15) {
+        if (text.length>9) {
             const postObj = {
                 cameraPicURL:"",
                 posterUID:uid,
@@ -234,6 +238,8 @@ const ExperienceUploader = ():JSX.Element => {
             } catch(err){
                 console.error("Post failed to post",err)
             }
+        } else {
+            setErrorMessage("Your log must be at least 10 characters!")
         }
 }
 
@@ -445,8 +451,12 @@ const ExperienceUploader = ():JSX.Element => {
                         <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Log your {currentEvent.skillTitle} Experience</Text>
                     </TouchableOpacity>
                     )}
-                    
+                    <View style={{height:20}} />
+                    {errorMessage&&(<View style={{height:30,width:"90%",backgroundColor:"rgba(255,0,0,0.5)", alignItems:"center", justifyContent:"center", borderColor:"#ff0000",borderWidth:2}}>
+                    <Text style={{color:"#fff",fontSize:scaleFont(14)}}>!! {errorMessage} !!</Text>
+                    </View>)}
                 </View>
+                
                 <View style={{height:200,}} />
             </ScrollView>
             {cameraActiveBool==true&&(

@@ -20,6 +20,7 @@ import { useUID } from '../../Contexts/UIDContext';
 import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import {useFriends} from '../../Contexts/FriendsContext'
+import { scaleFont } from '../../Utilities/fontSizing';
 type RootStackParamList = {
 	Profile:undefined,
 }
@@ -141,8 +142,8 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
             <View style={styles.sectionProfPicContainer}>
                 <Image style={styles.sectionProfPic} source={{uri:profilePicState}} />
             </View>
-            <View style={styles.sectionTextContainer}>
-                <Text style={{...styles.sectionTitle, color:`${areWeFriends==true?"green":"#fff"}`}}>{userDoc.userName}</Text>
+            <View style={{...styles.sectionTextContainer, width:"50%"}}>
+                <Text style={{...styles.sectionTitle, fontSize: scaleFont(24), color:`${areWeFriends==true?"green":"#fff"}`}}>{userDoc.userName}</Text>
                 <Text style={styles.sectionDescription}>{userDoc.name}</Text>
                 
             </View>
@@ -157,7 +158,7 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
               </View>
             )}
             {!type&&(
-              <View style={{...styles.sectionLevelBox, backgroundColor:highestColor}}>
+              <View style={{...styles.sectionLevelBox, backgroundColor:highestColor, width:"25%"}}>
                 <View style={styles.offsetWrapper}></View>
                 <Text style={{...styles.borderedTextShadow, color: 'black',}}>{highestSkillLevel}</Text>
                 <Text style={{...styles.borderedText, color: 'white' }}>{highestSkillLevel}</Text>

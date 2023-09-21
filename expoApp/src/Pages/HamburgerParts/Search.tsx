@@ -10,6 +10,7 @@ import {
 	TouchableOpacity,
 	TextInput,
   FlatList,
+  Keyboard,
 } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import UserTile from './UserTile';
@@ -79,6 +80,9 @@ const Search = ({route}:any):JSX.Element => {
 			  style={styles.searchInput}
 			  placeholder="Search For People..."
 			  placeholderTextColor="#999"
+        blurOnSubmit={true}
+        returnKeyType="done"
+        onSubmitEditing={()=>Keyboard.dismiss()}
               onBlur={(e) => fetchSearch(e.nativeEvent.text)} 
             //   onSubmitEditing={(e) => fetchSearch(e.nativeEvent.text)}
             //   onChangeText={(text) => setSearchTerm(text)}

@@ -118,7 +118,6 @@ const PostContentSplitter = ():JSX.Element => {
 			<Image style={{width:"100%", height:scaleFont(350),resizeMode:"cover"}} source={{uri:data.cameraPicURL}} /> 
 		</View>
 		)
-		case "acceleration":return(<View></View>)
 		case "timeline":return(<View></View>)
 		default:return(<View><Text>ERROR!!!!</Text></View>)
 	}

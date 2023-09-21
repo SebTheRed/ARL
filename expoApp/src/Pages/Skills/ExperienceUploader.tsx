@@ -89,7 +89,7 @@ const ExperienceUploader = ():JSX.Element => {
     //       );
     //     });
     //   };
-    const handlePostSubmit = async() => {
+    const handleCameraPostSubmit = async() => {
         
         let timeStamp = generateTimestamp()
         const storage = getStorage();
@@ -178,6 +178,64 @@ const ExperienceUploader = ():JSX.Element => {
         }
         
     }
+
+    const handleLogPostSubmit = async() => {
+        let timeStamp = generateTimestamp()
+        const postID = `${uid}_${timeStamp}`
+        if (text.length>15) {
+            const postObj = {
+                cameraPicURL:"",
+                posterUID:uid,
+                posterUserName:userData.userName,
+                streak:userData.streak,
+                postSkill:currentEvent.skillTitle,
+                picURL: userData.picURL,
+                uniqueStamp:"",
+                eventTitle:currentEvent.title,
+                xp:currentEvent.xp,
+                score:0,
+                geoTag:{latitude:0,longitude:0},
+                timeStamp:timeStamp,
+                textLog:text,
+                publicPost:settingOne,
+                mapPost:settingTwo,
+                globalPost:settingThree,
+                id: postID,
+                uid: uid,
+                type:currentEvent.type
+            }
+                // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
+            try {
+                const uniqueUserPath = `users/${uid}/xpLog`
+                await setDoc(doc(db,uniqueUserPath, postID), {id: postID, timeStamp:timeStamp, eventTitle:currentEvent.title, traitType:currentEvent.skillTitle, xp:currentEvent.xp })
+                await setDoc(doc(db, "posts", postID),postObj)
+                .then(() => {
+                    console.log("Post Success!");
+                    // Go back to the root navigator
+                    newPostHandler()
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [
+                            {
+                                name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
+                                state: {
+                                routes: [
+                                    {
+                                    name: 'Feed', // The name of the child navigator
+                                    },
+                                ],
+                                },
+                            },
+                            ],
+                        })
+                        );
+                    })
+            } catch(err){
+                console.error("Post failed to post",err)
+            }
+        }
+}
 
     const ApiAction = ():JSX.Element => {
         return(<View></View>)
@@ -377,9 +435,17 @@ const ExperienceUploader = ():JSX.Element => {
                     
                 </View>
                 <View style={{alignItems:"center", width:"100%"}}>
-                    <TouchableOpacity onPress={handlePostSubmit} style={{...styles.loginbutton, width:"95%", backgroundColor:`${currentEvent.skillColor}`}}>
+                    {utilityType=="camera"&&(
+                    <TouchableOpacity onPress={handleCameraPostSubmit} style={{...styles.loginbutton, width:"95%", backgroundColor:`${currentEvent.skillColor}`}}>
                         <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Log your {currentEvent.skillTitle} Experience</Text>
                     </TouchableOpacity>
+                    )}
+                    {utilityType=="log"&&(
+                    <TouchableOpacity onPress={handleLogPostSubmit} style={{...styles.loginbutton, width:"95%", backgroundColor:`${currentEvent.skillColor}`}}>
+                        <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Log your {currentEvent.skillTitle} Experience</Text>
+                    </TouchableOpacity>
+                    )}
+                    
                 </View>
                 <View style={{height:200,}} />
             </ScrollView>

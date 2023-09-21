@@ -546,7 +546,7 @@ postTopMapButton:{
 },
 postContentContainer:{
   width:"95%",
-  height:200,
+  height:120,
   borderColor:"#656565",
   borderWidth:2,
   borderRadius:8,

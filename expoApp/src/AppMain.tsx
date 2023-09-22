@@ -253,76 +253,72 @@ function AppMain(): JSX.Element {
     }
   })
 
-  const [skillsList,setSkillsList] = useState([
-    {title:"Family",color:"#ff0000",flare:"Calls - Visits - Reunions",level:99},
-    {title:"Friends",color:"#ff8400",flare:"Events - Meetups - Dates",level:12},
-    {title:"Fitness",color:"#ffea00",flare:"Gyms - Runs - Routines",level:8},
-    {title:"Earthcraft",color:"#4dff00",flare:"Plants - Animals - Outdoors",level:60},
-    {title:"Cooking",color:"#00ff80",flare:"Recipes - Dieting - Baking",level:50},
-    {title:"Technology",color:"#00fffb",flare:"Code - Electronics - 3D",level:75},
-    {title:"Games",color:"#0080ff",flare:"Tabletop - Video - Sports",level:15},
-    {title:"Language",color:"#7700ff",flare:"Duolingo - Travel - Reading",level:10},
-    {title:"Humanity",color:"#c800ff",flare:"Activism - Volunteering - Arts",level:20},
-  ]);
+  const [skillsList,setSkillsList] = useState({
+    family:{title:"Family",color:"#ff0000",flare:"Calls - Visits - Reunions",level:99},
+    friends:{title:"Friends",color:"#ff8400",flare:"Events - Meetups - Dates",level:12},
+    fitness:{title:"Fitness",color:"#ffea00",flare:"Gyms - Runs - Routines",level:8},
+    earthcraft:{title:"Earthcraft",color:"#4dff00",flare:"Plants - Animals - Outdoors",level:60},
+    cooking:{title:"Cooking",color:"#00ff80",flare:"Recipes - Dieting - Baking",level:50},
+    technology:{title:"Technology",color:"#00fffb",flare:"Code - Electronics - 3D",level:75},
+    games:{title:"Games",color:"#0080ff",flare:"Tabletop - Video - Sports",level:15},
+    language:{title:"Language",color:"#7700ff",flare:"Duolingo - Travel - Reading",level:10},
+    humanity:{title:"Humanity",color:"#c800ff",flare:"Activism - Volunteering - Arts",level:20},
+});
 
-  const [trophyData,setTrophyData] = useState([
-    {title:"Titan of Steel",progressQTY:21,imgPath:require('./IconBin/TrophyPNG/goblet1.png'),tier:"Bronze",desc:"Share 100 Go to The Gym experiences."},
-    {title:"Fleetfooted Fanatic",progressQTY:100,imgPath:require('./IconBin/TrophyPNG/gem1.png'),tier:"Bronze",desc:"Share 100 Runner's High experiences."},
-    {title:"Golden Devotion",progressQTY:200,imgPath:require('./IconBin/TrophyPNG/number1.png'),tier:"Silver",desc:"Share 1,000 Fitness experiences"},
-    {title:"Sisyphus' Prized Work",progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/pedistal1.png'),tier:"Gold",desc:"Accomplish peak performance in your specific field of Fitness, then log your story."},
-    {title:"Mountain Climber",progressQTY:1000, imgPath:require('./IconBin/TrophyPNG/gem2.png'), tier:"Gold", desc:"Reach the summit of a significant peak and take a selfie with the elevation marker.",},
-    {title:"Martial Master",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/elegant2.png'),tier:"Gold",desc:"Place top 3 in a large martial arts contest. Log yourself with your trophy."},
-    {title:"26.2",progressQTY:1, imgPath:require('./IconBin/TrophyPNG/gem3.png'), tier:"Gold", desc:"Run and complete a Marathon. Log yourself at the finish line."},
-    {title:"Yoga Yogi",progressQTY:100, imgPath:require('./IconBin/TrophyPNG/simple1.png'), tier:"Bronze", desc:"Log 100 at home yoga posts."},
-    {title:"Exercise Enthusiast",progressQTY:30,imgPath:require('./IconBin/TrophyPNG/star1.png'),tier:"Silver",desc:"Log 100 consecutive days of any Fitness experience."},
-
-    {title:"Chef of the Year",progressQTY:365,imgPath:require('./IconBin/TrophyPNG/star3.png'),tier:"Bronze",desc:"Log 100 cooked meals or baked goods."},
-    {title:'Cooking Connoisseur',progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/simple3.png'),tier:"Silver",desc:"Log 365 cooked meals or baked goods."},
-    {title:"Iron Chef",progressQTY:25,imgPath:require('./IconBin/TrophyPNG/shield1.png'),tier:"Gold",desc:"Win a trophy/award in a cooking competition."},
-    {title:"Family Feast",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star2.png'),tier:"Gold",desc:"Host a holiday dinner with at least 12 family members in attendance."},
-
-    {title:"Code Crusader",progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/elegant3.png'),tier:"Silver",desc:"Make & Log 1,000 contributions to Github tracked through ARL."},
-    {title:"Bearing FAANGs",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star4.png'),tier:"Gold",desc:"Make & Log an app for the iOS and Google Play store."},
-    {title:"Curriculum Contributor",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/person4.png'),tier:"Silver",desc:"Make, Upload & Log 100 Technology education videos."},
-    {title:"Digital Playground",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/gear.png'),tier:"Gold",desc:"Develop & release your own game onto Steam, The Web, or both App Stores. Log the link."},
-    {title:"3D Modeling Maniac",progressQTY:1, imgPath:require('./IconBin/TrophyPNG/simple4.png'), tier:"Bronze", desc:"Create & Log 100 different 3D models, animations, or prints.",},
-
-    {title:"Hard Work > Talent",progressQTY:50,imgPath:require('./IconBin/TrophyPNG/simple5.png'),tier:"Silver",desc:"Log 365 sports practice experiences."},
-    {title:"The Grind",progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/gem4.png'),tier:"Silver",desc:"Play & log 1,000 Steam playtime hours."},
-    {title:"Gotta Go Fast",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/number2.png'),tier:"Gold",desc:'Claim and hold the world record speedrun in any video game.'},
-    {title:"Can't Pause This Game",progressQTY:30,imgPath:require('./IconBin/TrophyPNG/gem5.png'),tier:"Bronze",desc:"Log Steam playtime hours for 50 days consistently."},
-    {title:"All Star",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/shield2.png'),tier:"Gold",desc:"Win a trophy or large award from a sporting tournament."},
-
-    {title:"Book Worm",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/elegant4.png'),tier:"Bronze",desc:"Log 100 Daily Reading experiences."},
-    {title:"Globe Trotter",progressQTY:10, imgPath:require('./IconBin/TrophyPNG/simple6.png'), tier:"Gold", desc:"Visit 4 different countries, and tell the story of each of them."},
-    {title:"Gallery Guru",progressQTY:20, imgPath:require('./IconBin/TrophyPNG/gem6.png'), tier:"Bronze", desc:"Visit & Log in at 20 different art museums and galleries.",},
-    {title:"Social Butterfly",progressQTY:200, imgPath:require('./IconBin/TrophyPNG/mirror2.png'), tier:"Silver", desc:"Attend & Log in at 200 different social events or meetups. Family or Friends",},
-    {title:"Civic Duty",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/steering1.png'),tier:"Silver",desc:"Vote in 10 different elections!"},
-
-    {title:"Family Reunion",progressQTY:1, imgPath:require('./IconBin/TrophyPNG/star5.png'), tier:"Gold", desc:"Share a family reunion with at least 25 family members.",},
-    {title:"Checking In",progressQTY:100, imgPath:require('./IconBin/TrophyPNG/pedistal2.png'), tier:"Bronze", desc:"Log 100 calls to close friends or loved ones.",},
-    {title:"Game of Life",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/simple3.png'),tier:"Bronze",desc:"Log 50 Tabletop Game experiences."},
-    {title:"Life on The Road",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star6.png'),tier:"Silver",desc:"Complete a road-trip of at least 1,000 miles."},
-
-    {title:"Hands of Bronze",progressQTY:10, imgPath:require('./IconBin/TrophyPNG/gem7.png'), tier:"Bronze", desc:"Share 20 Volunteering experiences.",},
-    {title:"Eyes of Silver",progressQTY:50, imgPath:require('./IconBin/TrophyPNG/star7.png'), tier:"Silver", desc:"Create & Log 100 pieces of art or music that you have created.",},
-    {title:"Voice of Gold",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/person1.png'),tier:"Gold",desc:"Share your performance of any kind on a stage in front of an audience."},
-    {title:"Decoration of Space",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/gem8.png'),tier:"Gold",desc:"Display & Share a piece of physical art at a public art gallery."},
-    {title:"Stillness of Mind",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star8.png'),tier:"Bronze",desc:"Log 1,000 Mediatation | Prayer experiences."},
-
-    {title:"Lost in Nature",progressQTY:50,imgPath:require('./IconBin/TrophyPNG/goblet3.png'),tier:"Bronze",desc:"Log 100 The Great Outdoors experiences."},
-    {title:"Finding Nature",progressQTY:200,imgPath:require('./IconBin/TrophyPNG/star9.png'),tier:"Silver",desc:"Log 365 The Great Outdoors experiences."},
-    {title:"One with Nature",progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/star10.png'),tier:"Gold",desc:"Camp outside for 3 nights straight, and share your experience. Be safe!"},
-    {title:"Butchers & Shepherds",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/shield3.png'),tier:"Gold",desc:"Construct & Share your own animal livestock collection."},
-    {title:"Of The Earth",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/shield4.png'),tier:"Bronze",desc:"Log 50 Fresh Food experiences."},
-    {title:"Nature's Steward",progressQTY:100, imgPath:require('./IconBin/TrophyPNG/person2.png'), tier:"Bronze", desc:"Plant & Log 100 unique trees of any shape or size.",},
-    {title:"Nature's Friend",progressQTY:30, imgPath:require('./IconBin/TrophyPNG/person3.png'), tier:"Bronze", desc:"Share 10 different camping trips.",},
-    {title:"Nature's Agent",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star9.png'),tier:"Silver",desc:"Share 1,000 Nature's Lens experiences."},
-    // {title:"Save The Bees",imgPath:require('./IconBin/TrophyPNG/trophyAndMedal.png'),tier:"Silver",desc:"Set up & Maintain a small beekeeping hive.",unlocked:false},
-    // {title:"Earth's Beautiful Surface",imgPath:"",tier:"Bronze",desc:"Participate in an environmental cleanup drive.",unlocked:false},
-    // {title:"Earth's Amazing People",imgPath:"",tier:"Gold",desc:"Organize an environmental cleanup drive.",unlocked:false},
-
-  ])
+  const [trophyData,setTrophyData] = useState({
+    bronze:[
+      {title:"Titan of Steel",progressQTY:21,imgPath:require('./IconBin/TrophyPNG/goblet1.png'),tier:"Bronze",desc:"Share 100 Go to The Gym experiences."},
+      {title:"Fleetfooted Fanatic",progressQTY:100,imgPath:require('./IconBin/TrophyPNG/gem1.png'),tier:"Bronze",desc:"Share 100 Runner's High experiences."},
+      {title:"Yoga Yogi",progressQTY:100, imgPath:require('./IconBin/TrophyPNG/simple1.png'), tier:"Bronze", desc:"Log 100 at home yoga posts."},
+      {title:"Chef of the Year",progressQTY:365,imgPath:require('./IconBin/TrophyPNG/star3.png'),tier:"Bronze",desc:"Log 100 cooked meals or baked goods."},
+      {title:"3D Modeling Maniac",progressQTY:1, imgPath:require('./IconBin/TrophyPNG/simple4.png'), tier:"Bronze", desc:"Create & Log 100 different 3D models, animations, or prints.",},
+      {title:"Can't Pause This Game",progressQTY:30,imgPath:require('./IconBin/TrophyPNG/gem5.png'),tier:"Bronze",desc:"Log Steam playtime hours for 50 days consistently."},
+      {title:"Book Worm",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/elegant4.png'),tier:"Bronze",desc:"Log 100 Daily Reading experiences."},
+      {title:"Gallery Guru",progressQTY:20, imgPath:require('./IconBin/TrophyPNG/gem6.png'), tier:"Bronze", desc:"Visit & Log in at 20 different art museums and galleries.",},
+      {title:"Checking In",progressQTY:100, imgPath:require('./IconBin/TrophyPNG/pedistal2.png'), tier:"Bronze", desc:"Log 100 calls to close friends or loved ones.",},
+      {title:"Game of Life",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/simple3.png'),tier:"Bronze",desc:"Log 50 Tabletop Game experiences."},
+      {title:"Hands of Bronze",progressQTY:10, imgPath:require('./IconBin/TrophyPNG/gem7.png'), tier:"Bronze", desc:"Share 20 Volunteering experiences.",},
+      {title:"Stillness of Mind",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star8.png'),tier:"Bronze",desc:"Log 1,000 Mediatation | Prayer experiences."},
+      {title:"Lost in Nature",progressQTY:50,imgPath:require('./IconBin/TrophyPNG/goblet3.png'),tier:"Bronze",desc:"Log 100 The Great Outdoors experiences."},
+      {title:"Of The Earth",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/shield4.png'),tier:"Bronze",desc:"Log 50 Fresh Food experiences."},
+      {title:"Nature's Steward",progressQTY:100, imgPath:require('./IconBin/TrophyPNG/person2.png'), tier:"Bronze", desc:"Plant & Log 100 unique trees of any shape or size.",},
+      {title:"Nature's Friend",progressQTY:30, imgPath:require('./IconBin/TrophyPNG/person3.png'), tier:"Bronze", desc:"Share 10 different camping trips.",},
+    ],
+    silver:[
+      {title:"Golden Devotion",progressQTY:200,imgPath:require('./IconBin/TrophyPNG/number1.png'),tier:"Silver",desc:"Share 1,000 Fitness experiences"},
+      {title:"Exercise Enthusiast",progressQTY:30,imgPath:require('./IconBin/TrophyPNG/star1.png'),tier:"Silver",desc:"Log 100 consecutive days of any Fitness experience."},
+      {title:'Cooking Connoisseur',progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/simple3.png'),tier:"Silver",desc:"Log 365 cooked meals or baked goods."},
+      {title:"Code Crusader",progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/elegant3.png'),tier:"Silver",desc:"Make & Log 1,000 contributions to Github tracked through ARL."},
+      {title:"Curriculum Contributor",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/person4.png'),tier:"Silver",desc:"Make, Upload & Log 100 Technology education videos."},
+      {title:"Hard Work > Talent",progressQTY:50,imgPath:require('./IconBin/TrophyPNG/simple5.png'),tier:"Silver",desc:"Log 365 sports practice experiences."},
+      {title:"The Grind",progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/gem4.png'),tier:"Silver",desc:"Play & log 1,000 Steam playtime hours."},
+      {title:"Social Butterfly",progressQTY:200, imgPath:require('./IconBin/TrophyPNG/mirror2.png'), tier:"Silver", desc:"Attend & Log in at 200 different social events or meetups. Family or Friends",},
+      {title:"Civic Duty",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/steering1.png'),tier:"Silver",desc:"Vote in 10 different elections!"},
+      {title:"Life on The Road",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star6.png'),tier:"Silver",desc:"Complete a road-trip of at least 1,000 miles."},
+      {title:"Eyes of Silver",progressQTY:50, imgPath:require('./IconBin/TrophyPNG/star7.png'), tier:"Silver", desc:"Create & Log 100 pieces of art or music that you have created.",},
+      {title:"Finding Nature",progressQTY:200,imgPath:require('./IconBin/TrophyPNG/star9.png'),tier:"Silver",desc:"Log 365 The Great Outdoors experiences."},
+      {title:"Nature's Agent",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star9.png'),tier:"Silver",desc:"Share 1,000 Nature's Lens experiences."},
+      
+    ],
+    gold:[
+      {title:"Sisyphus' Prized Work",progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/pedistal1.png'),tier:"Gold",desc:"Accomplish peak performance in your specific field of Fitness, then log your story."},
+      {title:"Mountain Climber",progressQTY:1000, imgPath:require('./IconBin/TrophyPNG/gem2.png'), tier:"Gold", desc:"Reach the summit of a significant peak and take a selfie with the elevation marker.",},
+      {title:"Martial Master",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/elegant2.png'),tier:"Gold",desc:"Place top 3 in a large martial arts contest. Log yourself with your trophy."},
+      {title:"26.2",progressQTY:1, imgPath:require('./IconBin/TrophyPNG/gem3.png'), tier:"Gold", desc:"Run and complete a Marathon. Log yourself at the finish line."},
+      {title:"Iron Chef",progressQTY:25,imgPath:require('./IconBin/TrophyPNG/shield1.png'),tier:"Gold",desc:"Win a trophy/award in a cooking competition."},
+      {title:"Family Feast",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star2.png'),tier:"Gold",desc:"Host a holiday dinner with at least 12 family members in attendance."},
+      {title:"Bearing FAANGs",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/star4.png'),tier:"Gold",desc:"Make & Log an app for the iOS and Google Play store."},
+      {title:"Digital Playground",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/gear.png'),tier:"Gold",desc:"Develop & release your own game onto Steam, The Web, or both App Stores. Log the link."},
+      {title:"Gotta Go Fast",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/number2.png'),tier:"Gold",desc:'Claim and hold the world record speedrun in any video game.'},
+      {title:"All Star",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/shield2.png'),tier:"Gold",desc:"Win a trophy or large award from a sporting tournament."},
+      {title:"Globe Trotter",progressQTY:10, imgPath:require('./IconBin/TrophyPNG/simple6.png'), tier:"Gold", desc:"Visit 4 different countries, and tell the story of each of them."},
+      {title:"Family Reunion",progressQTY:1, imgPath:require('./IconBin/TrophyPNG/star5.png'), tier:"Gold", desc:"Share a family reunion with at least 25 family members.",},
+      {title:"Voice of Gold",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/person1.png'),tier:"Gold",desc:"Share your performance of any kind on a stage in front of an audience."},
+      {title:"Decoration of Space",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/gem8.png'),tier:"Gold",desc:"Display & Share a piece of physical art at a public art gallery."},
+      {title:"One with Nature",progressQTY:1000,imgPath:require('./IconBin/TrophyPNG/star10.png'),tier:"Gold",desc:"Camp outside for 3 nights straight, and share your experience. Be safe!"},
+      {title:"Butchers & Shepherds",progressQTY:1,imgPath:require('./IconBin/TrophyPNG/shield3.png'),tier:"Gold",desc:"Construct & Share your own animal livestock collection."},
+    ],
+  })
 
   const [playerData,setPlayerData] = useState({
     userName:"SebTheRed",
@@ -351,15 +347,15 @@ const SkillsNav = () => {
   return(
     <SkillStack.Navigator initialRouteName='SkillsMain' screenOptions={{ headerShown: false,cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,}}>
       <SkillStack.Screen name="SkillsMain" component={Skills} initialParams={{skillsList: skillsList, playerData:playerData,XPScale:XPScale }}/>
-      <SkillStack.Screen name="Family" initialParams={{skillData:skillsList[0], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList[1], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList[2], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList[3], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList[4], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Technology" initialParams={{skillData:skillsList[5], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Games" initialParams={{skillData:skillsList[6], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Language" initialParams={{skillData:skillsList[7], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList[8], playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Family" initialParams={{skillData:skillsList.family, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList.friends, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList.fitness, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList.earthcraft, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList.cooking, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Technology" initialParams={{skillData:skillsList.technology, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Games" initialParams={{skillData:skillsList.games, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Language" initialParams={{skillData:skillsList.language, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
+      <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList.humanity, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
       <SkillStack.Screen name="ExperienceUploader" component={ExperienceUploader}></SkillStack.Screen>
     </SkillStack.Navigator>
   )
@@ -374,7 +370,7 @@ const AuthApp = ()=>{
     return(
       <>
         <HeaderBar />
-          <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
+          <Stack.Navigator initialRouteName='Admin' screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Skills"  component={SkillsNav} />
             <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
             <Stack.Screen name="Map" initialParams={{arrayOPlaces: arrayOPlaces,}} component={Map} />

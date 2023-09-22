@@ -548,8 +548,8 @@ postTopMapButton:{
 postContentContainer:{
   width:"95%",
   height:120,
-  borderColor:"#656565",
-  borderWidth:2,
+  borderColor:"#333",
+  borderTopWidth:2,
   borderRadius:8,
   margin:"2.5%",
   marginBottom:50,

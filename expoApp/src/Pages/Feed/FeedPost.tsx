@@ -142,7 +142,43 @@ const PostContentSplitter = ():JSX.Element => {
 			</View>
 		</View>
 		)
-		case "timeline":return(<View></View>)
+		case "timeline":return(
+			<View style={{height:"auto", justifyContent:"space-around"}}>
+				 <ScrollView
+					horizontal={true}
+					pagingEnabled
+					showsHorizontalScrollIndicator={false}
+					style={{ height: scaleFont(350) }}
+				>
+					{data.timelinePicURLs.map((item, index) => (
+						<Image 
+							key={index}
+							style={{ width: scaleFont(425), height: scaleFont(350), resizeMode: 'cover' }}
+							source={{ uri: item }}
+						/>
+					))}
+				</ScrollView>
+				{/* <FlatList
+					data={data.timelinePicURLs}
+					renderItem={({item})=>
+						<Image style={{width:"100%",height:scaleFont(350),resizeMode:'cover'}} source={{ uri: item }} />
+					}
+					horizontal={true}
+					pagingEnabled
+					showsHorizontalScrollIndicator={false}
+					style={{height:scaleFont(350), width:"auto"}}
+				/> */}
+				{/* <View style={{...styles.postContentContainer, height:scaleFont(350), borderWidth:0,marginBottom:0}}>
+					<Image style={{width:"100%", height:scaleFont(350),resizeMode:"cover"}} source={{uri:data.timelinePicURLs[0]}} /> 
+				</View> */}
+				<View style={{...styles.postContentContainer, marginBottom:0, height:logBoxHeight, borderWidth:0, alignItems:"center"}}>
+					<Text style={{...styles.postContentLogText, color:"#656565"}}>⟵ Swipe to view entire Timeline ⟶</Text>
+				</View>
+				<View style={{...styles.postContentContainer, height:logBoxHeight}}>
+					<Text style={{...styles.postContentLogText}}>{data.textLog}</Text>
+				</View>
+			</View>
+		)
 		default:return(<View><Text>ERROR!!!!</Text></View>)
 	}
 }

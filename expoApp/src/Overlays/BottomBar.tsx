@@ -12,6 +12,7 @@ import {
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
+import { useUID } from '../Contexts/UIDContext';
 import { useProfilePageUID } from '../Contexts/ProfilePageUID';
 import { useFeed } from '../Contexts/FeedContext';
 import styles from '../styles'
@@ -22,11 +23,12 @@ type RootStackParamList = {
 	Skills: undefined;
 	Stats: undefined;
 	Trophies: undefined;
-	People:undefined,
+	Admin:undefined,
   };
 
 ////// COMPONENT FUNCTION BEGINNING //////
 const BottomBar = ():JSX.Element => {
+const {uid}:any = useUID()
 const {matchingProfileData, profilePageUID, setProfilePageUID, setMatchingProfileData}:any = useProfilePageUID()
 const {feedButtonHandler}:any = useFeed()
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -60,14 +62,18 @@ const {feedButtonHandler}:any = useFeed()
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/addChart.png')} />
 				<Text style={styles.bottomBarText}>Traits</Text>
 			</TouchableOpacity>
-			{/* <TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Stats")}>
-				<Image style={styles.bottomBarIcon} source={require('../IconBin/areaChart.png')} />
-				<Text style={styles.bottomBarText}>Stats</Text>
-			</TouchableOpacity> */}
+			
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Trophies")}>
 				<Image style={styles.bottomBarIcon} source={require('../IconBin/trophy.png')} />
 				<Text style={styles.bottomBarText}>Trophies</Text>
 			</TouchableOpacity>
+			{uid=="vUVmF04zA9hYXsZc8YIiPPtP7BZ2" && (
+				<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Admin")}>
+					<Image style={styles.bottomBarIcon} source={require('../IconBin/api.png')} />
+					<Text style={styles.bottomBarText}>Admin</Text>
+				</TouchableOpacity>
+			)}
+
 			
 				
 		</View>

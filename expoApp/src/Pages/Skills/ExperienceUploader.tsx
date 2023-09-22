@@ -29,6 +29,7 @@ import { useUID } from '../../Contexts/UIDContext';
 import { useFeed } from '../../Contexts/FeedContext';
 import {scaleFont} from '../../Utilities/fontSizing'
 import CameraPage from './CameraPage'
+import * as ImagePicker from 'expo-image-picker'
 
 type RootStackParamList = {
     SkillsPage:undefined,
@@ -94,8 +95,20 @@ const ExperienceUploader = ():JSX.Element => {
     //       );
     //     });
     //   };
+    const pickImage = async (setImageState:any) => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+      
+        if (!result.canceled) {
+          setImageState(result.assets[0].uri);
+        }
+      };
     const handleTimelineSubmit = async() => {
-        
+
     }
     const handleCameraPostSubmit = async() => {
         
@@ -284,10 +297,10 @@ const ExperienceUploader = ():JSX.Element => {
         return(
             <View style={{...styles.logContainer}}>
                 <View style={{flexDirection:"row",justifyContent:"space-between",width:"90%"}}>
-                        <Text style={{...styles.loginlabel}}>Upload four photos of the experience:</Text>
+                        <Text style={{...styles.loginlabel}}>Upload three photos of the experience:</Text>
                     </View>
             <View style={{flexDirection:"row",justifyContent:"space-evenly",width:"100%"}} >
-                <TouchableOpacity onPress={()=>{setCameraActiveBool(true)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"22%"}}>
+                <TouchableOpacity onPress={()=>{pickImage(setImageOneState)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"30%"}}>
                         {imageOneState && (
                             <ImageBackground
                             source={{ uri: imageOneState }}
@@ -300,7 +313,7 @@ const ExperienceUploader = ():JSX.Element => {
                         </> 
                         )}
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{setCameraActiveBool(true)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"22%"}}>
+                <TouchableOpacity onPress={()=>{pickImage(setImageTwoState)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"30%"}}>
                         {imageTwoState && (
                             <ImageBackground
                             source={{ uri: imageTwoState }}
@@ -313,7 +326,7 @@ const ExperienceUploader = ():JSX.Element => {
                         </> 
                         )}
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{setCameraActiveBool(true)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"22%"}}>
+                <TouchableOpacity onPress={()=>{pickImage(setImageThreeState)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"30%"}}>
                         {imageThreeState && (
                             <ImageBackground
                             source={{ uri: imageThreeState }}
@@ -321,19 +334,6 @@ const ExperienceUploader = ():JSX.Element => {
                             />
                         )}
                         {!imageThreeState && (
-                        <>
-                            <Image style={{...styles.bottomBarIcon}} source={require("../../IconBin/camera_add.png")} />
-                        </> 
-                        )}
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{setCameraActiveBool(true)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"22%"}}>
-                        {imageFourState && (
-                            <ImageBackground
-                            source={{ uri: imageFourState }}
-                            style={{ flex: 1, width: '100%', height: '100%', justifyContent: 'flex-start', alignItems: 'center' }}
-                            />
-                        )}
-                        {!imageFourState && (
                         <>
                             <Image style={{...styles.bottomBarIcon}} source={require("../../IconBin/camera_add.png")} />
                         </> 

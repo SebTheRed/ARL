@@ -272,7 +272,7 @@ const ExperienceUploader = ():JSX.Element => {
                 <View style={{flexDirection:"row",justifyContent:"space-between",width:"90%"}}>
                         <Text style={{...styles.loginlabel}}>Take a picture of the experience:</Text>
                     </View>
-                <TouchableOpacity onPress={()=>{setCameraActiveBool(true)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(400)}}>
+                <TouchableOpacity onPress={()=>{setCameraActiveBool(true)}} style={{...styles.textArea,padding:0,overflow:'hidden', alignItems:"center",justifyContent:"center", height:scaleFont(400)}}>
                         {cameraImageState && (
                             <ImageBackground
                             source={{ uri: cameraImageState }}
@@ -300,7 +300,7 @@ const ExperienceUploader = ():JSX.Element => {
                         <Text style={{...styles.loginlabel}}>Upload three photos of the experience:</Text>
                     </View>
             <View style={{flexDirection:"row",justifyContent:"space-evenly",width:"100%"}} >
-                <TouchableOpacity onPress={()=>{pickImage(setImageOneState)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"30%"}}>
+                <TouchableOpacity onPress={()=>{pickImage(setImageOneState)}} style={{...styles.textArea, padding:0,overflow:"hidden",alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"30%"}}>
                         {imageOneState && (
                             <ImageBackground
                             source={{ uri: imageOneState }}
@@ -313,7 +313,7 @@ const ExperienceUploader = ():JSX.Element => {
                         </> 
                         )}
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{pickImage(setImageTwoState)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"30%"}}>
+                <TouchableOpacity onPress={()=>{pickImage(setImageTwoState)}} style={{...styles.textArea, padding:0,overflow:"hidden",alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"30%"}}>
                         {imageTwoState && (
                             <ImageBackground
                             source={{ uri: imageTwoState }}
@@ -326,7 +326,7 @@ const ExperienceUploader = ():JSX.Element => {
                         </> 
                         )}
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{pickImage(setImageThreeState)}} style={{...styles.textArea, alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"30%"}}>
+                <TouchableOpacity onPress={()=>{pickImage(setImageThreeState)}} style={{...styles.textArea,padding:0,overflow:"hidden", alignItems:"center",justifyContent:"center", height:scaleFont(150), width:"30%"}}>
                         {imageThreeState && (
                             <ImageBackground
                             source={{ uri: imageThreeState }}

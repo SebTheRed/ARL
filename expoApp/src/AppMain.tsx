@@ -65,6 +65,7 @@ import ExperienceUploader from './Pages/Skills/ExperienceUploader';
 import {db} from './Firebase/firebase'
 import {UserDataProvider, useUserData} from './Contexts/UserDataContext';
 import UserPassPopup from './Pages/Profile/UserPassPopup';
+import { GameRulesProvider } from './Contexts/GameRules';
 const Stack = createStackNavigator();
 const SkillStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -411,6 +412,7 @@ const ProfilePages = () => {
 }
 
   return(
+    <GameRulesProvider>
     <LastPageProvider>
       <UIDProvider>
       <FriendsProvider>
@@ -438,6 +440,7 @@ const ProfilePages = () => {
         </FriendsProvider>
       </UIDProvider>
     </LastPageProvider>
+    </GameRulesProvider>
   )
 }
 

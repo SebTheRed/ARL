@@ -49,9 +49,9 @@ const ExperienceUploader = ():JSX.Element => {
     const [cameraImageState,setCameraImageState] = useState(null)
     const [cameraImageURL,setCameraImageURL] = useState(null)
     const [errorMessage,setErrorMessage] = useState(String)
-    const [imageOneState,setImageOneState] = useState(null)
-    const [imageTwoState,setImageTwoState] = useState(null)
-    const [imageThreeState,setImageThreeState] = useState(null)
+    const [imageOneState,setImageOneState] = useState<string|null>(null)
+    const [imageTwoState,setImageTwoState] = useState<string|null>(null)
+    const [imageThreeState,setImageThreeState] = useState<string|null>(null)
     const [imageFourState,setImageFourState] = useState(null)
 
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -107,8 +107,84 @@ const ExperienceUploader = ():JSX.Element => {
           setImageState(result.assets[0].uri);
         }
       };
+    const uploadImageToFirebase = async (imageURI: string, postID: string, imageNumber: string) => {
+        const storage = getStorage();
+        const imageRef = ref(storage, `posts/${postID}_image${imageNumber}.jpg`);
+    
+        const response = await fetch(imageURI);
+        const blob = await response.blob();
+    
+        await uploadBytesResumable(imageRef, blob);
+    
+        return await getDownloadURL(imageRef);
+    };
     const handleTimelineSubmit = async() => {
+        let timeStamp = generateTimestamp()
+        const postID = `${uid}_${timeStamp}`
+        if (text.length>9 && imageOneState && imageTwoState && imageThreeState) {
+            try{
+                const [pictureURL1,pictureURL2,pictureURL3] = await Promise.all([
+                    uploadImageToFirebase(imageOneState,postID, '1',),
+                    uploadImageToFirebase(imageTwoState,postID, '2',),
+                    uploadImageToFirebase(imageThreeState,postID, '3',)
+                ])
+                const postObj = {
+                    timelinePicURLs:[pictureURL1,pictureURL2,pictureURL3],
+                    cameraPicURL:"",
+                    posterUID:uid,
+                    posterUserName:userData.userName,
+                    streak:userData.streak,
+                    postSkill:currentEvent.skillTitle,
+                    picURL: userData.picURL,
+                    uniqueStamp:"",
+                    eventTitle:currentEvent.title,
+                    xp:currentEvent.xp,
+                    score:0,
+                    geoTag:{latitude:0,longitude:0},
+                    timeStamp:timeStamp,
+                    textLog:text,
+                    publicPost:settingOne,
+                    mapPost:settingTwo,
+                    globalPost:settingThree,
+                    id: postID,
+                    uid: uid,
+                    type:currentEvent.type
+                }
+                try {
+                    const uniqueUserPath = `users/${uid}/xpLog`
+                    await setDoc(doc(db,uniqueUserPath, postID), {id: postID, timeStamp:timeStamp, eventTitle:currentEvent.title, traitType:currentEvent.skillTitle, xp:currentEvent.xp })
+                    await setDoc(doc(db, "posts", postID),postObj)
+                    .then(() => {
+                        console.log("Post Success!");
+                        // Go back to the root navigator
+                        newPostHandler()
+                        navigation.dispatch(
+                            CommonActions.reset({
+                              index: 0,
+                              routes: [
+                                {
+                                  name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
+                                  state: {
+                                    routes: [
+                                      {
+                                        name: 'Feed', // The name of the child navigator
+                                      },
+                                    ],
+                                  },
+                                },
+                              ],
+                            })
+                          );
+                        })
+                } catch(err){
+                    console.error("Post failed to post",err)
+                    setErrorMessage("Your experiences failed to post. Please close the app & try again.")
+                }
+            } catch(err) {
+        }
+        
 
+        }
     }
     const handleCameraPostSubmit = async() => {
         
@@ -138,6 +214,7 @@ const ExperienceUploader = ():JSX.Element => {
             async () => {
                 pictureURL = await getDownloadURL(imageRef)
                 const postObj = {
+                    timelinePicURLs:[],
                     cameraPicURL:pictureURL,
                     posterUID:uid,
                     posterUserName:userData.userName,
@@ -208,6 +285,7 @@ const ExperienceUploader = ():JSX.Element => {
         const postID = `${uid}_${timeStamp}`
         if (text.length>9) {
             const postObj = {
+                timelinePicURLs:[],
                 cameraPicURL:"",
                 posterUID:uid,
                 posterUserName:userData.userName,

@@ -66,6 +66,7 @@ import {db} from './Firebase/firebase'
 import {UserDataProvider, useUserData} from './Contexts/UserDataContext';
 import UserPassPopup from './Pages/Profile/UserPassPopup';
 import { GameRulesProvider } from './Contexts/GameRules';
+import { CooldownProvider } from './Contexts/CooldownContext';
 const Stack = createStackNavigator();
 const SkillStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -101,6 +102,7 @@ const AuthApp = ()=>{
   if (Object.values(userData).length>0) {
     return(
       <GameRulesProvider>
+        <CooldownProvider>
         <HeaderBar />
           <Stack.Navigator initialRouteName='Admin' screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Skills" component={SkillsNav} />
@@ -118,6 +120,7 @@ const AuthApp = ()=>{
           </Stack.Navigator>
         <HamburgerBar />
         <BottomBar/>
+        </CooldownProvider>
       </GameRulesProvider>
     )
   } else {

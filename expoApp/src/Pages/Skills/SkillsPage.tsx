@@ -134,14 +134,14 @@ if (dataLoading == false) {
             </View>
             <View style={styles.skillPageXPContainer}>
               <View style={{...styles.skillPageXPBar,backgroundColor:"transparent"}}></View>
-              <View style={{ ...styles.skillPageXPBar, backgroundColor: skillData.color, width: `${xpStats.xpBarWidth}%` }}></View>
+              <View style={{ ...styles.skillPageXPBar, backgroundColor: `${skillData.color||"#fff"}`, width: `${xpStats.xpBarWidth}%` }}></View>
             </View>
             <View style={styles.skillPageXPBox}>
               <Text style={styles.skillPageXPText}>PREV- {xpStats.lastXpVal}</Text>
               <Text style={styles.skillPageXPText}>XP- {xpStats.matchingSkillXp}</Text>
               <Text style={styles.skillPageXPText}>NEXT- {xpStats.nextXpVal}</Text>
             </View>
-            <TouchableOpacity onPress={handleStatsPress} style={{...styles.skillsStatsButton, backgroundColor:`${skillData.color}`}}>
+            <TouchableOpacity onPress={handleStatsPress} style={{...styles.skillsStatsButton, backgroundColor:`${skillData.color || "#fff"}`}}>
               <Text style={{color:"#1c1c1c",fontSize:scaleFont(18)}}>Press here to view your {skillData.title} stats</Text>
             </TouchableOpacity>
           </View>
@@ -152,15 +152,14 @@ if (dataLoading == false) {
               .map((d: any) => experiencesList[name.toLowerCase()][d]) // Map to the actual objects
               .sort((a: any, b: any) => a.unlocksAt - b.unlocksAt) // Sort by unlocksAt in ascending order
               .map((entry: any, i: number) => {
-                const nextUnlock = "";
                 console.log(levelScale[entry.unlocksAt], userData.xpData[name.toLowerCase()]);
                 if (levelScale[entry.unlocksAt] > userData.xpData[name.toLowerCase()]) {
                   return (
-                    <EventTile skillTitle={name} locked={true} color={skillData.color} d={entry} key={i} />
+                    <EventTile skillTitle={name} locked={true} color={skillData.color || "#fff"} d={entry} key={i} />
                   );
                 }
                 return (
-                  <EventTile skillTitle={name} locked={false} color={skillData.color} d={entry} key={i} />
+                  <EventTile skillTitle={name} locked={false} color={skillData.color || "#fff"} d={entry} key={i} />
                 );
             })}
           </View>

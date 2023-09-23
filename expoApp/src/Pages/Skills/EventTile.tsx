@@ -18,17 +18,25 @@ import { NavigationProp } from '@react-navigation/native';
 import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
 import {scaleFont} from '../../Utilities/fontSizing'
 import {useGameRules} from '../../Contexts/GameRules'
+import {useCooldowns} from '../../Contexts/CooldownContext'
 type RootStackParamList = {
     ExperienceUploader:undefined,
   }
 const EventTile = ({d,locked, i, color,skillTitle, uid}:any):JSX.Element => {
     const {skillsList}:any = useGameRules()
+    const {cooldowns,cooldownsLoading}:any = useCooldowns()
     const {setCurrentEvent}:any = useCurrentEvent()
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
 useEffect(()=>{
     determineCooldown()
 },[])
+
+useEffect(()=>{
+    if (cooldownsLoading == false) {
+        console.log("cooldowns",cooldowns)
+    }
+},[cooldownsLoading])
 
 const returnImgRequire = () => {
     switch(d.type){

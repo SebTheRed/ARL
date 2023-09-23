@@ -118,7 +118,7 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
         {Object.values(skillsList)
           .sort((a: any, b: any) => a.order - b.order)
           .map((d: any, i: number) => {
-            return (<SkillTile title={d.title} color={d.color} level={d.level} flare={d.flare} key={i} />)
+            return (<SkillTile title={d.title} color={d.color} level={d.level} flare={d.flare} key={i+100000} />)
         })}
       </View>
     )}

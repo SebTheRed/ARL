@@ -27,10 +27,14 @@ const [panelState,setPanelState]=useState(false);
 	return(
 		<ScrollView horizontal={true} style={{...styles.backgroundStyle}}>
 			<View style={{...styles.trophyBoxWrapper, paddingTop:5}}>
-			{trophyData.map((d:any,i:number)=>{
-				return(<TrophyBox d={d} key={i}/>)
-			})}
-			</View>	
+				{[
+					Object.values(trophyData).map((tier: any) => 
+						Object.values(tier).map((data:any, index:number) => 
+							<TrophyBox d={data} key={Math.random()}/>
+						)
+					).flat()
+				]}
+			</View>    
 		</ScrollView>
 	)
 }

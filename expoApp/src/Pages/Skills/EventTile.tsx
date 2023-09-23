@@ -27,6 +27,7 @@ const EventTile = ({d,locked, i, color,skillTitle, uid}:any):JSX.Element => {
     const {cooldowns,cooldownsLoading}:any = useCooldowns()
     const {setCurrentEvent}:any = useCurrentEvent()
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    const [cooldownTime,setCooldownTime] = useState<number>(0)
 
 useEffect(()=>{
     determineCooldown()
@@ -34,7 +35,13 @@ useEffect(()=>{
 
 useEffect(()=>{
     if (cooldownsLoading == false) {
-        console.log("cooldowns",cooldowns)
+        // console.log("cooldowns",cooldowns)
+        Object.keys(cooldowns).forEach((key:any)=>{
+            if(d.title == key) {
+                console.log('COOLDOWN MATCH')
+                setCooldownTime(cooldowns[d.title])
+            }
+        })
     }
 },[cooldownsLoading])
 
@@ -59,8 +66,24 @@ const determineCooldown = () => {
     console.log(coolDownHours)
 }
     
-
-if (locked == false) {
+if (cooldownTime>0) {
+    return(
+        <TouchableOpacity style={styles.eventTileWrapper}>
+            <View style={{...styles.eventTileMain}}>
+                <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                    <Text style={{...styles.eventTileText,fontSize:scaleFont(24),textDecorationColor:"#656565",textDecorationLine:"underline", color:"#656565"}}>{d.title}</Text>
+                </View>
+                <Text style={{...styles.eventTileText, color:color}}>On cooldown for {cooldownTime} more hours.</Text>
+            </View>
+            <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+                <View style={styles.eventButtonWrapper}>
+                    <Image style={{...styles.eventButtonIcon}} source={require("../../IconBin/lock.png")} />
+                </View>
+            </View>
+        </TouchableOpacity>
+    )
+}
+else if (locked == false) {
     return(
         <TouchableOpacity onPress={handlePress} style={styles.eventTileWrapper}>
             <View style={{...styles.eventTileMain}}>

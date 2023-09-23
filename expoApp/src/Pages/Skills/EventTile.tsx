@@ -65,6 +65,20 @@ const determineCooldown = () => {
     const coolDownHours = d.cooldown
     console.log(coolDownHours)
 }
+const convertHoursToDHM = (hours:number) => {
+    const totalMinutes = hours * 60;
+    const days = Math.floor(totalMinutes / 1440);
+    const remainingMinutesAfterDays = totalMinutes % 1440;
+    const hoursInMinutes = Math.floor(remainingMinutesAfterDays / 60);
+    const minutes = Math.round(remainingMinutesAfterDays % 60);
+
+    let result = "";
+    if (days > 0) result += `${days} Day${days > 1 ? 's' : ''} `;
+    if (hoursInMinutes > 0) result += `${hoursInMinutes} Hour${hoursInMinutes > 1 ? 's' : ''} and `;
+    if (minutes > 0) result += `${minutes} Minute${minutes > 1 ? 's' : ''}`;
+
+    return result.trim();
+}
     
 if (cooldownTime>0) {
     return(
@@ -73,11 +87,11 @@ if (cooldownTime>0) {
                 <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                     <Text style={{...styles.eventTileText,fontSize:scaleFont(24),textDecorationColor:"#656565",textDecorationLine:"underline", color:"#656565"}}>{d.title}</Text>
                 </View>
-                <Text style={{...styles.eventTileText, color:color}}>On cooldown for {cooldownTime} more hours.</Text>
+                <Text style={{...styles.eventTileText, color:color}}>On cooldown: {convertHoursToDHM(cooldownTime)}</Text>
             </View>
             <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                 <View style={styles.eventButtonWrapper}>
-                    <Image style={{...styles.eventButtonIcon}} source={require("../../IconBin/lock.png")} />
+                    <Image style={{...styles.eventButtonIcon}} source={require("../../IconBin/cooldown.png")} />
                 </View>
             </View>
         </TouchableOpacity>

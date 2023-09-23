@@ -34,14 +34,27 @@ type RootStackParamList = {
 
 
 ////// JSX START FUN COMPONENT //////
-const SkillsPage = ():JSX.Element => {
+const SkillsPage = (data:any):JSX.Element => {
+const {name}:any = data.route
 const {uid}:any = useUID()
 const {setLastPage}:any = useLastPage()
 const {setProfilePageUID}:any = useProfilePageUID()
 const {userData}:any = useUserData()
 const {setCurrentTraitTitle}:any = useCurrentTraitStat()
 const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-const {skillData, levelScale, experiencesList}:any = useGameRules()
+const {skillsList, levelScale, experiencesList,dataLoading}:any = useGameRules()
+const [skillData,setSkillData] = useState<any>({})
+const [xpStats,setXpStats] = useState<any>({})
+
+useEffect(()=>{
+  if (dataLoading == false) {
+    const lowerCaseSkillName = name.toLocaleLowerCase()
+    setSkillData(skillsList[lowerCaseSkillName])
+    console.log("matching skill data:", skillsList[lowerCaseSkillName])
+    initXpStats(skillsList[lowerCaseSkillName])
+    console.log(experiencesList)
+  }  
+},[dataLoading])
 
 
 const calculateXPBarWidth = (currentXP: number, prevXP: number, nextXP: number) => {
@@ -60,7 +73,15 @@ const calculateCurrentLevel = (currentXP: number, XPScale: any) => {
   }
   return level;
 };
-const calculateXPInfo = (currentLevel:number) => {
+
+const initXpStats = (matchingSkill:any) => {
+  const currentXP = userData.xpData[matchingSkill.title.toLowerCase()]; // Assuming skillData.title is 'Family', 'Friends', etc.
+  const currentLevel = calculateCurrentLevel(currentXP, levelScale); // Calculate current level
+  const prevXP = levelScale[currentLevel];
+  const nextXP = levelScale[currentLevel + 1];
+  const xpBarWidth = calculateXPBarWidth(currentXP, prevXP, nextXP);
+  const skillTitle = matchingSkill.title
+  const matchingSkillXp = (userData.xpData[skillTitle.toLowerCase()]).toLocaleString()
   let xpNumber = {current:"0", next:"0"}
   for (const [lvl, xp] of Object.entries(levelScale) as [string,number][]){
     if (currentLevel.toString() == lvl) {
@@ -69,18 +90,19 @@ const calculateXPInfo = (currentLevel:number) => {
       xpNumber.next = (parseInt(levelScale[calcPlusOne])).toLocaleString() || "0"
     }
   }
-  return xpNumber
+  setXpStats({
+    currentXP:currentXP,
+    currentLevel:currentLevel,
+    prevXP:prevXP,
+    nextXP:nextXP,
+    xpBarWidth:xpBarWidth,
+    matchingSkillXp:matchingSkillXp,
+    lastXpVal: xpNumber.current,
+    nextXpVal: xpNumber.next
+  })
+  
 }
 
-
-const currentXP = userData.xpData[skillData.title.toLowerCase()]; // Assuming skillData.title is 'Family', 'Friends', etc.
-const currentLevel = calculateCurrentLevel(currentXP, levelScale); // Calculate current level
-const prevXP = levelScale[currentLevel];
-const nextXP = levelScale[currentLevel + 1];
-const xpBarWidth = calculateXPBarWidth(currentXP, prevXP, nextXP);
-const skillTitle = skillData.title
-const matchingSkillXp = (userData.xpData[skillTitle.toLowerCase()]).toLocaleString()
-const sideXPVals = calculateXPInfo(currentLevel)
 
 const handlePress = () => { //REALLY SHOULD NOT USE ANY HERE
   navigation.navigate("SkillsMain");
@@ -97,7 +119,7 @@ const handleStatsPress = () => {
 //   const result = findSkillByTitle(skillType)
 //   setMatchingSkillData(result)
 // },[])
-if (skillData) {
+if (dataLoading == false) {
   return(
     <ScrollView
         contentInsetAdjustmentBehavior="automatic"
@@ -107,17 +129,17 @@ if (skillData) {
           </TouchableOpacity>
           <View style={{...styles.skillPageHeader, alignItems:"center", width:"100%"}}>
             <View style={styles.skillPageTitleBox}>
-              <Text style={styles.skillPageTitle}>{skillTitle}</Text>
-              <Text style={styles.skillPageTitle}>{currentLevel}/99</Text>
+              <Text style={styles.skillPageTitle}>{skillData.title}</Text>
+              <Text style={styles.skillPageTitle}>{xpStats.currentLevel}/99</Text>
             </View>
             <View style={styles.skillPageXPContainer}>
               <View style={{...styles.skillPageXPBar,backgroundColor:"transparent"}}></View>
-              <View style={{ ...styles.skillPageXPBar, backgroundColor: skillData.color, width: `${xpBarWidth}%` }}></View>
+              <View style={{ ...styles.skillPageXPBar, backgroundColor: skillData.color, width: `${xpStats.xpBarWidth}%` }}></View>
             </View>
             <View style={styles.skillPageXPBox}>
-              <Text style={styles.skillPageXPText}>PREV- {sideXPVals.current}</Text>
-              <Text style={styles.skillPageXPText}>XP- {matchingSkillXp}</Text>
-              <Text style={styles.skillPageXPText}>NEXT- {sideXPVals.next}</Text>
+              <Text style={styles.skillPageXPText}>PREV- {xpStats.lastXpVal}</Text>
+              <Text style={styles.skillPageXPText}>XP- {xpStats.matchingSkillXp}</Text>
+              <Text style={styles.skillPageXPText}>NEXT- {xpStats.nextXpVal}</Text>
             </View>
             <TouchableOpacity onPress={handleStatsPress} style={{...styles.skillsStatsButton, backgroundColor:`${skillData.color}`}}>
               <Text style={{color:"#1c1c1c",fontSize:scaleFont(18)}}>Press here to view your {skillData.title} stats</Text>
@@ -126,21 +148,21 @@ if (skillData) {
           <View style={styles.eventTileBox}>
             <Text style={styles.skillPageTitle}>Post an Experience</Text>
             <Text style={styles.skillPageXPText}>Create a post to share with your friends!</Text>
-            {Object.keys(experiencesList[skillTitle.toLowerCase()]).map((d:any,i:number)=>{
+            {/* {Object.keys(experiencesList[skillData.title.toLowerCase()]).map((d:any,i:number)=>{
               const nextUnlock = ""
-              console.log(levelScale[experiencesList[skillTitle.toLowerCase()][d].unlocksAt], userData.xpData[skillTitle.toLowerCase()])
-              if (levelScale[experiencesList[skillTitle.toLowerCase()][d].unlocksAt] > userData.xpData[skillTitle.toLowerCase()]) {return(
-                <EventTile skillTitle={skillData.title} locked={true} color={skillData.color} d={experiencesList[skillTitle.toLowerCase()][d]} key={i} />
+              console.log(levelScale[experiencesList[skillData.title.toLowerCase()][d].unlocksAt], userData.xpData[skillData.title.toLowerCase()])
+              if (levelScale[experiencesList[skillData.title.toLowerCase()][d].unlocksAt] > userData.xpData[skillData.title.toLowerCase()]) {return(
+                <EventTile skillTitle={skillData.title} locked={true} color={skillData.color} d={experiencesList[skillData.title.toLowerCase()][d]} key={i} />
               )}
-              return(<EventTile skillTitle={skillData.title} locked={false} color={skillData.color} d={experiencesList[skillTitle.toLowerCase()][d]} key={i} />)
-            })}
+              return(<EventTile skillTitle={skillData.title} locked={false} color={skillData.color} d={experiencesList[skillData.title.toLowerCase()][d]} key={i} />)
+            })} */}
           </View>
-        
     </ScrollView>
-)
+  )
 } else {
-  return(<></>)
+  return(<View></View>)
 }
+
 
 }
 

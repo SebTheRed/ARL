@@ -21,7 +21,7 @@ export const GameRulesProvider = ({children}:any) => {
         if (uid) {
             const initializeData = async() => {
                 try {
-                const expDocRef = doc(db,"gameRules","experienceList")
+                const expDocRef = doc(db,"gameRules","experiencesList")
                 const scaleDocRef = doc(db,"gameRules","levelScale")
                 const skillsDocRef = doc(db,"gameRules","skillsList")
                 const trophyDocRef = doc(db,"gameRules","trophyData")
@@ -37,6 +37,7 @@ export const GameRulesProvider = ({children}:any) => {
                 setTrophyData(trophySnap.data())
                 setDataLoading(false)
                 console.log("Data finished loading!")
+                // console.log(expSnap.data())
                 // console.log(expSnap.data(),scaleSnap.data(),skillsSnap.data(),trophySnap.data()) DONT TURN THIS ON LOL
                 } catch(err) {
                     console.error("error loading game rule data", err)

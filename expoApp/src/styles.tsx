@@ -124,19 +124,19 @@ sectionTextContainer:{
   marginHorizontal:24,
 },
 sectionTitle: {
-  fontSize: scaleFont(28),
+  fontSize: scaleFont(30),
   fontWeight: '600',
   // fontFamily: "Phosphate",
   color:"white",
 },
 sectionFlare:{
-  fontSize:scaleFont(16),
+  fontSize:scaleFont(12),
   fontWeight:'400',
   color:"white",
 },
 sectionDescription: {
   marginTop: 8,
-  fontSize: scaleFont(18),
+  fontSize: scaleFont(16),
   fontWeight: '400',
   flexDirection:"column",
   color:"white",

@@ -37,7 +37,8 @@ const FeedPost = ({data, skillsList}:any):JSX.Element => {
 //This useEffect simply maps over the skillsList, seeking a match.
 //Also, it will set the translated timestamp, using the function timeRemainingUntil24Hours
 useEffect(()=>{
-	skillsList.map((skill:any)=>{
+	
+	Object.values(skillsList).map((skill:any)=>{
 		if (skill.title === data.postSkill){setMatchingSkillData(skill)}
 	})
 	setTranslatedTimestamp(timeRemainingUntil24Hours(data.timeStamp))

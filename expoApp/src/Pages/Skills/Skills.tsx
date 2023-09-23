@@ -7,6 +7,7 @@ import {
     useColorScheme,
     View,
     TouchableOpacity,
+    ActivityIndicator,
   } from 'react-native';
   import React from 'react'
   import { useNavigation } from '@react-navigation/native';
@@ -52,7 +53,7 @@ function Skills({route}:SkillsProps): JSX.Element {
   const {userData}:any = useUserData()
   const {uid}:any = useUID()
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { skillsList, levelScale,}:any = useGameRules()
+  const { skillsList, levelScale,dataLoading}:any = useGameRules()
 
   useEffect(()=>{
     // console.log("userData", userData)
@@ -109,15 +110,19 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
 
 
     return(
-        <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.backgroundStyle}>
-            <View>
-              {skillsList.map((d:any,i:number)=>{
-                return(<SkillTile title={d.title} color={d.color} level={d.level} flare={d.flare} key={i}/>)
-              })}
-            </View>
-      </ScrollView>
+<ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.backgroundStyle}>
+    {dataLoading ? (
+      <ActivityIndicator size="large" color="#0000ff" />  // or any other loading indicator
+    ) : (
+      <View>
+        {Object.values(skillsList)
+          .sort((a: any, b: any) => a.order - b.order)
+          .map((d: any, i: number) => {
+            return (<SkillTile title={d.title} color={d.color} level={d.level} flare={d.flare} key={i} />)
+        })}
+      </View>
+    )}
+  </ScrollView>
     )
 }
 

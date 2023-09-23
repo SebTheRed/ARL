@@ -31,13 +31,7 @@ import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 import {useFriends} from '../../Contexts/FriendsContext'
 import { useGameRules } from '../../Contexts/GameRules';
 import {scaleFont} from '../../Utilities/fontSizing'
-type TrophyDataObj = {
-    title:string,
-    tier:string,
-    imgPath:undefined,
-    desc:string,
-    progressQTY:number,
-}
+
 
 // const screenWidth = Dimensions.get('window').width;
 const Profile = ():JSX.Element => {
@@ -65,7 +59,7 @@ const Profile = ():JSX.Element => {
         let passThruArray = [{},{},{}]
         trophyPinTitles.map((title:string,i:number)=>{
             // console.log("in de loop")
-            trophyData.map((trophy:TrophyDataObj)=>{
+            Object.values(trophyData).map((trophy:any)=>{
                 if (title === trophy.title){
                     passThruArray[i] = trophy
                     // console.log(trophy)
@@ -303,17 +297,19 @@ const Profile = ():JSX.Element => {
                 </View>
             </View>
             <View style={styles.profilePageStatsbottom}>
-
-                {skillsList.map((data:any,index:any)=>{
-                    const currentLevel = calculateCurrentLevel(data.title.toLowerCase(), )
-                    return(
-                        <TouchableOpacity onPress={()=>handleTraitStatsPress(data.title)} style={{...styles.profilePageTraitBox, backgroundColor:data.color}} key={index}>
-                            {/* <Text style={styles.profilePageTraitTitle}>{data.title}</Text> */}
-                            <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:scaleFont(25), fontWeight:"bold"}}>{currentLevel}</Text>
-                            {/* <Text style={{...styles.borderedTextShadow, fontSize:25,fontWeight:"bold", color:"#fff"}}>{currentLevel}</Text> */}
-                        </TouchableOpacity>
-                    )
-                })}
+            {skillsList && typeof skillsList === 'object' ? 
+                Object.values(skillsList)
+                .sort((a: any, b: any) => a.order - b.order)
+                .map((d: any, i: number) => {
+                const currentLevel = calculateCurrentLevel(d.title.toLowerCase(), )
+                return(
+                    <TouchableOpacity onPress={()=>handleTraitStatsPress(d.title)} style={{...styles.profilePageTraitBox, backgroundColor:d.color}} key={i}>
+                        {/* <Text style={styles.profilePageTraitTitle}>{data.title}</Text> */}
+                        <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:scaleFont(25), fontWeight:"bold"}}>{currentLevel}</Text>
+                        {/* <Text style={{...styles.borderedTextShadow, fontSize:25,fontWeight:"bold", color:"#fff"}}>{currentLevel}</Text> */}
+                    </TouchableOpacity>
+                )})
+            : null}
             </View>
             
         </View>

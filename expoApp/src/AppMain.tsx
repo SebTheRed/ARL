@@ -255,15 +255,15 @@ function AppMain(): JSX.Element {
   })
 
   const [skillsList,setSkillsList] = useState({
-    family:{title:"Family",color:"#ff0000",flare:"Calls - Visits - Reunions",level:99},
-    friends:{title:"Friends",color:"#ff8400",flare:"Events - Meetups - Dates",level:12},
-    fitness:{title:"Fitness",color:"#ffea00",flare:"Gyms - Runs - Routines",level:8},
-    earthcraft:{title:"Earthcraft",color:"#4dff00",flare:"Plants - Animals - Outdoors",level:60},
-    cooking:{title:"Cooking",color:"#00ff80",flare:"Recipes - Dieting - Baking",level:50},
-    technology:{title:"Technology",color:"#00fffb",flare:"Code - Electronics - 3D",level:75},
-    games:{title:"Games",color:"#0080ff",flare:"Tabletop - Video - Sports",level:15},
-    language:{title:"Language",color:"#7700ff",flare:"Duolingo - Travel - Reading",level:10},
-    humanity:{title:"Humanity",color:"#c800ff",flare:"Activism - Volunteering - Arts",level:20},
+    family:{order:0,title:"Family",color:"#ff0000",flare:"Calls - Visits - Reunions",level:99},
+    friends:{order:1,title:"Friends",color:"#ff8400",flare:"Events - Meetups - Dates",level:12},
+    fitness:{order:2,title:"Fitness",color:"#ffea00",flare:"Gyms - Runs - Routines",level:8},
+    earthcraft:{order:3,title:"Earthcraft",color:"#4dff00",flare:"Plants - Animals - Outdoors",level:60},
+    cooking:{order:4,title:"Cooking",color:"#00ff80",flare:"Recipes - Dieting - Baking",level:50},
+    technology:{order:5,title:"Technology",color:"#00fffb",flare:"Code - Electronics - 3D",level:75},
+    games:{order:6,title:"Games",color:"#0080ff",flare:"Tabletop - Video - Sports",level:15},
+    language:{order:7,title:"Language",color:"#7700ff",flare:"Duolingo - Travel - Reading",level:10},
+    humanity:{order:8,title:"Humanity",color:"#c800ff",flare:"Activism - Volunteering - Arts",level:20},
 });
 
   const [trophyData,setTrophyData] = useState({
@@ -369,7 +369,7 @@ const AuthApp = ()=>{
   // console.log("authapp, ", userData)
   if (Object.values(userData).length>0) {
     return(
-      <>
+      <GameRulesProvider>
         <HeaderBar />
           <Stack.Navigator initialRouteName='Admin' screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Skills" component={SkillsNav} />
@@ -387,7 +387,7 @@ const AuthApp = ()=>{
           </Stack.Navigator>
         <HamburgerBar />
         <BottomBar/>
-      </>
+      </GameRulesProvider>
     )
   } else {
     return(
@@ -412,9 +412,10 @@ const ProfilePages = () => {
 }
 
   return(
-    <GameRulesProvider>
+
     <LastPageProvider>
       <UIDProvider>
+      
       <FriendsProvider>
         <UserDataProvider>
           <ProfilePageUIDProvider>
@@ -437,10 +438,10 @@ const ProfilePages = () => {
           </CurrentEventProvider>
           </ProfilePageUIDProvider>
         </UserDataProvider>
-        </FriendsProvider>
+      </FriendsProvider>
       </UIDProvider>
     </LastPageProvider>
-    </GameRulesProvider>
+    
   )
 }
 

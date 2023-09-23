@@ -52,7 +52,8 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
         let upperTitle = highestSkill.charAt(0).toUpperCase()
         let cappedTitle = upperTitle + highestSkill.slice(1)
         console.log(cappedTitle)
-        skillsList.map((skill:any,i:number)=>{
+        
+        Object.values(skillsList).map((skill:any,i:number)=>{
             if (skill.title == cappedTitle) {
                 setHighestColor(skill.color)
             }

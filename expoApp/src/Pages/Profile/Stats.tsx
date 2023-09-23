@@ -23,9 +23,10 @@ import styles from '../../styles'
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useLastPage } from '../../Contexts/LastPageContext';
 import {scaleFont} from '../../Utilities/fontSizing'
-const Stats = ({route}:any):JSX.Element => {
+import { useGameRules } from '../../Contexts/GameRules';
+const Stats = ():JSX.Element => {
   const {lastPage}:any = useLastPage()
-  const {skillsList, XPScale, trophyData}:any = route.params;
+  const {skillsList, XPScale, trophyData}:any = useGameRules()
   const navigation = useNavigation<any>();
   // const {uid}:any = useUID()
   const {profilePageUID}:any = useProfilePageUID()
@@ -39,7 +40,7 @@ const Stats = ({route}:any):JSX.Element => {
   useEffect(()=>{
 //FETCH ALL DATA
   const skillSwitch = ()=>{
-    skillsList.map((skill:any,i:number)=>{
+    Object.values(skillsList).map((skill:any,i:number)=>{
       if (skill.title == currentTraitTitle){setMatchingColor(skill.color)}
     })
   }

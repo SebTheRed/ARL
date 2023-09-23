@@ -148,14 +148,14 @@ if (dataLoading == false) {
           <View style={styles.eventTileBox}>
             <Text style={styles.skillPageTitle}>Post an Experience</Text>
             <Text style={styles.skillPageXPText}>Create a post to share with your friends!</Text>
-            {/* {Object.keys(experiencesList[skillData.title.toLowerCase()]).map((d:any,i:number)=>{
+            {Object.keys(experiencesList[name.toLowerCase()]).map((d:any,i:number)=>{
               const nextUnlock = ""
-              console.log(levelScale[experiencesList[skillData.title.toLowerCase()][d].unlocksAt], userData.xpData[skillData.title.toLowerCase()])
-              if (levelScale[experiencesList[skillData.title.toLowerCase()][d].unlocksAt] > userData.xpData[skillData.title.toLowerCase()]) {return(
-                <EventTile skillTitle={skillData.title} locked={true} color={skillData.color} d={experiencesList[skillData.title.toLowerCase()][d]} key={i} />
+              console.log(levelScale[experiencesList[name.toLowerCase()][d].unlocksAt], userData.xpData[name.toLowerCase()])
+              if (levelScale[experiencesList[name.toLowerCase()][d].unlocksAt] > userData.xpData[name.toLowerCase()]) {return(
+                <EventTile skillTitle={skillData.title} locked={true} color={skillData.color} d={experiencesList[name.toLowerCase()][d]} key={i} />
               )}
-              return(<EventTile skillTitle={skillData.title} locked={false} color={skillData.color} d={experiencesList[skillData.title.toLowerCase()][d]} key={i} />)
-            })} */}
+              return(<EventTile skillTitle={skillData.title} locked={false} color={skillData.color} d={experiencesList[name.toLowerCase()][d]} key={i} />)
+            })}
           </View>
     </ScrollView>
   )

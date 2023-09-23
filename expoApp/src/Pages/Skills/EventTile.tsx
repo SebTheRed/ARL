@@ -47,8 +47,8 @@ const handlePress = async() => {
 }
 
 const determineCooldown = () => {
-    const coolDownHours = skillsList[skillTitle][d.title]
-    console.log(coolDownHours)
+    // const coolDownHours = skillsList[skillTitle.toLowerCase()][d.title]
+    // console.log(coolDownHours)
 }
     
 

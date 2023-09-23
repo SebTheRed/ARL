@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
 import {useUserData} from '../../Contexts/UserDataContext'
+import { useGameRules } from '../../Contexts/GameRules';
 import {useUID} from '../../Contexts/UIDContext'
 
 
@@ -51,7 +52,7 @@ function Skills({route}:SkillsProps): JSX.Element {
   const {userData}:any = useUserData()
   const {uid}:any = useUID()
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { skillsList, XPScale,} = route.params;
+  const { skillsList, levelScale,}:any = useGameRules()
 
   useEffect(()=>{
     // console.log("userData", userData)
@@ -88,7 +89,7 @@ function Section({children, title, flare}: SectionProps): JSX.Element {
   )
 }
 const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
-  const currentLevel = calculateCurrentLevel(title.toLowerCase(), XPScale);
+  const currentLevel = calculateCurrentLevel(title.toLowerCase(), levelScale);
   return(
     <TouchableOpacity onPress={()=>{handlePress(title)}} style={styles.sectionContainer}>
       <View style={styles.sectionTextContainer}>

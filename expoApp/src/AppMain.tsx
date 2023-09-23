@@ -347,17 +347,17 @@ function AppMain(): JSX.Element {
 const SkillsNav = () => {
   return(
     <SkillStack.Navigator initialRouteName='SkillsMain' screenOptions={{ headerShown: false,cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,}}>
-      <SkillStack.Screen name="SkillsMain" component={Skills} initialParams={{skillsList: skillsList, playerData:playerData,XPScale:XPScale }}/>
-      <SkillStack.Screen name="Family" initialParams={{skillData:skillsList.family, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Friends" initialParams={{skillData:skillsList.friends, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Fitness" initialParams={{skillData:skillsList.fitness, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Earthcraft" initialParams={{skillData:skillsList.earthcraft, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Cooking" initialParams={{skillData:skillsList.cooking, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Technology" initialParams={{skillData:skillsList.technology, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Games" initialParams={{skillData:skillsList.games, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Language" initialParams={{skillData:skillsList.language, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="Humanity" initialParams={{skillData:skillsList.humanity, playerData:playerData, XPScale:XPScale, XPTriggerEvents:XPTriggerEvents}} component={SkillsPage} ></SkillStack.Screen>
-      <SkillStack.Screen name="ExperienceUploader" component={ExperienceUploader}></SkillStack.Screen>
+      <SkillStack.Screen name="SkillsMain" component={Skills} />
+      <SkillStack.Screen name="Family" component={SkillsPage} />
+      <SkillStack.Screen name="Friends" component={SkillsPage} />
+      <SkillStack.Screen name="Fitness" component={SkillsPage} />
+      <SkillStack.Screen name="Earthcraft" component={SkillsPage} />
+      <SkillStack.Screen name="Cooking" component={SkillsPage} />
+      <SkillStack.Screen name="Technology" component={SkillsPage} />
+      <SkillStack.Screen name="Games" component={SkillsPage} />
+      <SkillStack.Screen name="Language" component={SkillsPage} />
+      <SkillStack.Screen name="Humanity" component={SkillsPage} />
+      <SkillStack.Screen name="ExperienceUploader" component={ExperienceUploader}/>
     </SkillStack.Navigator>
   )
   
@@ -372,17 +372,17 @@ const AuthApp = ()=>{
       <>
         <HeaderBar />
           <Stack.Navigator initialRouteName='Admin' screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Skills"  component={SkillsNav} />
-            <Stack.Screen name="Trophies" initialParams={{trophyData: trophyData,}} component={Trophies} />
-            <Stack.Screen name="Map" initialParams={{arrayOPlaces: arrayOPlaces,}} component={Map} />
-            <Stack.Screen name="Feed" initialParams={{skillsList: skillsList}} component={Feed} />
+            <Stack.Screen name="Skills" component={SkillsNav} />
+            <Stack.Screen name="Trophies" component={Trophies} />
+            <Stack.Screen name="Map" component={Map} />
+            <Stack.Screen name="Feed" component={Feed} />
             <Stack.Screen name="ProfileStack" component={ProfilePages} />
-            <Stack.Screen name="UserStats" initialParams={{skillsList:skillsList}} component={Stats} />
-            <Stack.Screen name="Search" initialParams={{XPScale:XPScale, skillsList:skillsList}} component={Search} />
+            <Stack.Screen name="UserStats" component={Stats} />
+            <Stack.Screen name="Search" component={Search} />
             <Stack.Screen name="Notifications" component={Notifications} />
             <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
-            <Stack.Screen name="Friends" initialParams={{XPScale:XPScale, skillsList:skillsList}} component={Friends} />
-            <Stack.Screen name="Streak" initialParams={{XPScale:XPScale,skillsList:skillsList}} component={Streak} />
+            <Stack.Screen name="Friends" component={Friends} />
+            <Stack.Screen name="Streak" component={Streak} />
             <Stack.Screen name="Admin" initialParams={{XPScale:XPScale,skillsList:skillsList,XPTriggerEvents:XPTriggerEvents,trophyData:trophyData}} component={AdminComponent} />
           </Stack.Navigator>
         <HamburgerBar />
@@ -403,10 +403,10 @@ const AuthApp = ()=>{
 const ProfilePages = () => {
   return(
     <ProfileStack.Navigator initialRouteName='Profile' screenOptions={{headerShown:false}}>
-      <ProfileStack.Screen name="Profile" initialParams={{skillsList:skillsList, XPScale, trophyData}} component={Profile} />
+      <ProfileStack.Screen name="Profile"  component={Profile} />
       <ProfileStack.Screen name="EditProfile" component={EditProfile} />
       <ProfileStack.Screen name="UserPassPopup" component={UserPassPopup} />
-      <ProfileStack.Screen name="ProfileStats" initialParams={{skillsList:skillsList}} component={Stats} />
+      <ProfileStack.Screen name="ProfileStats" component={Stats} />
     </ProfileStack.Navigator>
   )
 }

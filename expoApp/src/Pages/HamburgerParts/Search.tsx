@@ -18,9 +18,10 @@ import { db } from '../../Firebase/firebase';
 import { getDocs, query, orderBy, startAt, endAt,where, collection, limit,startAfter } from "firebase/firestore";
 import styles from '../../styles';
 import {scaleFont} from '../../Utilities/fontSizing'
+import { useGameRules } from '../../Contexts/GameRules';
 
-const Search = ({route}:any):JSX.Element => {
-    const { XPScale,skillsList} = route.params;
+const Search = ():JSX.Element => {
+    const { levelScale,skillsList}:any = useGameRules()
     const [searchTerm,setSearchTerm] = useState("")
     const [errorMessage,setErrorMessage] = useState("")
     const [users,setUsers] = useState<any>()
@@ -65,8 +66,8 @@ const Search = ({route}:any):JSX.Element => {
         if (results.length < 1) {
           setErrorMessage("No one was found by that name or username")
         }
-        const uniqueResults = Array.from(new Set(results.map(a => a.uid)))
-          .map(uid => results.find(a => a.uid === uid));
+        const uniqueResults = Array.from(new Set(results.map((a:any) => a.uid)))
+          .map(uid => results.find((a:any) => a.uid === uid));
       
         console.log(JSON.stringify(uniqueResults, null, 2));
         setUsers(uniqueResults);  // Replace with your state update function
@@ -103,7 +104,7 @@ const Search = ({route}:any):JSX.Element => {
             {users && (
                 <FlatList
                 data={users}
-                renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={XPScale} userDoc={item} key={item.uid} />}
+                renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={levelScale} userDoc={item} key={item.uid} />}
                 contentContainerStyle={{ alignItems: 'center' }}
                 style={styles.userTileContainer}
                 scrollEventThrottle={150}

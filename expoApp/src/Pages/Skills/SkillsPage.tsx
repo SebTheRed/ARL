@@ -20,11 +20,9 @@ import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import { useLastPage } from '../../Contexts/LastPageContext';
 import {useUID} from '../../Contexts/UIDContext'
+import { useGameRules } from '../../Contexts/GameRules';
 import {scaleFont} from '../../Utilities/fontSizing'
 
-type SkillPageProps = PropsWithChildren<{
-    route:any
-}>
 type RootStackParamList = {
   SkillsMain:undefined,
   ExperienceUploader:undefined,
@@ -36,14 +34,14 @@ type RootStackParamList = {
 
 
 ////// JSX START FUN COMPONENT //////
-const SkillsPage = ({route}:SkillPageProps):JSX.Element => {
+const SkillsPage = ():JSX.Element => {
 const {uid}:any = useUID()
 const {setLastPage}:any = useLastPage()
 const {setProfilePageUID}:any = useProfilePageUID()
 const {userData}:any = useUserData()
 const {setCurrentTraitTitle}:any = useCurrentTraitStat()
 const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-const {skillData, XPScale, XPTriggerEvents} = route.params;
+const {skillData, levelScale, experiencesList}:any = useGameRules()
 
 
 const calculateXPBarWidth = (currentXP: number, prevXP: number, nextXP: number) => {
@@ -64,11 +62,11 @@ const calculateCurrentLevel = (currentXP: number, XPScale: any) => {
 };
 const calculateXPInfo = (currentLevel:number) => {
   let xpNumber = {current:"0", next:"0"}
-  for (const [lvl, xp] of Object.entries(XPScale) as [string,number][]){
+  for (const [lvl, xp] of Object.entries(levelScale) as [string,number][]){
     if (currentLevel.toString() == lvl) {
       xpNumber.current = (xp).toLocaleString();
       const calcPlusOne = (parseInt(lvl)+1).toString()
-      xpNumber.next = (parseInt(XPScale[calcPlusOne])).toLocaleString() || "0"
+      xpNumber.next = (parseInt(levelScale[calcPlusOne])).toLocaleString() || "0"
     }
   }
   return xpNumber
@@ -76,9 +74,9 @@ const calculateXPInfo = (currentLevel:number) => {
 
 
 const currentXP = userData.xpData[skillData.title.toLowerCase()]; // Assuming skillData.title is 'Family', 'Friends', etc.
-const currentLevel = calculateCurrentLevel(currentXP, XPScale); // Calculate current level
-const prevXP = XPScale[currentLevel];
-const nextXP = XPScale[currentLevel + 1];
+const currentLevel = calculateCurrentLevel(currentXP, levelScale); // Calculate current level
+const prevXP = levelScale[currentLevel];
+const nextXP = levelScale[currentLevel + 1];
 const xpBarWidth = calculateXPBarWidth(currentXP, prevXP, nextXP);
 const skillTitle = skillData.title
 const matchingSkillXp = (userData.xpData[skillTitle.toLowerCase()]).toLocaleString()
@@ -128,13 +126,13 @@ if (skillData) {
           <View style={styles.eventTileBox}>
             <Text style={styles.skillPageTitle}>Post an Experience</Text>
             <Text style={styles.skillPageXPText}>Create a post to share with your friends!</Text>
-            {Object.keys(XPTriggerEvents[skillTitle.toLowerCase()]).map((d:any,i:number)=>{
+            {Object.keys(experiencesList[skillTitle.toLowerCase()]).map((d:any,i:number)=>{
               const nextUnlock = ""
-              console.log(XPScale[XPTriggerEvents[skillTitle.toLowerCase()][d].unlocksAt], userData.xpData[skillTitle.toLowerCase()])
-              if (XPScale[XPTriggerEvents[skillTitle.toLowerCase()][d].unlocksAt] > userData.xpData[skillTitle.toLowerCase()]) {return(
-                <EventTile skillTitle={skillData.title} locked={true} color={skillData.color} d={XPTriggerEvents[skillTitle.toLowerCase()][d]} key={i} />
+              console.log(levelScale[experiencesList[skillTitle.toLowerCase()][d].unlocksAt], userData.xpData[skillTitle.toLowerCase()])
+              if (levelScale[experiencesList[skillTitle.toLowerCase()][d].unlocksAt] > userData.xpData[skillTitle.toLowerCase()]) {return(
+                <EventTile skillTitle={skillData.title} locked={true} color={skillData.color} d={experiencesList[skillTitle.toLowerCase()][d]} key={i} />
               )}
-              return(<EventTile skillTitle={skillData.title} locked={false} color={skillData.color} d={XPTriggerEvents[skillTitle.toLowerCase()][d]} key={i} />)
+              return(<EventTile skillTitle={skillData.title} locked={false} color={skillData.color} d={experiencesList[skillTitle.toLowerCase()][d]} key={i} />)
             })}
           </View>
         

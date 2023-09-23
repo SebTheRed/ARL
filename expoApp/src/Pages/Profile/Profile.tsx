@@ -29,6 +29,7 @@ import { useUID } from '../../Contexts/UIDContext';
 import { useLastPage } from '../../Contexts/LastPageContext';
 import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 import {useFriends} from '../../Contexts/FriendsContext'
+import { useGameRules } from '../../Contexts/GameRules';
 import {scaleFont} from '../../Utilities/fontSizing'
 type TrophyDataObj = {
     title:string,
@@ -39,14 +40,14 @@ type TrophyDataObj = {
 }
 
 // const screenWidth = Dimensions.get('window').width;
-const Profile = ({route}:any):JSX.Element => {
+const Profile = ():JSX.Element => {
     // const navigation = useNavigation();
     const navigation = useNavigation<any>();
     const {friendsRefresh,setFriendsRefresh}:any = useFriends()
     const {setLastPage}:any = useLastPage()
     const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
     const {setCurrentTraitTitle}:any = useCurrentTraitStat()
-    const {skillsList, XPScale, trophyData}:any = route.params;
+    const {skillsList, levelScale, trophyData}:any = useGameRules()
     const {matchingProfileData,refreshProfileFeed, profilePageUID, setProfilePageUID, profileFeed}:any = useProfilePageUID()
     const {userData}:any = useUserData()
     const {uid}:any = useUID()
@@ -188,7 +189,7 @@ const Profile = ({route}:any):JSX.Element => {
     const calculateCurrentLevel = (skillName: string) => {
         const currentXP = matchingProfileData.xpData[skillName]; // Assuming skillData.title is 'Family', 'Friends', etc.
         let level = 1;
-        for (const [lvl, xp] of Object.entries(XPScale) as [string,number][]) {
+        for (const [lvl, xp] of Object.entries(levelScale) as [string,number][]) {
           if (currentXP >= xp) {
             level = parseInt(lvl);
           } else {

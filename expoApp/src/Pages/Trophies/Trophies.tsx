@@ -13,13 +13,14 @@ import type {PropsWithChildren,} from 'react';
 import React, {useState} from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TrophyBox from './TrophyBox';
+import { useGameRules } from '../../Contexts/GameRules';
 
 // type trophyProps = PropsWithChildren<{
     
 // }>
 
-const Trophies = ({route}:any):JSX.Element => {
-const {uid, trophyData } = route.params;
+const Trophies = ():JSX.Element => {
+const { trophyData }:any = useGameRules()
 const [panelState,setPanelState]=useState(false);
 		// console.log(trophyList)
 

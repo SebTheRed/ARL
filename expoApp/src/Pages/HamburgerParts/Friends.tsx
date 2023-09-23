@@ -16,9 +16,10 @@ import React, { useEffect, useState } from 'react'
 import UserTile from './UserTile';
 import styles from '../../styles';
 import { useFriends } from '../../Contexts/FriendsContext';
+import { useGameRules } from '../../Contexts/GameRules';
 
-const Friends = ({route}:any):JSX.Element => {
-	const { XPScale,skillsList} = route.params;
+const Friends = ():JSX.Element => {
+	const { levelScale,skillsList}:any = useGameRules()
 	const {trueFriends,pendingFriends,trueFriendDocs,pendingFriendDocs,friendsRefresh,setFriendsRefresh}:any = useFriends()
 	const [currentList,setCurrentList] = useState<any>()
 	const [currentRequests,setCurrentRequests] = useState<any>()
@@ -52,7 +53,7 @@ const Friends = ({route}:any):JSX.Element => {
 				<FlatList 
 				data={trueFriendDocs}
 				keyExtractor={(item)=>item.uid}
-                renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={XPScale} userDoc={item} key={item.uid} />}
+                renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={levelScale} userDoc={item} key={item.uid} />}
                 contentContainerStyle={{ alignItems: 'center' }}
                 style={styles.userTileContainer}
                 scrollEventThrottle={150}
@@ -61,7 +62,7 @@ const Friends = ({route}:any):JSX.Element => {
 			{chosenTab==false&&(
 				<FlatList 
 				data={pendingFriendDocs}
-                renderItem={({item})=>< UserTile skillsList={skillsList} type={"pending"} XPScale={XPScale} userDoc={item} key={item.uid} />}
+                renderItem={({item})=>< UserTile skillsList={skillsList} type={"pending"} XPScale={levelScale} userDoc={item} key={item.uid} />}
 				keyExtractor={(item)=>item.uid}
                 contentContainerStyle={{ alignItems: 'center' }}
                 style={styles.userTileContainer}

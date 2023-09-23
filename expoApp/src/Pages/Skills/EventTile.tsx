@@ -17,13 +17,19 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
 import {scaleFont} from '../../Utilities/fontSizing'
-
+import {useGameRules} from '../../Contexts/GameRules'
 type RootStackParamList = {
     ExperienceUploader:undefined,
   }
 const EventTile = ({d,locked, i, color,skillTitle, uid}:any):JSX.Element => {
+    const {skillsList}:any = useGameRules()
     const {setCurrentEvent}:any = useCurrentEvent()
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+useEffect(()=>{
+    determineCooldown()
+},[])
+
 const returnImgRequire = () => {
     switch(d.type){
         case "api": return(require('../../IconBin/api.png'))
@@ -37,9 +43,11 @@ const returnImgRequire = () => {
 const handlePress = async() => {
     // console.log(d)
     setCurrentEvent({...d,"skillTitle":skillTitle, "skillColor":color,})
-    navigation.navigate("ExperienceUploader")
-    
-    
+    navigation.navigate("ExperienceUploader")   
+}
+
+const determineCooldown = () => {
+
 }
     
 

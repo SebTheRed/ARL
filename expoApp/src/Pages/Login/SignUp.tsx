@@ -37,11 +37,20 @@ const SignUp = ():JSX.Element => {
     const {setUID}:any = useUID();
 	const {setUserData}:any = useUserData()
     const [responseMessage,setResponseMessage] = useState<string>()
-    const [email,setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [phoneNumber,setPhoneNumber] = useState("")
-    const [name,setName] = useState("")
-    const [userName,setUserName] = useState("")
+    const [userName, setUserName] = useState('');
+    const [isUserNameValid, setIsUserNameValid] = useState(true);
+
+    const [email, setEmail] = useState('');
+    const [isEmailValid, setIsEmailValid] = useState(true);
+
+    const [name, setName] = useState('');
+    const [isNameValid, setIsNameValid] = useState(true);
+
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true);
+
+    const [password, setPassword] = useState('');
+    const [isPasswordValid, setIsPasswordValid] = useState(true);
     const [loadingBool,setLoadingBool] = useState(false)
     // 2. Use the useNavigation hook with the type
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -73,6 +82,11 @@ const SignUp = ():JSX.Element => {
 	// 	inputRange: [0,0.25,0.5,0.75, 1],
 	// 	outputRange: ['orange', 'gold', "green", "cyan", "#007bff"],
 	//   });
+    const handleInputChange = (text:any, setter:any, validator:any, isValidSetter:any) => {
+        setter(text);
+        isValidSetter(validator(text));
+      };
+
 
 const addUserFetch = async () => {
     setLoadingBool(true)
@@ -127,8 +141,11 @@ const addUserFetch = async () => {
     }
     };
 
-    return(
 
+
+
+
+return(
 <KeyboardAvoidingView
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 		>
@@ -143,59 +160,112 @@ const addUserFetch = async () => {
             </TouchableOpacity>
         </View>
         <View style={styles.logininputContainer}>
-            <Text style={styles.loginlabel}>user name</Text>
-            <TextInput 
+            <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-end"}}>
+                <Text style={styles.loginlabel}>user name</Text>
+                {!isUserNameValid&&(<Text style={{...styles.loginlabel, color:"#ff0000",fontSize:10,}}>! alphabet characters & ._- only!</Text>)}
+
+            </View>
+            
+            <TextInput
+            style={[styles.logininput, !isUserNameValid && styles.invalidInput]}
             returnKeyType="done"
             blurOnSubmit={true}
-            onSubmitEditing={()=>Keyboard.dismiss()}
-            onChangeText={(text)=>setUserName(text)} 
-            style={styles.logininput} />
+            onSubmitEditing={()=>Keyboard.dismiss()} 
+            onChangeText={(text) =>
+              handleInputChange(text, setUserName, (text:string) => /^[a-zA-Z0-9._-]+$/.test(text), setIsUserNameValid)
+            }
+            value={userName}
+          />
         </View>
         <View style={styles.logininputContainer}>
+        <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-end"}}>
             <Text style={styles.loginlabel}>email</Text>
-            <TextInput 
+            {!isEmailValid&&(<Text style={{...styles.loginlabel, color:"#ff0000",fontSize:10,}}>! enter a proper email !</Text>)}
+        </View>
+            <TextInput
+            value={email}
+            style={[styles.logininput, !isEmailValid && styles.invalidInput]}
+            keyboardType="email-address"
+            textContentType="emailAddress"
+            autoCapitalize="none"
             returnKeyType="done"
             blurOnSubmit={true}
             onSubmitEditing={()=>Keyboard.dismiss()} 
-            onChangeText={(text)=>setEmail(text)} 
-            style={styles.logininput} 
+            onChangeText={(text) =>
+              handleInputChange(text, setEmail, (text:string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text), setIsEmailValid)
+            }
             />
         </View>
         <View style={styles.logininputContainer}>
+        <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-end"}}>
             <Text style={styles.loginlabel}>first & last Name</Text>
-            <TextInput 
+            {!isNameValid&&(<Text style={{...styles.loginlabel,fontSize:10, color:"#ff0000"}}>! alphabet characters & ._- only!</Text>)}
+        </View>
+            <TextInput
+            value={name}
+            style={[styles.logininput, !isNameValid && styles.invalidInput]}
+            autoCapitalize='words'
             returnKeyType="done"
             blurOnSubmit={true}
             onSubmitEditing={()=>Keyboard.dismiss()} 
-            onChangeText={(text)=>setName(text)} 
-            style={styles.logininput} 
+            onChangeText={(text) =>
+              handleInputChange(text, setName, (text:string) => /^[a-zA-Z\s]+$/.test(text), setIsNameValid)
+            }
             />
         </View>
         <View style={styles.logininputContainer}>
+        <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-end"}}>
             <Text style={styles.loginlabel}>phone number</Text>
-            <TextInput 
+            {!isPhoneNumberValid&&(<Text style={{...styles.loginlabel, color:"#ff0000",fontSize:10}}>! enter an accurate phone # !</Text>)}
+
+        </View>
+            <TextInput
+            value={phoneNumber}
+            style={[styles.logininput, !isPhoneNumberValid && styles.invalidInput]}
             returnKeyType="done"
             blurOnSubmit={true}
             onSubmitEditing={()=>Keyboard.dismiss()}
-            onChangeText={(text)=>setPhoneNumber(text)} 
-            style={styles.logininput} 
+            keyboardType="phone-pad"
+            textContentType="telephoneNumber"
+            onChangeText={(text)=>{
+                handleInputChange(text, setPhoneNumber, (text:string) => /^[\d() -]{0,17}$/.test(text), setIsPhoneNumberValid)
+            }}
             />
         </View>
         <View style={styles.logininputContainer}>
+        <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-end"}}>
             <Text style={styles.loginlabel}>password</Text>
-            <TextInput 
+            {!isPasswordValid&&(<Text style={{...styles.loginlabel, color:"#ff0000",fontSize:10,}}>! at least 8 characers !</Text>)}
+        </View>
+            <TextInput
+            value={password}
+            style={[styles.logininput, !isPasswordValid && styles.invalidInput]}
             returnKeyType="done"
             blurOnSubmit={true}
             onSubmitEditing={()=>Keyboard.dismiss()} 
-            onChangeText={(text)=>setPassword(text)} 
-            style={styles.logininput} secureTextEntry 
+            secureTextEntry
+            onChangeText={(text) =>
+              handleInputChange(text, setPassword, (text:string) => /^[a-zA-Z0-9!@#$%^&*()_+,\-./:;<=>?@[\\\]_`{|}~]{8,}$/.test(text), setIsPasswordValid)
+            }
             />
         </View>
+        {(isUserNameValid&&isEmailValid&&isNameValid&&isPasswordValid&&isPhoneNumberValid&&userName&&email&&name&&password&&phoneNumber)&&(
         <TouchableOpacity onPress={addUserFetch} style={styles.loginbutton}>
             <Text style={styles.loginbuttonText}>complete sign up</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>)}
+
+        {((!isUserNameValid||!isEmailValid||!isNameValid||!isPasswordValid||!isPhoneNumberValid)||(!userName||!email||!name||!password||!phoneNumber))&&(
+        <TouchableOpacity style={{...styles.loginbutton, backgroundColor:"#333"}}>
+            {(!userName||!email||!name||!password||!phoneNumber)&&(
+                <Text style={styles.loginbuttonText}>fill out all fields</Text>
+            )}
+            {(userName&&email&&name&&password&&phoneNumber)&&(
+                <Text style={styles.loginbuttonText}>! fix your info !</Text>
+            )}  
+        </TouchableOpacity>)}
+        
     </View>
-    {/* <View style={{height:500,}} /> */}
+    <View style={{height:500,}} />
 </ScrollView>
 <LoadingOverlay isVisible={loadingBool} />
 </KeyboardAvoidingView>

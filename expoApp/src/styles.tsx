@@ -16,6 +16,9 @@ backgroundStyle:{
   backgroundColor: '#1c1c1c',
   flex:1,
 },
+invalidInput: {
+  borderColor: 'red',
+},
 headerBar:{
   backgroundColor:"#1c1c1c",
   width:"100%",

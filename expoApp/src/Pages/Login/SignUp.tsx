@@ -31,6 +31,7 @@ type RootStackParamList = {
 }
 
 const SignUp = ():JSX.Element => {
+    const [responseMessage,setResponseMessage] = useState<string>()
     const [email,setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [phoneNumber,setPhoneNumber] = useState("")
@@ -78,6 +79,30 @@ const getCurrentDate = () => {
     return `${month}/${day}/${year}`;
     };
 
+const addUserFetch = async (userData:object) => {
+    const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/addUser"
+    // const functionURL = 'https://<region>-<project-id>.cloudfunctions.net/addUser';
+    try {
+        const response = await fetch(functionURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newUserData: userData }),
+        });
+
+        if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const message = await response.text();
+        console.log("RESPONSE MESSAGE: ",message)
+        setResponseMessage(message);
+    } catch (error) {
+        console.error('Error calling addUser function: ', error);
+        setResponseMessage('Error adding user');
+    }
+    };
 
 const createAccount = async(e:any) => {
     let uid = ""
@@ -85,11 +110,7 @@ const createAccount = async(e:any) => {
 		const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
 		console.log(userCredentials)
 		uid = userCredentials.user.uid;
-        //NEED
-        //TO
-        //ADD LOADING
-        // SCREEN HERE
-		await setDoc(doc(db, "users", uid), {
+        const userObj = {
             uid: uid,
 			email: email,
             accountCreationDate:getCurrentDate(),
@@ -163,9 +184,14 @@ const createAccount = async(e:any) => {
             },
             friends:[],
             blockedUsers:[],
-        })
-		console.log("User document created in Firestore");
-        navigation.navigate("Login")
+        }
+        addUserFetch(userObj)
+        //NEED
+        //TO
+        //ADD LOADING
+        // SCREEN HERE
+		console.log("User document send to Firestore Functions");
+        // navigation.navigate("Login")
 	} catch(error){
 		console.log(error)
 	}

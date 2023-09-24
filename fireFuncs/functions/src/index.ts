@@ -144,11 +144,39 @@ export const downVotePost = functions.https.onRequest(async(request,response)=>{
 });
 
 export const createPost = functions.https.onRequest(async(request,response)=>{
+  try {
+  const {posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,}:any = request.body
+
+  switch(type){
+    case "log":
+     await handlePostSubmit(
+        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],""
+      )
+    break;
+    case "camera":
+      //SET AND FETCH PICTURE
+     await handlePostSubmit(
+        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],""
+      )
+
+    break;
+    case "timeline":
+      //SET AND FET PICTURES
+      await handlePostSubmit(
+        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],""
+      )
+    break;
+  }
+  response.send("SUCCESS");
     //switch based off of type
     //upload photo(s)
     //create post doc
     //give user xp
     //create xpLog of it
+} catch (err) {
+  logger.error("post failed at data calling or switch", err)
+  response.send(err);
+}
 });
 export const deletePost = functions.https.onRequest(async(request,response)=>{
     //This should run automatically on every document once its stamp reaches 24 hours
@@ -172,9 +200,58 @@ const getCurrentDate = () => {
   
   return `${month}/${day}/${year}`;
   };
-
-
-
+  function generateTimestamp() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hour = String(now.getHours()).padStart(2, '0');
+    const minute = String(now.getMinutes()).padStart(2, '0');
+    const second = String(now.getSeconds()).padStart(2, '0');
+  
+    return `${year}-${month}-${day}-${hour}-${minute}-${second}`;
+  }
+//EXP Uploader Functions//
+const handlePostSubmit = async(
+  uid:string,userName:string,streak:number,postSkill:string,
+  picURL:any,eventTitle:string,xp:number,textLog:string,
+  settingOne:boolean,settingTwo:boolean,settingThree:boolean,type:string,
+  timelinePicURLs:any,cameraPicURL:string,
+  ) => {
+  let timeStamp = generateTimestamp()
+  const postID = `${uid}_${timeStamp}`
+      const postObj = {
+          timelinePicURLs:timelinePicURLs,
+          cameraPicURL:cameraPicURL,
+          posterUID:uid,
+          posterUserName:userName,
+          streak:streak,
+          postSkill:postSkill,
+          picURL: picURL,
+          uniqueStamp:"",
+          eventTitle:eventTitle,
+          xp:xp,
+          score:0,
+          geoTag:{latitude:0,longitude:0},
+          timeStamp:timeStamp,
+          textLog:textLog,
+          publicPost:settingOne,
+          mapPost:settingTwo,
+          globalPost:settingThree,
+          id: postID,
+          uid: uid,
+          type:type
+      }
+      logger.log("POST SUBMITTING WITH DATA: ", postObj)
+          // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
+      try {
+        const uniqueUserPath = `users/${uid}/xpLog`;
+        await db.doc(`${uniqueUserPath}/${postID}`).set({ id: postID, timeStamp:timeStamp, eventTitle:eventTitle, traitType: postSkill, xp:xp });
+        await db.doc(`posts/${postID}`).set(postObj);
+      } catch(err) {
+        logger.error(err)
+      }
+    }
 // ADMIN FUNCS //
 export const deleteOldPosts = functions.https.onRequest(async(request,response)=>{
 

@@ -18,7 +18,6 @@ import {
   import { useNavigation } from '@react-navigation/native';
   import { NavigationProp } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import {createUserWithEmailAndPassword} from 'firebase/auth'
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
@@ -68,27 +67,15 @@ const SignUp = ():JSX.Element => {
 	// 	outputRange: ['orange', 'gold', "green", "cyan", "#007bff"],
 	//   });
 
-
-
-const getCurrentDate = () => {
-    const date = new Date();
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const year = date.getFullYear();
-    
-    return `${month}/${day}/${year}`;
-    };
-
-const addUserFetch = async (userData:object) => {
+const addUserFetch = async () => {
     const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/addUser"
-    // const functionURL = 'https://<region>-<project-id>.cloudfunctions.net/addUser';
     try {
         const response = await fetch(functionURL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ newUserData: userData }),
+        body: JSON.stringify({ email:email,password:password,userName:userName,name:name,phoneNumber }),
         });
 
         if (!response.ok) {
@@ -103,99 +90,6 @@ const addUserFetch = async (userData:object) => {
         setResponseMessage('Error adding user');
     }
     };
-
-const createAccount = async(e:any) => {
-    let uid = ""
-	try {
-		const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
-		console.log(userCredentials)
-		uid = userCredentials.user.uid;
-        const userObj = {
-            uid: uid,
-			email: email,
-            accountCreationDate:getCurrentDate(),
-			name: name, 
-			phoneNumber: phoneNumber, 
-			userName:userName,
-            streak:0,
-            picURL:"gs://appreallife-ea3d9.appspot.com/user_prof_pics/default.png",
-            coverURL:"",
-            trophyPins:["","",""],
-            xpData:{
-                family:1,friends:1,fitness:1,
-                earthcraft:1,cooking:1,technology:1,
-                games:1,language:1,humanity:1,
-            },
-            trophyData:{
-                "Tital of Steel": {unlocked:false,progress:0},
-                "Fitness Fanatic": {unlocked:false,progress:0},
-                "Golden Devotion": {unlocked:false,progress:0},
-                "Sisyphus' Prized Work": {unlocked:false,progress:0},
-                "Marathon's March": {unlocked:false,progress:0},
-                "Martial Master": {unlocked:false,progress:0},
-                "26.2": {unlocked:false,progress:0},
-                "Yoga Yogi": {unlocked:false,progress:0},
-                "Exercise Enthusiast": {unlocked:false,progress:0},
-                "Chef of the Year": {unlocked:false,progress:0},
-                "Cooking Connoisseur": {unlocked:false,progress:0},
-                "Iron Chef": {unlocked:false,progress:0},
-                "Family Feast": {unlocked:false,progress:0},
-                "Code Crusader": {unlocked:false,progress:0},
-                "Bearing FAANGs": {unlocked:false,progress:0},
-                "Internet Property": {unlocked:false,progress:0},
-                "Digital Playground": {unlocked:false,progress:0},
-                "Web3 Wizard": {unlocked:false,progress:0},
-                "Gamer with Taste": {unlocked:false,progress:0},
-                "Steam Star": {unlocked:false,progress:0},
-                "The Grind": {unlocked:false,progress:0},
-                "Gotta Go Fast": {unlocked:false,progress:0},
-                "Cant Stop Wont Stop": {unlocked:false,progress:0},
-                "Lightfoot Traveler": {unlocked:false,progress:0},
-                "Globe Trotter": {unlocked:false,progress:0},
-                "Gallery Guru": {unlocked:false,progress:0},
-                "Social Butterfly": {unlocked:false,progress:0},
-                "All Aboard": {unlocked:false,progress:0},
-                "Family Reunion": {unlocked:false,progress:0},
-                "Checking In": {unlocked:false,progress:0},
-                "Game of Life": {unlocked:false,progress:0},
-                "Clean Leader": {unlocked:false,progress:0},
-                "Hands of Bronze": {unlocked:false,progress:0},
-                "Eyes of Silver": {unlocked:false,progress:0},
-                "Voice of Gold": {unlocked:false,progress:0},
-                "Decoration of Space": {unlocked:false,progress:0},
-                "Decoration of Time": {unlocked:false,progress:0},
-                "Lost in Nature": {unlocked:false,progress:0},
-                "Finding Nature": {unlocked:false,progress:0},
-                "One with Nature": {unlocked:false,progress:0},
-                "Butchers & Shepherds": {unlocked:false,progress:0},
-                "Of The Earth": {unlocked:false,progress:0},
-                "Nature's Friend": {unlocked:false,progress:0},
-                "Nature's Steward": {unlocked:false,progress:0},
-                "Off The Grid": {unlocked:false,progress:0},
-
-
-            },
-            settings:{
-                darkMode:true,
-                geoLocation:true,
-                notifications:true,
-                privateSkills:true,
-                privateProfile:true,
-            },
-            friends:[],
-            blockedUsers:[],
-        }
-        addUserFetch(userObj)
-        //NEED
-        //TO
-        //ADD LOADING
-        // SCREEN HERE
-		console.log("User document send to Firestore Functions");
-        // navigation.navigate("Login")
-	} catch(error){
-		console.log(error)
-	}
-    }
 
     return(
 
@@ -242,7 +136,7 @@ const createAccount = async(e:any) => {
                         blurOnSubmit={true}
                         onSubmitEditing={()=>Keyboard.dismiss()} onChangeText={(text)=>setPassword(text)} style={styles.logininput} secureTextEntry />
         </View>
-        <TouchableOpacity onPress={createAccount} style={styles.loginbutton}>
+        <TouchableOpacity onPress={addUserFetch} style={styles.loginbutton}>
             <Text style={styles.loginbuttonText}>complete sign up</Text>
         </TouchableOpacity>
     </View>

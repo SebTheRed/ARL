@@ -20,6 +20,7 @@ const LoadingOverlay = ({ isVisible }:any) => {
 
 const styles = StyleSheet.create({
   modalBackground: {
+    zIndex:100,
     flex: 1,
     alignItems: 'center',
     flexDirection: 'column',

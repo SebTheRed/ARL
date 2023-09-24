@@ -29,6 +29,7 @@ import { useUID } from '../../Contexts/UIDContext';
 import { useFeed } from '../../Contexts/FeedContext';
 import {scaleFont} from '../../Utilities/fontSizing'
 import CameraPage from './CameraPage'
+import LoadingOverlay from '../../Overlays/LoadingOverlay';
 import * as ImagePicker from 'expo-image-picker'
 
 type RootStackParamList = {
@@ -282,61 +283,62 @@ const ExperienceUploader = ():JSX.Element => {
 
     const handleLogPostSubmit = async() => {
         if (text.length>9) {
-        // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
-        // const uniqueUserPath = `users/${uid}/xpLog`
-        // await setDoc(doc(db,uniqueUserPath, postID), {id: postID, timeStamp:timeStamp, eventTitle:currentEvent.title, traitType:currentEvent.skillTitle, xp:currentEvent.xp })
-        // await setDoc(doc(db, "posts", postID),postObj)
-        setLoadingBool(true)
-        const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/createPost"
-        try {
-            const response = await fetch(functionURL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-                posterUID:uid,
-                posterUserName:userData.userName,
-                streak:userData.streak,
-                postSkill:currentEvent.skillTitle,
-                picURL: userData.picURL,
-                eventTitle:currentEvent.title,
-                xp:currentEvent.xp,
-                textLog:text,
-                settingOne:settingOne,
-                settingTwo:settingTwo,
-                settingThree:settingThree,
-                type:currentEvent.type
-            }),
-            })
-    
-            if (!response.ok) {
-            setLoadingBool(false)
-            throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const responseMessage = await response.text();
-            console.log("Response Message: ",responseMessage);
-                newPostHandler()
-                navigation.dispatch(
-                    CommonActions.reset({
-                        index: 0,
-                        routes: [
-                        {
-                            name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
-                            state: {
+            setLoadingBool(true)
+            const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/createPost"
+            try {
+                const response = await fetch(functionURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    posterUID:uid,
+                    posterUserName:userData.userName,
+                    streak:userData.streak,
+                    postSkill:currentEvent.skillTitle,
+                    picURL: userData.picURL,
+                    eventTitle:currentEvent.title,
+                    xp:currentEvent.xp,
+                    textLog:text,
+                    settingOne:settingOne,
+                    settingTwo:settingTwo,
+                    settingThree:settingThree,
+                    type:currentEvent.type
+                }),
+                })
+        
+                if (!response.ok) {
+                setLoadingBool(false)
+                throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const responseMessage = await response.text();
+                console.log("Response Message: ",responseMessage);
+                setLoadingBool(false)
+                    newPostHandler()
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
                             routes: [
-                                {
-                                name: 'Feed', // The name of the child navigator
+                            {
+                                name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
+                                state: {
+                                routes: [
+                                    {
+                                    name: 'Feed', // The name of the child navigator
+                                    },
+                                ],
                                 },
-                            ],
                             },
-                        },
-                        ],
-                    })
-                    );
-            }catch(err){console.error(err)}
+                            ],
+                        })
+                        );
+                }catch(err){
+                    console.error(err)
+                    setLoadingBool(false)
+                }
     } else {
         setErrorMessage("Your log must be at least 10 characters!")
+        setLoadingBool(false)
     }
 }
 
@@ -610,7 +612,9 @@ const ExperienceUploader = ():JSX.Element => {
             {cameraActiveBool==true&&(
                 <CameraPage setCameraImageURL={setCameraImageURL} setCameraActiveBool={setCameraActiveBool} cameraImageState={cameraImageState} setCameraImageState={setCameraImageState} />
             )}
-          
+          {loadingBool&&(
+            <LoadingOverlay isVisible={loadingBool} />
+        )}
         </Modal>
     )
 }

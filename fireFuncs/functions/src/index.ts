@@ -145,25 +145,24 @@ export const downVotePost = functions.https.onRequest(async(request,response)=>{
 
 export const createPost = functions.https.onRequest(async(request,response)=>{
   try {
-  const {posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,}:any = request.body
-
+  const {posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,picture,pictureList}:any = request.body
   switch(type){
     case "log":
      await handlePostSubmit(
         posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],""
       )
     break;
-    case "camera":
-      //SET AND FETCH PICTURE
+    case "camera":      //SET AND FETCH PICTURE
      await handlePostSubmit(
-        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],""
+        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],picture
       )
 
     break;
     case "timeline":
       //SET AND FET PICTURES
+      logger.log(pictureList)
       await handlePostSubmit(
-        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],""
+        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,pictureList,""
       )
     break;
   }
@@ -252,6 +251,8 @@ const handlePostSubmit = async(
         logger.error(err)
       }
     }
+
+
 // ADMIN FUNCS //
 export const deleteOldPosts = functions.https.onRequest(async(request,response)=>{
 

@@ -196,10 +196,6 @@ const ExperienceUploader = ():JSX.Element => {
         if (text.length>9 && cameraImageURL && cameraImageState) {
             let pictureURL:string = ""
             try {
-
-            // const imageRef = ref(storage, `posts/${postID}.jpg`)
-            // await uploadString(imageRef,cameraImageURL,'data_url')
-            // pictureURL = await getDownloadURL(imageRef)
             const response = await fetch(cameraImageState)
             const blob = await response.blob()
             const uploadTask = uploadBytesResumable(imageRef,blob)
@@ -214,59 +210,59 @@ const ExperienceUploader = ():JSX.Element => {
             },
             async () => {
                 pictureURL = await getDownloadURL(imageRef)
-                const postObj = {
-                    timelinePicURLs:[],
-                    cameraPicURL:pictureURL,
-                    posterUID:uid,
-                    posterUserName:userData.userName,
-                    streak:userData.streak,
-                    postSkill:currentEvent.skillTitle,
-                    picURL: userData.picURL,
-                    uniqueStamp:"",
-                    eventTitle:currentEvent.title,
-                    xp:currentEvent.xp,
-                    score:0,
-                    geoTag:{latitude:0,longitude:0},
-                    timeStamp:timeStamp,
-                    textLog:text,
-                    publicPost:settingOne,
-                    mapPost:settingTwo,
-                    globalPost:settingThree,
-                    id: postID,
-                    uid: uid,
-                    type:currentEvent.type
-                }
-                // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
+                const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/createPost"
+
                 try {
-                    const uniqueUserPath = `users/${uid}/xpLog`
-                    await setDoc(doc(db,uniqueUserPath, postID), {id: postID, timeStamp:timeStamp, eventTitle:currentEvent.title, traitType:currentEvent.skillTitle, xp:currentEvent.xp })
-                    await setDoc(doc(db, "posts", postID),postObj)
-                    .then(() => {
-                        console.log("Post Success!");
-                        // Go back to the root navigator
-                        newPostHandler()
-                        navigation.dispatch(
-                            CommonActions.reset({
-                              index: 0,
-                              routes: [
-                                {
-                                  name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
-                                  state: {
-                                    routes: [
-                                      {
-                                        name: 'Feed', // The name of the child navigator
-                                      },
-                                    ],
-                                  },
+                    const response = await fetch(functionURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        picture:pictureURL,
+                        pictureList:[],
+                        posterUID:uid,
+                        posterUserName:userData.userName,
+                        streak:userData.streak,
+                        postSkill:currentEvent.skillTitle,
+                        picURL: userData.picURL,
+                        eventTitle:currentEvent.title,
+                        xp:currentEvent.xp,
+                        textLog:text,
+                        settingOne:settingOne,
+                        settingTwo:settingTwo,
+                        settingThree:settingThree,
+                        type:currentEvent.type
+                    }),
+                    })
+                    if (!response.ok) {
+                        setLoadingBool(false)
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const responseMessage = await response.text();
+                    console.log("Response Message: ",responseMessage);
+                    setLoadingBool(false)
+                    newPostHandler()
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [
+                            {
+                                name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
+                                state: {
+                                routes: [
+                                    {
+                                    name: 'Feed', // The name of the child navigator
+                                    },
+                                ],
                                 },
-                              ],
-                            })
-                          );
+                            },
+                            ],
                         })
-                } catch(err){
-                    console.error("Post failed to post",err)
-                    setErrorMessage("Your experiences failed to post. Please close the app & try again.")
-                }
+                        );
+                } catch(err) {console.error(err)}
+                // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
+
             }
             )
             } catch(err) {
@@ -292,6 +288,8 @@ const ExperienceUploader = ():JSX.Element => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ 
+                    picture:"",
+                    pictureList:[],
                     posterUID:uid,
                     posterUserName:userData.userName,
                     streak:userData.streak,

@@ -134,11 +134,29 @@ export const addUser = functions.https.onRequest(async (request, response) => {
   }
 });
 
+export const upVotePost = functions.https.onRequest(async(request,response)=>{
+  // Add username to upvote list on post
+  // Increase score of post by 1
+});
+export const downVotePost = functions.https.onRequest(async(request,response)=>{
+  // Add username to upvote list on post
+  // Decrease score of post by -1
+});
 
-
-
-
-
+export const createPost = functions.https.onRequest(async(request,response)=>{
+    //switch based off of type
+    //upload photo(s)
+    //create post doc
+    //give user xp
+    //create xpLog of it
+});
+export const deletePost = functions.https.onRequest(async(request,response)=>{
+    //This should run automatically on every document once its stamp reaches 24 hours
+    //give user score XP so long as its above 0, and capped at (eventXp * 3)
+    //updating corresponding xp log xp key value pair.
+    //send message to user's inbox (notifications) telling them how much xp they got.
+    //delete post & possible images from posts collection
+})
 
 
 
@@ -154,3 +172,10 @@ const getCurrentDate = () => {
   
   return `${month}/${day}/${year}`;
   };
+
+
+
+// ADMIN FUNCS //
+export const deleteOldPosts = functions.https.onRequest(async(request,response)=>{
+
+})

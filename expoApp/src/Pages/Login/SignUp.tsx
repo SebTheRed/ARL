@@ -25,7 +25,7 @@ import type {PropsWithChildren} from 'react';
 import {db, auth} from '../../Firebase/firebase'
 import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
-
+import LoadingOverlay from '../../Overlays/LoadingOverlay'
 
 type RootStackParamList = {
 	Login:undefined,
@@ -42,6 +42,7 @@ const SignUp = ():JSX.Element => {
     const [phoneNumber,setPhoneNumber] = useState("")
     const [name,setName] = useState("")
     const [userName,setUserName] = useState("")
+    const [loadingBool,setLoadingBool] = useState(false)
     // 2. Use the useNavigation hook with the type
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -74,6 +75,7 @@ const SignUp = ():JSX.Element => {
 	//   });
 
 const addUserFetch = async () => {
+    setLoadingBool(true)
     const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/addUser"
     try {
         const response = await fetch(functionURL, {
@@ -85,6 +87,7 @@ const addUserFetch = async () => {
         });
 
         if (!response.ok) {
+        setLoadingBool(false)
         throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
@@ -108,7 +111,10 @@ const addUserFetch = async () => {
                     .catch((error) => {
                     console.error("Error getting user document", error);
                     });
+                    setLoadingBool(false)
                     navigation.navigate("AuthedApp")
+                } else {
+                    setLoadingBool(false)
                 }
         })
         .catch((error)=>{
@@ -117,6 +123,7 @@ const addUserFetch = async () => {
     } catch (error) {
         console.error('Error calling addUser function: ', error);
         setResponseMessage('Error adding user');
+        setLoadingBool(false)
     }
     };
 
@@ -137,33 +144,52 @@ const addUserFetch = async () => {
         </View>
         <View style={styles.logininputContainer}>
             <Text style={styles.loginlabel}>user name</Text>
-            <TextInput returnKeyType="done"
-                        blurOnSubmit={true}
-                        onSubmitEditing={()=>Keyboard.dismiss()} onChangeText={(text)=>setUserName(text)} style={styles.logininput} />
+            <TextInput 
+            returnKeyType="done"
+            blurOnSubmit={true}
+            onSubmitEditing={()=>Keyboard.dismiss()}
+            onChangeText={(text)=>setUserName(text)} 
+            style={styles.logininput} />
         </View>
         <View style={styles.logininputContainer}>
             <Text style={styles.loginlabel}>email</Text>
-            <TextInput returnKeyType="done"
-                        blurOnSubmit={true}
-                        onSubmitEditing={()=>Keyboard.dismiss()} onChangeText={(text)=>setEmail(text)} style={styles.logininput} />
+            <TextInput 
+            returnKeyType="done"
+            blurOnSubmit={true}
+            onSubmitEditing={()=>Keyboard.dismiss()} 
+            onChangeText={(text)=>setEmail(text)} 
+            style={styles.logininput} 
+            />
         </View>
         <View style={styles.logininputContainer}>
             <Text style={styles.loginlabel}>first & last Name</Text>
-            <TextInput returnKeyType="done"
-                        blurOnSubmit={true}
-                        onSubmitEditing={()=>Keyboard.dismiss()} onChangeText={(text)=>setName(text)} style={styles.logininput} />
+            <TextInput 
+            returnKeyType="done"
+            blurOnSubmit={true}
+            onSubmitEditing={()=>Keyboard.dismiss()} 
+            onChangeText={(text)=>setName(text)} 
+            style={styles.logininput} 
+            />
         </View>
         <View style={styles.logininputContainer}>
             <Text style={styles.loginlabel}>phone number</Text>
-            <TextInput returnKeyType="done"
-                        blurOnSubmit={true}
-                        onSubmitEditing={()=>Keyboard.dismiss()}onChangeText={(text)=>setPhoneNumber(text)} style={styles.logininput} />
+            <TextInput 
+            returnKeyType="done"
+            blurOnSubmit={true}
+            onSubmitEditing={()=>Keyboard.dismiss()}
+            onChangeText={(text)=>setPhoneNumber(text)} 
+            style={styles.logininput} 
+            />
         </View>
         <View style={styles.logininputContainer}>
             <Text style={styles.loginlabel}>password</Text>
-            <TextInput returnKeyType="done"
-                        blurOnSubmit={true}
-                        onSubmitEditing={()=>Keyboard.dismiss()} onChangeText={(text)=>setPassword(text)} style={styles.logininput} secureTextEntry />
+            <TextInput 
+            returnKeyType="done"
+            blurOnSubmit={true}
+            onSubmitEditing={()=>Keyboard.dismiss()} 
+            onChangeText={(text)=>setPassword(text)} 
+            style={styles.logininput} secureTextEntry 
+            />
         </View>
         <TouchableOpacity onPress={addUserFetch} style={styles.loginbutton}>
             <Text style={styles.loginbuttonText}>complete sign up</Text>
@@ -171,6 +197,7 @@ const addUserFetch = async () => {
     </View>
     {/* <View style={{height:500,}} /> */}
 </ScrollView>
+<LoadingOverlay isVisible={loadingBool} />
 </KeyboardAvoidingView>
 
     )

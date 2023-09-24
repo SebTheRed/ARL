@@ -118,7 +118,7 @@ export const addUser = functions.https.onRequest(async (request, response) => {
         try {
           // logger.info(request.body)
           await db.collection('users').doc(uid).set(userObj);
-          response.send(`User ${userName} added!`);
+          response.send(uid);
         } catch (error) {
           logger.error('Error adding user: ', error);
           response.status(500).send('Error adding user');

@@ -18,10 +18,14 @@ import {
   import { useNavigation } from '@react-navigation/native';
   import { NavigationProp } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc,getDoc } from "firebase/firestore";
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
 import {db, auth} from '../../Firebase/firebase'
+import { useUserData } from '../../Contexts/UserDataContext';
+import { useUID } from '../../Contexts/UIDContext';
+
 
 type RootStackParamList = {
 	Login:undefined,
@@ -30,6 +34,8 @@ type RootStackParamList = {
 }
 
 const SignUp = ():JSX.Element => {
+    const {setUID}:any = useUID();
+	const {setUserData}:any = useUserData()
     const [responseMessage,setResponseMessage] = useState<string>()
     const [email,setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -82,9 +88,32 @@ const addUserFetch = async () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const message = await response.text();
-        console.log("RESPONSE MESSAGE: ",message)
-        setResponseMessage(message);
+        const uidResponse = await response.text();
+        console.log("USER UID: ",uidResponse)
+        signInWithEmailAndPassword(auth,email,password)
+        .then(()=>{
+            // console.log(userCredentials)
+            setUID(uidResponse)
+            if (uidResponse) {
+                const userDocRef = doc(db, "users", uidResponse);
+                getDoc(userDocRef)
+                    .then((docSnapshot) => {
+                    if (docSnapshot.exists()) {
+                    //   console.log("Setting user data:", docSnapshot.data());  // Debugging line
+                        setUserData(docSnapshot.data());
+                    } else {
+                        console.error("No such user documents document!");
+                    }
+                    })
+                    .catch((error) => {
+                    console.error("Error getting user document", error);
+                    });
+                    navigation.navigate("AuthedApp")
+                }
+        })
+        .catch((error)=>{
+            console.error(error)
+        })
     } catch (error) {
         console.error('Error calling addUser function: ', error);
         setResponseMessage('Error adding user');

@@ -134,7 +134,7 @@ if (dataLoading == false) {
             </View>
             <View style={styles.skillPageXPContainer}>
               <View style={{...styles.skillPageXPBar,backgroundColor:"transparent"}}></View>
-              <View style={{ ...styles.skillPageXPBar, backgroundColor: `${skillData.color||"#fff"}`, width: `${xpStats.xpBarWidth}%` }}></View>
+              <View style={{ ...styles.skillPageXPBar, backgroundColor: `${skillData.color||"#fff"}`, width: `${xpStats.xpBarWidth || 0}%` }} />
             </View>
             <View style={styles.skillPageXPBox}>
               <Text style={styles.skillPageXPText}>PREV- {xpStats.lastXpVal}</Text>

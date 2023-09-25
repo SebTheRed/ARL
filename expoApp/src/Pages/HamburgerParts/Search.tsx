@@ -12,7 +12,7 @@ import {
   FlatList,
   Keyboard,
 } from 'react-native';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef } from 'react'
 import UserTile from './UserTile';
 import { db } from '../../Firebase/firebase';
 import { getDocs, query, orderBy, startAt, endAt,where, collection, limit,startAfter } from "firebase/firestore";
@@ -23,6 +23,7 @@ import { useGameRules } from '../../Contexts/GameRules';
 const Search = ():JSX.Element => {
     const { levelScale,skillsList}:any = useGameRules()
     const [searchTerm,setSearchTerm] = useState("")
+    const searchRef = useRef<string>()
     const [errorMessage,setErrorMessage] = useState("")
     const [users,setUsers] = useState<any>()
     const PAGE_SIZE = 10
@@ -33,9 +34,10 @@ const Search = ():JSX.Element => {
     
     const fetchSearch = async(text:string) => {
         let results:any;
-      if (text.length < 3) {
+      if (!text ||text.length < 3) {
         setErrorMessage("Search at least 3 letters")
         return}
+        try{
         setErrorMessage("")
         // Query by name
         const nameQuery = query(
@@ -71,6 +73,9 @@ const Search = ():JSX.Element => {
       
         console.log(JSON.stringify(uniqueResults, null, 2));
         setUsers(uniqueResults);  // Replace with your state update function
+      } catch(err) {
+        console.error(err)
+      }
         
     }
 
@@ -83,10 +88,12 @@ const Search = ():JSX.Element => {
 			  placeholderTextColor="#999"
         blurOnSubmit={true}
         returnKeyType="done"
-        onSubmitEditing={()=>Keyboard.dismiss()}
-              onBlur={(e) => fetchSearch(e.nativeEvent.text)} 
-            //   onSubmitEditing={(e) => fetchSearch(e.nativeEvent.text)}
-            //   onChangeText={(text) => setSearchTerm(text)}
+        onSubmitEditing={(e)=>{
+          Keyboard.dismiss()
+          fetchSearch(e.nativeEvent.text)
+        }}
+              // onBlur={(e) => fetchSearch(e.nativeEvent.text)} 
+              onChangeText={(text) => searchRef.current = text}
             //   value={searchTerm}
 			/>
 		  </View>

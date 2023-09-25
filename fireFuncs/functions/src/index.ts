@@ -175,12 +175,60 @@ export const createPost = functions.https.onRequest(async(request,response)=>{
 });
 
 export const deletePost = functions.https.onRequest(async(request,response)=>{
+  try {
+    const db = admin.firestore();
+    const storage = admin.storage().bucket();
+
+    const date = new Date(Date.now() - 24 * 60 * 60 * 1000); // 24 hours in milliseconds
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+
+    const timestampString = `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
+
+    const oldPostsQuery = db.collection('posts').where('timeStamp', '<=', timestampString);
+    const oldPostsSnapshot = await oldPostsQuery.get();
+
+    const deletePromises = [];
+
+    for (const doc of oldPostsSnapshot.docs) {
+      const postId = doc.id;
+      const postData = doc.data();
+
+      // Extract the image path from the post document
+      if (postData.type==="camera"){
+        const imagePath = postData.picURL; // Replace with the actual field name where the image path is stored
+        deletePromises.push(storage.file(imagePath).delete());
+      } else if (postData.type === "timeline") {
+        postData.timelinePicURLs.map((imgURL:string)=>{
+          deletePromises.push(storage.file(imgURL).delete());
+        })
+      }
+      deletePromises.push(db.collection('posts').doc(postId).delete());
+
+
+      // Push the promises to delete the document and the image to the array
+      
+    }
+
+    // Wait for all delete operations to complete
+    await Promise.all(deletePromises);
+
+    console.log('Old posts and images deleted successfully!');
+    response.send("SUCCESS")
+  } catch (error) {
+    console.error('Error deleting old posts and images:', error);
+  }
+});
+
     //This should run automatically on every document once its stamp reaches 24 hours
     //give user score XP so long as its above 0, and capped at (eventXp * 3)
     //updating corresponding xp log xp key value pair.
     //send message to user's inbox (notifications) telling them how much xp they got.
     //delete post & possible images from posts collection
-})
 
 // ADMIN FUNCS //
 export const deleteOldPosts = functions.https.onRequest(async(request,response)=>{

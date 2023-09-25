@@ -21,7 +21,6 @@ export const helloVolt = onRequest((request,response)=>{
     response.send("Hello Volt Ppls");
 })
 
-
 export const addUser = functions.https.onRequest(async (request, response) => {
   try {
     const incomingData = request.body;
@@ -138,6 +137,7 @@ export const upVotePost = functions.https.onRequest(async(request,response)=>{
   // Add username to upvote list on post
   // Increase score of post by 1
 });
+
 export const downVotePost = functions.https.onRequest(async(request,response)=>{
   // Add username to upvote list on post
   // Decrease score of post by -1
@@ -156,7 +156,6 @@ export const createPost = functions.https.onRequest(async(request,response)=>{
      await handlePostSubmit(
         posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],picture
       )
-
     break;
     case "timeline":
       //SET AND FET PICTURES
@@ -167,9 +166,6 @@ export const createPost = functions.https.onRequest(async(request,response)=>{
     break;
   }
   response.send("SUCCESS");
-    //switch based off of type
-    //upload photo(s)
-    //create post doc
     //give user xp
     //create xpLog of it
 } catch (err) {
@@ -177,6 +173,7 @@ export const createPost = functions.https.onRequest(async(request,response)=>{
   response.send(err);
 }
 });
+
 export const deletePost = functions.https.onRequest(async(request,response)=>{
     //This should run automatically on every document once its stamp reaches 24 hours
     //give user score XP so long as its above 0, and capped at (eventXp * 3)
@@ -185,12 +182,18 @@ export const deletePost = functions.https.onRequest(async(request,response)=>{
     //delete post & possible images from posts collection
 })
 
+// ADMIN FUNCS //
+export const deleteOldPosts = functions.https.onRequest(async(request,response)=>{
+
+})
 
 
 
 
 
-// UTILITY FUNCS //
+
+
+//NON-REQUEST UTILITY FUNCS //
 const getCurrentDate = () => {
   const date = new Date();
   const day = String(date.getDate()).padStart(2, '0');
@@ -247,13 +250,45 @@ const handlePostSubmit = async(
         const uniqueUserPath = `users/${uid}/xpLog`;
         await db.doc(`${uniqueUserPath}/${postID}`).set({ id: postID, timeStamp:timeStamp, eventTitle:eventTitle, traitType: postSkill, xp:xp });
         await db.doc(`posts/${postID}`).set(postObj);
+        giveUserXP(uid,postSkill,xp)
       } catch(err) {
         logger.error(err)
       }
     }
 
+  
+const giveUserXP = async (skill: string, uid: string, xpQty: number) => {
+  try {
+    const lowSkill = skill.toLowerCase();
+    // Reference to the user's document in the 'users' collection
+    const userDocRef = db.collection('users').doc(uid);
 
-// ADMIN FUNCS //
-export const deleteOldPosts = functions.https.onRequest(async(request,response)=>{
+    // Get the user's document
+    const userDoc = await userDocRef.get();
+    if (!userDoc.exists) {
+      logger.error('User does not exist!');
+      return;
+    }
 
-})
+    // Get the xpData object from the user's document
+    const userData: any = userDoc.data();
+    logger.log(userData);
+    const xpData = userData.xpData;
+
+    // Check if the skill exists in xpData, if not initialize it to 0
+    if (!xpData[lowSkill]) xpData[lowSkill] = 0;
+
+    // Update the xp for the given skill using FieldValue.increment
+    await userDocRef.update({ [`xpData.${lowSkill}`]: admin.firestore.FieldValue.increment(xpQty) });
+
+    logger.log('XP updated successfully!');
+  } catch (error) {
+    logger.error('Error updating XP:', error);
+  }
+};
+
+
+
+
+
+    

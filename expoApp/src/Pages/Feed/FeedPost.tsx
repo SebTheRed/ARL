@@ -9,6 +9,7 @@ import {
 	Image,
 	TouchableOpacity,
 	FlatList,
+  Dimensions,
 } from 'react-native'
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import React, { useEffect, useState } from 'react';
@@ -33,6 +34,8 @@ const FeedPost = ({data, skillsList}:any):JSX.Element => {
 	const [profilePicState,setProfilePicState] = useState<any>(null)
 	const [isLoading,setIsLoading]=useState(true)
 	const [logBoxHeight,setLogBoxHeight] = useState<number|null>(null)
+
+  const windowDimensions = Dimensions.get('window')
 
 //This useEffect simply maps over the skillsList, seeking a match.
 //Also, it will set the translated timestamp, using the function timeRemainingUntil24Hours
@@ -149,12 +152,12 @@ const PostContentSplitter = ():JSX.Element => {
 					horizontal={true}
 					pagingEnabled
 					showsHorizontalScrollIndicator={false}
-					style={{ height: scaleFont(350) }}
+					style={{ height: (windowDimensions.width) }}
 				>
 					{data.timelinePicURLs.map((item:string, index:number) => (
 						<Image 
 							key={index}
-							style={{ width: scaleFont(425), height: scaleFont(350), resizeMode: 'cover' }}
+							style={{ width: (windowDimensions.width), height: (windowDimensions.width), resizeMode: 'cover' }}
 							source={{ uri: item }}
 						/>
 					))}
@@ -187,7 +190,7 @@ const PostContentSplitter = ():JSX.Element => {
   
 	
     return(
-        <View style={{...styles.feedPostWrapper}}>
+        <View style={{...styles.feedPostWrapper, width: windowDimensions.width}}>
 			<View style={{...styles.postTopRow}}>
 				<View style={{...styles.postProfileAndNameContainer}}>
 					<TouchableOpacity style={{...styles.postProfPic}} onPress={handleProfilePress}>

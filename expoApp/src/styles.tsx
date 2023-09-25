@@ -453,11 +453,11 @@ feedFlatList:{
   width:"100%",
 },
 feedPostWrapper:{
-  width:370,
-  margin:"2.5%",
-  borderRadius:10,
-  borderWidth:2,
-  borderColor:"white",
+  // width:"100%",
+  marginVertical:"2.5%",
+  borderTopWidth:2,
+  borderBottomWidth:2,
+  borderColor:"#fff",
   backgroundColor:"#1c1c1c"
 },
 feedPostText: {
@@ -466,7 +466,7 @@ feedPostText: {
 postTopRow:{
   flexDirection:"row",
   justifyContent:'space-between',
-  margin:2.5,
+  margin:10,
   alignItems:"flex-end",
 },
 postProfileAndNameContainer:{
@@ -571,7 +571,7 @@ postBottomWrapper:{
   borderBottomEndRadius:8,
   borderBottomLeftRadius:8,
   borderTopWidth:1,
-  borderColor:"white"
+  borderColor:"#656565"
 },
 postBottomIconContainer:{
   alignItems:"center"

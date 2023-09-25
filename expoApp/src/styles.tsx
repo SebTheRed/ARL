@@ -22,7 +22,7 @@ invalidInput: {
 headerBar:{
   backgroundColor:"#1c1c1c",
   width:"100%",
-  height:"5%",
+  height:50,
   alignItems:"center",
   color:"white",
   borderBottomWidth:2,
@@ -36,8 +36,8 @@ headerBarText:{
 ,},
 headerBarIcon:{
   tintColor:"white",
-  width: 30,  // desired width
-  height: 30, // desired height
+  width: 35,  // desired width
+  height: 35, // desired height
   resizeMode: 'contain', // or 'cover'
 },
 headerBarProfilePic:{
@@ -49,8 +49,8 @@ headerBarProfilePic:{
   resizeMode:"cover",
 },
 headerProfilePicContainer:{
-  width:30,
-  height:30,
+  width:35,
+  height:35,
   overflow:"hidden"
 },
 statusBar:{

@@ -103,23 +103,24 @@ const AuthApp = ()=>{
     return(
       <GameRulesProvider>
         <CooldownProvider>
-        <HeaderBar />
-          <Stack.Navigator initialRouteName='Admin' screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Skills" component={SkillsNav} />
-            <Stack.Screen name="Trophies" component={Trophies} />
-            <Stack.Screen name="Map" component={Map} />
-            <Stack.Screen name="Feed" component={Feed} />
-            <Stack.Screen name="ProfileStack" component={ProfilePages} />
-            <Stack.Screen name="UserStats" component={Stats} />
-            <Stack.Screen name="Search" component={Search} />
-            <Stack.Screen name="Notifications" component={Notifications} />
-            <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
-            <Stack.Screen name="Friends" component={Friends} />
-            <Stack.Screen name="Streak" component={Streak} />
-            <Stack.Screen name="Admin" component={AdminComponent} />
-          </Stack.Navigator>
-        <HamburgerBar />
-        <BottomBar/>
+          <StatusBar />
+          <HeaderBar />
+            <Stack.Navigator initialRouteName='Admin' screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Skills" component={SkillsNav} />
+              <Stack.Screen name="Trophies" component={Trophies} />
+              <Stack.Screen name="Map" component={Map} />
+              <Stack.Screen name="Feed" component={Feed} />
+              <Stack.Screen name="ProfileStack" component={ProfilePages} />
+              <Stack.Screen name="UserStats" component={Stats} />
+              <Stack.Screen name="Search" component={Search} />
+              <Stack.Screen name="Notifications" component={Notifications} />
+              <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
+              <Stack.Screen name="Friends" component={Friends} />
+              <Stack.Screen name="Streak" component={Streak} />
+              <Stack.Screen name="Admin" component={AdminComponent} />
+            </Stack.Navigator>
+          <HamburgerBar />
+          <BottomBar/>
         </CooldownProvider>
       </GameRulesProvider>
     )

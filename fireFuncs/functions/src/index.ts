@@ -264,7 +264,7 @@ const handlePostSubmit = async(
   timelinePicURLs:any,cameraPicURL:string,
   ) => {
   let timeStamp = Timestamp.now()
-  const postID = `${uid}_${timeStamp}`
+  const postID = `${uid}_${timeStamp.toMillis()}`
       const postObj = {
           timelinePicURLs:timelinePicURLs,
           cameraPicURL:cameraPicURL,

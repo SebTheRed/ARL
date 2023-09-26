@@ -161,8 +161,8 @@ const PostContentSplitter = ():JSX.Element => {
 		// case "api":return(<View></View>)
 		case "camera":return(
 		<View style={{height:"auto", justifyContent:"space-around"}}>
-			<View style={{...styles.postContentContainer, height:scaleFont(350), borderWidth:0,marginBottom:0}}>
-				<Image style={{width:"100%", height:scaleFont(350),resizeMode:"cover"}} source={{uri:data.cameraPicURL}} /> 
+			<View style={{height: (windowDimensions.width), borderWidth:0,marginBottom:0}}>
+				<Image style={{width: (windowDimensions.width), height: (windowDimensions.width),resizeMode:"cover"}} source={{uri:data.cameraPicURL}} /> 
 			</View>
 			<View style={{...styles.postContentContainer, height:logBoxHeight}}>
 				<Text style={{...styles.postContentLogText}}>{data.textLog}</Text>
@@ -227,23 +227,17 @@ const PostContentSplitter = ():JSX.Element => {
 					</TouchableOpacity>
 					
 				</View>
-				<View style={{...styles.postTopStreakIconContainer}}>
+				{/* <View style={{...styles.postTopStreakIconContainer}}>
 					<Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
 					<Text style={{...styles.postTopStreak}}>{data.streak}</Text>
-				</View>
-				
-				<View style={{...styles.postTopTrophyBox}}>
-					{/*TROPHY PINS GO HERE */}
-				</View>
-				<TouchableOpacity style={{...styles.postTopMapButton}}>
-					<Image style={styles.postTopMapIcon} source={require('../../IconBin/travel.png')} />
-				</TouchableOpacity>
-			</View>
+				</View> */}
 			<View style={{...styles.postTopExperienceContainer}}>
 				{skillsList && (<Text style={{...styles.postTopExperienceName,color:matchingSkillColor}}>{data.eventTitle}</Text>)}
-				<Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
+				
 				
 			</View>
+			</View>
+			
 				<PostContentSplitter />
 			
 			<View style={{...styles.postBottomWrapper}}>
@@ -252,26 +246,30 @@ const PostContentSplitter = ():JSX.Element => {
 						<Image style={styles.postBottomIcon} source={require('../../IconBin/reactions.png')} />
 					</TouchableOpacity>
 				</View> */}
+        <TouchableOpacity style={{...styles.postTopMapButton}}>
+					<Image style={{...styles.postTopMapIcon,tintColor:"gray"}} source={require('../../IconBin/travel.png')} />
+				</TouchableOpacity>
         <View style={styles.postBottomBox}>
           <View style={{...styles.postBottomVoteContainer}}>
             <TouchableOpacity style={styles.postBottomIconContainer} >
-              <Image style={{...styles.postBottomIcon, height:35,width:35}} source={require('../../IconBin/upvote.png')} />
+              <Image style={{...styles.postBottomIcon, height:35,width:35,tintColor:"gray"}} source={require('../../IconBin/carat_up.png')} />
               {/* <Text style={styles.postBottomText}></Text> */}
             </TouchableOpacity>
             <Text style={styles.postBottomScore}>{data.score}</Text>
             <TouchableOpacity style={styles.postBottomIconContainer} >
-              <Image style={{...styles.postBottomIcon, height:35,width:35}} source={require('../../IconBin/downvote.png')} />
+              <Image style={{...styles.postBottomIcon, height:35,width:35,tintColor:"gray"}} source={require('../../IconBin/carat_down.png')} />
               {/* <Text style={styles.postBottomText}></Text> */}
             </TouchableOpacity>
           </View>
         </View>
+        <Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
 				{/* <View style={{...styles.postBottomCommentsContainer}}>
 					<TouchableOpacity style={styles.postBottomIconContainer} >
 						<Image style={styles.postBottomIcon} source={require('../../IconBin/comments.png')} />
 					</TouchableOpacity>
 				</View> */}
 			</View>
-        </View>
+    </View>
     )
 }
 

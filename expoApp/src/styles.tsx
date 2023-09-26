@@ -528,7 +528,6 @@ postTopMapIcon:{
   width: 25,  // desired width
   height: 25, // desired height
   resizeMode: 'contain', // or 'cover'
-  marginBottom:3,
 },
 postTopStreak:{
   color:"white",
@@ -562,7 +561,7 @@ postContentContainer:{
   width:"95%",
   height:120,
   borderColor:"#333",
-  borderTopWidth:2,
+  // borderTopWidth:2,
   borderRadius:8,
   margin:"2.5%",
   marginBottom:50,
@@ -578,7 +577,6 @@ postBottomWrapper:{
   backgroundColor:"#1c1c1c",
 },
 postBottomBox:{
-  width:"95%",
   // borderTopWidth:1,
   // borderColor:"#333",
   justifyContent:"space-around",
@@ -601,7 +599,7 @@ postBottomVoteContainer:{
   flexDirection:"row",
   alignItems:"center",
   justifyContent:"space-around",
-  width:200,
+  width:140,
   // borderWidth:2,
   // borderColor:"white",
   // borderRadius:5

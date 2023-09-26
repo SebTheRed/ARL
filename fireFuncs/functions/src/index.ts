@@ -352,27 +352,31 @@ const giveUserXP = async (skill: string, uid: string, xpQty: number) => {
 
 // HOURLY POST CLEANUP //
 export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hours').timeZone('UTC').onRun(async (context) => {
-logger.log('Starting cleanup and reward process...');
+  logger.log('Starting cleanup and reward process...');
 
   try {
-      const currentTime = new Date();
-      const twentyFourHoursAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000));
+    const currentTime = new Date();
+    const twentyFourHoursAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000));
 
-      // Format the twentyFourHoursAgo date to match your timestamp format
-      const formattedTwentyFourHoursAgo = `${twentyFourHoursAgo.getUTCFullYear()}-${String(twentyFourHoursAgo.getUTCMonth() + 1).padStart(2, '0')}-${String(twentyFourHoursAgo.getUTCDate()).padStart(2, '0')}-${String(twentyFourHoursAgo.getUTCHours()).padStart(2, '0')}-${String(twentyFourHoursAgo.getUTCMinutes()).padStart(2, '0')}-${String(twentyFourHoursAgo.getUTCSeconds()).padStart(2, '0')}`;
+    // Fetch posts older than 24 hours from Firestore
+    const oldPostsQuerySnapshot = await admin.firestore().collection('posts')
+      .where('timeStamp', '<=', admin.firestore.Timestamp.fromDate(twentyFourHoursAgo))
+      .get();
 
-      // Fetch posts older than 24 hours from Firestore
-      const oldPostsQuerySnapshot = await admin.firestore().collection('posts').where('timeStamp', '<=', formattedTwentyFourHoursAgo).get();
+    for (const doc of oldPostsQuerySnapshot.docs) {
+      const postData = doc.data();
+      logger.log('Old Post Data:', postData);
 
-      for (const doc of oldPostsQuerySnapshot.docs) {
-          const postData = doc.data();
-          logger.log('Old Post Data:', postData);
+      // TODO: Implement the logic to delete the post and reward the user with additional XP
+    }
 
-          // TODO: Implement the logic to delete the post and reward the user with additional XP
-      }
-
-      logger.log('Cleanup and reward process completed successfully!');
+    logger.log('Cleanup and reward process completed successfully!');
   } catch (error) {
-      logger.error('Error occurred during cleanup and reward process:', error);
+    logger.error('Error occurred during cleanup and reward process:', error);
   }
 });
+
+
+
+
+

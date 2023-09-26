@@ -96,26 +96,31 @@ useEffect(()=>{
 },[])
 
 //Chat GPT is GOAT for writing this for me. Too lazy *yawn* CHAT-GPT already commented this for me <3
-function timeRemainingUntil24Hours(timestamp: string): string {
-	// Parse the timestamp string into its components
-	const [year, month, day, hour, minute, second] = timestamp.split('-').map(Number);
-	// Create a Date object from the timestamp
-	const pastDate = new Date(year, month - 1, day, hour, minute, second);
-	// Get the current date and time
-	const currentDate = new Date();
-	// Calculate the time difference in milliseconds
-	const timeDifference = currentDate.getTime() - pastDate.getTime();
-	// Calculate the remaining time in milliseconds
-	const remainingTime = (24 * 60 * 60 * 1000) - timeDifference;
-	// Calculate remaining hours and minutes
-	const remainingHours = Math.floor(remainingTime / (1000 * 60 * 60));
-	const remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-	// Format the remaining time as HH:MM
-	const formattedTime = `${String(remainingHours).padStart(2, '0')}:${String(remainingMinutes).padStart(2, '0')}`;
+const timeRemainingUntil24Hours = (timestamp:any) =>{
+  // Convert Firestore Timestamp to JavaScript Date
+  const pastDate = timestamp.toDate();
 
-	return formattedTime;
-  }
+  // Get the current date and time
+  const currentDate = new Date();
 
+  // Calculate the time difference in milliseconds
+  const timeDifference = currentDate.getTime() - pastDate.getTime();
+
+  // Calculate the remaining time in milliseconds
+  const remainingTime = (24 * 60 * 60 * 1000) - timeDifference;
+
+  // If the remaining time is less than or equal to 0, return "00:00"
+  if (remainingTime <= 0) return "00:00";
+
+  // Calculate remaining hours and minutes
+  const remainingHours = Math.floor(remainingTime / (1000 * 60 * 60));
+  const remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+
+  // Format the remaining time as HH:MM
+  const formattedTime = `${String(remainingHours).padStart(2, '0')}:${String(remainingMinutes).padStart(2, '0')}`;
+
+  return formattedTime;
+}
 //handleProfilePress does two things:
 // fist, it runs the function findPageUseriD which is explained above.
 //second, it navigates to the profile page, which uses the matched user's data.

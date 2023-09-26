@@ -1,5 +1,6 @@
 
 import {onRequest} from "firebase-functions/v2/https";
+import { Timestamp } from "firebase-admin/firestore";
 import * as logger from "firebase-functions/logger";
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
@@ -229,11 +230,6 @@ export const deletePost = functions.https.onRequest(async(request,response)=>{
     //send message to user's inbox (notifications) telling them how much xp they got.
     //delete post & possible images from posts collection
 
-// ADMIN FUNCS //
-export const deleteOldPosts = functions.https.onRequest(async(request,response)=>{
-
-})
-
 
 
 
@@ -249,17 +245,17 @@ const getCurrentDate = () => {
   
   return `${month}/${day}/${year}`;
   };
-  function generateTimestamp() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hour = String(now.getHours()).padStart(2, '0');
-    const minute = String(now.getMinutes()).padStart(2, '0');
-    const second = String(now.getSeconds()).padStart(2, '0');
+  // function generateTimestamp() {
+  //   const now = new Date();
+  //   const year = now.getFullYear();
+  //   const month = String(now.getMonth() + 1).padStart(2, '0');
+  //   const day = String(now.getDate()).padStart(2, '0');
+  //   const hour = String(now.getHours()).padStart(2, '0');
+  //   const minute = String(now.getMinutes()).padStart(2, '0');
+  //   const second = String(now.getSeconds()).padStart(2, '0');
   
-    return `${year}-${month}-${day}-${hour}-${minute}-${second}`;
-  }
+  //   return `${year}-${month}-${day}-${hour}-${minute}-${second}`;
+  // }
 //EXP Uploader Functions//
 const handlePostSubmit = async(
   uid:string,userName:string,streak:number,postSkill:string,
@@ -267,7 +263,7 @@ const handlePostSubmit = async(
   settingOne:boolean,settingTwo:boolean,settingThree:boolean,type:string,
   timelinePicURLs:any,cameraPicURL:string,
   ) => {
-  let timeStamp = generateTimestamp()
+  let timeStamp = Timestamp.now()
   const postID = `${uid}_${timeStamp}`
       const postObj = {
           timelinePicURLs:timelinePicURLs,
@@ -339,3 +335,44 @@ const giveUserXP = async (skill: string, uid: string, xpQty: number) => {
 
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// HOURLY POST CLEANUP //
+export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hours').timeZone('UTC').onRun(async (context) => {
+logger.log('Starting cleanup and reward process...');
+
+  try {
+      const currentTime = new Date();
+      const twentyFourHoursAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000));
+
+      // Format the twentyFourHoursAgo date to match your timestamp format
+      const formattedTwentyFourHoursAgo = `${twentyFourHoursAgo.getUTCFullYear()}-${String(twentyFourHoursAgo.getUTCMonth() + 1).padStart(2, '0')}-${String(twentyFourHoursAgo.getUTCDate()).padStart(2, '0')}-${String(twentyFourHoursAgo.getUTCHours()).padStart(2, '0')}-${String(twentyFourHoursAgo.getUTCMinutes()).padStart(2, '0')}-${String(twentyFourHoursAgo.getUTCSeconds()).padStart(2, '0')}`;
+
+      // Fetch posts older than 24 hours from Firestore
+      const oldPostsQuerySnapshot = await admin.firestore().collection('posts').where('timeStamp', '<=', formattedTwentyFourHoursAgo).get();
+
+      for (const doc of oldPostsQuerySnapshot.docs) {
+          const postData = doc.data();
+          logger.log('Old Post Data:', postData);
+
+          // TODO: Implement the logic to delete the post and reward the user with additional XP
+      }
+
+      logger.log('Cleanup and reward process completed successfully!');
+  } catch (error) {
+      logger.error('Error occurred during cleanup and reward process:', error);
+  }
+});

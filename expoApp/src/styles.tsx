@@ -454,11 +454,20 @@ feedFlatList:{
 },
 feedPostWrapper:{
   // width:"100%",
-  marginVertical:"2.5%",
+  marginVertical:"5%",
   borderTopWidth:2,
   borderBottomWidth:2,
   borderColor:"#fff",
-  backgroundColor:"#1c1c1c"
+  backgroundColor:"#1c1c1c",
+  shadowColor: "#fff", // Shadow color for iOS
+  shadowOffset: {
+    width: 0, // Horizontal shadow offset
+    height: 10, // Vertical shadow offset
+  },
+  shadowOpacity: 0.25, // Shadow opacity
+  shadowRadius: 3.84, // Shadow blur radius
+  
+  elevation: 10, // Shadow for Android
 },
 feedPostText: {
   color:"white"
@@ -578,8 +587,8 @@ postBottomIconContainer:{
 },
 postBottomIcon:{
   tintColor:"white",
-  width: 35,  // desired width
-  height: 35, // desired height
+  width: 30,  // desired width
+  height: 30, // desired height
   resizeMode: 'contain', // or 'cover'
 },
 postBottomText:{},

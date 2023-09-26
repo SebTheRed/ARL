@@ -190,7 +190,7 @@ const PostContentSplitter = ():JSX.Element => {
   
 	
     return(
-        <View style={{...styles.feedPostWrapper, width: windowDimensions.width}}>
+        <View style={{...styles.feedPostWrapper, width: windowDimensions.width,}}>
 			<View style={{...styles.postTopRow}}>
 				<View style={{...styles.postProfileAndNameContainer}}>
 					<TouchableOpacity style={{...styles.postProfPic}} onPress={handleProfilePress}>
@@ -225,27 +225,25 @@ const PostContentSplitter = ():JSX.Element => {
 			
 			<View style={{...styles.postBottomWrapper}}>
 				<View style={{...styles.postBottomReactionContainer}}>
-					<TouchableOpacity style={styles.postBottomIconContainer} >
+					{/* <TouchableOpacity style={styles.postBottomIconContainer} >
 						<Image style={styles.postBottomIcon} source={require('../../IconBin/reactions.png')} />
-						{/* <Text style={styles.postBottomText}></Text> */}
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 				</View>
 				<View style={{...styles.postBottomVoteContainer}}>
 					<TouchableOpacity style={styles.postBottomIconContainer} >
-						<Image style={styles.postBottomIcon} source={require('../../IconBin/upvote.png')} />
+						<Image style={{...styles.postBottomIcon, height:35,width:35}} source={require('../../IconBin/upvote.png')} />
 						{/* <Text style={styles.postBottomText}></Text> */}
 					</TouchableOpacity>
 					<Text style={styles.postBottomScore}>{data.score}</Text>
 					<TouchableOpacity style={styles.postBottomIconContainer} >
-						<Image style={styles.postBottomIcon} source={require('../../IconBin/downvote.png')} />
+						<Image style={{...styles.postBottomIcon, height:35,width:35}} source={require('../../IconBin/downvote.png')} />
 						{/* <Text style={styles.postBottomText}></Text> */}
 					</TouchableOpacity>
 				</View>
 				<View style={{...styles.postBottomCommentsContainer}}>
-					<TouchableOpacity style={styles.postBottomIconContainer} >
+					{/* <TouchableOpacity style={styles.postBottomIconContainer} >
 						<Image style={styles.postBottomIcon} source={require('../../IconBin/comments.png')} />
-						{/* <Text style={styles.postBottomText}></Text> */}
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 				</View>
 			</View>
         </View>

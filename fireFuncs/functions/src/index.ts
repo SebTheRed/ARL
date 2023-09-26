@@ -291,13 +291,13 @@ const handlePostSubmit = async(
           uid: uid,
           type:type
       }
-      logger.log("POST SUBMITTING WITH DATA: ", postObj)
+      logger.info("POST SUBMITTING WITH DATA: ", postObj)
           // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
       try {
         const uniqueUserPath = `users/${uid}/xpLog`;
         await db.doc(`${uniqueUserPath}/${postID}`).set({ id: postID, timeStamp:timeStamp, eventTitle:eventTitle, traitType: postSkill, xp:xp });
         await db.doc(`posts/${postID}`).set(postObj);
-        giveUserXP(uid,postSkill,xp)
+        giveUserXP(postSkill,uid,xp)
       } catch(err) {
         logger.error(err)
       }
@@ -319,7 +319,7 @@ const giveUserXP = async (skill: string, uid: string, xpQty: number) => {
 
     // Get the xpData object from the user's document
     const userData: any = userDoc.data();
-    logger.log(userData);
+    logger.info(userData);
     const xpData = userData.xpData;
 
     // Check if the skill exists in xpData, if not initialize it to 0
@@ -328,7 +328,7 @@ const giveUserXP = async (skill: string, uid: string, xpQty: number) => {
     // Update the xp for the given skill using FieldValue.increment
     await userDocRef.update({ [`xpData.${lowSkill}`]: admin.firestore.FieldValue.increment(xpQty) });
 
-    logger.log('XP updated successfully!');
+    logger.info('XP updated successfully!');
   } catch (error) {
     logger.error('Error updating XP:', error);
   }

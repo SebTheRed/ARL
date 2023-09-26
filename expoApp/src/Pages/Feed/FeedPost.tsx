@@ -18,17 +18,18 @@ import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import { scaleFont } from '../../Utilities/fontSizing';
-
+import { useGameRules } from '../../Contexts/GameRules';
 type RootStackParamList = {
 	Profile:undefined,
 }
 
-const FeedPost = ({data, skillsList}:any):JSX.Element => {
+const FeedPost = ({data}:any):JSX.Element => {
+  const { skillsList }:any = useGameRules();
 	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 	//findPageUserID is a function call that sets a unique, profile-filtered, feed on the profile page.
 	const {findPageUserID, }:any = useProfilePageUID()
 	//matchingSkillData contains relevant data to the "matched skill". This is to show the proper color, title, flare, etc. Per post.
-	const [matchingSkillData,setMatchingSkillData] = useState({title:"",color:"#fff",flare:"",level:0})
+	const [matchingSkillColor,setMatchingSkillColor] = useState("#fff")
 	//translatedTimestamp takes my stupid YYYY-MM-DD-HH-MM-SS timestamp and sets it to a 24 hour "time remaining" string val.
 	const [translatedTimestamp,setTranslatedTimestamp] = useState("")
 	const [profilePicState,setProfilePicState] = useState<any>(null)
@@ -41,9 +42,26 @@ const FeedPost = ({data, skillsList}:any):JSX.Element => {
 //Also, it will set the translated timestamp, using the function timeRemainingUntil24Hours
 useEffect(()=>{
 	
-	Object.values(skillsList).map((skill:any)=>{
-		if (skill.title === data.postSkill){setMatchingSkillData(skill)}
-	})
+	switch(data.postSkill){
+    case"Family": setMatchingSkillColor("#ff0000")
+    break;
+    case"Friends":setMatchingSkillColor("#ff8400")
+    break;
+    case "Fitness":setMatchingSkillColor("#ffea00")
+    break;
+    case "Earthcraft":setMatchingSkillColor("#4dff00")
+    break;
+    case "Cooking":setMatchingSkillColor("#00ff80")
+    break;
+    case "Technology":setMatchingSkillColor("#00fffb")
+    break;
+    case "Games":setMatchingSkillColor("#0080ff")
+    break;
+    case "Language":setMatchingSkillColor("#7700ff")
+    break;
+    case "Humanity":setMatchingSkillColor("#c800ff")
+    break;
+  }
 	setTranslatedTimestamp(timeRemainingUntil24Hours(data.timeStamp))
 
 	
@@ -190,7 +208,7 @@ const PostContentSplitter = ():JSX.Element => {
   
 	
     return(
-        <View style={{...styles.feedPostWrapper, width: windowDimensions.width,}}>
+    <View style={{...styles.feedPostWrapper, width: windowDimensions.width,}}>
 			<View style={{...styles.postTopRow}}>
 				<View style={{...styles.postProfileAndNameContainer}}>
 					<TouchableOpacity style={{...styles.postProfPic}} onPress={handleProfilePress}>
@@ -217,34 +235,36 @@ const PostContentSplitter = ():JSX.Element => {
 				</TouchableOpacity>
 			</View>
 			<View style={{...styles.postTopExperienceContainer}}>
-				<Text style={{...styles.postTopExperienceName,color:matchingSkillData.color}}>{data.eventTitle}</Text>
+				{skillsList && (<Text style={{...styles.postTopExperienceName,color:matchingSkillColor}}>{data.eventTitle}</Text>)}
 				<Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
 				
 			</View>
 				<PostContentSplitter />
 			
 			<View style={{...styles.postBottomWrapper}}>
-				<View style={{...styles.postBottomReactionContainer}}>
-					{/* <TouchableOpacity style={styles.postBottomIconContainer} >
+				{/* <View style={{...styles.postBottomReactionContainer}}>
+					<TouchableOpacity style={styles.postBottomIconContainer} >
 						<Image style={styles.postBottomIcon} source={require('../../IconBin/reactions.png')} />
-					</TouchableOpacity> */}
-				</View>
-				<View style={{...styles.postBottomVoteContainer}}>
-					<TouchableOpacity style={styles.postBottomIconContainer} >
-						<Image style={{...styles.postBottomIcon, height:35,width:35}} source={require('../../IconBin/upvote.png')} />
-						{/* <Text style={styles.postBottomText}></Text> */}
 					</TouchableOpacity>
-					<Text style={styles.postBottomScore}>{data.score}</Text>
+				</View> */}
+        <View style={styles.postBottomBox}>
+          <View style={{...styles.postBottomVoteContainer}}>
+            <TouchableOpacity style={styles.postBottomIconContainer} >
+              <Image style={{...styles.postBottomIcon, height:35,width:35}} source={require('../../IconBin/upvote.png')} />
+              {/* <Text style={styles.postBottomText}></Text> */}
+            </TouchableOpacity>
+            <Text style={styles.postBottomScore}>{data.score}</Text>
+            <TouchableOpacity style={styles.postBottomIconContainer} >
+              <Image style={{...styles.postBottomIcon, height:35,width:35}} source={require('../../IconBin/downvote.png')} />
+              {/* <Text style={styles.postBottomText}></Text> */}
+            </TouchableOpacity>
+          </View>
+        </View>
+				{/* <View style={{...styles.postBottomCommentsContainer}}>
 					<TouchableOpacity style={styles.postBottomIconContainer} >
-						<Image style={{...styles.postBottomIcon, height:35,width:35}} source={require('../../IconBin/downvote.png')} />
-						{/* <Text style={styles.postBottomText}></Text> */}
-					</TouchableOpacity>
-				</View>
-				<View style={{...styles.postBottomCommentsContainer}}>
-					{/* <TouchableOpacity style={styles.postBottomIconContainer} >
 						<Image style={styles.postBottomIcon} source={require('../../IconBin/comments.png')} />
-					</TouchableOpacity> */}
-				</View>
+					</TouchableOpacity>
+				</View> */}
 			</View>
         </View>
     )

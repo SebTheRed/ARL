@@ -454,9 +454,10 @@ feedFlatList:{
 },
 feedPostWrapper:{
   // width:"100%",
-  marginVertical:"5%",
-  borderTopWidth:2,
-  borderBottomWidth:2,
+  paddingTop:"5%",
+  paddingBottom:"5%",
+  borderTopWidth:1,
+  borderBottomWidth:1,
   borderColor:"#fff",
   backgroundColor:"#1c1c1c",
   shadowColor: "#fff", // Shadow color for iOS
@@ -568,19 +569,20 @@ postContentContainer:{
 },
 postContentLogText:{
   color:"white",
-  fontSize:scaleFont(18),
+  fontSize:scaleFont(20),
 },
 postBottomWrapper:{
   flexDirection:"row",
   justifyContent:"space-evenly",
-  position:"absolute",
-  bottom:0,
   width:"100%",
   backgroundColor:"#1c1c1c",
-  borderBottomEndRadius:8,
-  borderBottomLeftRadius:8,
-  borderTopWidth:1,
-  borderColor:"#656565"
+},
+postBottomBox:{
+  width:"95%",
+  // borderTopWidth:1,
+  // borderColor:"#333",
+  justifyContent:"space-around",
+  alignItems:"center"
 },
 postBottomIconContainer:{
   alignItems:"center"
@@ -598,6 +600,8 @@ postBottomReactionContainer:{
 postBottomVoteContainer:{
   flexDirection:"row",
   alignItems:"center",
+  justifyContent:"space-around",
+  width:200,
   // borderWidth:2,
   // borderColor:"white",
   // borderRadius:5

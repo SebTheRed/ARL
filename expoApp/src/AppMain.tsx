@@ -105,7 +105,7 @@ const AuthApp = ()=>{
         <CooldownProvider>
           <StatusBar />
           <HeaderBar />
-            <Stack.Navigator initialRouteName='Admin' screenOptions={{ headerShown: false }}>
+            <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Skills" component={SkillsNav} />
               <Stack.Screen name="Trophies" component={Trophies} />
               <Stack.Screen name="Map" component={Map} />

@@ -81,7 +81,7 @@ export const FeedProvider = ({ children }:any) => {
       console.log(newDocs.length)
       setCurrentFeed((prevFeed: any) => {
         const updatedFeed = [...prevFeed, ...newDocs];
-        return updatedFeed.sort((a, b) => b.timeStamp.localeCompare(a.timeStamp));
+        return updatedFeed.sort((a, b) => b.timeStamp.toMillis() - a.timeStamp.toMillis());
       });
       
     }
@@ -117,7 +117,7 @@ export const FeedProvider = ({ children }:any) => {
       console.log(newDocs.length)
       setCurrentFeed((prevFeed: any) => {
         const updatedFeed = [...prevFeed, ...newDocs];
-        return updatedFeed.sort((a, b) => b.timeStamp.localeCompare(a.timeStamp));
+        return updatedFeed.sort((a, b) => b.timeStamp.toMillis() - a.timeStamp.toMillis());
       });
       
     }

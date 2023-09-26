@@ -222,8 +222,9 @@ const PostContentSplitter = ():JSX.Element => {
 							<Image style={styles.postProfPicImg} source={{uri: profilePicState}} />
 						)}
 					</TouchableOpacity>
-					<TouchableOpacity onPress={handleProfilePress}>
+					<TouchableOpacity style={{height:50}} onPress={handleProfilePress}>
 						<Text style={{...styles.postTopName}}>{data.posterUserName} </Text>
+            {skillsList && (<Text style={{...styles.postTopExperienceName,color:matchingSkillColor}}>{data.eventTitle}</Text>)}
 					</TouchableOpacity>
 					
 				</View>
@@ -232,8 +233,6 @@ const PostContentSplitter = ():JSX.Element => {
 					<Text style={{...styles.postTopStreak}}>{data.streak}</Text>
 				</View> */}
 			<View style={{...styles.postTopExperienceContainer}}>
-				{skillsList && (<Text style={{...styles.postTopExperienceName,color:matchingSkillColor}}>{data.eventTitle}</Text>)}
-				
 				
 			</View>
 			</View>

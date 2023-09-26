@@ -454,7 +454,7 @@ feedFlatList:{
 },
 feedPostWrapper:{
   // width:"100%",
-  paddingTop:"5%",
+
   paddingBottom:"5%",
   borderTopWidth:1,
   borderBottomWidth:1,
@@ -488,8 +488,8 @@ postProfPic:{
   borderColor:"white",
   borderRadius:50,
   borderWidth:2,
-  width:35,
-  height:35,
+  width:50,
+  height:50,
   alignItems:'center',
   justifyContent:"center",
   backgroundColor:"transparent"

@@ -152,13 +152,12 @@ export const createPost = functions.https.onRequest(async(request,response)=>{
         posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],""
       )
     break;
-    case "camera":      //SET AND FETCH PICTURE
+    case "camera": 
      await handlePostSubmit(
         posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],picture
       )
     break;
     case "timeline":
-      //SET AND FET PICTURES
       logger.log(pictureList)
       await handlePostSubmit(
         posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,pictureList,""

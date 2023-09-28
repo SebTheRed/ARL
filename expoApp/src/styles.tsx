@@ -1094,8 +1094,27 @@ notificationFlatList:{
   width:"100%",
   backgroundColor:"#333",
   flex:1,
+  
 },
-
+notifTileContainer:{
+  padding:5,
+  borderRadius:5,
+  flexDirection:"row",
+  justifyContent:"space-between",
+  alignItems:"center",
+  borderWidth:2,
+  marginTop:5,
+},
+notifIndicator:{
+  height:25,
+  width:25,
+  borderRadius:25,
+  borderColor:"#333",
+  borderWidth:2,
+},
+notifMessageContainer:{
+  width:"50%"
+},
 
 });
 

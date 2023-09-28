@@ -24,7 +24,8 @@ const Notifications = () => {
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await refreshNotifications();
+    // await refreshNotifications();
+    
     setRefreshing(false);
   };
 
@@ -37,7 +38,7 @@ const Notifications = () => {
       data={currentNotifications}
       ListHeaderComponent={<NotificationHeader />}
       renderItem={({ item }) => <NotificationTile data={item} />}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={item => item.timeStamp.toMillis()}
       style={styles.notificationFlatList}
       contentContainerStyle={{ alignItems: 'center' }}
       onEndReached={handleLoadMore}
@@ -60,7 +61,6 @@ export default Notifications
 const NotificationHeader = () => {
   return (
     <View>
-      {/* Header Content */}
     </View>
   );
 };

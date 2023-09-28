@@ -47,6 +47,9 @@ export const NotificationProvider = ({ children }:any) => {
     }
   };
 
+  const refreshNotifications = async() => {
+  }
+
   return (
     <NotificationContextProvider.Provider value={{ currentNotifications, paginateNotifications }}>
       {children}

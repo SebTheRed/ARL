@@ -1082,6 +1082,21 @@ cameraText: {
 
 
 
+
+
+
+
+
+
+
+
+notificationFlatList:{
+  width:"100%",
+  backgroundColor:"#333",
+  flex:1,
+},
+
+
 });
 
 export default styles

@@ -40,6 +40,7 @@ import {CurrentTraitStatProvider} from './Contexts/CurrentTraitStat'
 import {LastPageProvider} from './Contexts/LastPageContext'
 import {HamburgerBarProvider} from './Contexts/HamburgerBarContext'
 import { FriendsProvider } from './Contexts/FriendsContext';
+import { NotificationProvider } from './Contexts/NotificationsContext';
 import {
   SafeAreaView,
   ScrollView,
@@ -103,6 +104,7 @@ const AuthApp = ()=>{
     return(
       <GameRulesProvider>
         <CooldownProvider>
+          <NotificationProvider>
           <StatusBar />
           <HeaderBar />
             <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
@@ -121,6 +123,7 @@ const AuthApp = ()=>{
             </Stack.Navigator>
           <HamburgerBar />
           <BottomBar/>
+          </NotificationProvider>
         </CooldownProvider>
       </GameRulesProvider>
     )

@@ -224,11 +224,6 @@ export const deletePost = functions.https.onRequest(async(request,response)=>{
   }
 });
 
-    //This should run automatically on every document once its stamp reaches 24 hours
-    //give user score XP so long as its above 0, and capped at (eventXp * 3)
-    //updating corresponding xp log xp key value pair.
-    //send message to user's inbox (notifications) telling them how much xp they got.
-    //delete post & possible images from posts collection
 
 
 
@@ -357,17 +352,26 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
   try {
     const currentTime = new Date();
     const twentyFourHoursAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000));
+    logger.log('Current Time:', currentTime);
+    logger.log('24 Hours Ago:', twentyFourHoursAgo);
 
     // Fetch posts older than 24 hours from Firestore
     const oldPostsQuerySnapshot = await admin.firestore().collection('posts')
       .where('timeStamp', '<=', admin.firestore.Timestamp.fromDate(twentyFourHoursAgo))
       .get();
 
+    logger.log('Number of Old Posts:', oldPostsQuerySnapshot.size);
+
     for (const doc of oldPostsQuerySnapshot.docs) {
       const postData = doc.data();
       logger.log('Old Post Data:', postData);
 
-      // TODO: Implement the logic to delete the post and reward the user with additional XP
+      // Delete the post
+      await admin.firestore().collection('posts').doc(doc.id).delete();
+      logger.log('Deleted Post with ID:', doc.id);
+
+      // TODO: Reward the user with additional XP
+      // You can implement the logic to reward the user based on your application's requirements
     }
 
     logger.log('Cleanup and reward process completed successfully!');
@@ -375,8 +379,6 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
     logger.error('Error occurred during cleanup and reward process:', error);
   }
 });
-
-
 
 
 

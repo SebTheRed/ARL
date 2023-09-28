@@ -261,6 +261,8 @@ const handlePostSubmit = async(
   let timeStamp = Timestamp.now()
   const postID = `${uid}_${timeStamp.toMillis()}`
       const postObj = {
+          upvotes:[],
+          downvotes:[],
           timelinePicURLs:timelinePicURLs,
           cameraPicURL:cameraPicURL,
           posterUID:uid,

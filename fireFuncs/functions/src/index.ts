@@ -337,9 +337,14 @@ const giveUserNotification = async (uid:string,message:string) => {
 }
 
 const updateXpLogDocumentXp = async(uid:string,score:number,timeStamp:any)=>{
-  const docID = `${uid}_${timeStamp.toMillis()}`
-  const docRef = admin.firestore().doc(`users/${uid}/xpLog/${docID}`);
-  await docRef.update({ xp: admin.firestore.FieldValue.increment(score) });
+  try{
+    const docID = `${uid}_${timeStamp.toMillis()}`
+    const docRef = admin.firestore().doc(`users/${uid}/xpLog/${docID}`);
+    await docRef.update({ xp: admin.firestore.FieldValue.increment(score) });
+  } catch (err) {
+    logger.error(err)
+  }
+
 }
     
 

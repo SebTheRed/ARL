@@ -337,6 +337,7 @@ trophyText:{
   padding:3,
   color:"white",
   textAlign:"center",
+  fontSize:scaleFont(12)
 },
 trophyIcon:{
   tintColor:"white",

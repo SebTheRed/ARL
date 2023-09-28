@@ -86,7 +86,7 @@ const TrophyBox = ({d}:TrophyBoxProps):JSX.Element => {
             )}
             {panelState == true && (
                 <>
-                    <Text style={{...styles.trophyText,textAlign:"left"}}>{d.desc}</Text>
+                    <Text style={{...styles.trophyText,textAlign:"left"}}>Trophies coming soon... They reward a ton of XP and can be pinned to profile.</Text>
                     {/* <Image style={styles.trophyIcon} source={d.imgPath} /> */}
                     <View>
                         <Text style={{...styles.trophyText}} > Progress:</Text>

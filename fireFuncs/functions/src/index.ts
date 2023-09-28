@@ -326,7 +326,15 @@ const giveUserXP = async (skill: string, uid: string, xpQty: number) => {
 };
 
 
-
+const giveUserNotification = async (uid:string,message:string) => {
+  const notificationObj = {
+    message:message,
+    read:false,
+    timeStamp:Timestamp.now(),
+  }
+  logger.log(notificationObj)
+  await db.collection(`users/${uid}/notifications`).add(notificationObj)
+}
 
 
     
@@ -366,12 +374,12 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
       const postData = doc.data();
       logger.log('Old Post Data:', postData);
 
+      giveUserXP(postData.postSkill,postData.posterUID,postData.score)
+      giveUserNotification(postData.posterUID,`Your ${postData.eventTitle} post finished with a score of ${postData.score}! You have received ${postData.score} ${postData.postSkill} XP!`)
       // Delete the post
       await admin.firestore().collection('posts').doc(doc.id).delete();
       logger.log('Deleted Post with ID:', doc.id);
 
-      // TODO: Reward the user with additional XP
-      // You can implement the logic to reward the user based on your application's requirements
     }
 
     logger.log('Cleanup and reward process completed successfully!');

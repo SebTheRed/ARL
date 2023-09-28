@@ -336,7 +336,11 @@ const giveUserNotification = async (uid:string,message:string) => {
   await db.collection(`users/${uid}/notifications`).add(notificationObj)
 }
 
-
+const updateXpLogDocumentXp = async(uid:string,score:number,timeStamp:any)=>{
+  const docID = `${uid}_${timeStamp.toMillis()}`
+  const docRef = admin.firestore().doc(`users/${uid}/xpLog/${docID}`);
+  await docRef.update({ xp: admin.firestore.FieldValue.increment(score) });
+}
     
 
 
@@ -375,6 +379,7 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
       logger.log('Old Post Data:', postData);
 
       giveUserXP(postData.postSkill,postData.posterUID,postData.score)
+      updateXpLogDocumentXp(postData.posterUID,postData.score,postData.timeStamp)
       giveUserNotification(postData.posterUID,`Your ${postData.eventTitle} post finished with a score of ${postData.score}! You have received ${postData.score} ${postData.postSkill} XP!`)
       // Delete the post
       await admin.firestore().collection('posts').doc(doc.id).delete();

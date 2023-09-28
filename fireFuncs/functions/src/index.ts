@@ -149,6 +149,7 @@ export const createPost = functions.https.onRequest(async(request,response)=>{
   const {posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,picture,pictureList}:any = request.body
   switch(type){
     case "log":
+    case "api":
      await handlePostSubmit(
         posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],""
       )

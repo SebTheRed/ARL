@@ -25,6 +25,8 @@ import {db, auth,} from '../../Firebase/firebase'
 import {doc, getDoc} from 'firebase/firestore'
 import { useUserData } from '../../Contexts/UserDataContext';
 import LinearGradient from 'react-native-linear-gradient';
+import LoadingOverlay from '../../Overlays/LoadingOverlay';
+import { scaleFont } from '../../Utilities/fontSizing';
 type RootStackParamList = {
 	Login:undefined,
 	AuthedApp:undefined,
@@ -35,6 +37,8 @@ const Login = ({route}:any):JSX.Element => {
 	const [password,setPassword] = useState("punspaye")
 	const {setUID}:any = useUID();
 	const {setUserData}:any = useUserData()
+  const [loadingBool,setLoadingBool] = useState<boolean>(false)
+  const [failureMessage,setFailureMessage] = useState<string>()
 	// const animatedValue = new Animated.Value(0);
 
 	// useEffect(() => {
@@ -69,9 +73,10 @@ const Login = ({route}:any):JSX.Element => {
 
 const signIn = async(e:any) => {
 	e.preventDefault();
-        signInWithEmailAndPassword(auth,email,password)
-        .then((userCredentials)=>{
-            // console.log(userCredentials)
+  try {
+    signInWithEmailAndPassword(auth,email,password)
+    .then((userCredentials)=>{
+        // console.log(userCredentials)
 			let uid = userCredentials.user.uid
 			navigation.navigate("AuthedApp")
 			setUID(uid)
@@ -83,17 +88,23 @@ const signIn = async(e:any) => {
 					//   console.log("Setting user data:", docSnapshot.data());  // Debugging line
 					  setUserData(docSnapshot.data());
 					} else {
-					  console.error("No such document!");
+					  // console.error("No such document!");
+            setFailureMessage("ERROR: Reload app and try again.")
 					}
 				  })
 				  .catch((error) => {
-					console.error("Error getting doc", error);
+					// console.error("Error getting doc", error);
+          setFailureMessage("ERROR: Reload app and try again.")
 				  });
 			  }
         })
         .catch((error)=>{
             console.error(error)
+            setFailureMessage("Wrong email / password.")
         })
+  } catch(err) {
+  }
+    
 }
 	return(
 		<KeyboardAvoidingView
@@ -108,7 +119,10 @@ const signIn = async(e:any) => {
 				<Text style={{...styles.borderedText, color: 'white' ,fontWeight:"bold"}}>arl</Text>
 			</View>
 			<View style={{...styles.loginWrapper}}>
-			
+      {failureMessage&&(<View style={{height:30,width:"100%",backgroundColor:"rgba(255,0,0,0.5)", alignItems:"center", justifyContent:"center", borderColor:"#ff0000",borderWidth:2}}>
+      <Text style={{color:"#fff",fontSize:scaleFont(14)}}>{failureMessage}</Text>
+      </View>)}
+      <View style={{height:10}} />
 				<View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
 					<Text style={styles.logintitle}>sign in </Text>
 					<Text style={{...styles.skillPageXPText,}}> or </Text>
@@ -133,8 +147,8 @@ const signIn = async(e:any) => {
 					<Text style={styles.loginlabel}>password</Text>
 					<TextInput 
 						returnKeyType="done"
-                        blurOnSubmit={true}
-                        onSubmitEditing={()=>Keyboard.dismiss()}
+            blurOnSubmit={true}
+            onSubmitEditing={()=>Keyboard.dismiss()}
 						onChangeText={(text)=>setPassword(text)}
 						style={styles.logininput}
 						secureTextEntry
@@ -148,7 +162,12 @@ const signIn = async(e:any) => {
 					<Text style={styles.loginbuttonText}>what's arl ?</Text>
 				</TouchableOpacity> */}
 			</View>
+
+      {loadingBool&&(
+        <LoadingOverlay isVisible={loadingBool} />
+      )}
 		</ScrollView>
+    
 		</KeyboardAvoidingView>
 	)
 }

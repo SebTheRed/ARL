@@ -253,14 +253,14 @@ export const changeUserPassword = functions.https.onRequest(async(request,respon
     logger.error("Failed to change user email: ",err)
   }
 });
-
+const firestore = admin.firestore();
 export const deleteUserProfile = functions.https.onRequest(async(request,response)=>{
   const {uid}:any = request.body
   try{
-    admin.auth().deleteUser(uid)
-    .then(()=>{
-      response.send("Account deleted successfully!")
-    })
+    await admin.auth().deleteUser(uid)
+    const userDocRef = firestore.doc(`users/${uid}`);
+    await userDocRef.delete();
+    response.send("Account deleted successfully!")
   } catch(err) {
     logger.error("Failed to change user email: ",err)
   }

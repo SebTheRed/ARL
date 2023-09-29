@@ -377,14 +377,14 @@ return(
 					</View>
 				</View>
 			</View>
-			{/* <TouchableOpacity onPress={handleChangeCredentialsPress} style={{...styles.eventTileWrapper,borderColor:`#ff4000`}}>
+			<TouchableOpacity onPress={handleChangeCredentialsPress} style={{...styles.eventTileWrapper,borderColor:`#ff4000`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
-						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Change Email / Password</Text>
+						<Text style={{...styles.eventTileText,fontSize:20,textDecorationColor:"#656565",textDecorationLine:"underline"}}>Change Account Credentials</Text>
 					</View>
-					<Text style={{...styles.eventTileText, fontSize:16,}}>Click here to change your email and/or password.</Text>
+					<Text style={{...styles.eventTileText, fontSize:16,}}>Click here to change your email or password.</Text>
 				</View>
-			</TouchableOpacity> */}
+			</TouchableOpacity>
 
 		</View>
     </ScrollView>

@@ -19,6 +19,26 @@ backgroundStyle:{
 invalidInput: {
   borderColor: 'red',
 },
+confimationModal: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: "rgba(0,0,0,0.9)", // semi-transparent background
+},
+deleteModalContent: {
+  width: "80%", // or any desired width
+  height:400,
+  borderWidth:2,
+  borderColor:"#fff",
+  borderRadius:10,
+  padding: 20,
+  backgroundColor: "#1c1c1c", // solid white background
+  // You can add more styling like shadows etc.
+},
+
+
+
+
 headerBar:{
   backgroundColor:"#1c1c1c",
   width:"100%",

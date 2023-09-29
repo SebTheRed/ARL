@@ -24,46 +24,67 @@ import styles from '../../styles'
 import {db, auth} from '../../Firebase/firebase'
 import {getAuth, updateEmail, updatePassword} from "firebase/auth"
 import {updateDoc,doc} from 'firebase/firestore'
+import { scaleFont } from '../../Utilities/fontSizing';
 
 const UserPassPopup = ():JSX.Element => {
 const navigation = useNavigation<any>();
-const [emailInput,setEmailInput] = useState(String)
-const [passwordInput,setPasswordInput] = useState(String)
+const [emailInput,setEmailInput] = useState<string>()
+const [passwordInput,setPasswordInput] = useState<string>()
+const [deleteModal,setDeleteModal] = useState<boolean>(false)
 
 const handleGoBack = () => {
     navigation.navigate("EditProfile")
 }
+const handleDeleteButton = () => {
+  setDeleteModal(true)
+}
+
+
 const handleChangeCredentials = async(text:string) => {
-    const auth = getAuth()
-    const currentUser = auth.currentUser
-    if (!currentUser) {
-        console.error('NO CURRENT USER?!')
-        return;
-    }
     switch(text){
         case"email":
             try{
-                updateEmail(currentUser, emailInput).then(()=>{
-                    console.log(`Email successfully updated to ${emailInput}`)
-                })
+
             } catch(error){
                 console.error('ERROR EMAIL NOT RESET: ', error)
             }
         break;
         case"password":
             try{
-                updatePassword(currentUser, passwordInput).then(()=>{
-                    console.log(`Email successfully updated to ${passwordInput}`)
-                })
+
             }catch(error){
                 console.error("ERROR PASSWORD NOT RESET: ", error)
             } 
         break;
     }
 }
+const deleteAccount = () => {
+  
+}
 
 
-
+const DeleteConfirmation = ():JSX.Element => {
+  return(
+  <Modal animationType='slide' transparent={true} visible={deleteModal}>
+    <View style={styles.confimationModal}>
+      <View style={styles.deleteModalContent}>
+        <TouchableOpacity onPress={()=>setDeleteModal(false)} style={{}}>
+          <Image
+          style={{ width:30,height:30,resizeMode:"cover" }}
+          source={require('../../IconBin/close.png')}
+        />
+        </TouchableOpacity>
+        <View style={{height:50}} />
+        <Text style={{color:"white", fontSize:scaleFont(24)}}>Are you sure you want to delete your account?</Text>
+        <View style={{height:100}} />
+        <TouchableOpacity onPress={deleteAccount} style={{...styles.whatIsARLButton, backgroundColor:"#b00000"}}>
+          <Text style={{...styles.loginbuttonText, color:"#1c1c1c"}}>DELETE ACCOUNT!</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </Modal>
+  )
+}
 
 
     return(
@@ -99,11 +120,13 @@ const handleChangeCredentials = async(text:string) => {
                     <TouchableOpacity onPress={()=>""} style={{...styles.loginbutton, marginTop:8}}>
                         <Text style={styles.loginbuttonText}>Change password</Text>
                     </TouchableOpacity>
-				{/* <TouchableOpacity onPress={signIn} style={styles.whatIsARLButton}>
-					<Text style={styles.loginbuttonText}>what's arl ?</Text>
-				</TouchableOpacity> */}
+                    <View style={{height:100,}}></View>
+                    <TouchableOpacity onPress={handleDeleteButton} style={{...styles.whatIsARLButton, backgroundColor:"#b00000"}}>
+                      <Text style={{...styles.loginbuttonText, color:"#1c1c1c"}}>DELETE ACCOUNT</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
+            <DeleteConfirmation />
         </Modal>
     )
 }

@@ -81,8 +81,7 @@ export const ProfilePageUIDProvider = ({children}:any) => {
                         const currentTime = new Date();
                         const oneDayAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000)); // 24 hours ago
                         newDocs = newDocs.filter((doc: any) => {
-                            const [year, month, day, hour, minute, second] = doc.timeStamp.split('-').map(Number);
-                            const postDate = new Date(year, month - 1, day, hour, minute, second);
+                            const postDate = doc.timeStamp.toDate();
                             return postDate >= oneDayAgo;
                           });
 

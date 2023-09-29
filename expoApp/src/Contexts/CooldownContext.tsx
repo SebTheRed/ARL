@@ -58,8 +58,7 @@ export const CooldownProvider = ({ children }: any) => {
                                 console.log("inside exp key")
                                 console.log(experiencesList[type][experienceKey].cooldown)
                                 const experienceCooldown = experiencesList[type][experienceKey].cooldown * 60 * 60 * 1000;
-                                const [year, month, day, hour, minute, second] = docData.timeStamp.split("-").map(Number);
-                                const lastPostedDate = new Date(year, month - 1, day, hour, minute, second);
+                                const lastPostedDate = docData.timeStamp.toDate();
                                 const lastPostedTime = lastPostedDate.getTime();
                                 const currentTime = new Date().getTime();
                                 const elapsedTime = currentTime - lastPostedTime;

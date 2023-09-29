@@ -372,13 +372,15 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
   try {
     const currentTime = new Date();
     const twentyFourHoursAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000));
+    const twentyFourHoursAgoTimestamp = admin.firestore.Timestamp.fromDate(twentyFourHoursAgo); // Convert to Firestore Timestamp
     logger.log('Current Time:', currentTime);
     logger.log('24 Hours Ago:', twentyFourHoursAgo);
+    logger.log('Firestore 24 hours ago', twentyFourHoursAgoTimestamp)
 
     // Fetch posts older than 24 hours from Firestore
     const oldPostsQuerySnapshot = await admin.firestore().collection('posts')
-      .where('timeStamp', '<=', admin.firestore.Timestamp.fromDate(twentyFourHoursAgo))
-      .get();
+    .where('timeStamp', '<=', twentyFourHoursAgoTimestamp)
+    .get();
 
     logger.log('Number of Old Posts:', oldPostsQuerySnapshot.size);
 

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { collection, query, orderBy, onSnapshot, startAfter, limit,getDocs } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, startAfter, limit,getDocs,doc,setDoc } from 'firebase/firestore';
 import { db } from '../Firebase/firebase'; // Adjust the import according to your project structure
 import { useUID } from './UIDContext'; // Adjust the import according to your project structure
 
@@ -25,7 +25,10 @@ export const NotificationProvider = ({ children }:any) => {
     
     const unsubscribe = onSnapshot(q, snapshot => {
       let notifications:any = [];
-      snapshot.forEach(doc => notifications.push(doc.data()));
+      snapshot.forEach(doc => {
+        // Include the document ID in each notification item
+        notifications.push({ id: doc.id, ...doc.data() });
+      });
       setCurrentNotifications(notifications);
       if (!snapshot.empty) {
         setLastVisible(snapshot.docs[snapshot.docs.length - 1]);
@@ -35,7 +38,14 @@ export const NotificationProvider = ({ children }:any) => {
     // Clean up the subscription on component unmount
     return () => unsubscribe();
   }, [uid]);
-
+  const updateNotificationReadStatus = async(notificationId:string) => {
+    try {
+      const notificationRef = doc(db, 'users', `${uid}`, 'notifications', notificationId); // Replace 'userId' with the actual user ID
+      await setDoc(notificationRef, { read: true }, { merge: true }); // Merge to avoid overwriting other fields
+    } catch (error) {
+      console.error('Error updating notification read status: ', error);
+    }
+  }
   const paginateNotifications = async () => {
     if (!lastVisible) return;
     const notificationRef = collection(db, `users/${uid}/notifications`);
@@ -43,7 +53,10 @@ export const NotificationProvider = ({ children }:any) => {
     const snapshot = await getDocs(q);
     if (!snapshot.empty) {
       setLastVisible(snapshot.docs[snapshot.docs.length - 1]);
-      setCurrentNotifications((prev:any) => [...prev, ...snapshot.docs.map(doc => doc.data())]);
+      setCurrentNotifications((prev:any) => [
+        ...prev, 
+        ...snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) // Include the document ID in each notification item
+      ]);
     }
   };
 
@@ -51,7 +64,7 @@ export const NotificationProvider = ({ children }:any) => {
   }
 
   return (
-    <NotificationContextProvider.Provider value={{ currentNotifications, paginateNotifications }}>
+    <NotificationContextProvider.Provider value={{ currentNotifications, paginateNotifications,updateNotificationReadStatus }}>
       {children}
     </NotificationContextProvider.Provider>
   );

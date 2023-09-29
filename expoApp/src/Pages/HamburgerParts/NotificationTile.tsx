@@ -15,9 +15,12 @@ import {
 } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import styles from '../../styles';
+import { useNotifications } from '../../Contexts/NotificationsContext';
 const NotificationTile = ({data}:any):JSX.Element => {
   const windowDimensions = Dimensions.get('window')
   const [timePast,setTimePast] = useState<string>()
+  const {updateNotificationReadStatus}:any = useNotifications()
+
   useEffect(() => {
     const calculateTimePast = () => {
       const now = new Date();
@@ -43,15 +46,37 @@ const NotificationTile = ({data}:any):JSX.Element => {
 
     return () => clearInterval(intervalId); // Clear interval on component unmount
   }, [data.timeStamp]);
+
+
+  const markRead = () => {
+    if (data.id && !data.read) { // Check if the notification has an id and is unread
+      updateNotificationReadStatus(data.id); // Call the function to update the read status in Firestore
+    }
+  }
+
+
+
+
   return(
-    <View style={{...styles.notifTileContainer,borderColor:"#656565", width:(windowDimensions.width-10)}}>
-      
-      <View style={{...styles.notifIndicator, backgroundColor:"red",borderColor:"#fff"}}></View>
+    <TouchableOpacity 
+      onPress={markRead} 
+      style={{
+        ...styles.notifTileContainer,
+        width: (windowDimensions.width - 10),
+        borderColor: data.read ? "#656565" : "#FFFFFF" // Change color based on read status
+      }}
+    >
+      <View style={{
+        ...styles.notifIndicator, 
+        backgroundColor: data.read ? "transparent" : "red",
+        borderColor: data.read ? "transparent" : "#fff",
+        opacity: data.read ? 0.5 : 1 // Change opacity based on read status
+      }}></View>
       <View style={styles.notifMessageContainer}>
-        <Text style={{color:"white"}}>{data.message}</Text>
+        <Text style={{color: data.read ? "gray" : "white"}}>{data.message}</Text>
       </View>
-      <Text style={{color:"gray"}}>{timePast}</Text>
-    </View>
+      <Text style={{color: "gray"}}>{timePast}</Text>
+    </TouchableOpacity>
   )
 }
 

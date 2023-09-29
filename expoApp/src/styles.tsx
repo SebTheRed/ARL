@@ -1106,8 +1106,8 @@ notifTileContainer:{
   marginTop:5,
 },
 notifIndicator:{
-  height:25,
-  width:25,
+  height:20,
+  width:20,
   borderRadius:25,
   borderColor:"#333",
   borderWidth:2,

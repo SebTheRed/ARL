@@ -12,16 +12,19 @@ import {
   RefreshControl,
   FlatList
 } from 'react-native';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef } from 'react'
+import { doc,setDoc } from 'firebase/firestore';
 import NotificationTile from './NotificationTile';
+import { db } from '../../Firebase/firebase';
 import styles from '../../styles';
+import { useUID } from '../../Contexts/UIDContext';
 import { useNotifications } from '../../Contexts/NotificationsContext';
 const Notifications = () => {
 
   const [refreshing,setRefreshing] = useState<boolean>(false)
 
-  const { currentNotifications, refreshNotifications, paginateNotifications }:any = useNotifications();
-
+  const { currentNotifications, refreshNotifications, paginateNotifications,updateNotificationReadStatus }:any = useNotifications();
+  const {uid}:any = useUID()
   const handleRefresh = async () => {
     setRefreshing(true);
     // await refreshNotifications();
@@ -29,9 +32,19 @@ const Notifications = () => {
     setRefreshing(false);
   };
 
+
+
   const handleLoadMore = () => {
     paginateNotifications();
   };
+
+    const NotificationHeader = () => {
+      return (
+        <View>
+        </View>
+      );
+    };
+
 
   return (
     <FlatList
@@ -58,9 +71,3 @@ const Notifications = () => {
 
 export default Notifications
 
-const NotificationHeader = () => {
-  return (
-    <View>
-    </View>
-  );
-};

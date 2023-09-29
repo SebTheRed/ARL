@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
 import {useUserData} from '../../Contexts/UserDataContext'
 import { useUID } from '../../Contexts/UIDContext';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import styles from '../../styles'
 import {db, auth} from '../../Firebase/firebase'
 import {getAuth, updateEmail, updatePassword} from "firebase/auth"
@@ -27,6 +27,7 @@ import {updateDoc,doc} from 'firebase/firestore'
 import { scaleFont } from '../../Utilities/fontSizing';
 
 const UserPassPopup = ():JSX.Element => {
+const {uid}:any = useUID()
 const navigation = useNavigation<any>();
 const [emailInput,setEmailInput] = useState<string>()
 const [passwordInput,setPasswordInput] = useState<string>()
@@ -58,8 +59,35 @@ const handleChangeCredentials = async(text:string) => {
         break;
     }
 }
-const deleteAccount = () => {
-  
+const deleteAccount = async() => {
+  try{
+    const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/deleteUserProfile"
+    const response = await fetch(functionURL, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+          uid: uid,
+      }),
+      }).then((response)=>{
+        //ROUTE USER BACK TO LOGIN
+        navigation.dispatch(
+          CommonActions.reset({
+              index: 0,
+              routes: [
+              {
+                  name: 'Login', // The name of the root navigator's screen that contains the child navigators
+                 
+              },
+              ],
+          })
+          );
+      })
+
+  } catch(err) {
+    console.warn("ACCOUNT DELETION FAILED: ", err)
+  }
 }
 
 

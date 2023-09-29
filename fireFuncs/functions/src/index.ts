@@ -224,11 +224,47 @@ export const deletePost = functions.https.onRequest(async(request,response)=>{
     console.error('Error deleting old posts and images:', error);
   }
 });
+// USER CREDENTIALS FUNCTIONS //
 
+export const changeUserEmail = functions.https.onRequest(async(request,response)=>{
+  const {uid,newEmail}:any = request.body
+  try{
+    admin.auth().updateUser(uid,{
+      email:newEmail,
+    })
+    .then((userRecord)=>{
+      response.send("Email change success!")
+    })
+  } catch(err) {
+    logger.error("Failed to change user email: ",err)
+  }
+});
 
+export const changeUserPassword = functions.https.onRequest(async(request,response)=>{
+  const {uid,newPassword}:any = request.body
+  try{
+    admin.auth().updateUser(uid,{
+      password:newPassword,
+    })
+    .then((userRecord)=>{
+      response.send("Password change success!")
+    })
+  } catch(err) {
+    logger.error("Failed to change user email: ",err)
+  }
+});
 
-
-
+export const deleteUserProfile = functions.https.onRequest(async(request,response)=>{
+  const {uid}:any = request.body
+  try{
+    admin.auth().deleteUser(uid)
+    .then(()=>{
+      response.send("Account deleted successfully!")
+    })
+  } catch(err) {
+    logger.error("Failed to change user email: ",err)
+  }
+});
 
 
 

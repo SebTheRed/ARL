@@ -99,7 +99,7 @@ const signIn = async(e:any) => {
 			  }
         })
         .catch((error)=>{
-            console.error(error)
+            // console.error(error)
             setFailureMessage("Wrong email / password.")
         })
   } catch(err) {

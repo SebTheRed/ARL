@@ -102,6 +102,7 @@ const AuthApp = ()=>{
   // console.log("authapp, ", userData)
   if (Object.values(userData).length>0) {
     return(
+      <FeedProvider>
       <GameRulesProvider>
         <CooldownProvider>
           <NotificationProvider>
@@ -126,6 +127,7 @@ const AuthApp = ()=>{
           </NotificationProvider>
         </CooldownProvider>
       </GameRulesProvider>
+      </FeedProvider>
     )
   } else {
     return(
@@ -158,7 +160,6 @@ const ProfilePages = () => {
         <UserDataProvider>
           <ProfilePageUIDProvider>
           <CurrentEventProvider>
-            <FeedProvider>
               <CurrentTraitStatProvider>
               <HamburgerBarProvider>
                 <SafeAreaView style={styles.backgroundStyle}>
@@ -172,7 +173,6 @@ const ProfilePages = () => {
                 </SafeAreaView>
               </HamburgerBarProvider>
               </CurrentTraitStatProvider>
-            </FeedProvider>
           </CurrentEventProvider>
           </ProfilePageUIDProvider>
         </UserDataProvider>

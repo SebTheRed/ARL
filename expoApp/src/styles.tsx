@@ -19,10 +19,30 @@ backgroundStyle:{
 invalidInput: {
   borderColor: 'red',
 },
+confimationModal: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: "rgba(0,0,0,0.9)", // semi-transparent background
+},
+deleteModalContent: {
+  width: "80%", // or any desired width
+  height:400,
+  borderWidth:2,
+  borderColor:"#fff",
+  borderRadius:10,
+  padding: 20,
+  backgroundColor: "#1c1c1c", // solid white background
+  // You can add more styling like shadows etc.
+},
+
+
+
+
 headerBar:{
   backgroundColor:"#1c1c1c",
   width:"100%",
-  height:"5%",
+  height:50,
   alignItems:"center",
   color:"white",
   borderBottomWidth:2,
@@ -36,8 +56,8 @@ headerBarText:{
 ,},
 headerBarIcon:{
   tintColor:"white",
-  width: 30,  // desired width
-  height: 30, // desired height
+  width: 35,  // desired width
+  height: 35, // desired height
   resizeMode: 'contain', // or 'cover'
 },
 headerBarProfilePic:{
@@ -49,8 +69,8 @@ headerBarProfilePic:{
   resizeMode:"cover",
 },
 headerProfilePicContainer:{
-  width:30,
-  height:30,
+  width:35,
+  height:35,
   overflow:"hidden"
 },
 statusBar:{
@@ -337,6 +357,7 @@ trophyText:{
   padding:3,
   color:"white",
   textAlign:"center",
+  fontSize:scaleFont(12)
 },
 trophyIcon:{
   tintColor:"white",
@@ -453,12 +474,22 @@ feedFlatList:{
   width:"100%",
 },
 feedPostWrapper:{
-  width:370,
-  margin:"2.5%",
-  borderRadius:10,
-  borderWidth:2,
-  borderColor:"white",
-  backgroundColor:"#1c1c1c"
+  // width:"100%",
+
+  paddingBottom:"5%",
+  borderTopWidth:1,
+  borderBottomWidth:1,
+  borderColor:"#fff",
+  backgroundColor:"#1c1c1c",
+  shadowColor: "#fff", // Shadow color for iOS
+  shadowOffset: {
+    width: 0, // Horizontal shadow offset
+    height: 10, // Vertical shadow offset
+  },
+  shadowOpacity: 0.25, // Shadow opacity
+  shadowRadius: 3.84, // Shadow blur radius
+  
+  elevation: 10, // Shadow for Android
 },
 feedPostText: {
   color:"white"
@@ -466,7 +497,7 @@ feedPostText: {
 postTopRow:{
   flexDirection:"row",
   justifyContent:'space-between',
-  margin:2.5,
+  margin:10,
   alignItems:"flex-end",
 },
 postProfileAndNameContainer:{
@@ -478,8 +509,8 @@ postProfPic:{
   borderColor:"white",
   borderRadius:50,
   borderWidth:2,
-  width:35,
-  height:35,
+  width:50,
+  height:50,
   alignItems:'center',
   justifyContent:"center",
   backgroundColor:"transparent"
@@ -518,7 +549,6 @@ postTopMapIcon:{
   width: 25,  // desired width
   height: 25, // desired height
   resizeMode: 'contain', // or 'cover'
-  marginBottom:3,
 },
 postTopStreak:{
   color:"white",
@@ -552,34 +582,34 @@ postContentContainer:{
   width:"95%",
   height:120,
   borderColor:"#333",
-  borderTopWidth:2,
+  // borderTopWidth:2,
   borderRadius:8,
   margin:"2.5%",
   marginBottom:50,
 },
 postContentLogText:{
   color:"white",
-  fontSize:scaleFont(18),
+  fontSize:scaleFont(20),
 },
 postBottomWrapper:{
   flexDirection:"row",
   justifyContent:"space-evenly",
-  position:"absolute",
-  bottom:0,
   width:"100%",
   backgroundColor:"#1c1c1c",
-  borderBottomEndRadius:8,
-  borderBottomLeftRadius:8,
-  borderTopWidth:1,
-  borderColor:"white"
+},
+postBottomBox:{
+  // borderTopWidth:1,
+  // borderColor:"#333",
+  justifyContent:"space-around",
+  alignItems:"center"
 },
 postBottomIconContainer:{
   alignItems:"center"
 },
 postBottomIcon:{
   tintColor:"white",
-  width: 35,  // desired width
-  height: 35, // desired height
+  width: 30,  // desired width
+  height: 30, // desired height
   resizeMode: 'contain', // or 'cover'
 },
 postBottomText:{},
@@ -589,6 +619,8 @@ postBottomReactionContainer:{
 postBottomVoteContainer:{
   flexDirection:"row",
   alignItems:"center",
+  justifyContent:"space-around",
+  width:140,
   // borderWidth:2,
   // borderColor:"white",
   // borderRadius:5
@@ -1069,6 +1101,40 @@ cameraText: {
 
 
 
+
+
+
+
+
+
+
+
+
+notificationFlatList:{
+  width:"100%",
+  backgroundColor:"#333",
+  flex:1,
+  
+},
+notifTileContainer:{
+  padding:5,
+  borderRadius:5,
+  flexDirection:"row",
+  justifyContent:"space-between",
+  alignItems:"center",
+  borderWidth:2,
+  marginTop:5,
+},
+notifIndicator:{
+  height:20,
+  width:20,
+  borderRadius:25,
+  borderColor:"#333",
+  borderWidth:2,
+},
+notifMessageContainer:{
+  width:"50%"
+},
 
 });
 

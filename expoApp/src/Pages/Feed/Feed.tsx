@@ -16,14 +16,14 @@ import { useEffect, useState } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
 import FeedPost from './FeedPost';
 import styles from '../../styles'
-import { useGameRules } from '../../Contexts/GameRules';
+
 const Feed = () => {
 	//currentFeed holds a sorted array of posts. Sorted or not.
 	//This value is called from FeedContext.tsx
 	const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
 
 	//CHANGE THIS OUT ONCE WE SET UP FIREBASE TO INITIALIZE GAME RULES.
-	const { skillsList }:any = useGameRules();
+
 
 	//A simple refresh state just to the app actually changess after the reload.
 	const [refreshing, setRefreshing] = useState(false);
@@ -64,7 +64,7 @@ const Feed = () => {
 	  <FlatList
 		data={currentFeed}
 		ListHeaderComponent={<FeedHeader />}
-		renderItem={({ item }) => <FeedPost skillsList={skillsList} data={item} />}
+		renderItem={({ item }) => <FeedPost data={item} />}
 		keyExtractor={item => item.id.toString()}
 		style={styles.feedFlatList}
 		contentContainerStyle={{ alignItems: 'center' }}

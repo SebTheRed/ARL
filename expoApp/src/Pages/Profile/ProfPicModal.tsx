@@ -12,7 +12,6 @@ import {
     Switch,
     Image,
   } from 'react-native';
-  import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
   import {getStorage,ref, getDownloadURL, uploadBytes} from 'firebase/storage';
   import {useState,useEffect} from 'react'
   import { useUserData } from '../../Contexts/UserDataContext';
@@ -21,6 +20,8 @@ import {
   import {db, auth,} from '../../Firebase/firebase'
   import styles from '../../styles';
   import {scaleFont} from '../../Utilities/fontSizing'
+  import * as ImagePicker from 'expo-image-picker'
+
 const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
         const {userData}:any = useUserData()
         const {uid}:any = useUID()
@@ -42,26 +43,17 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
             translateURL()
         },[])
       
-        const selectImage = async() => {
-          const options = {
-            mediaType:'photo' as "photo",
-            includeBase64:false,
-            maxHeight:7000,
-            maxWidth:7000,
-            }
-            launchImageLibrary(options,(response:any)=>{
-                if (response.didCancel) {
-                    console.log('User cancelled image picker');
-                  } else if (response.error) {
-                    console.log('Image picker error: ', response.error);
-                  } else {
-                    let imageUri = response.uri || response.assets?.[0]?.uri;
-                    console.log(imageUri)
-                    setImageSource(imageUri);
-                  }
-            })
-
-
+        const pickImage = async (setImageState:any) => {
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+          });
+        
+          if (!result.canceled) {
+            setImageState(result.assets[0].uri);
+          }
         };
       
         const confirmImage = async() => {
@@ -130,7 +122,7 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
             <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
                 <Text style={{...styles.modalTitle, fontSize:scaleFont(30),}}>Change Profile Picture</Text>
-                <TouchableOpacity onPress={selectImage} style={{...styles.selectButton, backgroundColor:"#007bff"}}>
+                <TouchableOpacity onPress={pickImage} style={{...styles.selectButton, backgroundColor:"#007bff"}}>
                     <Text style={styles.modalTitle}>Select New Image</Text>
                 </TouchableOpacity>
                 {imageSource && (

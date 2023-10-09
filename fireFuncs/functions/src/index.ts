@@ -1,5 +1,6 @@
 
 import {onRequest} from "firebase-functions/v2/https";
+import { Timestamp } from "firebase-admin/firestore";
 import * as logger from "firebase-functions/logger";
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
@@ -148,17 +149,17 @@ export const createPost = functions.https.onRequest(async(request,response)=>{
   const {posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,picture,pictureList}:any = request.body
   switch(type){
     case "log":
+    case "api":
      await handlePostSubmit(
         posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],""
       )
     break;
-    case "camera":      //SET AND FETCH PICTURE
+    case "camera": 
      await handlePostSubmit(
         posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],picture
       )
     break;
     case "timeline":
-      //SET AND FET PICTURES
       logger.log(pictureList)
       await handlePostSubmit(
         posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,pictureList,""
@@ -223,21 +224,47 @@ export const deletePost = functions.https.onRequest(async(request,response)=>{
     console.error('Error deleting old posts and images:', error);
   }
 });
+// USER CREDENTIALS FUNCTIONS //
 
-    //This should run automatically on every document once its stamp reaches 24 hours
-    //give user score XP so long as its above 0, and capped at (eventXp * 3)
-    //updating corresponding xp log xp key value pair.
-    //send message to user's inbox (notifications) telling them how much xp they got.
-    //delete post & possible images from posts collection
+export const changeUserEmail = functions.https.onRequest(async(request,response)=>{
+  const {uid,newEmail}:any = request.body
+  try{
+    admin.auth().updateUser(uid,{
+      email:newEmail,
+    })
+    .then((userRecord)=>{
+      response.send("Email change success!")
+    })
+  } catch(err) {
+    logger.error("Failed to change user email: ",err)
+  }
+});
 
-// ADMIN FUNCS //
-export const deleteOldPosts = functions.https.onRequest(async(request,response)=>{
-
-})
-
-
-
-
+export const changeUserPassword = functions.https.onRequest(async(request,response)=>{
+  const {uid,newPassword}:any = request.body
+  try{
+    admin.auth().updateUser(uid,{
+      password:newPassword,
+    })
+    .then((userRecord)=>{
+      response.send("Password change success!")
+    })
+  } catch(err) {
+    logger.error("Failed to change user email: ",err)
+  }
+});
+const firestore = admin.firestore();
+export const deleteUserProfile = functions.https.onRequest(async(request,response)=>{
+  const {uid}:any = request.body
+  try{
+    await admin.auth().deleteUser(uid)
+    const userDocRef = firestore.doc(`users/${uid}`);
+    await userDocRef.delete();
+    response.send("Account deleted successfully!")
+  } catch(err) {
+    logger.error("Failed to change user email: ",err)
+  }
+});
 
 
 
@@ -250,17 +277,17 @@ const getCurrentDate = () => {
   
   return `${month}/${day}/${year}`;
   };
-  function generateTimestamp() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hour = String(now.getHours()).padStart(2, '0');
-    const minute = String(now.getMinutes()).padStart(2, '0');
-    const second = String(now.getSeconds()).padStart(2, '0');
+  // function generateTimestamp() {
+  //   const now = new Date();
+  //   const year = now.getFullYear();
+  //   const month = String(now.getMonth() + 1).padStart(2, '0');
+  //   const day = String(now.getDate()).padStart(2, '0');
+  //   const hour = String(now.getHours()).padStart(2, '0');
+  //   const minute = String(now.getMinutes()).padStart(2, '0');
+  //   const second = String(now.getSeconds()).padStart(2, '0');
   
-    return `${year}-${month}-${day}-${hour}-${minute}-${second}`;
-  }
+  //   return `${year}-${month}-${day}-${hour}-${minute}-${second}`;
+  // }
 //EXP Uploader Functions//
 const handlePostSubmit = async(
   uid:string,userName:string,streak:number,postSkill:string,
@@ -268,9 +295,11 @@ const handlePostSubmit = async(
   settingOne:boolean,settingTwo:boolean,settingThree:boolean,type:string,
   timelinePicURLs:any,cameraPicURL:string,
   ) => {
-  let timeStamp = generateTimestamp()
-  const postID = `${uid}_${timeStamp}`
+  let timeStamp = Timestamp.now()
+  const postID = `${uid}_${timeStamp.toMillis()}`
       const postObj = {
+          upvotes:[],
+          downvotes:[],
           timelinePicURLs:timelinePicURLs,
           cameraPicURL:cameraPicURL,
           posterUID:uid,
@@ -292,13 +321,13 @@ const handlePostSubmit = async(
           uid: uid,
           type:type
       }
-      logger.log("POST SUBMITTING WITH DATA: ", postObj)
+      logger.info("POST SUBMITTING WITH DATA: ", postObj)
           // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
       try {
         const uniqueUserPath = `users/${uid}/xpLog`;
         await db.doc(`${uniqueUserPath}/${postID}`).set({ id: postID, timeStamp:timeStamp, eventTitle:eventTitle, traitType: postSkill, xp:xp });
         await db.doc(`posts/${postID}`).set(postObj);
-        giveUserXP(uid,postSkill,xp)
+        giveUserXP(postSkill,uid,xp)
       } catch(err) {
         logger.error(err)
       }
@@ -320,7 +349,7 @@ const giveUserXP = async (skill: string, uid: string, xpQty: number) => {
 
     // Get the xpData object from the user's document
     const userData: any = userDoc.data();
-    logger.log(userData);
+    logger.info(userData);
     const xpData = userData.xpData;
 
     // Check if the skill exists in xpData, if not initialize it to 0
@@ -329,14 +358,86 @@ const giveUserXP = async (skill: string, uid: string, xpQty: number) => {
     // Update the xp for the given skill using FieldValue.increment
     await userDocRef.update({ [`xpData.${lowSkill}`]: admin.firestore.FieldValue.increment(xpQty) });
 
-    logger.log('XP updated successfully!');
+    logger.info('XP updated successfully!');
   } catch (error) {
     logger.error('Error updating XP:', error);
   }
 };
 
 
+const giveUserNotification = async (uid:string,message:string) => {
+  const notificationObj = {
+    message:message,
+    read:false,
+    timeStamp:Timestamp.now(),
+  }
+  logger.log(notificationObj)
+  await db.collection(`users/${uid}/notifications`).add(notificationObj)
+}
 
+const updateXpLogDocumentXp = async(uid:string,score:number,timeStamp:any)=>{
+  try{
+    const docID = `${uid}_${timeStamp.toMillis()}`
+    const docRef = admin.firestore().doc(`users/${uid}/xpLog/${docID}`);
+    await docRef.update({ xp: admin.firestore.FieldValue.increment(score) });
+  } catch (err) {
+    logger.error(err)
+  }
 
-
+}
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// HOURLY POST CLEANUP //
+export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hours').timeZone('UTC').onRun(async (context) => {
+  logger.log('Starting cleanup and reward process...');
+
+  try {
+    const currentTime = new Date();
+    const twentyFourHoursAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000));
+    const twentyFourHoursAgoTimestamp = admin.firestore.Timestamp.fromDate(twentyFourHoursAgo); // Convert to Firestore Timestamp
+    logger.log('Current Time:', currentTime);
+    logger.log('24 Hours Ago:', twentyFourHoursAgo);
+    logger.log('Firestore 24 hours ago', twentyFourHoursAgoTimestamp)
+
+    // Fetch posts older than 24 hours from Firestore
+    const oldPostsQuerySnapshot = await admin.firestore().collection('posts')
+    .where('timeStamp', '<=', twentyFourHoursAgoTimestamp)
+    .get();
+
+    logger.log('Number of Old Posts:', oldPostsQuerySnapshot.size);
+
+    for (const doc of oldPostsQuerySnapshot.docs) {
+      const postData = doc.data();
+      logger.log('Old Post Data:', postData);
+
+      giveUserXP(postData.postSkill,postData.posterUID,postData.score)
+      updateXpLogDocumentXp(postData.posterUID,postData.score,postData.timeStamp)
+      giveUserNotification(postData.posterUID,`Your ${postData.eventTitle} post finished with a score of ${postData.score}! You have received ${postData.score} ${postData.postSkill} XP!`)
+      // Delete the post
+      await admin.firestore().collection('posts').doc(doc.id).delete();
+      logger.log('Deleted Post with ID:', doc.id);
+
+    }
+
+    logger.log('Cleanup and reward process completed successfully!');
+  } catch (error) {
+    logger.error('Error occurred during cleanup and reward process:', error);
+  }
+});
+
+
+

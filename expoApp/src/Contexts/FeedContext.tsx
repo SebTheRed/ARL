@@ -59,8 +59,7 @@ export const FeedProvider = ({ children }:any) => {
     const oneDayAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000)); // 24 hours ago
 
     newDocs = newDocs.filter((doc: any) => {
-      const [year, month, day, hour, minute, second] = doc.timeStamp.split('-').map(Number);
-      const postDate = new Date(year, month - 1, day, hour, minute, second);
+      const postDate = doc.timeStamp.toDate(); // Convert Firestore Timestamp to JavaScript Date
       return postDate >= oneDayAgo;
     });
     console.log("newdocs", newDocs.length)
@@ -82,7 +81,7 @@ export const FeedProvider = ({ children }:any) => {
       console.log(newDocs.length)
       setCurrentFeed((prevFeed: any) => {
         const updatedFeed = [...prevFeed, ...newDocs];
-        return updatedFeed.sort((a, b) => b.timeStamp.localeCompare(a.timeStamp));
+        return updatedFeed.sort((a, b) => b.timeStamp.toMillis() - a.timeStamp.toMillis());
       });
       
     }
@@ -101,8 +100,7 @@ export const FeedProvider = ({ children }:any) => {
     const oneDayAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000)); // 24 hours ago
   
     newDocs = newDocs.filter((doc: any) => {
-      const [year, month, day, hour, minute, second] = doc.timeStamp.split('-').map(Number);
-      const postDate = new Date(year, month - 1, day, hour, minute, second);
+      const postDate = doc.timeStamp.toDate(); // Convert Firestore Timestamp to JavaScript Date
       return postDate >= oneDayAgo;
     });
     console.log("newdocs", newDocs.length)
@@ -119,7 +117,7 @@ export const FeedProvider = ({ children }:any) => {
       console.log(newDocs.length)
       setCurrentFeed((prevFeed: any) => {
         const updatedFeed = [...prevFeed, ...newDocs];
-        return updatedFeed.sort((a, b) => b.timeStamp.localeCompare(a.timeStamp));
+        return updatedFeed.sort((a, b) => b.timeStamp.toMillis() - a.timeStamp.toMillis());
       });
       
     }

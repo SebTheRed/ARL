@@ -120,6 +120,7 @@ const ExperienceUploader = ():JSX.Element => {
         return await getDownloadURL(imageRef);
     };
     const handleTimelineSubmit = async() => {
+      setLoadingBool(true)
         let timeStamp = generateTimestamp()
         const postID = `${uid}_${timeStamp}`
         if (text.length>9 && imageOneState && imageTwoState && imageThreeState) {
@@ -179,18 +180,21 @@ const ExperienceUploader = ():JSX.Element => {
                             ],
                         })
                         );
-                } catch(err) {console.error(err)}
+                } catch(err) {
+                  setLoadingBool(false)
+                  console.error(err)}
                 // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
                 } catch(err){
                     console.error("Post failed to post",err)
                     setErrorMessage("Your experiences failed to post. Please close the app & try again.")
+                    setLoadingBool(false)
                 }
         
 
         }
     }
     const handleCameraPostSubmit = async() => {
-        
+        setLoadingBool(true)
         let timeStamp = generateTimestamp()
         const storage = getStorage();
         const postID = `${uid}_${timeStamp}`
@@ -262,17 +266,22 @@ const ExperienceUploader = ():JSX.Element => {
                             ],
                         })
                         );
-                } catch(err) {console.error(err)}
+                        
+                } catch(err) {
+                  setLoadingBool(false)
+                  console.error(err)}
                 // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
 
             }
             )
             } catch(err) {
+              setLoadingBool(false)
                 console.error("upload failed",err)
                 setErrorMessage("Image upload failed, please try again with a new picture.")
             }
 
         } else {
+          setLoadingBool(false)
             console.warn("LOG MUST BE AT LEAST 10 CHARACTERS")
             if (text.length<9) {setErrorMessage("Your log must be at least 10 characters!")}
             else if (!cameraImageURL) {setErrorMessage("This experiences requires a picture!")}}

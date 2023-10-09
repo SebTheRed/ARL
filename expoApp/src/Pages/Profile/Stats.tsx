@@ -15,7 +15,7 @@ import {
   } from "react-native-chart-kit";
 import React, {useEffect, useState} from 'react'
 import { db } from '../../Firebase/firebase';
-import { getDocs, query, orderBy, startAt, endAt,where, collection, limit,startAfter } from "firebase/firestore"; // Import onSnapshot
+import { getDocs, query, orderBy, startAt, endAt,where, collection, limit,startAfter, Timestamp } from "firebase/firestore"; // Import onSnapshot
 import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 // import { useUID } from '../../Contexts/UIDContext';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
@@ -103,52 +103,46 @@ const Stats = ():JSX.Element => {
   }
 }
 
-  const calculateLineGraphData = (logList:Object[]) => {
-    // let testXPMonthData = [100,99,98,97,96,95,94,93,92,91,90,79,78,77,76,75,74,73,72,71,70,59,58,57,56,55,54,53,52,51]
-    // const xpPerDay = {};
-    const calculated30Days = () => {
-      const today = new Date();
-      const xpArray = new Array(30).fill(0); // Initialize an array of 30 nulls
+const calculateLineGraphData = (logList: Object[]) => {
+  const today = new Date();
+  const xpArray = new Array(30).fill(0); // Initialize an array of 30 zeros
   
-      for (let i = 0; i < 30; i++) {
-        const targetDate = new Date(today);
-        targetDate.setDate(today.getDate() - i); // Go back i days from today
-        const targetDateString = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}`;
-  
-        let totalXP = 0;
-        let hasData = false;
-  
-        logList.forEach((doc:any) => {
-          if (doc.traitType !== currentTraitTitle) { return; }
-          const docDate = doc.timeStamp.split('-').slice(0, 3).join('-'); // Extract the date part from the timestamp
-          if (docDate === targetDateString) {
-            totalXP += doc.xp;
-            hasData = true;
-          }
-        });
-  
-        if (hasData) {
-          xpArray[29 - i] = totalXP; // Fill in the XP for that day
-        }
-      }
-  
-      return xpArray;
-    };
-  
-
-
-
+  for (let i = 0; i < 30; i++) {
+    const targetDate = new Date(today);
+    targetDate.setDate(today.getDate() - i); // Go back i days from today
+    const targetTimestamp = Timestamp.fromDate(targetDate); // Convert to Firestore Timestamp
     
-    let data = {
-      labels: [30,""," Days","","","","","","","",20,""," Days","","","","","","","",10,""," Days","","","","","","","Today",""],
-      datasets:[
-        {
-          data: calculated30Days(),//PUT ARRAY OF COMBINED TOTAL OF EACH 30 DAYS HERE!!
-        },
-      ],
+    let totalXP = 0;
+    let hasData = false;
+  
+    logList.forEach((doc: any) => {
+      if (doc.traitType !== currentTraitTitle) { return; }
+      
+      // Compare Firestore Timestamps directly
+      const docDate = new Date(doc.timeStamp.seconds*1000)
+      if (docDate.getFullYear() === targetTimestamp.toDate().getFullYear() &&
+          docDate.getMonth() === targetTimestamp.toDate().getMonth() &&
+          docDate.getDate() === targetTimestamp.toDate().getDate()) {
+        totalXP += doc.xp;
+        hasData = true;
+      }
+    });
+  
+    if (hasData) {
+      xpArray[29 - i] = totalXP; // Fill in the XP for that day
     }
-    setLineChartData(data)
   }
+  
+  let data = {
+    labels: [30,""," Days","","","","","","","",20,""," Days","","","","","","","",10,""," Days","","","","","","","Today",""],
+    datasets:[
+      {
+        data: xpArray, // Updated array
+      },
+    ],
+  }
+  setLineChartData(data)
+}
   
   const chartConfig = {
     backgroundGradientFrom: "#1c1c1c",
@@ -180,14 +174,27 @@ const Stats = ():JSX.Element => {
   const handleLoadMoreLogs = () => {
 
   }
-  const convertTimestampToMMDDYY = (timestamp:string) => {
-    if (timestamp === "Timestamp") {return "Date"};
-    // Split the timestamp by '-' to get each component
-    const [year, month, day] = timestamp.split('-').slice(0, 3);
-  
+  const convertTimestampToMMDDYY = (timestamp:any) => {
+    if (timestamp === "Timestamp") { return "Date"; }
+    
+    let date;
+    if (typeof timestamp === 'string') {
+      // If timestamp is a string, split it by '-' to get each component
+      const [year, month, day] = timestamp.split('-').slice(0, 3);
+      date = new Date(`${year}-${month}-${day}`);
+    } else {
+      // If timestamp is a Firestore Timestamp, convert it to a Date object
+      date = new Date(timestamp.seconds*1000)
+    }
+    
+    // Get the components from the Date object
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    
     // Convert to MM/DD/YY format
-    const formattedDate = `${month}/${day}/${year.slice(-2)}`;
-  
+    const formattedDate = `${month}/${day}/${String(year).slice(-2)}`;
+    
     return formattedDate;
   };
 

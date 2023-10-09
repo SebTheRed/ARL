@@ -172,7 +172,7 @@ return(
             blurOnSubmit={true}
             onSubmitEditing={()=>Keyboard.dismiss()} 
             onChangeText={(text) =>
-              handleInputChange(text, setUserName, (text:string) => /^[a-zA-Z0-9._-]+$/.test(text), setIsUserNameValid)
+              handleInputChange(text, setUserName, (text:string) => /^[a-zA-Z0-9._-]{1,16}$/.test(text), setIsUserNameValid)
             }
             value={userName}
           />

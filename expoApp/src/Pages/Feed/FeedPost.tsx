@@ -9,38 +9,64 @@ import {
 	Image,
 	TouchableOpacity,
 	FlatList,
+  Dimensions,
 } from 'react-native'
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import React, { useEffect, useState } from 'react';
 import styles from '../../styles'
+import { runTransaction,doc,getDoc,updateDoc,onSnapshot } from 'firebase/firestore';
+import { db } from '../../Firebase/firebase';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import { scaleFont } from '../../Utilities/fontSizing';
-
+import { useGameRules } from '../../Contexts/GameRules';
+import { useUID } from '../../Contexts/UIDContext';
+import ScoreCounter from './ScoreCounter';
 type RootStackParamList = {
 	Profile:undefined,
 }
 
-const FeedPost = ({data, skillsList}:any):JSX.Element => {
+const FeedPost = ({data}:any):JSX.Element => {
+  const {uid}:any = useUID()
+  const { skillsList }:any = useGameRules();
 	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 	//findPageUserID is a function call that sets a unique, profile-filtered, feed on the profile page.
 	const {findPageUserID, }:any = useProfilePageUID()
 	//matchingSkillData contains relevant data to the "matched skill". This is to show the proper color, title, flare, etc. Per post.
-	const [matchingSkillData,setMatchingSkillData] = useState({title:"",color:"#fff",flare:"",level:0})
+	const [matchingSkillColor,setMatchingSkillColor] = useState("#fff")
 	//translatedTimestamp takes my stupid YYYY-MM-DD-HH-MM-SS timestamp and sets it to a 24 hour "time remaining" string val.
 	const [translatedTimestamp,setTranslatedTimestamp] = useState("")
 	const [profilePicState,setProfilePicState] = useState<any>(null)
 	const [isLoading,setIsLoading]=useState(true)
 	const [logBoxHeight,setLogBoxHeight] = useState<number|null>(null)
+  const [score,setScore] = useState<number>()
+  const windowDimensions = Dimensions.get('window')
 
 //This useEffect simply maps over the skillsList, seeking a match.
 //Also, it will set the translated timestamp, using the function timeRemainingUntil24Hours
 useEffect(()=>{
-	
-	Object.values(skillsList).map((skill:any)=>{
-		if (skill.title === data.postSkill){setMatchingSkillData(skill)}
-	})
+	setScore(data.score)
+	switch(data.postSkill){
+    case"Family": setMatchingSkillColor("#ff0000")
+    break;
+    case"Friends":setMatchingSkillColor("#ff8400")
+    break;
+    case "Fitness":setMatchingSkillColor("#ffea00")
+    break;
+    case "Earthcraft":setMatchingSkillColor("#4dff00")
+    break;
+    case "Cooking":setMatchingSkillColor("#00ff80")
+    break;
+    case "Technology":setMatchingSkillColor("#00fffb")
+    break;
+    case "Games":setMatchingSkillColor("#0080ff")
+    break;
+    case "Language":setMatchingSkillColor("#7700ff")
+    break;
+    case "Humanity":setMatchingSkillColor("#c800ff")
+    break;
+  }
 	setTranslatedTimestamp(timeRemainingUntil24Hours(data.timeStamp))
 
 	
@@ -74,27 +100,33 @@ useEffect(()=>{
         translateURL()
 },[])
 
+
 //Chat GPT is GOAT for writing this for me. Too lazy *yawn* CHAT-GPT already commented this for me <3
-function timeRemainingUntil24Hours(timestamp: string): string {
-	// Parse the timestamp string into its components
-	const [year, month, day, hour, minute, second] = timestamp.split('-').map(Number);
-	// Create a Date object from the timestamp
-	const pastDate = new Date(year, month - 1, day, hour, minute, second);
-	// Get the current date and time
-	const currentDate = new Date();
-	// Calculate the time difference in milliseconds
-	const timeDifference = currentDate.getTime() - pastDate.getTime();
-	// Calculate the remaining time in milliseconds
-	const remainingTime = (24 * 60 * 60 * 1000) - timeDifference;
-	// Calculate remaining hours and minutes
-	const remainingHours = Math.floor(remainingTime / (1000 * 60 * 60));
-	const remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-	// Format the remaining time as HH:MM
-	const formattedTime = `${String(remainingHours).padStart(2, '0')}:${String(remainingMinutes).padStart(2, '0')}`;
+const timeRemainingUntil24Hours = (timestamp:any) =>{
+  // Convert Firestore Timestamp to JavaScript Date
+  const pastDate = timestamp.toDate();
 
-	return formattedTime;
-  }
+  // Get the current date and time
+  const currentDate = new Date();
 
+  // Calculate the time difference in milliseconds
+  const timeDifference = currentDate.getTime() - pastDate.getTime();
+
+  // Calculate the remaining time in milliseconds
+  const remainingTime = (24 * 60 * 60 * 1000) - timeDifference;
+
+  // If the remaining time is less than or equal to 0, return "00:00"
+  if (remainingTime <= 0) return "00:00";
+
+  // Calculate remaining hours and minutes
+  const remainingHours = Math.floor(remainingTime / (1000 * 60 * 60));
+  const remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+
+  // Format the remaining time as HH:MM
+  const formattedTime = `${String(remainingHours).padStart(2, '0')}:${String(remainingMinutes).padStart(2, '0')}`;
+
+  return formattedTime;
+}
 //handleProfilePress does two things:
 // fist, it runs the function findPageUseriD which is explained above.
 //second, it navigates to the profile page, which uses the matched user's data.
@@ -123,6 +155,7 @@ const handleProfilePress = () => {
 
 
 
+
 //PostContentSplitter simplly returns different "bodies" of the post, depending on the post type.
 //This needs much more work, and will be updated more-so after I've finalized ExperienceUPloader.
 const PostContentSplitter = ():JSX.Element => {
@@ -135,8 +168,8 @@ const PostContentSplitter = ():JSX.Element => {
 		// case "api":return(<View></View>)
 		case "camera":return(
 		<View style={{height:"auto", justifyContent:"space-around"}}>
-			<View style={{...styles.postContentContainer, height:scaleFont(350), borderWidth:0,marginBottom:0}}>
-				<Image style={{width:"100%", height:scaleFont(350),resizeMode:"cover"}} source={{uri:data.cameraPicURL}} /> 
+			<View style={{height: (windowDimensions.width), borderWidth:0,marginBottom:0}}>
+				<Image style={{width: (windowDimensions.width), height: (windowDimensions.width),resizeMode:"cover"}} source={{uri:data.cameraPicURL}} /> 
 			</View>
 			<View style={{...styles.postContentContainer, height:logBoxHeight}}>
 				<Text style={{...styles.postContentLogText}}>{data.textLog}</Text>
@@ -149,12 +182,12 @@ const PostContentSplitter = ():JSX.Element => {
 					horizontal={true}
 					pagingEnabled
 					showsHorizontalScrollIndicator={false}
-					style={{ height: scaleFont(350) }}
+					style={{ height: (windowDimensions.width) }}
 				>
 					{data.timelinePicURLs.map((item:string, index:number) => (
 						<Image 
 							key={index}
-							style={{ width: scaleFont(425), height: scaleFont(350), resizeMode: 'cover' }}
+							style={{ width: (windowDimensions.width), height: (windowDimensions.width), resizeMode: 'cover' }}
 							source={{ uri: item }}
 						/>
 					))}
@@ -184,10 +217,10 @@ const PostContentSplitter = ():JSX.Element => {
 	}
 }
 
-  
+
 	
     return(
-        <View style={{...styles.feedPostWrapper}}>
+    <View style={{...styles.feedPostWrapper, width: windowDimensions.width,}}>
 			<View style={{...styles.postTopRow}}>
 				<View style={{...styles.postProfileAndNameContainer}}>
 					<TouchableOpacity style={{...styles.postProfPic}} onPress={handleProfilePress}>
@@ -196,56 +229,43 @@ const PostContentSplitter = ():JSX.Element => {
 							<Image style={styles.postProfPicImg} source={{uri: profilePicState}} />
 						)}
 					</TouchableOpacity>
-					<TouchableOpacity onPress={handleProfilePress}>
+					<TouchableOpacity style={{height:50}} onPress={handleProfilePress}>
 						<Text style={{...styles.postTopName}}>{data.posterUserName} </Text>
+            {skillsList && (<Text style={{...styles.postTopExperienceName,color:matchingSkillColor}}>{data.eventTitle}</Text>)}
 					</TouchableOpacity>
 					
 				</View>
-				<View style={{...styles.postTopStreakIconContainer}}>
+				{/* <View style={{...styles.postTopStreakIconContainer}}>
 					<Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
 					<Text style={{...styles.postTopStreak}}>{data.streak}</Text>
-				</View>
-				
-				<View style={{...styles.postTopTrophyBox}}>
-					{/*TROPHY PINS GO HERE */}
-				</View>
-				<TouchableOpacity style={{...styles.postTopMapButton}}>
-					<Image style={styles.postTopMapIcon} source={require('../../IconBin/travel.png')} />
-				</TouchableOpacity>
-			</View>
+				</View> */}
 			<View style={{...styles.postTopExperienceContainer}}>
-				<Text style={{...styles.postTopExperienceName,color:matchingSkillData.color}}>{data.eventTitle}</Text>
-				<Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
 				
 			</View>
+			</View>
+			
 				<PostContentSplitter />
 			
 			<View style={{...styles.postBottomWrapper}}>
-				<View style={{...styles.postBottomReactionContainer}}>
+				{/* <View style={{...styles.postBottomReactionContainer}}>
 					<TouchableOpacity style={styles.postBottomIconContainer} >
 						<Image style={styles.postBottomIcon} source={require('../../IconBin/reactions.png')} />
-						{/* <Text style={styles.postBottomText}></Text> */}
 					</TouchableOpacity>
-				</View>
-				<View style={{...styles.postBottomVoteContainer}}>
-					<TouchableOpacity style={styles.postBottomIconContainer} >
-						<Image style={styles.postBottomIcon} source={require('../../IconBin/upvote.png')} />
-						{/* <Text style={styles.postBottomText}></Text> */}
-					</TouchableOpacity>
-					<Text style={styles.postBottomScore}>{data.score}</Text>
-					<TouchableOpacity style={styles.postBottomIconContainer} >
-						<Image style={styles.postBottomIcon} source={require('../../IconBin/downvote.png')} />
-						{/* <Text style={styles.postBottomText}></Text> */}
-					</TouchableOpacity>
-				</View>
-				<View style={{...styles.postBottomCommentsContainer}}>
+				</View> */}
+        <TouchableOpacity style={{...styles.postTopMapButton}}>
+					<Image style={{...styles.postTopMapIcon,tintColor:"gray"}} source={require('../../IconBin/travel.png')} />
+				</TouchableOpacity>
+        <View style={styles.postBottomBox}>
+          <ScoreCounter data={data} />
+        </View>
+        <Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
+				{/* <View style={{...styles.postBottomCommentsContainer}}>
 					<TouchableOpacity style={styles.postBottomIconContainer} >
 						<Image style={styles.postBottomIcon} source={require('../../IconBin/comments.png')} />
-						{/* <Text style={styles.postBottomText}></Text> */}
 					</TouchableOpacity>
-				</View>
+				</View> */}
 			</View>
-        </View>
+    </View>
     )
 }
 

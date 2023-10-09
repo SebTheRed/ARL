@@ -40,6 +40,7 @@ import {CurrentTraitStatProvider} from './Contexts/CurrentTraitStat'
 import {LastPageProvider} from './Contexts/LastPageContext'
 import {HamburgerBarProvider} from './Contexts/HamburgerBarContext'
 import { FriendsProvider } from './Contexts/FriendsContext';
+import { NotificationProvider } from './Contexts/NotificationsContext';
 import {
   SafeAreaView,
   ScrollView,
@@ -101,27 +102,32 @@ const AuthApp = ()=>{
   // console.log("authapp, ", userData)
   if (Object.values(userData).length>0) {
     return(
+      <FeedProvider>
       <GameRulesProvider>
         <CooldownProvider>
-        <HeaderBar />
-          <Stack.Navigator initialRouteName='Admin' screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Skills" component={SkillsNav} />
-            <Stack.Screen name="Trophies" component={Trophies} />
-            <Stack.Screen name="Map" component={Map} />
-            <Stack.Screen name="Feed" component={Feed} />
-            <Stack.Screen name="ProfileStack" component={ProfilePages} />
-            <Stack.Screen name="UserStats" component={Stats} />
-            <Stack.Screen name="Search" component={Search} />
-            <Stack.Screen name="Notifications" component={Notifications} />
-            <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
-            <Stack.Screen name="Friends" component={Friends} />
-            <Stack.Screen name="Streak" component={Streak} />
-            <Stack.Screen name="Admin" component={AdminComponent} />
-          </Stack.Navigator>
-        <HamburgerBar />
-        <BottomBar/>
+          <NotificationProvider>
+          <StatusBar />
+          <HeaderBar />
+            <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Skills" component={SkillsNav} />
+              <Stack.Screen name="Trophies" component={Trophies} />
+              <Stack.Screen name="Map" component={Map} />
+              <Stack.Screen name="Feed" component={Feed} />
+              <Stack.Screen name="ProfileStack" component={ProfilePages} />
+              <Stack.Screen name="UserStats" component={Stats} />
+              <Stack.Screen name="Search" component={Search} />
+              <Stack.Screen name="Notifications" component={Notifications} />
+              <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
+              <Stack.Screen name="Friends" component={Friends} />
+              <Stack.Screen name="Streak" component={Streak} />
+              <Stack.Screen name="Admin" component={AdminComponent} />
+            </Stack.Navigator>
+          <HamburgerBar />
+          <BottomBar/>
+          </NotificationProvider>
         </CooldownProvider>
       </GameRulesProvider>
+      </FeedProvider>
     )
   } else {
     return(
@@ -154,7 +160,6 @@ const ProfilePages = () => {
         <UserDataProvider>
           <ProfilePageUIDProvider>
           <CurrentEventProvider>
-            <FeedProvider>
               <CurrentTraitStatProvider>
               <HamburgerBarProvider>
                 <SafeAreaView style={styles.backgroundStyle}>
@@ -168,7 +173,6 @@ const ProfilePages = () => {
                 </SafeAreaView>
               </HamburgerBarProvider>
               </CurrentTraitStatProvider>
-            </FeedProvider>
           </CurrentEventProvider>
           </ProfilePageUIDProvider>
         </UserDataProvider>

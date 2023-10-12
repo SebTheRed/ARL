@@ -21,6 +21,7 @@ type RootStackParamList = {
     TrophyGrading:undefined,
     Friends:undefined,
     Streak:undefined,
+    Tutorial:undefined,
 }
 
 const HamburgerBar = ():JSX.Element => {
@@ -76,18 +77,22 @@ const HamburgerBar = ():JSX.Element => {
                     <Image style={styles.menuIcon} source={require("../../IconBin/notifications.png")} />
                     <Text style={styles.menuItem}>Notifications</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{handleOptionPress("TrophyGrading")}} style={styles.menuItemContainer}>
+                {/* <TouchableOpacity onPress={()=>{handleOptionPress("TrophyGrading")}} style={styles.menuItemContainer}>
                     <Image style={styles.menuIcon} source={require("../../IconBin/trophy_grading.png")} />
                     <Text style={styles.menuItem}>Trophy Grading</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity onPress={()=>{handleOptionPress("Friends")}} style={styles.menuItemContainer}>
                     <Image style={styles.menuIcon} source={require("../../IconBin/friends.png")} />
                     <Text style={styles.menuItem}>Friends</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{handleOptionPress("Streak")}} style={styles.menuItemContainer}>
+                <TouchableOpacity onPress={()=>{handleOptionPress("Tutorial")}} style={styles.menuItemContainer}>
+                    <Image style={styles.menuIcon} source={require("../../IconBin/psych.png")} />
+                    <Text style={styles.menuItem}>How ARL works</Text>
+                </TouchableOpacity>
+                {/* <TouchableOpacity onPress={()=>{handleOptionPress("Streak")}} style={styles.menuItemContainer}>
                     <Image style={styles.menuIcon} source={require("../../IconBin/streak.png")} />
                     <Text style={styles.menuItem}>Streak</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </Animated.View>
         )
     }

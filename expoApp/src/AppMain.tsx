@@ -32,6 +32,7 @@ import Friends from './Pages/HamburgerParts/Friends';
 import Notifications from './Pages/HamburgerParts/Notifications';
 import Streak from './Pages/HamburgerParts/Streak'
 import AdminComponent from './Utilities/AdminComponent';
+import Tutorial from './Pages/HamburgerParts/Tutorial';
 import { UIDProvider } from './Contexts/UIDContext';
 import { FeedProvider } from './Contexts/FeedContext';
 import {CurrentEventProvider} from './Contexts/CurrentEventContext'
@@ -120,6 +121,7 @@ const AuthApp = ()=>{
               <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
               <Stack.Screen name="Friends" component={Friends} />
               <Stack.Screen name="Streak" component={Streak} />
+              <Stack.Screen name="Tutorial" component={Tutorial} />
               <Stack.Screen name="Admin" component={AdminComponent} />
             </Stack.Navigator>
           <HamburgerBar />

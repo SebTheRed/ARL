@@ -30,6 +30,9 @@ const Tutorial = ():JSX.Element => {
       <View style={{height:20}} />
       <Text style={{...styles.sectionTitle,fontSize:scaleFont(24)}}>Forever is the plan.</Text>
       <Text style={{...styles.sectionFlare}}>This app will never reset. Your progress will never be lost. Do note this app costs each user about $0.01 a month. So long as this thing doesn't explode, I'll keep it free. If you would like to donate to my future 30 Acre home-stead purchase, my Paypal is specs1396@gmail.com ily</Text>
+      <View style={{height:20}} />
+      <Text style={{...styles.sectionTitle,fontSize:scaleFont(24)}}>Excuse the mess.</Text>
+      <Text style={{...styles.sectionFlare}}>ARL is my first ever mobile app. I began the self-taught journey of programming June 2022. Over time this app will improve and polish, but in the meantime bear with the bugs. Reporting any you find to specs1396@gmail.com would be appreciated.</Text>
 
     </View>
     </ScrollView>

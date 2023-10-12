@@ -496,7 +496,7 @@ const ExperienceUploader = ():JSX.Element => {
                             </View>
                         </View>
                     </View>
-                    {settingOne == true &&
+                    {/* {settingOne == true &&
                     (<View style={{...styles.eventTileWrapper,borderColor:`${settingTwo?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
@@ -530,14 +530,14 @@ const ExperienceUploader = ():JSX.Element => {
                             </View>
                         </View>
                     </View>
-                    )}
-                    { (settingTwo == true && settingOne==true && userData.settings.privateProfile == true) &&
+                    )} */}
+                    { (settingOne==true && userData.settings.privateProfile == true) &&
                     (<View style={{...styles.eventTileWrapper,borderColor:`${settingThree?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                                 <Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
                             </View>
-                            <Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Switch on to make post visible to the Global Feed & Map.</Text>
+                            <Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Switch on to make post visible to the Global Feed.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                             <View style={styles.eventButtonWrapper}>
@@ -552,7 +552,7 @@ const ExperienceUploader = ():JSX.Element => {
                         </View>
                     </View>
                     )}
-                    { (settingTwo == true && settingOne == true && userData.settings.privateProfile == false) &&
+                    { (settingOne == false && userData.settings.privateProfile == false) &&
                     (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
@@ -565,20 +565,20 @@ const ExperienceUploader = ():JSX.Element => {
                         </View>
                     </View>
                     )}
-                    { (settingTwo == false && settingOne == true && userData.settings.privateProfile == true) &&
+                    { (settingOne == false && userData.settings.privateProfile == true) &&
                     (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
                         <View style={{...styles.eventTileMain}}>
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                                 <Text style={{...styles.eventTileText,color:"gray",fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Post</Text>
                             </View>
-                            <Text style={{...styles.eventTileText,color:"gray", fontSize:scaleFont(16),}}>Switch on to make post visible to the Global Feed & Map.</Text>
+                            <Text style={{...styles.eventTileText,color:"gray", fontSize:scaleFont(16),}}>Switch on to make post visible to the Global Feed.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
 
                         </View>
                     </View>
                     )}
-                    { (settingTwo == false && userData.settings.privateProfile == false) &&
+                    {/* { (settingOne == false && userData.settings.privateProfile == false) &&
                     (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
                     <View style={{...styles.eventTileMain}}>
                         <View style={{flexDirection:"row",justifyContent:"space-between"}}>
@@ -590,7 +590,7 @@ const ExperienceUploader = ():JSX.Element => {
 
                     </View>
                 </View>
-                    )}
+                    )} */}
 
                     
                 </View>

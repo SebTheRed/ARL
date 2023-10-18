@@ -146,23 +146,23 @@ export const downVotePost = functions.https.onRequest(async(request,response)=>{
 
 export const createPost = functions.https.onRequest(async(request,response)=>{
   try {
-  const {posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,picture,pictureList}:any = request.body
+  const {visibleTo,posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,picture,pictureList}:any = request.body
   switch(type){
     case "log":
     case "api":
      await handlePostSubmit(
-        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],""
+        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],"",visibleTo
       )
     break;
     case "camera": 
      await handlePostSubmit(
-        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],picture
+        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],picture,visibleTo
       )
     break;
     case "timeline":
       logger.log(pictureList)
       await handlePostSubmit(
-        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,pictureList,""
+        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,pictureList,"",visibleTo
       )
     break;
   }
@@ -293,7 +293,7 @@ const handlePostSubmit = async(
   uid:string,userName:string,streak:number,postSkill:string,
   picURL:any,eventTitle:string,xp:number,textLog:string,
   settingOne:boolean,settingTwo:boolean,settingThree:boolean,type:string,
-  timelinePicURLs:any,cameraPicURL:string,
+  timelinePicURLs:any,cameraPicURL:string,visibleTo:any
   ) => {
   let timeStamp = Timestamp.now()
   const postID = `${uid}_${timeStamp.toMillis()}`
@@ -319,7 +319,8 @@ const handlePostSubmit = async(
           globalPost:settingThree,
           id: postID,
           uid: uid,
-          type:type
+          type:type,
+          visibleTo:visibleTo
       }
       logger.info("POST SUBMITTING WITH DATA: ", postObj)
           // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}

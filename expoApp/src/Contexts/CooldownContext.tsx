@@ -45,18 +45,18 @@ export const CooldownProvider = ({ children }: any) => {
             
             const calculatedCooldowns: any = {};
             // console.log("Query Snapshots:", querySnapshots);
-            console.log("Query snapshots length: ",querySnapshots.length)
+            // console.log("Query snapshots length: ",querySnapshots.length)
             try{
                 querySnapshots.forEach((querySnapshot:any) => {
                     if (!querySnapshot.empty) {
                         const docData = querySnapshot.docs[0].data();
-                        console.log(docData)
+                        // console.log(docData)
                         const type = (docData.traitType).toLowerCase();
                         const experienceKey = titleToKeyMapping[docData.eventTitle];
-                        console.log("exp key: ",experienceKey)
+                        // console.log("exp key: ",experienceKey)
                         if (experienceKey) {
-                                console.log("inside exp key")
-                                console.log(experiencesList[type][experienceKey].cooldown)
+                                // console.log("inside exp key")
+                                // console.log(experiencesList[type][experienceKey].cooldown)
                                 const experienceCooldown = experiencesList[type][experienceKey].cooldown * 60 * 60 * 1000;
                                 const lastPostedDate = docData.timeStamp.toDate();
                                 const lastPostedTime = lastPostedDate.getTime();

@@ -20,7 +20,7 @@ import styles from '../../styles'
 const Feed = () => {
 	//currentFeed holds a sorted array of posts. Sorted or not.
 	//This value is called from FeedContext.tsx
-	const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
+	const { friendsFeed,globalFeed, refreshFeed, paginateFeed }:any = useFeed();
 
 	//CHANGE THIS OUT ONCE WE SET UP FIREBASE TO INITIALIZE GAME RULES.
 
@@ -62,7 +62,7 @@ const Feed = () => {
 	//sixth, refreshControl.. A func component that hosts the "loading" spinner. This triggers automatically thru FlatList.
 	return (
 	  <FlatList
-		data={currentFeed}
+		data={friendsFeed}
 		ListHeaderComponent={<FeedHeader />}
 		renderItem={({ item }) => <FeedPost data={item} />}
 		keyExtractor={item => item.id.toString()}

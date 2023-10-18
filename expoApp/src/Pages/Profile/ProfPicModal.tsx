@@ -26,7 +26,7 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
         const {userData}:any = useUserData()
         const {uid}:any = useUID()
         const [imageSource, setImageSource] = useState<any>(null);
-        const [selectedImage,setSelectedImage] = useState(null)
+        const [selectedImage,setSelectedImage] = useState<any>(null)
         const [profilePicState,setProfilePicState] = useState(String)
         const [coverPhotoState,setCoverPhotoState] = useState(String)
         useEffect(()=>{
@@ -52,7 +52,7 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
           });
         
           if (!result.canceled) {
-            setImageState(result.assets[0].uri);
+            setImageSource(result.assets[0].uri);
           }
         };
       

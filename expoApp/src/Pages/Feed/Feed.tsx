@@ -20,7 +20,7 @@ import styles from '../../styles'
 const Feed = () => {
 	//currentFeed holds a sorted array of posts. Sorted or not.
 	//This value is called from FeedContext.tsx
-	const { friendsFeed,globalFeed, refreshFeed, paginateFeed }:any = useFeed();
+	const { friendsFeed,globalFeed, refreshFeed, paginateFeed, paginateFriends }:any = useFeed();
 
 	//CHANGE THIS OUT ONCE WE SET UP FIREBASE TO INITIALIZE GAME RULES.
 
@@ -45,7 +45,9 @@ const Feed = () => {
 	const handleLoadMore = () => {
 	  paginateFeed()
 	};
-  
+  const handleLoadMoreFriends = () => {
+    paginateFriends()
+  }
 
 	const FeedHeader = ():JSX.Element => {
 		return(
@@ -68,7 +70,6 @@ const Feed = () => {
       borderBottomWidth:2,
       borderLeftWidth:2,borderRightWidth:2,
       borderColor:"#fff",
-      borderBottomRightRadius:10,borderBottomLeftRadius:10,
       flexDirection:"row",justifyContent:"space-evenly"}} >
         <TouchableOpacity onPress={()=>setFeedTypeBool(false)}
         style={{
@@ -101,7 +102,7 @@ const Feed = () => {
         keyExtractor={item => item.id.toString()}
         style={styles.feedFlatList}
         contentContainerStyle={{ alignItems: 'center' }}
-        onEndReached={handleLoadMore}
+        onEndReached={handleLoadMoreFriends}
         onEndReachedThreshold={0.1}
         scrollEventThrottle={150}
         refreshControl={

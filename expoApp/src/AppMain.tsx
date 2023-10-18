@@ -103,6 +103,7 @@ const AuthApp = ()=>{
   // console.log("authapp, ", userData)
   if (Object.values(userData).length>0) {
     return(
+      <FriendsProvider>
       <FeedProvider>
       <GameRulesProvider>
         <CooldownProvider>
@@ -130,6 +131,7 @@ const AuthApp = ()=>{
         </CooldownProvider>
       </GameRulesProvider>
       </FeedProvider>
+      </FriendsProvider>
     )
   } else {
     return(
@@ -158,7 +160,7 @@ const ProfilePages = () => {
     <LastPageProvider>
       <UIDProvider>
       
-      <FriendsProvider>
+      
         <UserDataProvider>
           <ProfilePageUIDProvider>
           <CurrentEventProvider>
@@ -178,7 +180,6 @@ const ProfilePages = () => {
           </CurrentEventProvider>
           </ProfilePageUIDProvider>
         </UserDataProvider>
-      </FriendsProvider>
       </UIDProvider>
     </LastPageProvider>
     

@@ -62,6 +62,7 @@ const ExperienceUploader = ():JSX.Element => {
         setUtilityType(currentEvent.type)
         console.log("expUpload")
         console.log(currentEvent)
+        console.log(trueFriends)
     },[])
 
     function generateTimestamp() {

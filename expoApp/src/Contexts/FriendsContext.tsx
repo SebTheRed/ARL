@@ -3,15 +3,15 @@ import { db } from '../Firebase/firebase';
 import { doc,getDocs, query, collection, where, getDoc } from "firebase/firestore";
 import { useUID } from './UIDContext';
 
-interface IFriendsContext {
-  trueFriends:any[],
-  pendingFriends:any[],
-  trueFriendDocs:any[],
-  pendingFriendDocs:any[],
-  setFriendsRefresh:any,
-  friendsRefresh:boolean,
-}
-export const FriendsContext = createContext<IFriendsContext | null>(null);
+// interface IFriendsContext {
+//   trueFriends:any[],
+//   pendingFriends:any[],
+//   trueFriendDocs:any[],
+//   pendingFriendDocs:any[],
+//   setFriendsRefresh:any,
+//   friendsRefresh:boolean,
+// }
+export const FriendsContext = createContext({});
 
 export const useFriends = () => {
   return useContext(FriendsContext);
@@ -63,7 +63,10 @@ export const FriendsProvider = ({ children }:any) => {
                 // console.log("true friends", trueFriendsList)
                 // console.log("pending friends", filteredPending)
                 // console.log("useEffect triggered", { uid, friendsRefresh });
-                if (trueFriendsList.length > 0) {fetchUserDocs(trueFriendsList,"trueFriends")} else {setTrueFriendDocs([])}
+                if (trueFriendsList.length > 0) {
+                  fetchUserDocs(trueFriendsList,"trueFriends")
+                  setTrueFriends(trueFriendsList)
+                } else {setTrueFriendDocs([])}
                 if (filteredPending.length > 0) {fetchUserDocs(filteredPending,"pendingFriends")} else {setPendingFriendDocs([])}
               };
       
@@ -77,6 +80,7 @@ export const FriendsProvider = ({ children }:any) => {
                 })
               )
               if (type=="trueFriends"){
+                // console.log("TRUE _ - _ FRIENDS: ",userDocs)
                 setTrueFriendDocs(userDocs)}
               else if (type=="pendingFriends"){
                 setPendingFriendDocs(userDocs)}

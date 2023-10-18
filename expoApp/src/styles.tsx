@@ -45,7 +45,7 @@ headerBar:{
   height:50,
   alignItems:"center",
   color:"white",
-  borderBottomWidth:2,
+  // borderBottomWidth:2,
   borderColor:"#ffffff",
   flexDirection:"row",
   justifyContent:"space-between"

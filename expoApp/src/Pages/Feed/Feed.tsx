@@ -27,6 +27,7 @@ const Feed = () => {
 
 	//A simple refresh state just to the app actually changess after the reload.
 	const [refreshing, setRefreshing] = useState(false);
+  const [feedTypeBool,setFeedTypeBool] = useState(false);
 
 	//A function that simple toggles the switch of the refreshing state.
 	//The immportant thing here is the await call. Reason being is that we should WAIT until the feed is updated,
@@ -61,25 +62,81 @@ const Feed = () => {
 	//fifth, onEndReachedThreshold.. ¯\_(ツ)_/¯ I really don't know how this works. But I know its necessary!!
 	//sixth, refreshControl.. A func component that hosts the "loading" spinner. This triggers automatically thru FlatList.
 	return (
-	  <FlatList
-		data={friendsFeed}
-		ListHeaderComponent={<FeedHeader />}
-		renderItem={({ item }) => <FeedPost data={item} />}
-		keyExtractor={item => item.id.toString()}
-		style={styles.feedFlatList}
-		contentContainerStyle={{ alignItems: 'center' }}
-		onEndReached={handleLoadMore}
-		onEndReachedThreshold={0.1}
-		scrollEventThrottle={150}
-		refreshControl={
-		  <RefreshControl
-			refreshing={refreshing}
-			onRefresh={handleRefresh}
-			colors={['#FFF']}
-			tintColor="#FFF"
-		  />
-		}
-	  />
+    <>
+    <View style={{height:30, backgroundColor:"#1c1c1c"}}>
+      <View style={{height:"100%",
+      borderBottomWidth:2,
+      borderLeftWidth:2,borderRightWidth:2,
+      borderColor:"#fff",
+      borderBottomRightRadius:10,borderBottomLeftRadius:10,
+      flexDirection:"row",justifyContent:"space-evenly"}} >
+        <TouchableOpacity onPress={()=>setFeedTypeBool(false)}
+        style={{
+          flex: 1,
+          backgroundColor: !feedTypeBool ? 'white' : '#1c1c1c',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+        >
+          <Text style={{color: !feedTypeBool ? '#1c1c1c' : '#fff', fontWeight: !feedTypeBool ? "bold" : "none"}}>Friends</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>setFeedTypeBool(true)}
+        style={{
+          flex: 1,
+          backgroundColor: feedTypeBool ? 'white' : '#1c1c1c',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+        >
+          <Text style={{color: feedTypeBool ? '#1c1c1c' : '#fff',fontWeight: feedTypeBool ? "bold" : "none"}}>Global</Text>
+        </TouchableOpacity>
+        
+      </View>
+    </View>
+    {!feedTypeBool&&(
+      <FlatList
+        data={friendsFeed}
+        ListHeaderComponent={<FeedHeader />}
+        renderItem={({ item }) => <FeedPost data={item} />}
+        keyExtractor={item => item.id.toString()}
+        style={styles.feedFlatList}
+        contentContainerStyle={{ alignItems: 'center' }}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.1}
+        scrollEventThrottle={150}
+        refreshControl={
+          <RefreshControl
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          colors={['#FFF']}
+          tintColor="#FFF"
+          />
+        }
+      />
+    )}
+    {feedTypeBool&&(
+      <FlatList
+        data={globalFeed}
+        ListHeaderComponent={<FeedHeader />}
+        renderItem={({ item }) => <FeedPost data={item} />}
+        keyExtractor={item => item.id.toString()}
+        style={styles.feedFlatList}
+        contentContainerStyle={{ alignItems: 'center' }}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.1}
+        scrollEventThrottle={150}
+        refreshControl={
+          <RefreshControl
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          colors={['#FFF']}
+          tintColor="#FFF"
+          />
+        }
+      />
+    )}
+    </>
+	  
 	);
   };
   

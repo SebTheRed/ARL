@@ -27,6 +27,7 @@ import {setDoc,doc, Timestamp} from 'firebase/firestore'
 import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
 import { useFeed } from '../../Contexts/FeedContext';
+import { useFriends } from '../../Contexts/FriendsContext';
 import {scaleFont} from '../../Utilities/fontSizing'
 import CameraPage from './CameraPage'
 import LoadingOverlay from '../../Overlays/LoadingOverlay';
@@ -37,6 +38,7 @@ type RootStackParamList = {
     Feed:undefined,
 }
 const ExperienceUploader = ():JSX.Element => {
+    const {trueFriends}:any = useFriends()
     const {userData}:any = useUserData()
     const {currentEvent, setCurrentEvent}:any = useCurrentEvent()
     const {newPostHandler}:any = useFeed()
@@ -152,7 +154,8 @@ const ExperienceUploader = ():JSX.Element => {
                         settingOne:settingOne,
                         settingTwo:settingTwo,
                         settingThree:settingThree,
-                        type:currentEvent.type
+                        type:currentEvent.type,
+                        visibleTo:[...trueFriends,uid]
                     }),
                     })
                     if (!response.ok) {
@@ -238,7 +241,8 @@ const ExperienceUploader = ():JSX.Element => {
                         settingOne:settingOne,
                         settingTwo:settingTwo,
                         settingThree:settingThree,
-                        type:currentEvent.type
+                        type:currentEvent.type,
+                        visibleTo:[...trueFriends,uid]
                     }),
                     })
                     if (!response.ok) {
@@ -312,7 +316,8 @@ const ExperienceUploader = ():JSX.Element => {
                     settingOne:settingOne,
                     settingTwo:settingTwo,
                     settingThree:settingThree,
-                    type:currentEvent.type
+                    type:currentEvent.type,
+                    visibleTo:[...trueFriends,uid]
                 }),
                 })
         

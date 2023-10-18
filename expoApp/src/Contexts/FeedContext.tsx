@@ -3,9 +3,11 @@ import { getDocs, query, orderBy, startAt, endAt,where, collection, limit,startA
 import { useUID } from './UIDContext';
 import { useProfilePageUID } from './ProfilePageUID';
 import { db } from '../Firebase/firebase';
+import { useFriends } from './FriendsContext';
 const FeedContextProvider = createContext({});
 
 export const useFeed = () => {
+
   const context = useContext(FeedContextProvider);
   if (!context) {
     throw new Error('useFeed must be used within a FeedProvider');
@@ -15,6 +17,7 @@ export const useFeed = () => {
 type DocumentData = undefined
 
 export const FeedProvider = ({ children }:any) => {
+  const {trueFriends}:any = useFriends()
   const {profilePageUID}:any = useProfilePageUID()
   const { uid }:any = useUID();
   const [currentFeed, setCurrentFeed] = useState<any>([]);

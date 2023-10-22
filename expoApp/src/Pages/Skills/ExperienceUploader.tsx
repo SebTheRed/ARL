@@ -244,7 +244,8 @@ const ExperienceUploader = ():JSX.Element => {
                         settingTwo:settingTwo,
                         settingThree:settingThree,
                         type:currentEvent.type,
-                        visibleTo:[...trueFriends,uid]
+                        visibleTo:[...trueFriends,uid],
+                        blockedTo:[...blockedPersons]
                     }),
                     })
                     if (!response.ok) {
@@ -319,7 +320,8 @@ const ExperienceUploader = ():JSX.Element => {
                     settingTwo:settingTwo,
                     settingThree:settingThree,
                     type:currentEvent.type,
-                    visibleTo:[...trueFriends,uid]
+                    visibleTo:[...trueFriends,uid],
+                    blockedTo:[...blockedPersons]
                 }),
                 })
         
@@ -629,7 +631,7 @@ const ExperienceUploader = ():JSX.Element => {
                 <CameraPage setCameraImageURL={setCameraImageURL} setCameraActiveBool={setCameraActiveBool} cameraImageState={cameraImageState} setCameraImageState={setCameraImageState} />
             )}
           {loadingBool&&(
-            <LoadingOverlay isVisible={loadingBool} />
+            <LoadingOverlay text={"Uploading Post..."} isVisible={loadingBool} />
         )}
         </Modal>
     )

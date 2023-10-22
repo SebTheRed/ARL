@@ -757,7 +757,7 @@ profilePageStatsTop:{
   width:"97.5%",
   height:30,
   flexDirection:"row",
-  justifyContent:"space-between",
+  justifyContent:"space-evenly",
 },
 profilePageJoinDateContainer:{
   width:"40%",

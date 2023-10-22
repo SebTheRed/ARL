@@ -20,7 +20,7 @@ import EditProfile from './Pages/Profile/EditProfile'
 import Trophies from './Pages/Trophies/Trophies'
 import HeaderBar from './Overlays/HeaderBar';
 import ProfilePicModal from './Pages/Profile/ProfPicModal'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './styles';
 import Feed from './Pages/Feed/Feed';
 import Login from './Pages/Login/Login'
@@ -61,14 +61,15 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 // import Geolocation from '@react-native-community/geolocation';
 import BottomBar from './Overlays/BottomBar';
-import { useEffect, } from 'react';
 import { useUID } from './Contexts/UIDContext';
 import ExperienceUploader from './Pages/Skills/ExperienceUploader';
 import {db} from './Firebase/firebase'
 import {UserDataProvider, useUserData} from './Contexts/UserDataContext';
+import { useGameRules } from './Contexts/GameRules';
 import UserPassPopup from './Pages/Profile/UserPassPopup';
 import { GameRulesProvider } from './Contexts/GameRules';
 import { CooldownProvider } from './Contexts/CooldownContext';
+import LoadingOverlay from './Overlays/LoadingOverlay';
 const Stack = createStackNavigator();
 const SkillStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -76,7 +77,6 @@ const ProfileStack = createStackNavigator()
 
 ////// COMPONENT FUNCTION BEGINNING //////
 function AppMain(): JSX.Element {
-
 
 const SkillsNav = () => {
   return(
@@ -100,12 +100,13 @@ const SkillsNav = () => {
 
 const AuthApp = ()=>{
   const {userData}:any = useUserData()
+  const {dataLoading}:any = useGameRules()
   // console.log("authapp, ", userData)
-  if (Object.values(userData).length>0) {
+  if (Object.values(userData).length>0 && dataLoading==false) {
     return(
       <FriendsProvider>
       <FeedProvider>
-      <GameRulesProvider>
+
         <CooldownProvider>
           <NotificationProvider>
           <StatusBar />
@@ -129,7 +130,6 @@ const AuthApp = ()=>{
           <BottomBar/>
           </NotificationProvider>
         </CooldownProvider>
-      </GameRulesProvider>
       </FeedProvider>
       </FriendsProvider>
     )
@@ -138,7 +138,7 @@ const AuthApp = ()=>{
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.backgroundStyle}>
-          <Text style={{fontSize:40,color:"#fff"}}>LOADING...</Text>
+          <LoadingOverlay text={"Starting Application..."} isVisible={true} />
         </ScrollView>
     )
   }
@@ -160,7 +160,7 @@ const ProfilePages = () => {
     <LastPageProvider>
       <UIDProvider>
       
-      
+      <GameRulesProvider>
         <UserDataProvider>
           <ProfilePageUIDProvider>
           <CurrentEventProvider>
@@ -180,6 +180,8 @@ const ProfilePages = () => {
           </CurrentEventProvider>
           </ProfilePageUIDProvider>
         </UserDataProvider>
+        </GameRulesProvider>
+
       </UIDProvider>
     </LastPageProvider>
     

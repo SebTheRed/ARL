@@ -95,6 +95,7 @@ export const FriendsProvider = ({ children }:any) => {
                 if (item.requestingUser===uid){return item.receivingUser} else {return item.requestingUser}
               });
               if (blockedPersonsList.length > 0 ) {
+                console.log("blocked persons:", blockedPersonsList)
                 setBlockedPersons(blockedPersonsList)
               }
             }
@@ -123,7 +124,7 @@ export const FriendsProvider = ({ children }:any) => {
     },[trueFriends, pendingFriends])
 
     return (
-      <FriendsContext.Provider value={{trueFriends, pendingFriends, trueFriendDocs, pendingFriendDocs,friendsRefresh, setFriendsRefresh,}}>
+      <FriendsContext.Provider value={{trueFriends,blockedPersons, pendingFriends, trueFriendDocs, pendingFriendDocs,friendsRefresh, setFriendsRefresh,}}>
         {children}
       </FriendsContext.Provider>
     );

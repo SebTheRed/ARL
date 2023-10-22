@@ -32,6 +32,7 @@ import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
 import {useFriends} from '../../Contexts/FriendsContext'
 import { useGameRules } from '../../Contexts/GameRules';
 import {scaleFont} from '../../Utilities/fontSizing'
+import LoadingOverlay from '../../Overlays/LoadingOverlay';
 
 
 // const screenWidth = Dimensions.get('window').width;
@@ -54,7 +55,8 @@ const Profile = ():JSX.Element => {
     const [isLoading,setIsLoading] = useState(true);
     const [relation,setRelation] = useState("");
     const [currentLevels,setCurrentLevels] = useState<any>({})
-    const [pageLoading,setPageLoading] = useState(true)
+    const [pageLoading,setPageLoading] = useState<boolean>(true)
+    const [imagesAlreadyProcessed,setImagesAlreadyProcessed] = useState<boolean>(false)
     
     useEffect(()=>{
         // console.log(matchingProfileData)
@@ -90,22 +92,26 @@ const Profile = ():JSX.Element => {
                 setCurrentLevels(proxyObj)
              }
              calculateSkills()
-             setPageLoading(false)
+             if (pageLoading == true) {setPageLoading(false)}
         }
     },[dataLoading])
     useEffect(()=>{
+      if (imagesAlreadyProcessed == false) {
         const translateURL = async () => {
-            setIsLoading(true); // Set loading state to true before fetching
-            const storage = getStorage();
-            const pathRef = ref(storage, matchingProfileData.picURL);
-            const coverPathRef = ref(storage, matchingProfileData.coverURL);
-            const profilePicUrl = await getDownloadURL(pathRef);
-            const coverPicUrl = await getDownloadURL(coverPathRef);
-            setProfilePicState(profilePicUrl);
-            setCoverPicState(coverPicUrl);
-            setIsLoading(false); // Set loading state to false after fetching
-        };
-        translateURL()
+          setIsLoading(true); // Set loading state to true before fetching
+          const storage = getStorage();
+          const pathRef = ref(storage, matchingProfileData.picURL);
+          const coverPathRef = ref(storage, matchingProfileData.coverURL);
+          const profilePicUrl = await getDownloadURL(pathRef);
+          const coverPicUrl = await getDownloadURL(coverPathRef);
+          setProfilePicState(profilePicUrl);
+          setCoverPicState(coverPicUrl);
+          setIsLoading(false); // Set loading state to false after fetching
+          setImagesAlreadyProcessed(true)
+      };
+      translateURL()
+      } else {}
+        
     },[matchingProfileData])
     useEffect(()=>{
         const checkFriendStatus = async () => {
@@ -268,7 +274,6 @@ const Profile = ():JSX.Element => {
 const ProfileHeader = ():JSX.Element => {
     return(
     <>
-        {pageLoading==false&&(
             <View style={styles.profilePageContainer}>
             <View style={{...styles.profilePageCover}}>
             {(coverPicState && !isLoading)&&(<Image style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />)}
@@ -313,11 +318,11 @@ const ProfileHeader = ():JSX.Element => {
                     <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friends.png')} />
                         <Text style={{...styles.postTopStreak}}>{matchingProfileData.friends.length.toLocaleString()}</Text>
                 </View>
-                 <View style={styles.profilePageStreakContainer}>
+                 {/* <View style={styles.profilePageStreakContainer}>
                     <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
 
                         <Text style={{...styles.postTopStreak}}>{matchingProfileData.streak.toLocaleString()}</Text>
-                </View>
+                </View> */}
                 <View style={styles.profilePageJoinDateContainer}>
                     <Text style={{...styles.postTopStreak}}>{matchingProfileData.accountCreationDate}</Text>
                     <Image style={styles.postTopStreakIcon} source={require('../../IconBin/calendar.png')} />
@@ -339,39 +344,35 @@ const ProfileHeader = ():JSX.Element => {
             
         </View>
         </View>
-        )}
-        {pageLoading==true&&(
-            <View>
-                <View style={{height:100}} />
-                <ActivityIndicator size="large" color="#fff" />
-                <Text style={{color:"#fff"}}>Loading Profile...</Text>
-            </View>
-        )}
+            
     
     </>
     )
 }
     return(
     <>
-    {(relation!="blocked")&&(
+    {((relation!="blocked" && isLoading==false))&&(
         <FlatList
-		data={profileFeed}
+        data={profileFeed}
         ListHeaderComponent={<ProfileHeader />}
-		renderItem={({ item }) => <FeedPost skillsList={skillsList} data={item} />}
-		keyExtractor={item => item.id.toString()}
-		style={styles.feedFlatList}
-		contentContainerStyle={{ alignItems: 'center' }}
-		// onEndReached={handleLoadMore}
-		// onEndReachedThreshold={0.1}
-		scrollEventThrottle={150}
-		refreshControl={
-		  <RefreshControl
-			refreshing={refreshing}
-			onRefresh={handleRefresh}
-			colors={['#FFF']}
-			tintColor="#FFF"
+        renderItem={({ item }) => <FeedPost skillsList={skillsList} data={item} />}
+        keyExtractor={item => item.id.toString()}
+        style={styles.feedFlatList}
+        contentContainerStyle={{ alignItems: 'center' }}
+        // onEndReached={handleLoadMore}
+        // onEndReachedThreshold={0.1}
+        scrollEventThrottle={150}
+        refreshControl={
+          <RefreshControl
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          colors={['#FFF']}
+          tintColor="#FFF"
 		  />}
         />
+    )}
+    {(isLoading==true)&&(
+      <LoadingOverlay text={"Loading Profile"} isVisible={isLoading} />
     )}
     </>
        

@@ -17,7 +17,7 @@ export const useFeed = () => {
 type DocumentData = undefined
 
 export const FeedProvider = ({ children }:any) => {
-  const {trueFriends}:any = useFriends()
+  const {trueFriends, blockedPersons}:any = useFriends()
   const {profilePageUID}:any = useProfilePageUID()
   const { uid }:any = useUID();
   const [globalFeed, setGlobalFeed] = useState<any>([]);
@@ -74,6 +74,9 @@ export const FeedProvider = ({ children }:any) => {
     newDocs = newDocs.filter((doc: any) => {
       const postDate = doc.timeStamp.toDate(); // Convert Firestore Timestamp to JavaScript Date
       return postDate >= oneDayAgo;
+    }).filter((doc: any) => {
+      // Also ensure the current user has not blocked the poster
+      return doc.posterUID ? !blockedPersons.includes(doc.posterUID) : true; // if posterUID doesn't exist, consider it as a safe post
     });
     console.log("newdocs", newDocs.length)
 
@@ -115,6 +118,9 @@ export const FeedProvider = ({ children }:any) => {
     newDocs = newDocs.filter((doc: any) => {
       const postDate = doc.timeStamp.toDate(); // Convert Firestore Timestamp to JavaScript Date
       return postDate >= oneDayAgo;
+    }).filter((doc: any) => {
+      // Also ensure the current user has not blocked the poster
+      return doc.posterUID ? !blockedPersons.includes(doc.posterUID) : true; // if posterUID doesn't exist, consider it as a safe post
     });
     console.log("newdocs", newDocs.length)
 

@@ -7,6 +7,7 @@ import * as admin from 'firebase-admin';
 
 admin.initializeApp();
 const db = admin.firestore();
+const firestore = admin.firestore();
 
 
 // Start writing functions
@@ -146,23 +147,23 @@ export const downVotePost = functions.https.onRequest(async(request,response)=>{
 
 export const createPost = functions.https.onRequest(async(request,response)=>{
   try {
-  const {visibleTo,posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,picture,pictureList}:any = request.body
+  const {visibleTo,posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,picture,pictureList,blockedTo}:any = request.body
   switch(type){
     case "log":
     case "api":
      await handlePostSubmit(
-        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],"",visibleTo
+        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],"",visibleTo,blockedTo
       )
     break;
     case "camera": 
      await handlePostSubmit(
-        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],picture,visibleTo
+        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],picture,visibleTo,blockedTo
       )
     break;
     case "timeline":
       logger.log(pictureList)
       await handlePostSubmit(
-        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,pictureList,"",visibleTo
+        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,pictureList,"",visibleTo,blockedTo
       )
     break;
   }
@@ -253,7 +254,6 @@ export const changeUserPassword = functions.https.onRequest(async(request,respon
     logger.error("Failed to change user email: ",err)
   }
 });
-const firestore = admin.firestore();
 export const deleteUserProfile = functions.https.onRequest(async(request,response)=>{
   const {uid}:any = request.body
   try{
@@ -293,7 +293,7 @@ const handlePostSubmit = async(
   uid:string,userName:string,streak:number,postSkill:string,
   picURL:any,eventTitle:string,xp:number,textLog:string,
   settingOne:boolean,settingTwo:boolean,settingThree:boolean,type:string,
-  timelinePicURLs:any,cameraPicURL:string,visibleTo:any
+  timelinePicURLs:any,cameraPicURL:string,visibleTo:any,blockedTo:any
   ) => {
   let timeStamp = Timestamp.now()
   const postID = `${uid}_${timeStamp.toMillis()}`
@@ -320,7 +320,8 @@ const handlePostSubmit = async(
           id: postID,
           uid: uid,
           type:type,
-          visibleTo:visibleTo
+          visibleTo:visibleTo,
+          blockedTo:blockedTo,
       }
       logger.info("POST SUBMITTING WITH DATA: ", postObj)
           // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
@@ -400,9 +401,19 @@ const updateXpLogDocumentXp = async(uid:string,score:number,timeStamp:any)=>{
 
 
 
-
+const isOlderThan24Hours = (fileName:string) => {
+  const dateRegex = /(\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2})\.jpg$/;
+  const matches = fileName.match(dateRegex);
+  if (matches) {
+    const fileDate = new Date(matches[1].replace(/-/g, ':'));
+    const twentyFourHoursAgo = new Date(new Date().getTime() - (24 * 60 * 60 * 1000));
+    return fileDate < twentyFourHoursAgo;
+  }
+  return false;
+};
 
 // HOURLY POST CLEANUP //
+const bucket = admin.storage().bucket(); // Default bucket for your Firebase project
 export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hours').timeZone('UTC').onRun(async (context) => {
   logger.log('Starting cleanup and reward process...');
 
@@ -414,6 +425,14 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
     logger.log('24 Hours Ago:', twentyFourHoursAgo);
     logger.log('Firestore 24 hours ago', twentyFourHoursAgoTimestamp)
 
+     // Mass delete images older than 24 hours
+     const [files] = await bucket.getFiles({ prefix: 'posts/' });
+     for (const file of files) {
+       if (isOlderThan24Hours(file.name)) {
+         await file.delete();
+         logger.log('Deleted Image with path:', file.name);
+       }
+     }
     // Fetch posts older than 24 hours from Firestore
     const oldPostsQuerySnapshot = await admin.firestore().collection('posts')
     .where('timeStamp', '<=', twentyFourHoursAgoTimestamp)
@@ -428,6 +447,11 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
       giveUserXP(postData.postSkill,postData.posterUID,postData.score)
       updateXpLogDocumentXp(postData.posterUID,postData.score,postData.timeStamp)
       giveUserNotification(postData.posterUID,`Your ${postData.eventTitle} post finished with a score of ${postData.score}! You have received ${postData.score} ${postData.postSkill} XP!`)
+      //Delete the images
+      const imageFilePath = `posts/${doc.id}`; // Assuming the image's name is the same as the document's ID
+      await bucket.file(imageFilePath).delete();
+      logger.log('Deleted Image with path:', imageFilePath);
+      
       // Delete the post
       await admin.firestore().collection('posts').doc(doc.id).delete();
       logger.log('Deleted Post with ID:', doc.id);

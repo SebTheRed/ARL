@@ -79,7 +79,7 @@ const Feed = () => {
           alignItems: 'center'
         }}
         >
-          <Text style={{color: !feedTypeBool ? '#1c1c1c' : '#fff', fontWeight: !feedTypeBool ? "bold" : "none"}}>Friends</Text>
+          <Text style={{color: !feedTypeBool ? '#1c1c1c' : '#fff', fontWeight: "bold"}}>Friends</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>setFeedTypeBool(true)}
         style={{
@@ -89,7 +89,7 @@ const Feed = () => {
           alignItems: 'center'
         }}
         >
-          <Text style={{color: feedTypeBool ? '#1c1c1c' : '#fff',fontWeight: feedTypeBool ? "bold" : "none"}}>Global</Text>
+          <Text style={{color: feedTypeBool ? '#1c1c1c' : '#fff',fontWeight: "bold"}}>Global</Text>
         </TouchableOpacity>
         
       </View>

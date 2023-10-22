@@ -18,6 +18,7 @@ import type {PropsWithChildren} from 'react';
 import {useUserData} from '../../Contexts/UserDataContext'
 import { useGameRules } from '../../Contexts/GameRules';
 import {useUID} from '../../Contexts/UIDContext'
+import LoadingOverlay from '../../Overlays/LoadingOverlay';
 
 
 type SectionProps = PropsWithChildren<{
@@ -113,11 +114,7 @@ return(
 <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.backgroundStyle}>
     {dataLoading ? (
       
-      <View style={{justifyContent:'center'}}>
-        <View style={{height:100}} />
-        <ActivityIndicator size="large" color="#fff" />
-      <Text style={{color:"#fff"}}>Loading Traits...</Text>
-      </View>
+      <LoadingOverlay text={"Loading Traits..."} isVisible={true} />
     ) : (
       <View>
         {Object.values(skillsList)

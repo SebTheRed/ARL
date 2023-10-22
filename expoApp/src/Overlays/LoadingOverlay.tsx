@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Modal, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Modal, ActivityIndicator, StyleSheet, Text } from 'react-native';
 
 const LoadingOverlay = ({ isVisible }:any) => {
   return (
@@ -11,7 +11,8 @@ const LoadingOverlay = ({ isVisible }:any) => {
     >
       <View style={styles.modalBackground}>
         <View style={styles.activityIndicatorWrapper}>
-          <ActivityIndicator animating={isVisible} size="large" color="#FFFFFF" />
+          <ActivityIndicator size="large" color="#fff" />
+          <Text style={{color:"#fff"}}>Loading...</Text>
         </View>
       </View>
     </Modal>

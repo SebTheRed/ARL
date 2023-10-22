@@ -38,7 +38,7 @@ type RootStackParamList = {
     Feed:undefined,
 }
 const ExperienceUploader = ():JSX.Element => {
-    const {trueFriends}:any = useFriends()
+    const {trueFriends, blockedPersons}:any = useFriends()
     const {userData}:any = useUserData()
     const {currentEvent, setCurrentEvent}:any = useCurrentEvent()
     const {newPostHandler}:any = useFeed()
@@ -156,7 +156,8 @@ const ExperienceUploader = ():JSX.Element => {
                         settingTwo:settingTwo,
                         settingThree:settingThree,
                         type:currentEvent.type,
-                        visibleTo:[...trueFriends,uid]
+                        visibleTo:[...trueFriends,uid],
+                        blockedTo:[...blockedPersons]
                     }),
                     })
                     if (!response.ok) {

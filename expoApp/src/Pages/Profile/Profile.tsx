@@ -12,6 +12,7 @@ import {
 	RefreshControl,
     SectionList,
     Dimensions,
+    ActivityIndicator
 } from 'react-native'
 import React from 'react'
 import FeedPost from '../Feed/FeedPost';
@@ -89,6 +90,7 @@ const Profile = ():JSX.Element => {
                 setCurrentLevels(proxyObj)
              }
              calculateSkills()
+             setPageLoading(false)
         }
     },[dataLoading])
     useEffect(()=>{
@@ -263,10 +265,12 @@ const Profile = ():JSX.Element => {
       }
 
 
-    const ProfileHeader = ():JSX.Element => {
-        return(
-    <View style={styles.profilePageContainer}>
-        <View style={{...styles.profilePageCover}}>
+const ProfileHeader = ():JSX.Element => {
+    return(
+    <>
+        {pageLoading==false&&(
+            <View style={styles.profilePageContainer}>
+            <View style={{...styles.profilePageCover}}>
             {(coverPicState && !isLoading)&&(<Image style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />)}
         </View>
         
@@ -331,18 +335,22 @@ const Profile = ():JSX.Element => {
                     </TouchableOpacity>
                 )
             })}
-                    
             </View>}
             
         </View>
-
-    </View>
-        )
-    }
-
-    if (matchingProfileData){
-        
-    }
+        </View>
+        )}
+        {pageLoading==true&&(
+            <View>
+                <View style={{height:100}} />
+                <ActivityIndicator size="large" color="#fff" />
+                <Text style={{color:"#fff"}}>Loading Profile...</Text>
+            </View>
+        )}
+    
+    </>
+    )
+}
     return(
     <>
     {(relation!="blocked")&&(

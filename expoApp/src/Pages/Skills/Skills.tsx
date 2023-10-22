@@ -109,10 +109,15 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
 }
 
 
-    return(
+return(
 <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.backgroundStyle}>
     {dataLoading ? (
-      <ActivityIndicator size="large" color="#0000ff" />  // or any other loading indicator
+      
+      <View style={{justifyContent:'center'}}>
+        <View style={{height:100}} />
+        <ActivityIndicator size="large" color="#fff" />
+      <Text style={{color:"#fff"}}>Loading Traits...</Text>
+      </View>
     ) : (
       <View>
         {Object.values(skillsList)
@@ -123,7 +128,7 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
       </View>
     )}
   </ScrollView>
-    )
+)
 }
 
 export default Skills

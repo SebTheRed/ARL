@@ -19,6 +19,7 @@ export const useFriends = () => {
 
 export const FriendsProvider = ({ children }:any) => {
     const [trueFriends, setTrueFriends] = useState<any>([]);
+    const [blockedPersons,setBlockedPersons] = useState<any>()
     const [pendingFriends,setPendingFriends] = useState<any>([])
     const [trueFriendDocs, setTrueFriendDocs] = useState<any[]>([]);
     const [pendingFriendDocs, setPendingFriendDocs] = useState<any[]>([]);
@@ -69,8 +70,37 @@ export const FriendsProvider = ({ children }:any) => {
                 } else {setTrueFriendDocs([])}
                 if (filteredPending.length > 0) {fetchUserDocs(filteredPending,"pendingFriends")} else {setPendingFriendDocs([])}
               };
+            const fetchBlockedUIDs = async()=>{
+              const blockedQuery = query(
+                collection(db, "friendships"),
+                where("requestingUser","==",uid),
+                where("blocked", "==", true),
+              );
+              const blockedQueryTWO = query(
+                collection(db, "friendships"),
+                where("receivingUser","==",uid),
+                where("blocked", "==", true),
+              )
+              const [blockedSnapshotOne, blockedSnapshotTwo] = await Promise.all([
+                getDocs(blockedQuery),
+                getDocs(blockedQueryTWO)
+              ]);
+              const requestingData = blockedSnapshotOne.docs.map(doc => doc.data());
+              const receivingData = blockedSnapshotTwo.docs.map(doc => doc.data());
+
+              // Merge and deduplicate the data
+              const blockedUsers = [...requestingData, ...receivingData];
+              
+              const blockedPersonsList = blockedUsers.filter(item => item.pending === false).map(item => {
+                if (item.requestingUser===uid){return item.receivingUser} else {return item.requestingUser}
+              });
+              if (blockedPersonsList.length > 0 ) {
+                setBlockedPersons(blockedPersonsList)
+              }
+            }
       
           fetchFriendUIDs();
+          fetchBlockedUIDs();
           const fetchUserDocs = async(uids:string[],type:string) =>{
             const userDocs = await Promise.all(
                 uids.map(async (userID) => {

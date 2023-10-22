@@ -41,7 +41,7 @@ const Profile = ():JSX.Element => {
     const {setLastPage}:any = useLastPage()
     const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
     const {setCurrentTraitTitle}:any = useCurrentTraitStat()
-    const {skillsList, levelScale, trophyData}:any = useGameRules()
+    const {dataLoading,skillsList, levelScale, trophyData}:any = useGameRules()
     const {matchingProfileData,refreshProfileFeed, profilePageUID, setProfilePageUID, profileFeed}:any = useProfilePageUID()
     const {userData}:any = useUserData()
     const {uid}:any = useUID()
@@ -51,7 +51,9 @@ const Profile = ():JSX.Element => {
     const [coverPicState,setCoverPicState] = useState<any>(null)
     const [refreshing, setRefreshing] = useState(false);
     const [isLoading,setIsLoading] = useState(true);
-    const [relation,setRelation] = useState("")
+    const [relation,setRelation] = useState("");
+    const [currentLevels,setCurrentLevels] = useState<any>({})
+    const [pageLoading,setPageLoading] = useState(true)
     
     useEffect(()=>{
         // console.log(matchingProfileData)
@@ -69,7 +71,26 @@ const Profile = ():JSX.Element => {
         })
         // console.log(passThruArray)
         setMatchedTrophyPins(passThruArray)
+
+         //Going to translate levels before the loading is finished.
     },[userData])
+    useEffect(()=>{
+        if(dataLoading==false){
+            const calculateSkills = () => {
+                    const proxyObj:any = {}
+                    Object.values(skillsList)
+                    .sort((a: any, b: any) => a.order - b.order)
+                    .map((d: any, i: number) => {
+                    const skillLevel = calculateCurrentLevel(d.title.toLowerCase(),)
+                    proxyObj[d.title] = {...d, currentLevel:skillLevel}
+    
+                })
+                console.log("proxy obj for user skills",proxyObj)
+                setCurrentLevels(proxyObj)
+             }
+             calculateSkills()
+        }
+    },[dataLoading])
     useEffect(()=>{
         const translateURL = async () => {
             setIsLoading(true); // Set loading state to true before fetching
@@ -121,6 +142,8 @@ const Profile = ():JSX.Element => {
             }
           };
         if (uid != profilePageUID) {checkFriendStatus()} else (setRelation("self"))
+
+
     },[friendsRefresh])
     const handleRefresh = async () => {
 	  setRefreshing(true);
@@ -296,21 +319,20 @@ const Profile = ():JSX.Element => {
                     <Image style={styles.postTopStreakIcon} source={require('../../IconBin/calendar.png')} />
                 </View>
             </View>
+            {(Object.keys(currentLevels).length > 0)&&
             <View style={styles.profilePageStatsbottom}>
-            {skillsList && typeof skillsList === 'object' ? 
-                Object.values(skillsList)
-                .sort((a: any, b: any) => a.order - b.order)
-                .map((d: any, i: number) => {
-                const currentLevel = calculateCurrentLevel(d.title.toLowerCase(), )
+            {Object.values(currentLevels).map((d:any,i:number)=>{
+                console.log("current item being mapped:", d)
                 return(
                     <TouchableOpacity onPress={()=>handleTraitStatsPress(d.title)} style={{...styles.profilePageTraitBox, backgroundColor:d.color}} key={i}>
                         {/* <Text style={styles.profilePageTraitTitle}>{data.title}</Text> */}
-                        <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:scaleFont(25), fontWeight:"bold"}}>{currentLevel}</Text>
+                        <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:scaleFont(25), fontWeight:"bold"}}>{d.currentLevel}</Text>
                         {/* <Text style={{...styles.borderedTextShadow, fontSize:25,fontWeight:"bold", color:"#fff"}}>{currentLevel}</Text> */}
                     </TouchableOpacity>
-                )})
-            : null}
-            </View>
+                )
+            })}
+                    
+            </View>}
             
         </View>
 

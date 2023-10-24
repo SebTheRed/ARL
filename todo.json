@@ -1,0 +1,10 @@
+{
+  "Fix picture deleter on the clock not working":null,
+  "Fix a new post not calling the feed properly":false,
+  "Fix stuttering profile pages":false,
+  "weave in a photo checker": false,
+  "Fix default pictures":false,
+  "Add a change log into the hamburger": false,
+  "remove default login being mine": false,
+  "apply to APP STORES!!": false
+}

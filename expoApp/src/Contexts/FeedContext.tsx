@@ -103,6 +103,7 @@ export const FeedProvider = ({ children }:any) => {
     }
   }
   const fetchDataFresh = async () => {
+    console.log("blocked personas:  ",blockedPersons)
     let feedQuery;
       feedQuery = query(
         collection(db, "posts"),

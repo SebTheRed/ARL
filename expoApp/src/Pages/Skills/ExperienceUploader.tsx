@@ -57,7 +57,7 @@ const ExperienceUploader = ():JSX.Element => {
     const [imageThreeState,setImageThreeState] = useState<string|null>(null)
     const [imageFourState,setImageFourState] = useState(null)
     const [loadingBool,setLoadingBool] = useState(false)
-    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    const navigation = useNavigation<any>();
     useEffect(()=>{
         setUtilityType(currentEvent.type)
         console.log("expUpload")
@@ -333,23 +333,25 @@ const ExperienceUploader = ():JSX.Element => {
                 console.log("Response Message: ",responseMessage);
                 setLoadingBool(false)
                     newPostHandler()
-                    navigation.dispatch(
-                        CommonActions.reset({
-                            index: 0,
-                            routes: [
-                            {
-                                name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
-                                state: {
-                                routes: [
-                                    {
-                                    name: 'Feed', // The name of the child navigator
-                                    },
-                                ],
-                                },
-                            },
-                            ],
-                        })
-                        );
+                    navigation.popToTop()
+                    navigation.navigate("Feed")
+                    // navigation.dispatch(
+                    //     CommonActions.reset({
+                    //         index: 0,
+                    //         routes: [
+                    //         {
+                    //             name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
+                    //             state: {
+                    //             routes: [
+                    //                 {
+                    //                 name: 'Feed', // The name of the child navigator
+                    //                 },
+                    //             ],
+                    //             },
+                    //         },
+                    //         ],
+                    //     })
+                    //     );
                 }catch(err){
                     console.error(err)
                     setLoadingBool(false)

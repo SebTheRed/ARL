@@ -104,7 +104,6 @@ const AuthApp = ()=>{
   // console.log("authapp, ", userData)
   if (Object.values(userData).length>0 && dataLoading==false) {
     return(
-      <FriendsProvider>
       <FeedProvider>
 
         <CooldownProvider>
@@ -131,14 +130,13 @@ const AuthApp = ()=>{
           </NotificationProvider>
         </CooldownProvider>
       </FeedProvider>
-      </FriendsProvider>
     )
   } else {
     return(
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.backgroundStyle}>
-          <LoadingOverlay text={"Starting Application..."} isVisible={true} />
+          <LoadingOverlay text={"Starting aRL..."} isVisible={true} />
         </ScrollView>
     )
   }
@@ -159,7 +157,7 @@ const ProfilePages = () => {
 
     <LastPageProvider>
       <UIDProvider>
-      
+      <FriendsProvider>
       <GameRulesProvider>
         <UserDataProvider>
           <ProfilePageUIDProvider>
@@ -181,7 +179,7 @@ const ProfilePages = () => {
           </ProfilePageUIDProvider>
         </UserDataProvider>
         </GameRulesProvider>
-
+      </FriendsProvider>
       </UIDProvider>
     </LastPageProvider>
     

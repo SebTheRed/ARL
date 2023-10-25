@@ -168,23 +168,8 @@ const ExperienceUploader = ():JSX.Element => {
                     console.log("Response Message: ",responseMessage);
                     setLoadingBool(false)
                     newPostHandler()
-                    navigation.dispatch(
-                        CommonActions.reset({
-                            index: 0,
-                            routes: [
-                            {
-                                name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
-                                state: {
-                                routes: [
-                                    {
-                                    name: 'Feed', // The name of the child navigator
-                                    },
-                                ],
-                                },
-                            },
-                            ],
-                        })
-                        );
+                    navigation.popToTop()
+                    navigation.navigate("Feed")
                 } catch(err) {
                   setLoadingBool(false)
                   console.error(err)}
@@ -256,23 +241,8 @@ const ExperienceUploader = ():JSX.Element => {
                     console.log("Response Message: ",responseMessage);
                     setLoadingBool(false)
                     newPostHandler()
-                    navigation.dispatch(
-                        CommonActions.reset({
-                            index: 0,
-                            routes: [
-                            {
-                                name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
-                                state: {
-                                routes: [
-                                    {
-                                    name: 'Feed', // The name of the child navigator
-                                    },
-                                ],
-                                },
-                            },
-                            ],
-                        })
-                        );
+                    navigation.popToTop()
+                    navigation.navigate("Feed")
                         
                 } catch(err) {
                   setLoadingBool(false)

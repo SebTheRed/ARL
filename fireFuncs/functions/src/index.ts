@@ -408,87 +408,70 @@ const updateXpLogDocumentXp = async(uid:string,score:number,timeStamp:any)=>{
 
 const bucket = admin.storage().bucket(); // Default bucket for your Firebase project
 
+const extractStoragePathFromURL = (url:string) => {
+  const regex = /o\/(.*?)\?alt=/;
+  const match = url.match(regex);
+  if (match && match[1]) {
+      return decodeURIComponent(match[1]);
+  }
+  return null;
+};
+
 export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hours').timeZone('UTC').onRun(async (context) => {
-    logger.log('Starting cleanup and reward process...');
+  logger.log('Starting cleanup and reward process...');
 
-    try {
-        const currentTime = new Date();
-        const twentyFourHoursAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000));
-        const twentyFourHoursAgoTimestamp = admin.firestore.Timestamp.fromDate(twentyFourHoursAgo); // Convert to Firestore Timestamp
-        logger.log('Current Time:', currentTime);
-        logger.log('24 Hours Ago:', twentyFourHoursAgo);
-        logger.log('Firestore 24 hours ago', twentyFourHoursAgoTimestamp);
+  try {
+      const currentTime = new Date();
+      const twentyFourHoursAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000));
+      const twentyFourHoursAgoTimestamp = admin.firestore.Timestamp.fromDate(twentyFourHoursAgo);
+      
+      // Fetch posts older than 24 hours from Firestore
+      const oldPostsQuerySnapshot = await admin.firestore().collection('posts')
+          .where('timeStamp', '<=', twentyFourHoursAgoTimestamp)
+          .get();
 
-        // Fetch posts older than 24 hours from Firestore
-        const oldPostsQuerySnapshot = await admin.firestore().collection('posts')
-            .where('timeStamp', '<=', twentyFourHoursAgoTimestamp)
-            .get();
+      for (const doc of oldPostsQuerySnapshot.docs) {
+          const postData = doc.data();
 
-        logger.log('Number of Old Posts:', oldPostsQuerySnapshot.size);
+          giveUserXP(postData.postSkill, postData.posterUID, postData.score);
+          updateXpLogDocumentXp(postData.posterUID, postData.score, postData.timeStamp);
+          giveUserNotification(postData.posterUID, `Your ${postData.eventTitle} post finished with a score of ${postData.score}! You have received ${postData.score} ${postData.postSkill} XP!`);
 
-        for (const doc of oldPostsQuerySnapshot.docs) {
-            const postData = doc.data();
-            logger.log('Old Post Data:', postData);
+          // Array to hold the storage paths of the images to be deleted.
+          let imageStoragePaths = [];
 
-            giveUserXP(postData.postSkill, postData.posterUID, postData.score);
-            updateXpLogDocumentXp(postData.posterUID, postData.score, postData.timeStamp);
-            giveUserNotification(postData.posterUID, `Your ${postData.eventTitle} post finished with a score of ${postData.score}! You have received ${postData.score} ${postData.postSkill} XP!`);
+          if (postData.cameraPicURL != "") {
+              const path = extractStoragePathFromURL(postData.cameraPicURL);
+              if (path) imageStoragePaths.push(path);
+          }
 
-            // Create an array to hold all the image filenames associated with this post.
-            let imageFileNames = [];
+          if (postData.timelinePicURLs.length > 0) {
+              for (const url of postData.timelinePicURLs) {
+                  const path = extractStoragePathFromURL(url);
+                  if (path) imageStoragePaths.push(path);
+              }
+          }
 
-            // Generate the base image file name.
-            const imageBaseName = `${postData.posterUID}_${postData.timeStamp.toDate().toISOString().replace(/:/g, '-').slice(0,19)}.jpg`;
-            imageFileNames.push(imageBaseName);
+          // Delete images from Firebase Storage using the extracted paths.
+          for (const storagePath of imageStoragePaths) {
+              try {
+                  await bucket.file(storagePath).delete();
+                  logger.log('Deleted Image with path:', storagePath);
+              } catch (error) {
+                  logger.error('Failed to delete image with path:', storagePath, 'Error:', error);
+              }
+          }
 
-            // If it's an album, add all image names to the array.
-            let imageIndex = 1;
-            while (true) {
-                const albumImageName = imageBaseName.replace('.jpg', `_image${imageIndex}.jpg`);
-                try {
-                    // Check if the image exists before adding it to the array.
-                    const [exists] = await bucket.file(`posts/${albumImageName}`).exists();
-                    if (exists) {
-                        imageFileNames.push(albumImageName);
-                        imageIndex++;
-                    } else {
-                        break;
-                    }
-                } catch (error) {
-                    logger.error(error);
-                    break;
-                }
-            }
+          // Delete the post
+          await admin.firestore().collection('posts').doc(doc.id).delete();
+      }
 
-            // Iterate over the image filenames array and delete old images.
-            for (const imageName of imageFileNames) {
-                if (isOlderThan24HoursForImages(imageName)) {
-                    await bucket.file(`posts/${imageName}`).delete();
-                    logger.log('Deleted Image with path:', imageName);
-                }
-            }
-
-            // Delete the post
-            await admin.firestore().collection('posts').doc(doc.id).delete();
-            logger.log('Deleted Post with ID:', doc.id);
-        }
-
-        logger.log('Cleanup and reward process completed successfully!');
-    } catch (error) {
-        logger.error('Error occurred during cleanup and reward process:', error);
-    }
+      logger.log('Cleanup and reward process completed successfully!');
+  } catch (error) {
+      logger.error('Error occurred during cleanup and reward process:', error);
+  }
 });
 
-const isOlderThan24HoursForImages = (fileName: string) => {
-    const dateRegex = /(\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2})(_image\d+)?\.jpg$/;
-    const matches = fileName.match(dateRegex);
-    if (matches) {
-        const fileDate = new Date(matches[1].replace(/-/g, ':'));
-        const twentyFourHoursAgo = new Date(new Date().getTime() - (24 * 60 * 60 * 1000));
-        return fileDate < twentyFourHoursAgo;
-    }
-    return false;
-};
 
 
 

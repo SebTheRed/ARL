@@ -267,7 +267,7 @@ return(
     </View>
     <View style={{height:500,}} />
 </ScrollView>
-<LoadingOverlay text={"Signing you up..."} isVisible={loadingBool} />
+<LoadingOverlay text={"Signing you up..."} isVisible={loadingBool} opacity={1}/>
 </KeyboardAvoidingView>
 
     )

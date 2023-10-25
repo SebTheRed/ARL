@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Modal, ActivityIndicator, StyleSheet, Text } from 'react-native';
 
-const LoadingOverlay = ({ isVisible, text }:any) => {
+const LoadingOverlay = ({ isVisible, text, opacity }:any) => {
+
   return (
     <Modal
       transparent={true}
@@ -9,7 +10,7 @@ const LoadingOverlay = ({ isVisible, text }:any) => {
       visible={isVisible}
       onRequestClose={() => {}}
     >
-      <View style={styles.modalBackground}>
+      <View style={{...styles.modalBackground, backgroundColor: `rgba(0,0,0,${opacity})`}}>
         <View style={styles.activityIndicatorWrapper}>
           <ActivityIndicator size="large" color="#fff" />
           <Text style={{color:"#fff"}}>{text}</Text>
@@ -26,12 +27,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    backgroundColor: 'rgba(0,0,0,0.4)', // Dark background with 40% opacity
   },
   activityIndicatorWrapper: {
     backgroundColor: '#00000000', // Transparent background
     height: 100,
-    width: 100,
+    width: 300,
     borderRadius: 10,
     display: 'flex',
     alignItems: 'center',

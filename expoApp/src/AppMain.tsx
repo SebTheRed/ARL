@@ -136,7 +136,7 @@ const AuthApp = ()=>{
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.backgroundStyle}>
-          <LoadingOverlay text={"Starting aRL..."} isVisible={true} />
+          <LoadingOverlay text={"Starting aRL..."} isVisible={true} opacity={1}/>
         </ScrollView>
     )
   }

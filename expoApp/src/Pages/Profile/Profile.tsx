@@ -56,7 +56,8 @@ const Profile = ():JSX.Element => {
     const [relation,setRelation] = useState("");
     const [currentLevels,setCurrentLevels] = useState<any>({})
     const [pageLoading,setPageLoading] = useState<boolean>(true)
-    const [imagesAlreadyProcessed,setImagesAlreadyProcessed] = useState<boolean>(false)
+    const [coverPicLoaded,setCoverPicLoaded] = useState<boolean>(false)
+
     
     useEffect(()=>{
         // console.log(matchingProfileData)
@@ -96,9 +97,7 @@ const Profile = ():JSX.Element => {
         }
     },[dataLoading])
     useEffect(()=>{
-      if (imagesAlreadyProcessed == false) {
         const translateURL = async () => {
-          setIsLoading(true); // Set loading state to true before fetching
           const storage = getStorage();
           const pathRef = ref(storage, matchingProfileData.picURL);
           const coverPathRef = ref(storage, matchingProfileData.coverURL);
@@ -106,13 +105,16 @@ const Profile = ():JSX.Element => {
           const coverPicUrl = await getDownloadURL(coverPathRef);
           setProfilePicState(profilePicUrl);
           setCoverPicState(coverPicUrl);
-          setIsLoading(false); // Set loading state to false after fetching
-          setImagesAlreadyProcessed(true)
+
       };
       translateURL()
-      } else {}
         
     },[matchingProfileData])
+    useEffect(()=>{
+        if(coverPicLoaded==true){
+            setIsLoading(false); // Set loading state to false after fetching
+        }
+    },[coverPicLoaded])
     useEffect(()=>{
         const checkFriendStatus = async () => {
             const sortedUIDString = [uid, profilePageUID].sort().join('_'); 
@@ -134,7 +136,7 @@ const Profile = ():JSX.Element => {
                           state: {
                             routes: [
                               {
-                                name: 'Search', // NEED TO TEST BLOCKING TO ENSURE THIS WORKS!!!
+                                name: 'Search', 
                               },
                             ],
                           },
@@ -224,7 +226,6 @@ const Profile = ():JSX.Element => {
         return level;
       };
 
-
       const MultiButtonSplitter = ():JSX.Element => {
         switch(relation){
             case "self": return(
@@ -276,7 +277,7 @@ const ProfileHeader = ():JSX.Element => {
     <>
             <View style={styles.profilePageContainer}>
             <View style={{...styles.profilePageCover}}>
-            {(coverPicState && !isLoading)&&(<Image style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />)}
+            <Image onLoad={()=>setCoverPicLoaded(true)} style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />
         </View>
         
         <View style={styles.profilePageTopContainer}>
@@ -300,7 +301,7 @@ const ProfileHeader = ():JSX.Element => {
             </View>
             
             <View style={styles.profilePagePictureBox}>
-                {(profilePicState&&!isLoading)&&(<Image style={styles.profilePagePicture} source={{uri: profilePicState}} />)}
+                <Image style={styles.profilePagePicture} source={{uri: profilePicState}} />
             </View>
             <View style={styles.profilePageMultiBox}>
                 <MultiButtonSplitter />
@@ -351,7 +352,6 @@ const ProfileHeader = ():JSX.Element => {
 }
     return(
     <>
-    {((relation!="blocked" && isLoading==false))&&(
         <FlatList
         data={profileFeed}
         ListHeaderComponent={<ProfileHeader />}
@@ -370,10 +370,7 @@ const ProfileHeader = ():JSX.Element => {
           tintColor="#FFF"
 		  />}
         />
-    )}
-    {(isLoading==true)&&(
-      <LoadingOverlay text={"Loading Profile"} isVisible={isLoading} />
-    )}
+      <LoadingOverlay text={"Loading Profile"} isVisible={isLoading} opacity={0.8}/>
     </>
        
     )

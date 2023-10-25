@@ -164,7 +164,7 @@ const signIn = async(e:any) => {
 			</View>
 
       {loadingBool&&(
-        <LoadingOverlay text={"Logging you in..."} isVisible={loadingBool} />
+        <LoadingOverlay text={"Logging you in..."} isVisible={loadingBool} opacity={1}/>
       )}
 		</ScrollView>
     

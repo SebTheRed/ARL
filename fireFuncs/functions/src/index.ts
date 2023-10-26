@@ -4,6 +4,7 @@ import { Timestamp } from "firebase-admin/firestore";
 import * as logger from "firebase-functions/logger";
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import sharp from 'sharp'
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -13,7 +14,7 @@ const firestore = admin.firestore();
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
-export const helloWorld = onRequest((request, response) => {
+export const helloWorld = onRequest((request:any, response:any) => {
   logger.info("Hello logs!", {structuredData: true});
   response.send("Hello from Firebase!");
 });
@@ -50,7 +51,7 @@ export const addUser = functions.https.onRequest(async (request, response) => {
           userName:userName,
           streak:0,
           picURL:"gs://appreallife-ea3d9.appspot.com/user_prof_pics/default.png",
-          coverURL:"",
+          coverURL:"gs://appreallife-ea3d9.appspot.com/user_prof_pics/background-space.png",
           trophyPins:["","",""],
           xpData:{
               family:1,friends:1,fitness:1,
@@ -194,7 +195,7 @@ export const deletePost = functions.https.onRequest(async(request,response)=>{
     const oldPostsQuery = db.collection('posts').where('timeStamp', '<=', timestampString);
     const oldPostsSnapshot = await oldPostsQuery.get();
 
-    const deletePromises = [];
+    const deletePromises:any = [];
 
     for (const doc of oldPostsSnapshot.docs) {
       const postId = doc.id;
@@ -265,6 +266,71 @@ export const deleteUserProfile = functions.https.onRequest(async(request,respons
     logger.error("Failed to change user email: ",err)
   }
 });
+
+export const updateCoverPicture = functions.https.onRequest(async(request,response)=>{
+  const db = admin.firestore();
+  const storage = admin.storage().bucket();
+  try {
+    if (request.method !== 'POST') {
+      response.status(405).send('Method Not Allowed');
+    }
+    const { uid, imageBuffer } = request.body; // Assuming you're sending the image as a Buffer
+      // Resize the image using Sharp
+      const resizedImageBuffer = await sharp(imageBuffer)
+      .resize(800, 600) // Resize to 800x600 or any dimension you want
+      // .jpeg({ quality: 90 }) // Compress to a JPEG with 90% quality
+      .toBuffer();
+      // Define the Firebase Storage path
+      const filePath = `user_prof_pics/${uid}/cover_actual.jpg`;
+      const file = storage.file(filePath);
+    // Upload the resized image to Firebase Storage
+    await file.save(resizedImageBuffer, { contentType: 'image/jpeg' });
+    // Get the public URL for the uploaded image
+    const gsLink = `gs://${file.bucket.name}/${file.name}`;
+    // Update Firestore
+    const userDocRef = db.collection('users').doc(uid);
+    await userDocRef.update({ coverURL: gsLink });
+    response.status(200).send({ message: "Image uploaded successfully!", gsLink });
+  } catch (err) {
+    console.error(err);
+    response.status(500).send('Internal Server Error');
+  }
+})
+
+export const updateProfilePicture = functions.https.onRequest(async(request,response)=>{
+  const db = admin.firestore();
+  const storage = admin.storage().bucket();
+  try {
+    if (request.method !== 'POST') {
+      response.status(405).send('Method Not Allowed');
+    }
+    const { uid, imageBuffer } = request.body; // Assuming you're sending the image as a Buffer
+      // Resize the image using Sharp
+      const resizedImageBuffer = await sharp(imageBuffer)
+      .resize(500, 500) 
+      // .jpeg({ quality: 90 }) // Compress to a JPEG with 90% quality
+      .toBuffer();
+      // Define the Firebase Storage path
+      const filePath = `user_prof_pics/${uid}/profile_actual.jpg`;
+      const file = storage.file(filePath);
+    // Upload the resized image to Firebase Storage
+    await file.save(resizedImageBuffer, { contentType: 'image/jpeg' });
+    // Get the public URL for the uploaded image
+    const gsLink = `gs://${file.bucket.name}/${file.name}`;
+    // Update Firestore
+    const userDocRef = db.collection('users').doc(uid);
+    await userDocRef.update({ picURL: gsLink });
+    response.status(200).send({ message: "Image uploaded successfully!", gsLink });
+  } catch (err) {
+    console.error(err);
+    response.status(500).send('Internal Server Error');
+  }
+})
+
+
+
+
+
 
 
 
@@ -438,7 +504,7 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
           giveUserNotification(postData.posterUID, `Your ${postData.eventTitle} post finished with a score of ${postData.score}! You have received ${postData.score} ${postData.postSkill} XP!`);
 
           // Array to hold the storage paths of the images to be deleted.
-          let imageStoragePaths = [];
+          let imageStoragePaths:any = [];
 
           if (postData.cameraPicURL != "") {
               const path = extractStoragePathFromURL(postData.cameraPicURL);

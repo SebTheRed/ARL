@@ -16,7 +16,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import FeedPost from '../Feed/FeedPost';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 // import FeedPost from './FeedPost';
@@ -41,22 +41,18 @@ const Profile = ():JSX.Element => {
     const navigation = useNavigation<any>();
     const {friendsRefresh,setFriendsRefresh}:any = useFriends()
     const {setLastPage}:any = useLastPage()
-    const { currentFeed, refreshFeed, paginateFeed }:any = useFeed();
     const {setCurrentTraitTitle}:any = useCurrentTraitStat()
     const {dataLoading,skillsList, levelScale, trophyData}:any = useGameRules()
     const {matchingProfileData,refreshProfileFeed, profilePageUID, setProfilePageUID, profileFeed}:any = useProfilePageUID()
     const {userData}:any = useUserData()
     const {uid}:any = useUID()
-    const [buttonType,setButtonType] = useState("")
     const [matchedTrophyPins,setMatchedTrophyPins] = useState([{},{},{}])
     const [profilePicState,setProfilePicState] = useState<any>(null)
     const [coverPicState,setCoverPicState] = useState<any>(null)
     const [refreshing, setRefreshing] = useState(false);
-    const [isLoading,setIsLoading] = useState(true);
     const [relation,setRelation] = useState("");
     const [currentLevels,setCurrentLevels] = useState<any>({})
     const [pageLoading,setPageLoading] = useState<boolean>(true)
-    const [coverPicLoaded,setCoverPicLoaded] = useState<boolean>(false)
 
     
     useEffect(()=>{
@@ -79,7 +75,6 @@ const Profile = ():JSX.Element => {
          //Going to translate levels before the loading is finished.
     },[userData])
     useEffect(()=>{
-        if(dataLoading==false){
             const calculateSkills = () => {
                     const proxyObj:any = {}
                     Object.values(skillsList)
@@ -93,8 +88,6 @@ const Profile = ():JSX.Element => {
                 setCurrentLevels(proxyObj)
              }
              calculateSkills()
-             if (pageLoading == true) {setPageLoading(false)}
-        }
     },[dataLoading])
     useEffect(()=>{
         const translateURL = async () => {
@@ -110,11 +103,7 @@ const Profile = ():JSX.Element => {
       translateURL()
         
     },[matchingProfileData])
-    useEffect(()=>{
-        if(coverPicLoaded==true){
-            setIsLoading(false); // Set loading state to false after fetching
-        }
-    },[coverPicLoaded])
+
     useEffect(()=>{
         const checkFriendStatus = async () => {
             const sortedUIDString = [uid, profilePageUID].sort().join('_'); 
@@ -274,82 +263,75 @@ const Profile = ():JSX.Element => {
 
 const ProfileHeader = ():JSX.Element => {
     return(
-    <>
-            <View style={styles.profilePageContainer}>
-            <View style={{...styles.profilePageCover}}>
-            <Image onLoad={()=>setCoverPicLoaded(true)} style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />
-        </View>
+<>
+    <View style={styles.profilePageContainer}>
+      <View style={{...styles.profilePageCover}}>
+        <Image onLoad={()=>setPageLoading(false)} style={styles.profilePageCoverPicture} source={{uri:coverPicState}} />
+      </View>
         
-        <View style={styles.profilePageTopContainer}>
-            <View style={styles.profilePageTopLeftContainer}>
-                    {matchedTrophyPins.map((trophy:any,i:number)=>{
-                        if (Object.keys(trophy).length == 0) {
-                            return(
-                                <TouchableOpacity key={i} style={styles.profilePageEmptyTrophyButton}>
-                                    <View style={styles.profilePageEmptyTrophyPin}></View>
-                                </TouchableOpacity>
-                                
-                            )
-                        }
-                        return(
-                            <TouchableOpacity key={i} style={styles.profilePageTrophyButton}>
-                                <Image style={styles.profilePageTrophyPin} source={trophy.imgPath} />
-                            </TouchableOpacity>
-                        )
-                    })}
-               
-            </View>
-            
-            <View style={styles.profilePagePictureBox}>
-                <Image style={styles.profilePagePicture} source={{uri: profilePicState}} />
-            </View>
-            <View style={styles.profilePageMultiBox}>
-                <MultiButtonSplitter />
-            </View>
+      <View style={styles.profilePageTopContainer}>
+        <View style={styles.profilePageTopLeftContainer}>
+          {matchedTrophyPins.map((trophy:any,i:number)=>{
+              if (Object.keys(trophy).length == 0) {
+                  return(
+                      <TouchableOpacity key={i} style={styles.profilePageEmptyTrophyButton}>
+                          <View style={styles.profilePageEmptyTrophyPin}></View>
+                      </TouchableOpacity>
+                      
+                  )
+              }
+              return(
+                  <TouchableOpacity key={i} style={styles.profilePageTrophyButton}>
+                      <Image style={styles.profilePageTrophyPin} source={trophy.imgPath} />
+                  </TouchableOpacity>
+              )
+          })}   
         </View>
+        <View style={styles.profilePagePictureBox}>
+          <Image style={styles.profilePagePicture} source={{uri: profilePicState}} />
+        </View>
+        <View style={styles.profilePageMultiBox}>
+            <MultiButtonSplitter />
+        </View>
+      </View>
+      <View style={styles.profilePageNamesContainer}>
+          <Text style={styles.profilePageUserName}>@{matchingProfileData.userName}</Text>
+          <Text style={styles.profilePageRealName}>{matchingProfileData.name}</Text>
+      </View>
+      <View style={styles.profilePageStatsContainer}>
+        <View style={styles.profilePageStatsTop}>
+          <View style={styles.profilePageFriendsContainer}>
+            <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friends.png')} />
+              <Text style={{...styles.postTopStreak}}>{matchingProfileData.friends.length.toLocaleString()}</Text>
+          </View>
+          {/* <View style={styles.profilePageStreakContainer}>
+            <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
 
-        <View style={styles.profilePageNamesContainer}>
-            <Text style={styles.profilePageUserName}>@{matchingProfileData.userName}</Text>
-            <Text style={styles.profilePageRealName}>{matchingProfileData.name}</Text>
-        </View>
+                <Text style={{...styles.postTopStreak}}>{matchingProfileData.streak.toLocaleString()}</Text>
+        </View> */}
+          <View style={styles.profilePageJoinDateContainer}>
+              <Text style={{...styles.postTopStreak}}>{matchingProfileData.accountCreationDate}</Text>
+              <Image style={styles.postTopStreakIcon} source={require('../../IconBin/calendar.png')} />
+          </View>
+      </View>
+        {(Object.keys(currentLevels).length > 0)&&
+        <View style={styles.profilePageStatsbottom}>
+          {Object.values(currentLevels).map((d:any,i:number)=>{
+              console.log("current item being mapped:", d)
+              return(
+                  <TouchableOpacity onPress={()=>handleTraitStatsPress(d.title)} style={{...styles.profilePageTraitBox, backgroundColor:d.color}} key={i}>
+                      {/* <Text style={styles.profilePageTraitTitle}>{data.title}</Text> */}
+                      <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:scaleFont(25), fontWeight:"bold"}}>{d.currentLevel}</Text>
+                      {/* <Text style={{...styles.borderedTextShadow, fontSize:25,fontWeight:"bold", color:"#fff"}}>{currentLevel}</Text> */}
+                  </TouchableOpacity>
+              )
+          })}
+        </View>}
+      </View>
+    </View>   
+</>)}
 
-        <View style={styles.profilePageStatsContainer}>
-            <View style={styles.profilePageStatsTop}>
-                <View style={styles.profilePageFriendsContainer}>
-                    <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friends.png')} />
-                        <Text style={{...styles.postTopStreak}}>{matchingProfileData.friends.length.toLocaleString()}</Text>
-                </View>
-                 {/* <View style={styles.profilePageStreakContainer}>
-                    <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
 
-                        <Text style={{...styles.postTopStreak}}>{matchingProfileData.streak.toLocaleString()}</Text>
-                </View> */}
-                <View style={styles.profilePageJoinDateContainer}>
-                    <Text style={{...styles.postTopStreak}}>{matchingProfileData.accountCreationDate}</Text>
-                    <Image style={styles.postTopStreakIcon} source={require('../../IconBin/calendar.png')} />
-                </View>
-            </View>
-            {(Object.keys(currentLevels).length > 0)&&
-            <View style={styles.profilePageStatsbottom}>
-            {Object.values(currentLevels).map((d:any,i:number)=>{
-                console.log("current item being mapped:", d)
-                return(
-                    <TouchableOpacity onPress={()=>handleTraitStatsPress(d.title)} style={{...styles.profilePageTraitBox, backgroundColor:d.color}} key={i}>
-                        {/* <Text style={styles.profilePageTraitTitle}>{data.title}</Text> */}
-                        <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:scaleFont(25), fontWeight:"bold"}}>{d.currentLevel}</Text>
-                        {/* <Text style={{...styles.borderedTextShadow, fontSize:25,fontWeight:"bold", color:"#fff"}}>{currentLevel}</Text> */}
-                    </TouchableOpacity>
-                )
-            })}
-            </View>}
-            
-        </View>
-        </View>
-            
-    
-    </>
-    )
-}
     return(
     <>
         <FlatList
@@ -370,7 +352,7 @@ const ProfileHeader = ():JSX.Element => {
           tintColor="#FFF"
 		  />}
         />
-      <LoadingOverlay text={"Loading Profile"} isVisible={isLoading} opacity={0.8}/>
+      <LoadingOverlay text={"Loading Profile"} isVisible={pageLoading} opacity={0.8}/>
     </>
        
     )

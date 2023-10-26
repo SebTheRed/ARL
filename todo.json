@@ -1,17 +1,21 @@
 {
   "functional":{
-  "Fix picture deleter on the clock not working":null,
+  "Fix picture deleter on the clock not working":true,
   "Fix a new post not calling the feed properly":true,
-  "Fix stuttering profile pages":false,
+  "Fix default pictures":true,
+  "Fix image / cover image upload. Write backend": false,
   "weave in a photo checker": false,
   "reduce image size upon upload": false,
-  "Fix default pictures":false,
   "Add a change log into the hamburger": false,
   "remove default login being mine": false,
   "one huge final last test!":false,
   "apply to APP STORES!!": false
   },
   "polish":{
-    "make unique placeholder values for the text input field when making a new post":false
+    "make unique placeholder values for the text input field when making a new post":false,
+    "change icon PNGS to svgs":false,
+    "Fix stuttering profile pages":"COULD NOT FIX THIS FOR THE FUCKING LIFE OF ME. 4 HOURS OF FAILURE IS ENOUGH FOR A POLISH",
+    "Add pinch zoom to camera uploader":false
+
   }
 }

@@ -57,6 +57,7 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
         };
       
         const confirmImage = async() => {
+          try {
             console.log('1')
             const responseBlob = await fetch(imageSource);
             const blob = await responseBlob.blob();
@@ -82,8 +83,13 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
                 setImageSource("")
                 setProfilePicState("")
             });
+          } catch(err) {
+            console.error(err)
+          }
+            
         }
         const confirmCoverImage = async() => {
+          try{
             console.log('1')
             const responseBlob = await fetch(imageSource);
             const blob = await responseBlob.blob();
@@ -109,6 +115,10 @@ const ProfilePicModal = ({modalType,setModalType}:any):JSX.Element => {
                 setImageSource("")
                 setProfilePicState("")
             });
+          } catch(err) {
+            console.error(err)
+          }
+            
         }
 
         const onClose = () => {

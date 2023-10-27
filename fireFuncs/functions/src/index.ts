@@ -4,7 +4,6 @@ import { Timestamp } from "firebase-admin/firestore";
 import * as logger from "firebase-functions/logger";
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import sharp from 'sharp'
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -220,10 +219,10 @@ export const deletePost = functions.https.onRequest(async(request,response)=>{
     // Wait for all delete operations to complete
     await Promise.all(deletePromises);
 
-    console.log('Old posts and images deleted successfully!');
+    logger.log('Old posts and images deleted successfully!');
     response.send("SUCCESS")
   } catch (error) {
-    console.error('Error deleting old posts and images:', error);
+    logger.error('Error deleting old posts and images:', error);
   }
 });
 // USER CREDENTIALS FUNCTIONS //
@@ -267,65 +266,53 @@ export const deleteUserProfile = functions.https.onRequest(async(request,respons
   }
 });
 
-export const updateCoverPicture = functions.https.onRequest(async(request,response)=>{
+export const updateCoverPicture = functions.https.onRequest(async(request, response) => {
   const db = admin.firestore();
   const storage = admin.storage().bucket();
   try {
-    if (request.method !== 'POST') {
-      response.status(405).send('Method Not Allowed');
-    }
-    const { uid, imageBuffer } = request.body; // Assuming you're sending the image as a Buffer
-      // Resize the image using Sharp
-      const resizedImageBuffer = await sharp(imageBuffer)
-      .resize(800, 600) // Resize to 800x600 or any dimension you want
-      // .jpeg({ quality: 90 }) // Compress to a JPEG with 90% quality
-      .toBuffer();
+      const { uid, imageData } = request.body;
+      // Convert base64 image data to Buffer
+      const imageBuffer = Buffer.from(imageData.split(",")[1], 'base64');
       // Define the Firebase Storage path
       const filePath = `user_prof_pics/${uid}/cover_actual.jpg`;
       const file = storage.file(filePath);
-    // Upload the resized image to Firebase Storage
-    await file.save(resizedImageBuffer, { contentType: 'image/jpeg' });
-    // Get the public URL for the uploaded image
-    const gsLink = `gs://${file.bucket.name}/${file.name}`;
-    // Update Firestore
-    const userDocRef = db.collection('users').doc(uid);
-    await userDocRef.update({ coverURL: gsLink });
-    response.status(200).send({ message: "Image uploaded successfully!", gsLink });
+      // Upload the resized image to Firebase Storage
+      await file.save(imageBuffer, { contentType: 'image/jpeg' });
+      // Get the public URL for the uploaded image
+      const gsLink = `gs://${file.bucket.name}/${file.name}`;
+      // Update Firestore
+      const userDocRef = db.collection('users').doc(uid);
+      await userDocRef.update({ coverURL: gsLink });
+      response.status(200).send({ message: "Image uploaded successfully!", gsLink });
   } catch (err) {
-    console.error(err);
-    response.status(500).send('Internal Server Error');
+      logger.error(err);
+      response.status(500).send('Internal Server Error');
   }
-})
+});
 
-export const updateProfilePicture = functions.https.onRequest(async(request,response)=>{
+export const updateProfilePicture = functions.https.onRequest(async(request, response) => {
   const db = admin.firestore();
   const storage = admin.storage().bucket();
   try {
-    if (request.method !== 'POST') {
-      response.status(405).send('Method Not Allowed');
-    }
-    const { uid, imageBuffer } = request.body; // Assuming you're sending the image as a Buffer
-      // Resize the image using Sharp
-      const resizedImageBuffer = await sharp(imageBuffer)
-      .resize(500, 500) 
-      // .jpeg({ quality: 90 }) // Compress to a JPEG with 90% quality
-      .toBuffer();
+      const { uid, imageData } = request.body;
+      // Convert base64 image data to Buffer
+      const imageBuffer = Buffer.from(imageData.split(",")[1], 'base64');
       // Define the Firebase Storage path
       const filePath = `user_prof_pics/${uid}/profile_actual.jpg`;
       const file = storage.file(filePath);
-    // Upload the resized image to Firebase Storage
-    await file.save(resizedImageBuffer, { contentType: 'image/jpeg' });
-    // Get the public URL for the uploaded image
-    const gsLink = `gs://${file.bucket.name}/${file.name}`;
-    // Update Firestore
-    const userDocRef = db.collection('users').doc(uid);
-    await userDocRef.update({ picURL: gsLink });
-    response.status(200).send({ message: "Image uploaded successfully!", gsLink });
+      // Upload the resized image to Firebase Storage
+      await file.save(imageBuffer, { contentType: 'image/jpeg' });
+      // Get the public URL for the uploaded image
+      const gsLink = `gs://${file.bucket.name}/${file.name}`;
+      // Update Firestore
+      const userDocRef = db.collection('users').doc(uid);
+      await userDocRef.update({ picURL: gsLink });
+      response.status(200).send({ message: "Image uploaded successfully!", gsLink });
   } catch (err) {
-    console.error(err);
-    response.status(500).send('Internal Server Error');
+      logger.error(err);
+      response.status(500).send('Internal Server Error');
   }
-})
+});
 
 
 

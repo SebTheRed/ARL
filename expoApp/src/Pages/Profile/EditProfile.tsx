@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
 import {useUserData} from '../../Contexts/UserDataContext'
 import { useUID } from '../../Contexts/UIDContext';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import styles from '../../styles'
 import {db, auth,} from '../../Firebase/firebase'
 import {updateDoc,doc} from 'firebase/firestore'
@@ -92,7 +92,24 @@ const EditProfile = ():JSX.Element => {
 	},[option1,option2,option3,option4,option5]);
 
 	const handleReturnPress = () => {
-		navigation.navigate("Profile")
+		// navigation.navigate("Profile")
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'AuthedApp', 
+            state: {
+              routes: [
+                {
+                  name: 'ProfileStack', 
+                },
+              ],
+            },
+          },
+        ],
+      })
+    );
 	};
 	const handleSwitch = async(switchVal:string) => {
 		// const userDocRef = doc(db, "users", uid);
@@ -389,7 +406,7 @@ return(
 		</View>
     </ScrollView>
 	{modalType!="" && (
-		<ProfilePicModal setModalType={setModalType} modalType={modalType} />
+		<ProfilePicModal updateProfPic={setProfilePicState} updateCoverPic={setCoverPicState} setModalType={setModalType} modalType={modalType} />
 	)}
 	</>
 	)

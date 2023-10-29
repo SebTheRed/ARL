@@ -5,6 +5,7 @@
     "Fix a new post not calling the feed properly":true,
     "Fix default pictures":true,
     "Fix image / cover image upload. Write backend": true,
+    "Make only global posts actually global":false,
     "Experience uploader needs to upload image through backend first":false,
     "weave in a photo checker": false,
     "reduce image size upon upload": false,

@@ -5,10 +5,11 @@
     "Fix a new post not calling the feed properly":true,
     "Fix default pictures":true,
     "Fix image / cover image upload. Write backend": true,
-    "Make only global posts actually global":false,
-    "Experience uploader needs to upload image through backend first":false,
-    "weave in a photo checker": false,
-    "reduce image size upon upload": false,
+    "Make only global posts actually global":true,
+    "reduce image size upon upload": true,
+    "Experience uploader needs to upload image through backend first":true,
+    "weave in a google cloud vision API": true,
+    "Fix notifications not clearing all the time when pressed (paginated ones aren't working)": false,
     "Add a change log into the hamburger": false,
     "remove default login being mine": false,
     "one huge final last test!":false,
@@ -16,6 +17,7 @@
   },
   "polish":
   {
+    "quantify friends":false,
     "make unique placeholder values for the text input field when making a new post":false,
     "change icon PNGS to svgs":false,
     "Fix stuttering profile pages":"COULD NOT FIX THIS FOR THE FUCKING LIFE OF ME. 4 HOURS OF FAILURE IS ENOUGH FOR A POLISH",

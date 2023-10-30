@@ -531,7 +531,7 @@ const updateXpLogDocumentXp = async(uid:string,score:number,timeStamp:any)=>{
 const bucket = admin.storage().bucket(); // Default bucket for your Firebase project
 
 const extractStoragePathFromURL = (url:string) => {
-  const regex = /o\/(.*?)\?alt=/;
+  const regex = /appreallife-ea3d9\.appspot\.com\/(.*?)\?GoogleAccessId=/;
   const match = url.match(regex);
   if (match && match[1]) {
       return decodeURIComponent(match[1]);
@@ -594,79 +594,5 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
   }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const bucket = admin.storage().bucket(); // Default bucket for your Firebase project
-// export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hours').timeZone('UTC').onRun(async (context) => {
-//   logger.log('Starting cleanup and reward process...');
-
-//   try {
-//     const currentTime = new Date();
-//     const twentyFourHoursAgo = new Date(currentTime.getTime() - (24 * 60 * 60 * 1000));
-//     const twentyFourHoursAgoTimestamp = admin.firestore.Timestamp.fromDate(twentyFourHoursAgo); // Convert to Firestore Timestamp
-//     logger.log('Current Time:', currentTime);
-//     logger.log('24 Hours Ago:', twentyFourHoursAgo);
-//     logger.log('Firestore 24 hours ago', twentyFourHoursAgoTimestamp)
-
-//      // Mass delete images older than 24 hours
-//      const [files] = await bucket.getFiles({ prefix: 'posts/' });
-//      for (const file of files) {
-//        if (isOlderThan24Hours(file.name)) {
-//          await file.delete();
-//          logger.log('Deleted Image with path:', file.name);
-//        }
-//      }
-//     // Fetch posts older than 24 hours from Firestore
-//     const oldPostsQuerySnapshot = await admin.firestore().collection('posts')
-//     .where('timeStamp', '<=', twentyFourHoursAgoTimestamp)
-//     .get();
-
-//     logger.log('Number of Old Posts:', oldPostsQuerySnapshot.size);
-
-//     for (const doc of oldPostsQuerySnapshot.docs) {
-//       const postData = doc.data();
-//       logger.log('Old Post Data:', postData);
-
-//       giveUserXP(postData.postSkill,postData.posterUID,postData.score)
-//       updateXpLogDocumentXp(postData.posterUID,postData.score,postData.timeStamp)
-//       giveUserNotification(postData.posterUID,`Your ${postData.eventTitle} post finished with a score of ${postData.score}! You have received ${postData.score} ${postData.postSkill} XP!`)
-//       //Delete the images
-//       const imageFilePath = `posts/${doc.id}`; // Assuming the image's name is the same as the document's ID
-//       await bucket.file(imageFilePath).delete();
-//       logger.log('Deleted Image with path:', imageFilePath);
-      
-//       // Delete the post
-//       await admin.firestore().collection('posts').doc(doc.id).delete();
-//       logger.log('Deleted Post with ID:', doc.id);
-
-//     }
-
-//     logger.log('Cleanup and reward process completed successfully!');
-//   } catch (error) {
-//     logger.error('Error occurred during cleanup and reward process:', error);
-//   }
-// });
-
-// const isOlderThan24Hours = (fileName:string) => {
-//   const dateRegex = /(\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2})\.jpg$/;
-//   const matches = fileName.match(dateRegex);
-//   if (matches) {
-//     const fileDate = new Date(matches[1].replace(/-/g, ':'));
-//     const twentyFourHoursAgo = new Date(new Date().getTime() - (24 * 60 * 60 * 1000));
-//     return fileDate < twentyFourHoursAgo;
-//   }
-//   return false;
-// };
 
 

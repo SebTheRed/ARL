@@ -137,9 +137,9 @@ if (dataLoading == false) {
               <View style={{ ...styles.skillPageXPBar, backgroundColor: `${skillData.color||"#fff"}`, width: `${xpStats.xpBarWidth || 0}%` }} />
             </View>
             <View style={styles.skillPageXPBox}>
-              <Text style={styles.skillPageXPText}>PREV- {xpStats.lastXpVal}</Text>
-              <Text style={styles.skillPageXPText}>XP- {xpStats.matchingSkillXp}</Text>
-              <Text style={styles.skillPageXPText}>NEXT- {xpStats.nextXpVal}</Text>
+              <Text style={styles.skillPageXPText}>Prev: {xpStats.lastXpVal}</Text>
+              <Text style={{...styles.skillPageXPText, fontWeight:"bold"}}>XP: {xpStats.matchingSkillXp}</Text>
+              <Text style={styles.skillPageXPText}>Next: {xpStats.nextXpVal}</Text>
             </View>
             <TouchableOpacity onPress={handleStatsPress} style={{...styles.skillsStatsButton, backgroundColor:`${skillData.color || "#fff"}`}}>
               <Text style={{color:"#1c1c1c",fontSize:scaleFont(18)}}>Press here to view your {skillData.title} stats</Text>

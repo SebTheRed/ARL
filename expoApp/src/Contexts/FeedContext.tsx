@@ -63,6 +63,7 @@ export const FeedProvider = ({ children }:any) => {
     feedQuery = query(
       collection(db, "posts"),
       orderBy("timeStamp", "desc"),
+      where("globalPost", "==", true),
       startAfter(lastVisibleGloabl),
       limit(PAGE_SIZE)
     );
@@ -108,6 +109,7 @@ export const FeedProvider = ({ children }:any) => {
       feedQuery = query(
         collection(db, "posts"),
         orderBy("timeStamp", "desc"),
+        where("globalPost", "==", true),
         limit(PAGE_SIZE)
       );
 

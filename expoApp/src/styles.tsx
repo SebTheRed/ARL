@@ -48,7 +48,8 @@ headerBar:{
   // borderBottomWidth:2,
   borderColor:"#ffffff",
   flexDirection:"row",
-  justifyContent:"space-between"
+  justifyContent:"space-between",
+  paddingHorizontal:10,
 },
 headerBarText:{
   color:"white",

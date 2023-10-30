@@ -32,6 +32,7 @@ import {scaleFont} from '../../Utilities/fontSizing'
 import CameraPage from './CameraPage'
 import LoadingOverlay from '../../Overlays/LoadingOverlay';
 import * as ImagePicker from 'expo-image-picker'
+import ErrorModal from '../../Overlays/ErrorModal';
 
 type RootStackParamList = {
     SkillsPage:undefined,
@@ -57,6 +58,8 @@ const ExperienceUploader = ():JSX.Element => {
     const [imageThreeState,setImageThreeState] = useState<string|null>(null)
     const [imageFourState,setImageFourState] = useState(null)
     const [loadingBool,setLoadingBool] = useState(false)
+    const [errorBool,setErrorBool] = useState(false)
+    const [errorMessageText,setErrorMessageText] = useState<string>()
     const navigation = useNavigation<any>();
     useEffect(()=>{
         setUtilityType(currentEvent.type)
@@ -111,28 +114,43 @@ const ExperienceUploader = ():JSX.Element => {
           setImageState(result.assets[0].uri);
         }
       };
-    const uploadImageToFirebase = async (imageURI: string, postID: string, imageNumber: string) => {
-        const storage = getStorage();
-        const imageRef = ref(storage, `posts/${postID}_image${imageNumber}.jpg`);
+    // const uploadImageToFirebase = async (imageURI: string, postID: string, imageNumber: string) => {
+    //     const storage = getStorage();
+    //     const imageRef = ref(storage, `posts/${postID}_image${imageNumber}.jpg`);
     
-        const response = await fetch(imageURI);
-        const blob = await response.blob();
+    //     const response = await fetch(imageURI);
+    //     const blob = await response.blob();
     
-        await uploadBytesResumable(imageRef, blob);
+    //     await uploadBytesResumable(imageRef, blob);
     
-        return await getDownloadURL(imageRef);
+    //     return await getDownloadURL(imageRef);
+    // };
+
+    const blobToBase64 = (blob:any) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      return new Promise((resolve) => {
+          reader.onloadend = () => {
+              resolve(reader.result);
+          };
+      });
     };
+
     const handleTimelineSubmit = async() => {
       setLoadingBool(true)
         let timeStamp = generateTimestamp()
         const postID = `${uid}_${timeStamp}`
         if (text.length>9 && imageOneState && imageTwoState && imageThreeState) {
             try{
-                const [pictureURL1,pictureURL2,pictureURL3] = await Promise.all([
-                    uploadImageToFirebase(imageOneState,postID, '1',),
-                    uploadImageToFirebase(imageTwoState,postID, '2',),
-                    uploadImageToFirebase(imageThreeState,postID, '3',)
-                ])
+              const imageBlobs = await Promise.all([
+                fetch(imageOneState).then(res => res.blob()),
+                fetch(imageTwoState).then(res => res.blob()),
+                fetch(imageThreeState).then(res => res.blob())
+              ]);
+
+              const [base64ImageOne, base64ImageTwo, base64ImageThree] = await Promise.all(
+                  imageBlobs.map(blob => blobToBase64(blob))
+              );
                 const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/createPost"
 
                 try {
@@ -141,81 +159,13 @@ const ExperienceUploader = ():JSX.Element => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ 
+                    body: JSON.stringify({
+                        base64Image:{
+                          imageOne:base64ImageOne,
+                          imageTwo:base64ImageTwo,
+                          imageThree:base64ImageThree,
+                        },
                         picture:"",
-                        pictureList:[pictureURL1,pictureURL2,pictureURL3],
-                        posterUID:uid,
-                        posterUserName:userData.userName,
-                        streak:userData.streak,
-                        postSkill:currentEvent.skillTitle,
-                        picURL: userData.picURL,
-                        eventTitle:currentEvent.title,
-                        xp:currentEvent.xp,
-                        textLog:text,
-                        settingOne:settingOne,
-                        settingTwo:settingTwo,
-                        settingThree:settingThree,
-                        type:currentEvent.type,
-                        visibleTo:[...trueFriends,uid],
-                        blockedTo:[...blockedPersons]
-                    }),
-                    })
-                    if (!response.ok) {
-                        setLoadingBool(false)
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    const responseMessage = await response.text();
-                    console.log("Response Message: ",responseMessage);
-                    setLoadingBool(false)
-                    newPostHandler()
-                    navigation.popToTop()
-                    navigation.navigate("Feed")
-                } catch(err) {
-                  setLoadingBool(false)
-                  console.error(err)}
-                // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
-                } catch(err){
-                    console.error("Post failed to post",err)
-                    setErrorMessage("Your experiences failed to post. Please close the app & try again.")
-                    setLoadingBool(false)
-                }
-        
-
-        }
-    }
-    const handleCameraPostSubmit = async() => {
-        setLoadingBool(true)
-        let timeStamp = generateTimestamp()
-        const storage = getStorage();
-        const postID = `${uid}_${timeStamp}`
-        const imageRef = ref(storage,`posts/${postID}.jpg`)
-        if (text.length>9 && cameraImageURL && cameraImageState) {
-            let pictureURL:string = ""
-            try {
-            const response = await fetch(cameraImageState)
-            const blob = await response.blob()
-            const uploadTask = uploadBytesResumable(imageRef,blob)
-            uploadTask.on('state_changed',
-            (snapshot) => {
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-            },
-            (error) => {
-            console.error("Upload failed:", error);
-            },
-            async () => {
-                pictureURL = await getDownloadURL(imageRef)
-                const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/createPost"
-
-                try {
-                    const response = await fetch(functionURL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 
-                        picture:pictureURL,
                         pictureList:[],
                         posterUID:uid,
                         posterUserName:userData.userName,
@@ -239,18 +189,103 @@ const ExperienceUploader = ():JSX.Element => {
                     }
                     const responseMessage = await response.text();
                     console.log("Response Message: ",responseMessage);
-                    setLoadingBool(false)
-                    newPostHandler()
-                    navigation.popToTop()
-                    navigation.navigate("Feed")
-                        
+                    if (responseMessage == "INAPPROPRIATE") {
+                      setLoadingBool(false)
+                      setErrorMessageText("DO NOT UPLOAD INAPPROPRIATE CONTENT TO THIS PLATFORM!!")
+                      setErrorBool(true)
+                    } else {
+                      setLoadingBool(false)
+                      newPostHandler()
+                      navigation.popToTop()
+                      navigation.navigate("Feed")
+                    }
+                    
                 } catch(err) {
                   setLoadingBool(false)
                   console.error(err)}
                 // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
+                } catch(err){
+                    console.error("Post failed to post",err)
+                    setErrorMessage("Your experiences failed to post. Please close the app & try again.")
+                    setLoadingBool(false)
+                }
+        
 
-            }
-            )
+        }
+    }
+    const handleCameraPostSubmit = async() => {
+        setLoadingBool(true)
+        let timeStamp = generateTimestamp()
+        // const storage = getStorage();
+        // const postID = `${uid}_${timeStamp}`
+        // const imageRef = ref(storage,`posts/${postID}.jpg`)
+        if (text.length>9 && cameraImageURL && cameraImageState) {
+            // let pictureURL:string = ""
+            try {
+            const response = await fetch(cameraImageState)
+            const blob = await response.blob()
+            const base64Image = await blobToBase64(blob)
+            console.log("base64 Image successfully converted from blob")
+            // const uploadTask = uploadBytesResumable(imageRef,blob)
+            // uploadTask.on('state_changed',
+            // (snapshot) => {
+            // // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            // console.log('Upload is ' + progress + '% done');
+            // },
+            // (error) => {
+            // console.error("Upload failed:", error);
+            // },
+            // async () => {
+            //     pictureURL = await getDownloadURL(imageRef)
+                const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/createPost"
+
+                try {
+                    const response = await fetch(functionURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        base64Image,
+                        picture:"",
+                        pictureList:[],
+                        posterUID:uid,
+                        posterUserName:userData.userName,
+                        streak:userData.streak,
+                        postSkill:currentEvent.skillTitle,
+                        picURL: userData.picURL,
+                        eventTitle:currentEvent.title,
+                        xp:currentEvent.xp,
+                        textLog:text,
+                        settingOne:settingOne,
+                        settingTwo:settingTwo,
+                        settingThree:settingThree,
+                        type:currentEvent.type,
+                        visibleTo:[...trueFriends,uid],
+                        blockedTo:[...blockedPersons]
+                    }),
+                    })
+                    if (!response.ok) {
+                        setLoadingBool(false)
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const responseMessage = await response.text();
+                    console.log("Response Message: ",responseMessage);
+                    if (responseMessage == "INAPPROPRIATE") {
+                      setLoadingBool(false)
+                      setErrorMessageText("DO NOT UPLOAD INAPPROPRIATE CONTENT TO THIS PLATFORM!!")
+                      setErrorBool(true)
+                    } else {
+                      setLoadingBool(false)
+                      newPostHandler()
+                      navigation.popToTop()
+                      navigation.navigate("Feed")
+                    }
+                } catch(err) {
+                  setLoadingBool(false)
+                  console.error(err)}
+                // if (settingOne == true) {postObj.geoTag = await getGeoLocation() as { latitude: number; longitude: number };}
             } catch(err) {
               setLoadingBool(false)
                 console.error("upload failed",err)
@@ -603,8 +638,9 @@ const ExperienceUploader = ():JSX.Element => {
                 <CameraPage setCameraImageURL={setCameraImageURL} setCameraActiveBool={setCameraActiveBool} cameraImageState={cameraImageState} setCameraImageState={setCameraImageState} />
             )}
           {loadingBool&&(
-            <LoadingOverlay text={"Uploading Post..."} isVisible={loadingBool} />
-        )}
+            <LoadingOverlay text={"Uploading Post..."} isVisible={loadingBool} opacity={0.5}/>
+          )}
+            <ErrorModal setErrorBool={setErrorBool} isVisible={errorBool} text={errorMessageText} opacity={0.5} />
         </Modal>
     )
 }

@@ -58,7 +58,7 @@ const ScoreCounter = ({data}:any):JSX.Element => {
   
         // Check if the user has already upvoted the post
         if (upvotes.includes(uid)) {
-          console.warn('User has already upvoted this post!');
+          console.log('User has already upvoted this post!');
           return;
         }
   
@@ -102,7 +102,7 @@ const ScoreCounter = ({data}:any):JSX.Element => {
   
         // Check if the user has already downvoted the post
         if (downvotes.includes(uid)) {
-          console.warn('User has already downvoted this post!');
+          console.log('User has already downvoted this post!');
           return;
         }
   

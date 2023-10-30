@@ -10,3 +10,4 @@ node_modules/
 
 #Service account key
 /src/key.json
+/lib/key.json

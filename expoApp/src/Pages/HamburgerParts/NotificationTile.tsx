@@ -20,6 +20,7 @@ const NotificationTile = ({data}:any):JSX.Element => {
   const windowDimensions = Dimensions.get('window')
   const [timePast,setTimePast] = useState<string>()
   const {updateNotificationReadStatus}:any = useNotifications()
+  const [isNotifRead,setIsNotifRead] = useState<boolean>(false)
 
   useEffect(() => {
     const calculateTimePast = () => {
@@ -40,7 +41,7 @@ const NotificationTile = ({data}:any):JSX.Element => {
 
       setTimePast(timePastStr);
     };
-
+    setIsNotifRead(data.read)
     calculateTimePast();
     const intervalId = setInterval(calculateTimePast, 60000); // Update every minute
 
@@ -51,6 +52,7 @@ const NotificationTile = ({data}:any):JSX.Element => {
   const markRead = () => {
     if (data.id && !data.read) { // Check if the notification has an id and is unread
       updateNotificationReadStatus(data.id); // Call the function to update the read status in Firestore
+      setIsNotifRead(true)
     }
   }
 
@@ -63,17 +65,17 @@ const NotificationTile = ({data}:any):JSX.Element => {
       style={{
         ...styles.notifTileContainer,
         width: (windowDimensions.width - 10),
-        borderColor: data.read ? "#656565" : "#FFFFFF" // Change color based on read status
+        borderColor: isNotifRead ? "#656565" : "#FFFFFF" // Change color based on read status
       }}
     >
       <View style={{
         ...styles.notifIndicator, 
-        backgroundColor: data.read ? "transparent" : "red",
-        borderColor: data.read ? "transparent" : "#fff",
-        opacity: data.read ? 0.5 : 1 // Change opacity based on read status
+        backgroundColor: isNotifRead ? "transparent" : "red",
+        borderColor: isNotifRead ? "transparent" : "#fff",
+        opacity: isNotifRead ? 0.5 : 1 // Change opacity based on read status
       }}></View>
       <View style={styles.notifMessageContainer}>
-        <Text style={{color: data.read ? "gray" : "white"}}>{data.message}</Text>
+        <Text style={{color: isNotifRead ? "gray" : "white"}}>{data.message}</Text>
       </View>
       <Text style={{color: "gray"}}>{timePast}</Text>
     </TouchableOpacity>

@@ -9,7 +9,10 @@
     "reduce image size upon upload": true,
     "Experience uploader needs to upload image through backend first":true,
     "weave in a google cloud vision API": true,
-    "Fix notifications not clearing all the time when pressed (paginated ones aren't working)": false,
+    "Fix notifications not clearing all the time when pressed (paginated ones aren't working)": true,
+    "notification when user's post is cleared (24 hrs)":false,
+    "notification when experience is off cooldown":false,
+    "notification upon friend request":false,
     "Add a change log into the hamburger": false,
     "remove default login being mine": false,
     "one huge final last test!":false,
@@ -17,6 +20,7 @@
   },
   "polish":
   {
+    "show red notification in hamburger & notification bell when user has fresh notifs":false,
     "quantify friends":false,
     "make unique placeholder values for the text input field when making a new post":false,
     "change icon PNGS to svgs":false,

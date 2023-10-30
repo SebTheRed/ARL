@@ -35,8 +35,8 @@ type RootStackParamList = {
 	SignUp:undefined,
 }
 const Login = ({route}:any):JSX.Element => {
-	const [email,setEmail] = useState("Seb.belfonti@gmail.com")
-	const [password,setPassword] = useState("punspaye")
+	const [email,setEmail] = useState("")
+	const [password,setPassword] = useState("")
 	const {setUID}:any = useUID();
 	const {setUserData}:any = useUserData()
   const [loadingBool,setLoadingBool] = useState<boolean>(false)
@@ -56,14 +56,11 @@ const Login = ({route}:any):JSX.Element => {
 
 
   const handleAuthChange = async(user:any) => {
-    console.log("handle auth change running.")
     if (user) {
-      console.log("user match")
       setUID(user.uid)
       const userDocRef = doc(db, "users", user.uid)
       const docSnap = await getDoc(userDocRef)
       if (docSnap.exists()){
-        console.log("docSnap exists")
         setUserData(docSnap.data())
         setInitializing(false)
         navigation.navigate("AuthedApp")
@@ -75,7 +72,6 @@ const Login = ({route}:any):JSX.Element => {
     
   }
   useEffect(()=>{
-    console.log("use effect running")
     setInitializing(true)
     const authSubscriber = auth.onAuthStateChanged(handleAuthChange);
     return authSubscriber
@@ -185,12 +181,12 @@ const signIn = async(e:any) => {
       {initializing&&(
         <LoadingOverlay text={"Initializing..."} isVisible={initializing} opacity={0.8} />
       )}
-      
-		</ScrollView>
-    <View style={{...styles.loginVoltWrapper}}>
+      <View style={{...styles.loginVoltWrapper}}>
         <Text style={{...styles.loginVoltText}}>Created By:</Text>
         <Image style={{...styles.loginVoltLogo}} source={require("../../IconBin/volt_logo.png")} />
       </View>
+		</ScrollView>
+    
 		</KeyboardAvoidingView>
 	)
 }

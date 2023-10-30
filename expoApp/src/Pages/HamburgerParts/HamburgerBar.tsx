@@ -15,6 +15,8 @@ import styles from '../../styles';
 import {useEffect, useState} from 'react'
 import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
+import {signOut} from "firebase/auth"
+import { auth } from '../../Firebase/firebase';
 type RootStackParamList = {
     Search:undefined,
     Notifications:undefined,
@@ -41,6 +43,28 @@ const HamburgerBar = ():JSX.Element => {
     },[hamburgerToggle])
 
 
+    const handleSignOut = async() => {
+      try{
+        await signOut(auth)
+        console.log("Successfully signed out.")
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'Login', 
+              },
+            ],
+          })
+        );
+      } catch(err) {
+        console.error("OOPS! WHY CAN'T THEY LOG OUT?!")
+      }
+    }
+
+
+
+
     const closeMenu = () => {
         Animated.timing(menuWidth, {
             toValue: -250,
@@ -57,7 +81,7 @@ const HamburgerBar = ():JSX.Element => {
         }).start();
     }
 
-    const handleOptionPress = (val:string) => {
+    const handleOptionPress = (val:any) => {
         navigation.navigate(val)
         setHamburgerToggle(false)
     }
@@ -89,10 +113,10 @@ const HamburgerBar = ():JSX.Element => {
                     <Image style={styles.menuIcon} source={require("../../IconBin/psych.png")} />
                     <Text style={styles.menuItem}>How ARL works</Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity onPress={()=>{handleOptionPress("Streak")}} style={styles.menuItemContainer}>
-                    <Image style={styles.menuIcon} source={require("../../IconBin/streak.png")} />
-                    <Text style={styles.menuItem}>Streak</Text>
-                </TouchableOpacity> */}
+                <TouchableOpacity onPress={handleSignOut} style={styles.menuItemContainer}>
+                    <Image style={styles.menuIcon} source={require("../../IconBin/door.png")} />
+                    <Text style={styles.menuItem}>Sign Out</Text>
+                </TouchableOpacity>
             </Animated.View>
         )
     }

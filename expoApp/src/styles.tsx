@@ -463,8 +463,7 @@ loginbuttonText: {
   fontSize: scaleFont(18),
 },
 loginVoltWrapper:{
-  position:"absolute",
-  bottom:0,
+  paddingTop:100,
   width: "100%",
   alignItems:"center",
   paddingBottom:20,

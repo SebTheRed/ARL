@@ -1,6 +1,7 @@
 # Compiled JavaScript files
 lib/**/*.js
 lib/**/*.js.map
+lib/**/*.json
 
 # TypeScript v1 declaration files
 typings/
@@ -10,4 +11,3 @@ node_modules/
 
 #Service account key
 /src/key.json
-/lib/key.json

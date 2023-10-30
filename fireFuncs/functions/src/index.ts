@@ -4,10 +4,17 @@ import { Timestamp } from "firebase-admin/firestore";
 import * as logger from "firebase-functions/logger";
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import serviceAccount from './key.json'
+import Vision from '@google-cloud/vision'
 
-admin.initializeApp();
+// const serviceAccount = require('./key.json');
+admin.initializeApp({
+  credential:admin.credential.cert(serviceAccount as admin.ServiceAccount),
+  storageBucket:"appreallife-ea3d9.appspot.com"
+});
 const db = admin.firestore();
 const firestore = admin.firestore();
+
 
 
 // Start writing functions
@@ -147,27 +154,31 @@ export const downVotePost = functions.https.onRequest(async(request,response)=>{
 
 export const createPost = functions.https.onRequest(async(request,response)=>{
   try {
-  const {visibleTo,posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,picture,pictureList,blockedTo}:any = request.body
+  const {base64Image,visibleTo,posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,picture,pictureList,blockedTo}:any = request.body
+  let isSuccess:boolean = false;
   switch(type){
     case "log":
     case "api":
-     await handlePostSubmit(
-        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],"",visibleTo,blockedTo
+     isSuccess = await handlePostSubmit(
+        base64Image,posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],"",visibleTo,blockedTo
       )
     break;
     case "camera": 
-     await handlePostSubmit(
-        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],picture,visibleTo,blockedTo
+     isSuccess = await handlePostSubmit(
+        base64Image,posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,[],picture,visibleTo,blockedTo
       )
     break;
     case "timeline":
-      logger.log(pictureList)
-      await handlePostSubmit(
-        posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,pictureList,"",visibleTo,blockedTo
+      isSuccess = await handlePostSubmit(
+        base64Image,posterUID,posterUserName,streak,postSkill,picURL,eventTitle,xp,textLog,settingOne,settingTwo,settingThree,type,pictureList,"",visibleTo,blockedTo
       )
     break;
   }
-  response.send("SUCCESS");
+  if (isSuccess) {
+    response.send("SUCCESS")
+  } else {
+    response.send("INAPPROPRIATE")
+  }
     //give user xp
     //create xpLog of it
 } catch (err) {
@@ -330,26 +341,83 @@ const getCurrentDate = () => {
   
   return `${month}/${day}/${year}`;
   };
-  // function generateTimestamp() {
-  //   const now = new Date();
-  //   const year = now.getFullYear();
-  //   const month = String(now.getMonth() + 1).padStart(2, '0');
-  //   const day = String(now.getDate()).padStart(2, '0');
-  //   const hour = String(now.getHours()).padStart(2, '0');
-  //   const minute = String(now.getMinutes()).padStart(2, '0');
-  //   const second = String(now.getSeconds()).padStart(2, '0');
-  
-  //   return `${year}-${month}-${day}-${hour}-${minute}-${second}`;
-  // }
+
+
+
+const visionClient = new Vision.ImageAnnotatorClient();
+async function checkImageForInappropriateContent(base64Image: string): Promise<boolean> {
+    const [result] = await visionClient.safeSearchDetection({
+        image: { content: base64Image.split(",")[1] }
+    });
+    const detections:any = result.safeSearchAnnotation;
+
+    // Adjust these checks based on how strict you want your filtering to be
+    if (detections.adult === 'VERY_LIKELY' ||
+        detections.violence === 'VERY_LIKELY' ||
+        detections.racy === 'VERY_LIKELY') {
+        return false; // Image is inappropriate
+    }
+
+    return true; // Image is safe
+}
 //EXP Uploader Functions//
 const handlePostSubmit = async(
-  uid:string,userName:string,streak:number,postSkill:string,
+  base64Image:any,uid:string,userName:string,streak:number,postSkill:string,
   picURL:any,eventTitle:string,xp:number,textLog:string,
   settingOne:boolean,settingTwo:boolean,settingThree:boolean,type:string,
-  timelinePicURLs:any,cameraPicURL:string,visibleTo:any,blockedTo:any
+  timelinePicURLs:any,cameraPicURL:string,visibleTo:any,blockedTo:any,
   ) => {
-  let timeStamp = Timestamp.now()
-  const postID = `${uid}_${timeStamp.toMillis()}`
+    let timeStamp = Timestamp.now()
+    const postID = `${uid}_${timeStamp.toMillis()}`
+    try{
+      if (type == "camera") {
+
+        if (await checkImageForInappropriateContent(base64Image)){
+          const imageBuffer = Buffer.from(base64Image.split(",")[1], 'base64');
+          const filePath = `posts/${postID}.jpg`
+          const storage = admin.storage().bucket();
+          const file = storage.file(filePath);
+          await file.save(imageBuffer, { contentType: 'image/jpeg' });
+          const [signedURL] = await file.getSignedUrl({ action: 'read', expires: '03-17-2030' });
+          logger.log(signedURL)
+          cameraPicURL = signedURL
+        } else {
+          logger.warn("INAPPROPRIATE PICTURE DETECTED, FUNCTION CANCELLED")
+          return false;
+        }
+
+        
+      } else if (type == "timeline") {
+        for (const img of Object.values(base64Image)){
+          if (!await checkImageForInappropriateContent(img as string)) {
+            logger.warn("INAPPROPRIATE PICTURE DETECTED, FUNCTION CANCELLED")
+            return false;
+          }
+        }
+        const storage = admin.storage().bucket();
+        
+        const imageBuffers = [
+            Buffer.from(base64Image.imageOne.split(",")[1], 'base64'),
+            Buffer.from(base64Image.imageTwo.split(",")[1], 'base64'),
+            Buffer.from(base64Image.imageThree.split(",")[1], 'base64')
+        ];
+        const filePaths = [
+            `posts/${postID}_image1.jpg`,
+            `posts/${postID}_image2.jpg`,
+            `posts/${postID}_image3.jpg`
+        ];
+        const files = filePaths.map(path => storage.file(path));
+        // Upload the images
+        await Promise.all(files.map((file, index) => file.save(imageBuffers[index], { contentType: 'image/jpeg' })));
+        // Get the signed URLs
+        const signedURLs = await Promise.all(files.map(file => file.getSignedUrl({ action: 'read', expires: '03-17-2030' })));
+        // The below line maps the array of arrays to a flat array of URLs
+        timelinePicURLs = signedURLs.map(([url]) => url);
+        logger.log(timelinePicURLs)
+      }
+    } catch(err) {
+      logger.error(err)
+    }
       const postObj = {
           upvotes:[],
           downvotes:[],
@@ -386,6 +454,7 @@ const handlePostSubmit = async(
       } catch(err) {
         logger.error(err)
       }
+      return true;
     }
 
   

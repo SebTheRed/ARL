@@ -10,11 +10,12 @@
     "Experience uploader needs to upload image through backend first":true,
     "weave in a google cloud vision API": true,
     "Fix notifications not clearing all the time when pressed (paginated ones aren't working)": true,
+    "set up to save user login, so they only have to login say once a month":true,
     "notification when user's post is cleared (24 hrs)":false,
     "notification when experience is off cooldown":false,
     "notification upon friend request":false,
     "Add a change log into the hamburger": false,
-    "remove default login being mine": false,
+    "remove default login being mine": true,
     "one huge final last test!":false,
     "apply to APP STORES!!": false
   },

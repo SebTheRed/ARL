@@ -462,7 +462,21 @@ loginbuttonText: {
   color: '#fff',
   fontSize: scaleFont(18),
 },
-
+loginVoltWrapper:{
+  position:"absolute",
+  bottom:0,
+  width: "100%",
+  alignItems:"center",
+  paddingBottom:20,
+},
+loginVoltText:{
+  color:"#fff",
+  fontSize: scaleFont(20),
+},
+loginVoltLogo:{
+  width:"25%",
+  height:80,
+},
 
 /**
  

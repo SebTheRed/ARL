@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 
 import React from 'react';
 import type {PropsWithChildren} from 'react';
@@ -136,7 +129,7 @@ const AuthApp = ()=>{
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.backgroundStyle}>
-          <LoadingOverlay text={"Starting aRL..."} isVisible={true} opacity={1}/>
+          <LoadingOverlay text={"Starting App Real Life.."} isVisible={true} opacity={1}/>
         </ScrollView>
     )
   }

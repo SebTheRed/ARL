@@ -12,6 +12,7 @@ import {
 		Keyboard,
 		KeyboardAvoidingView,
 		Platform,
+    Image,
   } from 'react-native';
   import React from 'react'
   import { useNavigation } from '@react-navigation/native';
@@ -27,6 +28,7 @@ import { useUserData } from '../../Contexts/UserDataContext';
 import LinearGradient from 'react-native-linear-gradient';
 import LoadingOverlay from '../../Overlays/LoadingOverlay';
 import { scaleFont } from '../../Utilities/fontSizing';
+
 type RootStackParamList = {
 	Login:undefined,
 	AuthedApp:undefined,
@@ -39,37 +41,50 @@ const Login = ({route}:any):JSX.Element => {
 	const {setUserData}:any = useUserData()
   const [loadingBool,setLoadingBool] = useState<boolean>(false)
   const [failureMessage,setFailureMessage] = useState<string>()
-	// const animatedValue = new Animated.Value(0);
-
-	// useEffect(() => {
-	//   Animated.loop(
-	// 	Animated.sequence([
-	// 	  Animated.timing(animatedValue, {
-	// 		toValue: 1,
-	// 		duration: 20000,
-	// 		useNativeDriver: false,
-	// 	  }),
-	// 	  Animated.timing(animatedValue, {
-	// 		toValue: 0,
-	// 		duration: 20000,
-	// 		useNativeDriver: false,
-	// 	  }),
-	// 	])
-	//   ).start();
-	// }, []);
-	// const interpolatedColor = animatedValue.interpolate({
-	// 	inputRange: [0,0.25,0.5,0.75, 1],
-	// 	outputRange: ['orange', 'gold', "#00ff15", "cyan", "#007bff"],
-	//   });
+  const [initializing, setInitializing] = useState<boolean>(false)
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
 
- // 2. Use the useNavigation hook with the type
- const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
- // 3. Update the handlePress function
- const handleSignUpPress = (val: keyof RootStackParamList) => {
+
+
+  const handleSignUpPress = (val: keyof RootStackParamList) => {
    navigation.navigate(val);
- }
+  }
+
+
+
+
+  const handleAuthChange = async(user:any) => {
+    console.log("handle auth change running.")
+    if (user) {
+      console.log("user match")
+      setUID(user.uid)
+      const userDocRef = doc(db, "users", user.uid)
+      const docSnap = await getDoc(userDocRef)
+      if (docSnap.exists()){
+        console.log("docSnap exists")
+        setUserData(docSnap.data())
+        setInitializing(false)
+        navigation.navigate("AuthedApp")
+      } else {
+        setInitializing(false)
+        setFailureMessage("ERROR: Reload app and try again.")
+      }
+    } else{setInitializing(false)}
+    
+  }
+  useEffect(()=>{
+    console.log("use effect running")
+    setInitializing(true)
+    const authSubscriber = auth.onAuthStateChanged(handleAuthChange);
+    return authSubscriber
+  },[])
+
+
+
+
+
 
 const signIn = async(e:any) => {
 	e.preventDefault();
@@ -111,12 +126,12 @@ const signIn = async(e:any) => {
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 			style={{ flex: 1 }}
 		>
-		<ScrollView keyboardShouldPersistTaps='handled' style={{...styles.logincontainer,backgroundColor:"#19c6ff"}} contentContainerStyle={{alignItems:"center", justifyContent:"space-between"}}>
+		<ScrollView keyboardShouldPersistTaps='handled' style={{...styles.logincontainer,backgroundColor:"#22ace3"}} contentContainerStyle={{alignItems:"center", justifyContent:"space-between"}}>
 			<View style={{...styles.ARLLogoWrapper, backgroundColor:"transparent"}}>
 				<View style={styles.offsetWrapper}>
 				</View>
-				<Text style={{...styles.borderedTextShadow, color: 'black',fontWeight:"bold"}}>arl</Text>
-				<Text style={{...styles.borderedText, color: 'white' ,fontWeight:"bold"}}>arl</Text>
+				<Text style={{...styles.borderedTextShadow, color: 'black',fontWeight:"bold"}}>ARL</Text>
+				<Text style={{...styles.borderedText, color: 'white' ,fontWeight:"bold"}}>ARL</Text>
 			</View>
 			<View style={{...styles.loginWrapper}}>
       {failureMessage&&(<View style={{height:30,width:"100%",backgroundColor:"rgba(255,0,0,0.5)", alignItems:"center", justifyContent:"center", borderColor:"#ff0000",borderWidth:2}}>
@@ -162,12 +177,20 @@ const signIn = async(e:any) => {
 					<Text style={styles.loginbuttonText}>what's arl ?</Text>
 				</TouchableOpacity> */}
 			</View>
+      
 
       {loadingBool&&(
         <LoadingOverlay text={"Logging you in..."} isVisible={loadingBool} opacity={1}/>
       )}
+      {initializing&&(
+        <LoadingOverlay text={"Initializing..."} isVisible={initializing} opacity={0.8} />
+      )}
+      
 		</ScrollView>
-    
+    <View style={{...styles.loginVoltWrapper}}>
+        <Text style={{...styles.loginVoltText}}>Created By:</Text>
+        <Image style={{...styles.loginVoltLogo}} source={require("../../IconBin/volt_logo.png")} />
+      </View>
 		</KeyboardAvoidingView>
 	)
 }

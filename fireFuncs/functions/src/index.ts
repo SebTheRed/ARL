@@ -38,6 +38,8 @@ export const addUser = functions.https.onRequest(async (request, response) => {
     const userName = incomingData.userName;
     const name = incomingData.name;
     const phoneNumber = incomingData.phoneNumber;
+    const nameParts = name.split(' ').map((part:string)=>part.toLowerCase())
+    const lowerUserName = userName.toLowerCase()
       // Create user with email and password
     let uid:string
       try {
@@ -52,7 +54,7 @@ export const addUser = functions.https.onRequest(async (request, response) => {
           uid: uid,
           email: email,
           accountCreationDate: getCurrentDate(),
-          name: name, 
+          name: name,
           phoneNumber: phoneNumber, 
           userName:userName,
           streak:0,
@@ -121,7 +123,7 @@ export const addUser = functions.https.onRequest(async (request, response) => {
               privateProfile:true,
           },
           friendsCount:0,
-          blockedUsers:[],
+          nameMatches:[...nameParts, lowerUserName],
         }
         try {
           // logger.info(request.body)

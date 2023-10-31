@@ -32,52 +32,36 @@ const Search = ():JSX.Element => {
         // fetchSearch()
     },[])
     
-    const fetchSearch = async(text:string) => {
-        let results:any;
-      if (!text ||text.length < 3) {
-        setErrorMessage("Search at least 3 letters")
-        return}
-        try{
-        setErrorMessage("")
-        // Query by name
-        const nameQuery = query(
-          collection(db, "users"),
-          where("name", ">=", text),
-          where("name", "<=", text + "\uf8ff"),
-          where("settings.privateProfile", "==", true),
-          limit(PAGE_SIZE)
-        );
-      
-        const nameSnapshot = await getDocs(nameQuery);
-        const nameDocs = nameSnapshot.docs.map(doc => doc.data());
-      
-        // Query by userName
-        const userNameQuery = query(
-          collection(db, "users"),
-          where("userName", ">=", text),
-          where("userName", "<=", text + "\uf8ff"),
-          where("settings.privateProfile", "==", true),
-          limit(PAGE_SIZE)
-        );
-      
-        const userNameSnapshot = await getDocs(userNameQuery);
-        const userNameDocs = userNameSnapshot.docs.map(doc => doc.data());
-      
-        // Merge and remove duplicates
-        results = [...nameDocs, ...userNameDocs];
-        if (results.length < 1) {
-          setErrorMessage("No one was found by that name or username")
-        }
-        const uniqueResults = Array.from(new Set(results.map((a:any) => a.uid)))
-          .map(uid => results.find((a:any) => a.uid === uid));
-      
-        console.log(JSON.stringify(uniqueResults, null, 2));
-        setUsers(uniqueResults);  // Replace with your state update function
-      } catch(err) {
-        console.error(err)
+  const fetchSearch = async(text:string) => {
+      if (!text || text.length < 3) {
+          setErrorMessage("Search at least 3 letters");
+          return;
       }
-        
-    }
+  
+      try {
+          setErrorMessage("");
+  
+          // Query by nameMatches array
+          const searchQuery = query(
+              collection(db, "users"),
+              where("nameMatches", "array-contains", text.toLowerCase()),
+              where("settings.privateProfile", "==", true),
+              limit(PAGE_SIZE)
+          );
+  
+          const snapshot = await getDocs(searchQuery);
+          const docs = snapshot.docs.map(doc => doc.data());
+  
+          if (docs.length < 1) {
+              setErrorMessage("No one was found by that name or username");
+          }
+  
+          console.log(JSON.stringify(docs, null, 2));
+          setUsers(docs);  // Replace with your state update function
+      } catch(err) {
+          console.error(err);
+      }
+  }
 
     const SearchBar = () => {
 		return (

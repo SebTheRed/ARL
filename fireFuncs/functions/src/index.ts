@@ -122,12 +122,20 @@ export const addUser = functions.https.onRequest(async (request, response) => {
               privateSkills:true,
               privateProfile:true,
           },
-          friendsCount:0,
+          friendsCount:1,
           nameMatches:[...nameParts, lowerUserName],
+        }
+        const firstFriendObj = {
+          blocked:false,
+          pending:false,
+          receivingUser: uid,
+          requestingUser: "vUVmF04zA9hYXsZc8YIiPPtP7BZ2",
+          timestamp: new Date().toISOString(), 
         }
         try {
           // logger.info(request.body)
           await db.collection('users').doc(uid).set(userObj);
+          await db.collection('friendships').doc(`${uid}_"vUVmF04zA9hYXsZc8YIiPPtP7BZ2`).set(firstFriendObj)
           response.send(uid);
         } catch (error) {
           logger.error('Error adding user: ', error);

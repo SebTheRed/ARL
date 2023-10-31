@@ -15,7 +15,7 @@ const Tutorial = ():JSX.Element => {
   return(
     <ScrollView style={{backgroundColor:"#1c1c1c"}}>
     <View style={{...styles.defaultPageBackground, alignItems:"flex-start", padding:10}}>
-    <View style={{height:20}} />
+      <View style={{height:20}} />
       <Text style={{...styles.sectionTitle,fontSize:scaleFont(24)}}>ARL is a tool for the mind.</Text>
       <Text style={{...styles.sectionFlare}}>Studies have proven again and again that by gamifying a goal with numbers, you will be much more likely to accomplish the goal. Piece by piece, post by post, you will begin to see self-improvement by leveling up the Traits that make you human.</Text>
       <View style={{height:20}} />

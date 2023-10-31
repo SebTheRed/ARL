@@ -27,6 +27,7 @@ type RootStackParamList = {
     Friends:undefined,
     Streak:undefined,
     Tutorial:undefined,
+    ChangeLog:undefined,
 }
 
 const HamburgerBar = ():JSX.Element => {
@@ -119,6 +120,10 @@ const HamburgerBar = ():JSX.Element => {
                 <TouchableOpacity onPress={()=>{handleOptionPress("Tutorial")}} style={styles.menuItemContainer}>
                     <Image style={styles.menuIcon} source={require("../../IconBin/psych.png")} />
                     <Text style={styles.menuItem}>How ARL works</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>{handleOptionPress("ChangeLog")}} style={styles.menuItemContainer}>
+                    <Image style={styles.menuIcon} source={require("../../IconBin/log.png")} />
+                    <Text style={styles.menuItem}>Change Log</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleSignOut} style={styles.menuItemContainer}>
                     <Image style={styles.menuIcon} source={require("../../IconBin/door.png")} />

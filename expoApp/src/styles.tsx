@@ -167,9 +167,14 @@ sectionTitle: {
   color:"white",
 },
 sectionFlare:{
-  fontSize:scaleFont(12),
+  fontSize:scaleFont(16),
   fontWeight:'400',
   color:"white",
+},
+sectionLine:{
+  width:"100%",
+  borderBottomWidth:1,
+  borderColor:"#656565"
 },
 sectionDescription: {
   marginTop: 8,

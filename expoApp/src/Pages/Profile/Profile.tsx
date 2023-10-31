@@ -21,7 +21,7 @@ import { useFeed } from '../../Contexts/FeedContext';
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 // import FeedPost from './FeedPost';
 import {db, auth,} from '../../Firebase/firebase'
-import {setDoc,doc,addDoc,getDoc,deleteDoc, Timestamp, updateDoc, arrayUnion} from 'firebase/firestore'
+import {setDoc,doc,addDoc,getDoc,deleteDoc, Timestamp, updateDoc, arrayUnion, increment} from 'firebase/firestore'
 import styles from '../../styles'
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
@@ -171,8 +171,18 @@ const Profile = ():JSX.Element => {
         const sortedUIDString = [uid, profilePageUID].sort().join('_');
         try{
             await deleteDoc(doc(db,"friendships",sortedUIDString))
+            const reqUserRef = doc(db,"users",profilePageUID)
+            const respUserRef = doc(db,"users",uid)
+            await updateDoc(reqUserRef, {
+              friendsCount: increment(-1)
+            })
+            await updateDoc(respUserRef, {
+              friendsCount: increment(-1)
+            })
             setFriendsRefresh((prevState:boolean)=>!prevState)
-        }catch(error){console.error(error)}
+        }catch(error){
+          console.error(error)
+        }
         
         
     }

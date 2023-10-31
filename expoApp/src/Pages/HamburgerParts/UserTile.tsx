@@ -11,7 +11,7 @@ import {
 	TextInput,
 } from 'react-native';
 import React, { useEffect, useState } from 'react'
-import {doc,getDoc,updateDoc,deleteDoc} from 'firebase/firestore'
+import {doc,getDoc,updateDoc,deleteDoc, increment} from 'firebase/firestore'
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import {db, auth,} from '../../Firebase/firebase'
 import styles from '../../styles';
@@ -74,7 +74,7 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
         let highestXP = 0;
         let highestSkill = '';
         
-        for (const [skill, xp] of Object.entries(userDoc.xpData)) {
+        for (const [skill, xp] of Object.entries(userDoc.xpData) as any) {
           if (xp > highestXP) {
             highestXP = xp;
             highestSkill = skill;
@@ -85,10 +85,10 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
       };
       
       // Function to convert XP to Level
-      const convertXPToLevel = (xp, XPScale) => {
+      const convertXPToLevel = (xp:number, XPScale:any) => {
         let level = 0;
         
-        for (const [lvl, lvlXP] of Object.entries(XPScale)) {
+        for (const [lvl, lvlXP] of Object.entries(XPScale) as any) {
           if (xp >= lvlXP) {
             level = lvl;
           } else {
@@ -124,8 +124,16 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
   const handleAccept = async() => {
     const sortedUIDString = [uid, userDoc.uid].sort().join('_'); 
     const docRef = doc(db, "friendships", sortedUIDString);
+    const reqUserRef = doc(db,"users",userDoc.uid)
+    const respUserRef = doc(db,"users",uid)
     await updateDoc(docRef, {
       pending:false,
+    })
+    await updateDoc(reqUserRef, {
+      friendsCount: increment(1)
+    })
+    await updateDoc(respUserRef, {
+      friendsCount: increment(1)
     })
     console.log("ACCEPTED !")
     setFriendsRefresh((friendsRefresh:boolean)=>!friendsRefresh)
@@ -134,7 +142,7 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
     const sortedUIDString = [uid, userDoc.uid].sort().join('_'); 
     const docRef = doc(db, "friendships", sortedUIDString);
     await deleteDoc(docRef)
-    console.log("ACCEPTED !")
+    console.log("DENIED !")
     setFriendsRefresh((friendsRefresh:boolean)=>!friendsRefresh)
   }
       

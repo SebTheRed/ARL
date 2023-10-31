@@ -53,20 +53,20 @@ const Friends = ():JSX.Element => {
 				<FlatList 
 				data={trueFriendDocs}
 				keyExtractor={(item)=>item.uid}
-                renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={levelScale} userDoc={item} key={item.uid} />}
-                contentContainerStyle={{ alignItems: 'center' }}
-                style={styles.userTileContainer}
-                scrollEventThrottle={150}
+        renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={levelScale} userDoc={item} key={item.uid} />}
+        contentContainerStyle={{ alignItems: 'center' }}
+        style={styles.userTileContainer}
+        scrollEventThrottle={150}
 				/>
 			)}
 			{chosenTab==false&&(
 				<FlatList 
 				data={pendingFriendDocs}
-                renderItem={({item})=>< UserTile skillsList={skillsList} type={"pending"} XPScale={levelScale} userDoc={item} key={item.uid} />}
+        renderItem={({item})=>< UserTile skillsList={skillsList} type={"pending"} XPScale={levelScale} userDoc={item} key={item.uid} />}
 				keyExtractor={(item)=>item.uid}
-                contentContainerStyle={{ alignItems: 'center' }}
-                style={styles.userTileContainer}
-                scrollEventThrottle={150}
+        contentContainerStyle={{ alignItems: 'center' }}
+        style={styles.userTileContainer}
+        scrollEventThrottle={150}
 				refreshControl={
 					<RefreshControl
 					  refreshing={refreshing}

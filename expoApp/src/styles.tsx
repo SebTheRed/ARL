@@ -69,6 +69,19 @@ headerBarProfilePic:{
   borderWidth:2,
   resizeMode:"cover",
 },
+
+notificationDot: {
+  position: 'absolute', // This will position the dot relative to the TouchableOpacity
+  top: 0,
+  right: 0,
+  width: 15,  // Size of the dot. You can adjust as necessary.
+  height: 15,
+  borderRadius: 10,  // Half of the width/height to make it circular.
+  backgroundColor: 'red',  // Color of the notification dot.
+  borderWidth: 1, // Optional, but can make the dot more noticeable
+  borderColor: 'white',
+},
+
 headerProfilePicContainer:{
   width:35,
   height:35,

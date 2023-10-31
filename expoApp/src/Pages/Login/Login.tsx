@@ -182,7 +182,7 @@ const signIn = async(e:any) => {
         <LoadingOverlay text={"Initializing..."} isVisible={initializing} opacity={0.8} />
       )}
       <View style={{...styles.loginVoltWrapper}}>
-        <Text style={{...styles.loginVoltText}}>Created By:</Text>
+        <Text style={{...styles.loginVoltText}}>Powered By:</Text>
         <Image style={{...styles.loginVoltLogo}} source={require("../../IconBin/volt_logo.png")} />
       </View>
 		</ScrollView>

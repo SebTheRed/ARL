@@ -334,7 +334,7 @@ return(
 					</View>
 				</View>
 			</View>
-			<View style={{...styles.eventTileWrapper,borderColor:`${option1?"#1cb012":"#656565"}`}}>
+			{/* <View style={{...styles.eventTileWrapper,borderColor:`${option1?"#1cb012":"#656565"}`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
 						<Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Access & Data</Text>
@@ -353,8 +353,8 @@ return(
 					/>
 					</View>
 				</View>
-			</View>
-			<View style={{...styles.eventTileWrapper,borderColor:`${option4?"#1cb012":"#656565"}`}}>
+			</View> */}
+			{/* <View style={{...styles.eventTileWrapper,borderColor:`${option4?"#1cb012":"#656565"}`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>
 						<Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Global Skill Set</Text>
@@ -373,7 +373,7 @@ return(
 					/>
 					</View>
 				</View>
-			</View>
+			</View> */}
 			<View style={{...styles.eventTileWrapper,borderColor:`${option5?"#1cb012":"#656565"}`}}>
 				<View style={{...styles.eventTileMain}}>
 					<View style={{flexDirection:"row",justifyContent:"space-between"}}>

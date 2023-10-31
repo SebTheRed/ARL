@@ -16,6 +16,7 @@ export const useNotifications = () => {
 export const NotificationProvider = ({ children }:any) => {
   const { uid }:any = useUID(); // Assuming you have a UID context or some other way to get the user's uid
   const [currentNotifications, setCurrentNotifications] = useState<any>([]);
+  const [activeNotif,setActiveNotif] = useState<boolean>(false)
   const [lastVisible, setLastVisible] = useState<any>(null);
   const PAGE_SIZE = 5;
 
@@ -29,6 +30,8 @@ export const NotificationProvider = ({ children }:any) => {
         // Include the document ID in each notification item
         notifications.push({ id: doc.id, ...doc.data() });
       });
+      const hasUnread = notifications.some((notif: any) => notif.read === false);
+      setActiveNotif(hasUnread);
       setCurrentNotifications(notifications);
       if (!snapshot.empty) {
         setLastVisible(snapshot.docs[snapshot.docs.length - 1]);
@@ -60,11 +63,8 @@ export const NotificationProvider = ({ children }:any) => {
     }
   };
 
-  const refreshNotifications = async() => {
-  }
-
   return (
-    <NotificationContextProvider.Provider value={{ currentNotifications, paginateNotifications,updateNotificationReadStatus }}>
+    <NotificationContextProvider.Provider value={{ activeNotif,currentNotifications, paginateNotifications,updateNotificationReadStatus }}>
       {children}
     </NotificationContextProvider.Provider>
   );

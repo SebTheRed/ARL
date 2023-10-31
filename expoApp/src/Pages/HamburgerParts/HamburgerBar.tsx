@@ -17,6 +17,9 @@ import { NavigationRouteContext, useNavigation, CommonActions } from '@react-nav
 import { NavigationProp } from '@react-navigation/native';
 import {signOut} from "firebase/auth"
 import { auth } from '../../Firebase/firebase';
+import { useNotifications } from '../../Contexts/NotificationsContext';
+
+
 type RootStackParamList = {
     Search:undefined,
     Notifications:undefined,
@@ -27,7 +30,7 @@ type RootStackParamList = {
 }
 
 const HamburgerBar = ():JSX.Element => {
-
+    const {activeNotif}:any = useNotifications()
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const {hamburgerToggle,setHamburgerToggle}:any = useHamburgerBar()
     const [menuWidth] = useState(new Animated.Value(-250)); // Initial hidden position
@@ -98,7 +101,11 @@ const HamburgerBar = ():JSX.Element => {
                     <Text style={styles.menuItem}>Search</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{handleOptionPress("Notifications")}} style={styles.menuItemContainer}>
+                  <View>
                     <Image style={styles.menuIcon} source={require("../../IconBin/notifications.png")} />
+                    {activeNotif && <View style={styles.notificationDot} />}
+                  </View>
+                    
                     <Text style={styles.menuItem}>Notifications</Text>
                 </TouchableOpacity>
                 {/* <TouchableOpacity onPress={()=>{handleOptionPress("TrophyGrading")}} style={styles.menuItemContainer}>

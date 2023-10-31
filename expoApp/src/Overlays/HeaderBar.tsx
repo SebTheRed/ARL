@@ -17,6 +17,7 @@ import { useUID } from '../Contexts/UIDContext';
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import { useProfilePageUID } from '../Contexts/ProfilePageUID';
 import { useUserData } from '../Contexts/UserDataContext';
+import {useNotifications} from '../Contexts/NotificationsContext'
 import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import {useHamburgerBar} from '../Contexts/HamburgerBarContext'
@@ -28,6 +29,7 @@ type RootStackParamList = {
 const HeaderBar = ():JSX.Element => {
 	const {uid}:any = useUID()
 	const {findPageUserID}:any = useProfilePageUID()
+  const {activeNotif}:any = useNotifications()
 	const {userData}:any = useUserData()
 	const {setHamburgerToggle}:any = useHamburgerBar()
 	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -80,6 +82,7 @@ return(
   <View style={styles.headerBar}>
 		<TouchableOpacity onPress={handleHamburgerPress} style={styles.headerProfilePicContainer}>
 			<Image style={styles.headerBarIcon} source={require('../IconBin/hamburger.png')} />
+      {activeNotif && <View style={styles.notificationDot} />}
 		</TouchableOpacity>
 		<Text style={styles.headerBarText}>App Real Life</Text>
 		<TouchableOpacity style={styles.headerProfilePicContainer} onPress={handleProfilePress}>

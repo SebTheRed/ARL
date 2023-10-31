@@ -174,10 +174,10 @@ const Profile = ():JSX.Element => {
             const reqUserRef = doc(db,"users",profilePageUID)
             const respUserRef = doc(db,"users",uid)
             await updateDoc(reqUserRef, {
-              friendsCount: increment(-1)
+              friendCount: increment(-1)
             })
             await updateDoc(respUserRef, {
-              friendsCount: increment(-1)
+              friendCount: increment(-1)
             })
             setFriendsRefresh((prevState:boolean)=>!prevState)
         }catch(error){
@@ -312,7 +312,7 @@ const ProfileHeader = ():JSX.Element => {
         <View style={styles.profilePageStatsTop}>
           <View style={styles.profilePageFriendsContainer}>
             <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friends.png')} />
-              <Text style={{...styles.postTopStreak}}>{matchingProfileData.friends.length.toLocaleString()}</Text>
+              <Text style={{...styles.postTopStreak, fontSize:scaleFont(24)}}> {matchingProfileData.friendCount}</Text>
           </View>
           {/* <View style={styles.profilePageStreakContainer}>
             <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
@@ -320,7 +320,7 @@ const ProfileHeader = ():JSX.Element => {
                 <Text style={{...styles.postTopStreak}}>{matchingProfileData.streak.toLocaleString()}</Text>
         </View> */}
           <View style={styles.profilePageJoinDateContainer}>
-              <Text style={{...styles.postTopStreak}}>{matchingProfileData.accountCreationDate}</Text>
+              <Text style={{...styles.postTopStreak,fontSize:scaleFont(24)}}>{matchingProfileData.accountCreationDate}</Text>
               <Image style={styles.postTopStreakIcon} source={require('../../IconBin/calendar.png')} />
           </View>
       </View>

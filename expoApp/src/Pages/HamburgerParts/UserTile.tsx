@@ -130,10 +130,10 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
       pending:false,
     })
     await updateDoc(reqUserRef, {
-      friendsCount: increment(1)
+      friendCount: increment(1)
     })
     await updateDoc(respUserRef, {
-      friendsCount: increment(1)
+      friendCount: increment(1)
     })
     console.log("ACCEPTED !")
     setFriendsRefresh((friendsRefresh:boolean)=>!friendsRefresh)

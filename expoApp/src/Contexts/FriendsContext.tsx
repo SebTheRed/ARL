@@ -97,6 +97,8 @@ export const FriendsProvider = ({ children }:any) => {
               if (blockedPersonsList.length > 0 ) {
                 console.log("blocked persons:", blockedPersonsList)
                 setBlockedPersons(blockedPersonsList)
+              } else {
+                setBlockedPersons([])
               }
             }
       

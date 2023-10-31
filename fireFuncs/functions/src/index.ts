@@ -14,7 +14,7 @@ admin.initializeApp({
 });
 const db = admin.firestore();
 const firestore = admin.firestore();
-
+const { FieldValue } = require('firebase-admin').firestore;
 
 
 // Start writing functions
@@ -39,6 +39,7 @@ export const addUser = functions.https.onRequest(async (request, response) => {
     const name = incomingData.name;
     const phoneNumber = incomingData.phoneNumber;
     const nameParts = name.split(' ').map((part:string)=>part.toLowerCase())
+    const lowerName = name.toLowerCase()
     const lowerUserName = userName.toLowerCase()
       // Create user with email and password
     let uid:string
@@ -122,8 +123,8 @@ export const addUser = functions.https.onRequest(async (request, response) => {
               privateSkills:true,
               privateProfile:true,
           },
-          friendsCount:1,
-          nameMatches:[...nameParts, lowerUserName],
+          friendCount:1,
+          nameMatches:[...nameParts, lowerUserName, lowerName],
         }
         const firstFriendObj = {
           blocked:false,
@@ -136,6 +137,9 @@ export const addUser = functions.https.onRequest(async (request, response) => {
           // logger.info(request.body)
           await db.collection('users').doc(uid).set(userObj);
           await db.collection('friendships').doc(`${uid}_"vUVmF04zA9hYXsZc8YIiPPtP7BZ2`).set(firstFriendObj)
+          await db.collection('users').doc("vUVmF04zA9hYXsZc8YIiPPtP7BZ2").update({
+            friendCount: FieldValue.increment(1)
+          })
           response.send(uid);
         } catch (error) {
           logger.error('Error adding user: ', error);

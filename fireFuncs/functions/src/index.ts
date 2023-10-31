@@ -120,7 +120,7 @@ export const addUser = functions.https.onRequest(async (request, response) => {
               privateSkills:true,
               privateProfile:true,
           },
-          friends:[],
+          friendsCount:0,
           blockedUsers:[],
         }
         try {

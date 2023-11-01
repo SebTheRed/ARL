@@ -136,7 +136,7 @@ export const addUser = functions.https.onRequest(async (request, response) => {
         try {
           // logger.info(request.body)
           await db.collection('users').doc(uid).set(userObj);
-          await db.collection('friendships').doc(`${uid}_"vUVmF04zA9hYXsZc8YIiPPtP7BZ2`).set(firstFriendObj)
+          await db.collection('friendships').doc(`${uid}_vUVmF04zA9hYXsZc8YIiPPtP7BZ2`).set(firstFriendObj)
           await db.collection('users').doc("vUVmF04zA9hYXsZc8YIiPPtP7BZ2").update({
             friendCount: FieldValue.increment(1)
           })

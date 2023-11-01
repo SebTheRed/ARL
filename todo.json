@@ -14,7 +14,11 @@
     "Add a change log into the hamburger": true,
     "remove default login being mine": true,
 
-    "make private posts entirely private":false,
+    "make private posts entirely private":true,
+    "reset trait numbers when going to a new user's page":false,
+
+    "fix new users not seeing my posts in Friends":false,
+    "add @ tagging":false,
 
     "notification when user's post is cleared (24 hrs)":false,
     "notification when experience is off cooldown":false,
@@ -29,7 +33,7 @@
     "quantify friends":true,
     "fix search and make it more robust":true,
 
-    "add @ tagging":false,
+    
     "change icon PNGS to svgs":false,
     "make unique placeholder values for the text input field when making a new post":false,
     "Fix stuttering profile pages":"COULD NOT FIX THIS FOR THE FUCKING LIFE OF ME. 4 HOURS OF FAILURE IS ENOUGH FOR A POLISH",

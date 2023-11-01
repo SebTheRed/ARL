@@ -151,6 +151,7 @@ export const FeedProvider = ({ children }:any) => {
         collection(db, "posts"),
         orderBy("timeStamp", "desc"),
         where("visibleTo", "array-contains", uid),
+        where("publicPost", "==", true),
         limit(PAGE_SIZE)
       );
 
@@ -192,6 +193,7 @@ export const FeedProvider = ({ children }:any) => {
       collection(db, "posts"),
       orderBy("timeStamp", "desc"),
       where("visibleTo", "array-contains", uid),
+      where("publicPost", "==", true),
       startAfter(lastVisibleFriends),
       limit(PAGE_SIZE)
     );

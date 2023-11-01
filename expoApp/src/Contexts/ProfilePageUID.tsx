@@ -72,6 +72,7 @@ export const ProfilePageUIDProvider = ({children}:any) => {
                             collection(db, "posts"),
                             where("posterUID","==",chosenUID),
                             orderBy("timeStamp", "desc"),
+                            where("publicPost", "==", true),
                           ); 
                         const snapshot = await getDocs(feedQuery);
                         let newDocs = snapshot.docs.map(doc => doc.data());

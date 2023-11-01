@@ -14,6 +14,8 @@
     "Add a change log into the hamburger": true,
     "remove default login being mine": true,
 
+    "make private posts entirely private":false,
+
     "notification when user's post is cleared (24 hrs)":false,
     "notification when experience is off cooldown":false,
     "notification upon friend request":false,

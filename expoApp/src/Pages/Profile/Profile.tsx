@@ -75,20 +75,20 @@ const Profile = ():JSX.Element => {
          //Going to translate levels before the loading is finished.
     },[userData])
     useEffect(()=>{
-            const calculateSkills = () => {
-                    const proxyObj:any = {}
-                    Object.values(skillsList)
-                    .sort((a: any, b: any) => a.order - b.order)
-                    .map((d: any, i: number) => {
-                    const skillLevel = calculateCurrentLevel(d.title.toLowerCase(),)
-                    proxyObj[d.title] = {...d, currentLevel:skillLevel}
-    
-                })
-                console.log("proxy obj for user skills",proxyObj)
-                setCurrentLevels(proxyObj)
-             }
-             calculateSkills()
-    },[dataLoading])
+      const calculateSkills = () => {
+              const proxyObj:any = {}
+              Object.values(skillsList)
+              .sort((a: any, b: any) => a.order - b.order)
+              .map((d: any, i: number) => {
+              const skillLevel = calculateCurrentLevel(d.title.toLowerCase(),)
+              proxyObj[d.title] = {...d, currentLevel:skillLevel}
+
+          })
+          console.log("proxy obj for user skills",proxyObj)
+          setCurrentLevels(proxyObj)
+        }
+        calculateSkills()
+    },[dataLoading, matchingProfileData])
     useEffect(()=>{
         const translateURL = async () => {
           const storage = getStorage();

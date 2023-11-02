@@ -17,6 +17,8 @@ import { useProfilePageUID } from '../Contexts/ProfilePageUID';
 import { useFeed } from '../Contexts/FeedContext';
 import styles from '../styles'
 import Feed from '../IconBin/svg/feed.svg'
+import AddChart from '../IconBin/svg/addChart.svg'
+import { scaleFont } from '../Utilities/fontSizing';
 
 type RootStackParamList = {
 	Feed: undefined;
@@ -56,7 +58,7 @@ const {feedButtonHandler}:any = useFeed()
 				handlePress("Feed")
 				feedButtonHandler()
 			}}>
-				<Feed width={200} height={200} />
+				<Feed width={scaleFont(45)} height={scaleFont(45)} />
 				<Text style={styles.bottomBarText}>Feed</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Skills")}>

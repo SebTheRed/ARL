@@ -13,16 +13,17 @@
     "set up to save user login, so they only have to login say once a month":true,
     "Add a change log into the hamburger": true,
     "remove default login being mine": true,
-
     "make private posts entirely private":true,
-    "reset trait numbers when going to a new user's page":false,
+    "reset trait numbers when going to a new user's page":true,
+    "fix friends in profile?? ":true,
 
-    "fix new users not seeing my posts in Friends":false,
+    "add streaks with posting":false,
     "add @ tagging":false,
 
     "notification when user's post is cleared (24 hrs)":false,
     "notification when experience is off cooldown":false,
     "notification upon friend request":false,
+    "streak notifications":false,
     "one huge final last test!":false,
     "apply to APP STORES!!": false
   },
@@ -33,7 +34,7 @@
     "quantify friends":true,
     "fix search and make it more robust":true,
 
-    
+    "if friends feed empty, prompt user to search for friends":false,
     "change icon PNGS to svgs":false,
     "make unique placeholder values for the text input field when making a new post":false,
     "Fix stuttering profile pages":"COULD NOT FIX THIS FOR THE FUCKING LIFE OF ME. 4 HOURS OF FAILURE IS ENOUGH FOR A POLISH",

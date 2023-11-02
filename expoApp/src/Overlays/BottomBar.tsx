@@ -16,7 +16,7 @@ import { useUID } from '../Contexts/UIDContext';
 import { useProfilePageUID } from '../Contexts/ProfilePageUID';
 import { useFeed } from '../Contexts/FeedContext';
 import styles from '../styles'
-// import SvgImage from 'expo-svg-uri';
+import Feed from '../IconBin/svg/feed.svg'
 
 type RootStackParamList = {
 	Feed: undefined;
@@ -56,7 +56,7 @@ const {feedButtonHandler}:any = useFeed()
 				handlePress("Feed")
 				feedButtonHandler()
 			}}>
-				{/* <SvgImage style={styles.bottomBarIcon} source={require('../IconBin/svg/feed.svg')} /> */}
+				<Feed width={200} height={200} />
 				<Text style={styles.bottomBarText}>Feed</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Skills")}>

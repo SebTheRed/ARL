@@ -6,6 +6,11 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": ["js", "jsx", "ts", "tsx", "svg"],
+      "assetPlugins": ["react-native-svg-transformer"]
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

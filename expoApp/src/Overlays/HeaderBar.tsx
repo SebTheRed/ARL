@@ -1,14 +1,8 @@
 import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
 	Image,
 	TouchableOpacity,
-	Animated,
 } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import styles from '../styles';
@@ -18,9 +12,11 @@ import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import { useProfilePageUID } from '../Contexts/ProfilePageUID';
 import { useUserData } from '../Contexts/UserDataContext';
 import {useNotifications} from '../Contexts/NotificationsContext'
-import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import {useHamburgerBar} from '../Contexts/HamburgerBarContext'
+import Hamburger from '../IconBin/svg/hamburger.svg'
+import { scaleFont } from '../Utilities/fontSizing';
 
 type RootStackParamList = {
 	Profile:undefined,
@@ -81,7 +77,7 @@ const handleProfilePress = () => {
 return(
   <View style={styles.headerBar}>
 		<TouchableOpacity onPress={handleHamburgerPress} style={styles.headerProfilePicContainer}>
-			<Image style={styles.headerBarIcon} source={require('../IconBin/hamburger.png')} />
+			<Hamburger width={scaleFont(45)} height={scaleFont(45)} />
       {activeNotif && <View style={styles.notificationDot} />}
 		</TouchableOpacity>
 		<Text style={styles.headerBarText}>App Real Life</Text>

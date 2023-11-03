@@ -1,12 +1,6 @@
 import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
-	Image,
 	TouchableOpacity
 } from 'react-native';
 import React from 'react'
@@ -18,6 +12,8 @@ import { useFeed } from '../Contexts/FeedContext';
 import styles from '../styles'
 import Feed from '../IconBin/svg/feed.svg'
 import AddChart from '../IconBin/svg/addChart.svg'
+import Trophy from '../IconBin/svg/trophy.svg'
+import API from '../IconBin/svg/api.svg'
 import { scaleFont } from '../Utilities/fontSizing';
 
 type RootStackParamList = {
@@ -62,17 +58,17 @@ const {feedButtonHandler}:any = useFeed()
 				<Text style={styles.bottomBarText}>Feed</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Skills")}>
-				<Image style={styles.bottomBarIcon} source={require('../IconBin/addChart.png')} />
+				<AddChart width={scaleFont(45)} height={scaleFont(45)} />
 				<Text style={styles.bottomBarText}>Traits</Text>
 			</TouchableOpacity>
 			
 			<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Trophies")}>
-				<Image style={styles.bottomBarIcon} source={require('../IconBin/trophy.png')} />
+				<Trophy width={scaleFont(45)} height={scaleFont(45)} />
 				<Text style={styles.bottomBarText}>Trophies</Text>
 			</TouchableOpacity>
 			{uid=="vUVmF04zA9hYXsZc8YIiPPtP7BZ2" && (
 				<TouchableOpacity style={styles.bottomBarIconBox} onPress={()=>handlePress("Admin")}>
-					<Image style={styles.bottomBarIcon} source={require('../IconBin/api.png')} />
+					<API width={scaleFont(45)} height={scaleFont(45)} />
 					<Text style={styles.bottomBarText}>Admin</Text>
 				</TouchableOpacity>
 			)}

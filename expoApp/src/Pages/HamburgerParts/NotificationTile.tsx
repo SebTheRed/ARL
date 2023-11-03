@@ -1,16 +1,7 @@
 import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
-	Image,
 	TouchableOpacity,
-	Animated,
-  RefreshControl,
-  FlatList,
   Dimensions,
 } from 'react-native';
 import React, { useEffect, useState } from 'react'

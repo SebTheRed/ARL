@@ -1,21 +1,10 @@
 import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
-	Text,
-	useColorScheme,
 	View,
-	Image,
-	TouchableOpacity,
-	Animated,
   RefreshControl,
   FlatList
 } from 'react-native';
-import React, { useEffect, useState,useRef } from 'react'
-import { doc,setDoc } from 'firebase/firestore';
+import React, { useState } from 'react'
 import NotificationTile from './NotificationTile';
-import { db } from '../../Firebase/firebase';
 import styles from '../../styles';
 import { useUID } from '../../Contexts/UIDContext';
 import { useNotifications } from '../../Contexts/NotificationsContext';

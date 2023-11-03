@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import { View, Modal, ActivityIndicator, StyleSheet, Text } from 'react-native';
+import React from 'react';
+import { View, Modal, StyleSheet, Text } from 'react-native';
 
 const ErrorModal = ({ isVisible, text, opacity,setErrorBool }:any) => {
 

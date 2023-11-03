@@ -1,23 +1,24 @@
 import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
-	Image,
 	TouchableOpacity,
 	Animated,
 } from 'react-native';
 import { useHamburgerBar } from '../../Contexts/HamburgerBarContext';
 import styles from '../../styles';
 import {useEffect, useState} from 'react'
-import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import {signOut} from "firebase/auth"
 import { auth } from '../../Firebase/firebase';
 import { useNotifications } from '../../Contexts/NotificationsContext';
+import SearchSVG from '../../IconBin/svg/search.svg'
+import NotificationsSVG from '../../IconBin/svg/notifications.svg';
+import FriendsSVG from '../../IconBin/svg/friends.svg'
+import PsychSVG from '../../IconBin/svg/psych.svg'
+import LogSVG from '../../IconBin/svg/log.svg'
+import DoorSVG from '../../IconBin/svg/door.svg'
+import { scaleFont } from '../../Utilities/fontSizing';
 
 
 type RootStackParamList = {
@@ -98,35 +99,31 @@ const HamburgerBar = ():JSX.Element => {
                 {/* Your menu items here */}
                 <View style={{height:10,}}></View>
                 <TouchableOpacity onPress={()=>{handleOptionPress("Search")}} style={styles.menuItemContainer}>
-                    <Image style={styles.menuIcon} source={require("../../IconBin/search.png")} />
+                    <SearchSVG width={scaleFont(45)} height={scaleFont(45)} />
                     <Text style={styles.menuItem}>Search</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{handleOptionPress("Notifications")}} style={styles.menuItemContainer}>
                   <View>
-                    <Image style={styles.menuIcon} source={require("../../IconBin/notifications.png")} />
+                    <NotificationsSVG width={scaleFont(45)} height={scaleFont(45)}  />
                     {activeNotif && <View style={styles.notificationDot} />}
                   </View>
                     
                     <Text style={styles.menuItem}>Notifications</Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity onPress={()=>{handleOptionPress("TrophyGrading")}} style={styles.menuItemContainer}>
-                    <Image style={styles.menuIcon} source={require("../../IconBin/trophy_grading.png")} />
-                    <Text style={styles.menuItem}>Trophy Grading</Text>
-                </TouchableOpacity> */}
                 <TouchableOpacity onPress={()=>{handleOptionPress("Friends")}} style={styles.menuItemContainer}>
-                    <Image style={styles.menuIcon} source={require("../../IconBin/friends.png")} />
+                    <FriendsSVG width={scaleFont(45)} height={scaleFont(45)}  />
                     <Text style={styles.menuItem}>Friends</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{handleOptionPress("Tutorial")}} style={styles.menuItemContainer}>
-                    <Image style={styles.menuIcon} source={require("../../IconBin/psych.png")} />
+                    <PsychSVG width={scaleFont(45)} height={scaleFont(45)}  />
                     <Text style={styles.menuItem}>How ARL works</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{handleOptionPress("ChangeLog")}} style={styles.menuItemContainer}>
-                    <Image style={styles.menuIcon} source={require("../../IconBin/log.png")} />
+                    <LogSVG width={scaleFont(45)} height={scaleFont(45)}  />
                     <Text style={styles.menuItem}>Change Log</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleSignOut} style={styles.menuItemContainer}>
-                    <Image style={styles.menuIcon} source={require("../../IconBin/door.png")} />
+                    <DoorSVG width={scaleFont(45)} height={scaleFont(45)}  />
                     <Text style={styles.menuItem}>Sign Out</Text>
                 </TouchableOpacity>
             </Animated.View>

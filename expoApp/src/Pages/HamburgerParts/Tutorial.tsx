@@ -1,13 +1,7 @@
 import {
-	SafeAreaView,
 	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
-	Image,
-	TouchableOpacity,
 } from 'react-native';
 import styles from '../../styles';
 import { scaleFont } from '../../Utilities/fontSizing';

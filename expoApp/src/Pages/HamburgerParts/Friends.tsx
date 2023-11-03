@@ -1,14 +1,7 @@
 import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
-	Image,
 	TouchableOpacity,
-	Animated,
 	FlatList,
 	RefreshControl
 } from 'react-native';

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { View, Modal, ActivityIndicator, StyleSheet, Text } from 'react-native';
 
 const LoadingOverlay = ({ isVisible, text, opacity }:any) => {

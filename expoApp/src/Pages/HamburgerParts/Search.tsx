@@ -1,13 +1,6 @@
 import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
-	Image,
-	TouchableOpacity,
 	TextInput,
   FlatList,
   Keyboard,
@@ -15,7 +8,7 @@ import {
 import React, { useEffect, useState,useRef } from 'react'
 import UserTile from './UserTile';
 import { db } from '../../Firebase/firebase';
-import { getDocs, query, orderBy, startAt, endAt,where, collection, limit,startAfter } from "firebase/firestore";
+import { getDocs, query, where, collection, limit, } from "firebase/firestore";
 import styles from '../../styles';
 import {scaleFont} from '../../Utilities/fontSizing'
 import { useGameRules } from '../../Contexts/GameRules';
@@ -86,7 +79,6 @@ const Search = ():JSX.Element => {
     return(
         <View style={styles.defaultPageBackground}>
             <View style={{flexDirection:"row",justifyContent:"space-evenly",alignItems:"center"}}>
-                {/* <Image style={styles.searchIcon} source={require("../../IconBin/search.png")} /> */}
                 <SearchBar />
             </View>
             {errorMessage&&(<View style={{height:30,width:"90%",backgroundColor:"rgba(255,0,0,0.5)", alignItems:"center", justifyContent:"center", borderColor:"#ff0000",borderWidth:2}}>

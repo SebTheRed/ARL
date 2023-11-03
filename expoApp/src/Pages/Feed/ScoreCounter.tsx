@@ -1,22 +1,17 @@
 import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
 	Image,
 	TouchableOpacity,
-	FlatList,
-  Dimensions,
 } from 'react-native'
 import React,{useEffect,useState} from 'react'
-import { runTransaction,doc,getDoc,updateDoc,onSnapshot } from 'firebase/firestore';
+import { runTransaction,doc,updateDoc,onSnapshot } from 'firebase/firestore';
 import { db } from '../../Firebase/firebase';
 import styles from '../../styles';
 import { useUID } from '../../Contexts/UIDContext';
-
+import CaratUp from '../../IconBin/svg/carat_up.svg'
+import CaratDown from '../../IconBin/svg/carat_down.svg'
+import { scaleFont } from '../../Utilities/fontSizing';
 
 
 const ScoreCounter = ({data}:any):JSX.Element => {
@@ -133,12 +128,12 @@ const ScoreCounter = ({data}:any):JSX.Element => {
   return(
     <View style={{...styles.postBottomVoteContainer}}>
       <TouchableOpacity onPress={handleUpvote} style={styles.postBottomIconContainer} >
-        <Image style={{...styles.postBottomIcon, height:35,width:35,tintColor:"gray"}} source={require('../../IconBin/carat_up.png')} />
+        <CaratUp width={scaleFont(45)} height={scaleFont(45)} />
         {/* <Text style={styles.postBottomText}></Text> */}
       </TouchableOpacity>
       <Text style={styles.postBottomScore}>{score}</Text>
       <TouchableOpacity onPress={handleDownvote} style={styles.postBottomIconContainer} >
-        <Image style={{...styles.postBottomIcon, height:35,width:35,tintColor:"gray"}} source={require('../../IconBin/carat_down.png')} />
+        <CaratDown width={scaleFont(45)} height={scaleFont(45)} />
         {/* <Text style={styles.postBottomText}></Text> */}
       </TouchableOpacity>
     </View>

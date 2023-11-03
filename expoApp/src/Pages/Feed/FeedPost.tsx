@@ -1,23 +1,16 @@
 import {
-	SafeAreaView,
 	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
 	Image,
 	TouchableOpacity,
-	FlatList,
   Dimensions,
 } from 'react-native'
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import React, { useEffect, useState } from 'react';
 import styles from '../../styles'
-import { runTransaction,doc,getDoc,updateDoc,onSnapshot } from 'firebase/firestore';
-import { db } from '../../Firebase/firebase';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
-import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import { scaleFont } from '../../Utilities/fontSizing';
 import { useGameRules } from '../../Contexts/GameRules';
@@ -233,12 +226,12 @@ const PostContentSplitter = ():JSX.Element => {
 						<Text style={{...styles.postTopName}}>{data.posterUserName} </Text>
             {skillsList && (<Text style={{...styles.postTopExperienceName,color:matchingSkillColor}}>{data.eventTitle}</Text>)}
 					</TouchableOpacity>
+          
 					
 				</View>
-				{/* <View style={{...styles.postTopStreakIconContainer}}>
-					<Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
-					<Text style={{...styles.postTopStreak}}>{data.streak}</Text>
-				</View> */}
+				<View style={{position:"absolute",right:0}}>
+            <Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
+          </View>
 			<View style={{...styles.postTopExperienceContainer}}>
 				
 			</View>
@@ -247,18 +240,10 @@ const PostContentSplitter = ():JSX.Element => {
 				<PostContentSplitter />
 			
 			<View style={{...styles.postBottomWrapper}}>
-				{/* <View style={{...styles.postBottomReactionContainer}}>
-					<TouchableOpacity style={styles.postBottomIconContainer} >
-						<Image style={styles.postBottomIcon} source={require('../../IconBin/reactions.png')} />
-					</TouchableOpacity>
-				</View> */}
-        <TouchableOpacity style={{...styles.postTopMapButton}}>
-					<Image style={{...styles.postTopMapIcon,tintColor:"gray"}} source={require('../../IconBin/travel.png')} />
-				</TouchableOpacity>
         <View style={styles.postBottomBox}>
           <ScoreCounter data={data} />
         </View>
-        <Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
+        
 				{/* <View style={{...styles.postBottomCommentsContainer}}>
 					<TouchableOpacity style={styles.postBottomIconContainer} >
 						<Image style={styles.postBottomIcon} source={require('../../IconBin/comments.png')} />

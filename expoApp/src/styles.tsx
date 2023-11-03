@@ -531,6 +531,7 @@ postTopRow:{
   justifyContent:'space-between',
   margin:10,
   alignItems:"flex-end",
+  width:"90%"
 },
 postProfileAndNameContainer:{
   flexDirection:"row",
@@ -632,7 +633,7 @@ postBottomWrapper:{
 postBottomBox:{
   // borderTopWidth:1,
   // borderColor:"#333",
-  justifyContent:"space-around",
+  justifyContent:"center",
   alignItems:"center"
 },
 postBottomIconContainer:{
@@ -659,7 +660,7 @@ postBottomVoteContainer:{
 },
 postBottomScore:{
   color:"white",
-  fontSize:scaleFont(25),
+  fontSize:scaleFont(30),
 },
 postBottomCommentsContainer:{
   tintColor:"white",

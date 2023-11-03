@@ -1,23 +1,17 @@
 import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
 	Image,
 	TouchableOpacity,
-	TextInput,
 } from 'react-native';
 import React, { useEffect, useState } from 'react'
-import {doc,getDoc,updateDoc,deleteDoc, increment} from 'firebase/firestore'
+import {doc,updateDoc,deleteDoc, increment} from 'firebase/firestore'
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
-import {db, auth,} from '../../Firebase/firebase'
+import {db, } from '../../Firebase/firebase'
 import styles from '../../styles';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import { useUID } from '../../Contexts/UIDContext';
-import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
+import {  useNavigation, CommonActions } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import {useFriends} from '../../Contexts/FriendsContext'
 import { scaleFont } from '../../Utilities/fontSizing';

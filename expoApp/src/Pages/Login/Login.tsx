@@ -115,7 +115,7 @@ const signIn = async(e:any) => {
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 			style={{ flex: 1 }}
 		>
-		<ScrollView keyboardShouldPersistTaps='handled' style={{...styles.logincontainer,backgroundColor:"#22ace3"}} contentContainerStyle={{alignItems:"center", justifyContent:"space-between"}}>
+		<ScrollView keyboardShouldPersistTaps='handled' style={{...styles.logincontainer,backgroundColor:"#299e46"}} contentContainerStyle={{alignItems:"center", justifyContent:"space-between"}}>
 			<View style={{...styles.ARLLogoWrapper, backgroundColor:"transparent"}}>
 				<View style={styles.offsetWrapper}>
 				</View>

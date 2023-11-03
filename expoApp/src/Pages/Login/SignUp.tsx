@@ -141,7 +141,7 @@ const addUserFetch = async () => {
 
 return(
 <>
-<ScrollView style={{...styles.logincontainer,backgroundColor:"#22ace3"}} contentContainerStyle={{alignItems:"center", justifyContent:"center"}}>
+<ScrollView style={{...styles.logincontainer,backgroundColor:"#299e46"}} contentContainerStyle={{alignItems:"center", justifyContent:"center"}}>
     <View style={{height:10}}></View>
     <View style={{...styles.loginWrapper, height:550, width:"90%"}}>
         <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>

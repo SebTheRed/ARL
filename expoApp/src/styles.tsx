@@ -451,7 +451,7 @@ logininput: {
 },
 loginbutton: {
   marginTop: 30,
-  backgroundColor: '#007bff',
+  backgroundColor: '#36b149',
   paddingVertical: 10,
   paddingHorizontal: 20,
   borderRadius: 5,

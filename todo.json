@@ -17,6 +17,7 @@
     "reset trait numbers when going to a new user's page":true,
     "fix friends in profile?? ":true,
 
+    "FIX COOLDOWN NOW IMMEDIATELY TAKING EFFECT, ALLOWING USERS TO CHEAT COOLDOWNS":false,
     "add streaks with posting":false,
     "add @ tagging":false,
 
@@ -34,7 +35,7 @@
     "quantify friends":true,
     "fix search and make it more robust":true,
 
-    "change icon PNGS to svgs":false,
+    "change icon PNGS to svgs":true,
     "fix the weird back arrow thing pls omg":false,
 
     "if friends feed empty, prompt user to search for friends":false,

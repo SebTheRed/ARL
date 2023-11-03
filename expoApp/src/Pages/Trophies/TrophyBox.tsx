@@ -1,10 +1,5 @@
 import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
     Text,
-    useColorScheme,
     View,
 	Image,
     TouchableOpacity,

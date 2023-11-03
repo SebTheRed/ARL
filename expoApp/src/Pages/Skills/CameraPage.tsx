@@ -1,18 +1,17 @@
 import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    useColorScheme,
     View,
     TouchableOpacity,
-    Image,
-  } from 'react-native';
-  import React,{useRef,useState} from 'react'
-  import { Camera, CameraType } from 'expo-camera';
-  import styles from '../../styles';
+} from 'react-native';
+import React,{useRef,useState} from 'react'
+import { Camera, CameraType } from 'expo-camera';
+import styles from '../../styles';
 import { useEffect } from 'react';
+import { scaleFont } from '../../Utilities/fontSizing';
+import CloseSVG from '../../IconBin/svg/close.svg'
+import FlipSVG from '../../IconBin/svg/flip.svg'
+import CameraSVG from '../../IconBin/svg/camera.svg'
+
+
 const CameraPage = ({setCameraActiveBool,setCameraImageURL,setCameraImageState}:any):JSX.Element => {
 
     const [cameraType,setCameraType] = useState(CameraType.back)
@@ -23,8 +22,7 @@ const CameraPage = ({setCameraActiveBool,setCameraImageURL,setCameraImageState}:
     useEffect(()=>{
       (async () => {
         const { status } = await Camera.requestCameraPermissionsAsync(); //IGNORE ERRORS
-        setCameraPermissions(status === 'granted'); //IT WORKS TOTALLY FINE ?
-        //GPT PLS FIX OBNOXIOUS ERRORS
+        setCameraPermissions(status === 'granted');
       })();
     },[])
     function toggleCameraType() {
@@ -50,13 +48,13 @@ return(
       <Camera ref={cameraRef} style={styles.cameraCamera} type={cameraType} onCameraReady={() => console.log('Camera is ready')}>
         <View style={styles.cameraButtonContainer}>
          <TouchableOpacity style={styles.cameraButton} onPress={()=>setCameraActiveBool(false)}>
-            <Image style={styles.cameraIcon} source={require("../../IconBin/close.png")} />
+            <CloseSVG width={scaleFont(45)} height={scaleFont(45)} />
           </TouchableOpacity>
           <TouchableOpacity style={[styles.cameraButton, styles.cameraTakeButton]} onPress={takePicture}>
-            <Image style={styles.cameraIcon} source={require("../../IconBin/camera.png")} />
+            <CameraSVG width={scaleFont(50)} height={scaleFont(50)} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.cameraButton} onPress={toggleCameraType}>
-            <Image style={styles.cameraIcon} source={require("../../IconBin/flip.png")} />
+            <FlipSVG width={scaleFont(45)} height={scaleFont(45)}  />
           </TouchableOpacity>
         </View>
       </Camera>      

@@ -1,17 +1,9 @@
 import {
-    SafeAreaView,
     ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    useColorScheme,
     View,
-		Image,
   } from 'react-native';
 import styles from '../../styles'
-import type {PropsWithChildren,} from 'react';
 import React, {useState} from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import TrophyBox from './TrophyBox';
 import { useGameRules } from '../../Contexts/GameRules';
 

@@ -1,24 +1,26 @@
 import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
     Text,
-    useColorScheme,
     View,
     TouchableOpacity,
-    Image,
   } from 'react-native';
 import React from 'react'
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
-import type {PropsWithChildren} from 'react';
+import { scaleFont } from '../../Utilities/fontSizing';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
-import {scaleFont} from '../../Utilities/fontSizing'
 import {useGameRules} from '../../Contexts/GameRules'
 import {useCooldowns} from '../../Contexts/CooldownContext'
+
+import ApiSVG from '../../IconBin/svg/api.svg'
+import LogSVG from '../../IconBin/svg/log.svg'
+import CameraSVG from '../../IconBin/svg/camera_add.svg'
+import TimelineSVG from '../../IconBin/svg/timeline.svg'
+import CooldownSVG from '../../IconBin/svg/cooldown.svg'
+import LockSVG from '../../IconBin/svg/lock.svg'
+
+
 type RootStackParamList = {
     ExperienceUploader:undefined,
   }
@@ -45,13 +47,13 @@ useEffect(()=>{
     }
 },[cooldownsLoading])
 
-const returnImgRequire = () => {
+const SVGSwitch = () => {
     switch(d.type){
-        case "api": return(require('../../IconBin/api.png'))
-        case "camera": return(require('../../IconBin/camera.png'))
-        case "log": return(require('../../IconBin/log.png'))
-        case "acceleration": return(require('../../IconBin/acceleration.png'))
-        case "timeline": return(require('../../IconBin/timeline.png'))
+        case "api": return(<ApiSVG width={scaleFont(45)} height={scaleFont(45)} />)
+        case "camera": return(<CameraSVG width={scaleFont(45)} height={scaleFont(45)} />)
+        case "log": return(<LogSVG width={scaleFont(45)} height={scaleFont(45)} />)
+        case "acceleration": return(<LogSVG width={scaleFont(45)} height={scaleFont(45)} />)
+        case "timeline": return(<TimelineSVG width={scaleFont(45)} height={scaleFont(45)} />)
     }
 }
 
@@ -79,7 +81,9 @@ const convertHoursToDHM = (hours:number) => {
 
     return result.trim();
 }
-    
+
+
+
 if (cooldownTime>0) {
     return(
         <TouchableOpacity style={styles.eventTileWrapper}>
@@ -91,7 +95,7 @@ if (cooldownTime>0) {
             </View>
             <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                 <View style={styles.eventButtonWrapper}>
-                    <Image style={{...styles.eventButtonIcon}} source={require("../../IconBin/cooldown.png")} />
+                    <CooldownSVG width={scaleFont(45)} height={scaleFont(45)} />
                 </View>
             </View>
         </TouchableOpacity>
@@ -109,7 +113,7 @@ else if (locked == false) {
             <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                 <View style={styles.eventButtonWrapper}>
                     <Text style={{...styles.eventButtonText, fontSize:scaleFont(15), color: `${color}`, fontWeight:"bold"}}>XP+ {d.xp}</Text>
-                    <Image style={{...styles.eventButtonIcon}} source={returnImgRequire()} />
+                    <SVGSwitch />
                 </View>
             </View>
         </TouchableOpacity>
@@ -125,7 +129,7 @@ else if (locked == false) {
             </View>
             <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                 <View style={styles.eventButtonWrapper}>
-                    <Image style={{...styles.eventButtonIcon}} source={require("../../IconBin/lock.png")} />
+                    <LockSVG width={scaleFont(45)} height={scaleFont(45)} />
                 </View>
             </View>
         </TouchableOpacity>

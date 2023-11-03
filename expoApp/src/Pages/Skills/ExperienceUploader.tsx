@@ -1,13 +1,9 @@
 import {
-    SafeAreaView,
     ScrollView,
-    StatusBar,
-    StyleSheet,
     Text,
-    useColorScheme,
     View,
     TouchableOpacity,
-	TextInput,
+	  TextInput,
     Modal,
     Switch,
     Keyboard,
@@ -16,14 +12,9 @@ import {
   } from 'react-native';
   import React from 'react'
   import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
-  import { NavigationRouteContext, useNavigation, CommonActions } from '@react-navigation/native';
-  import { NavigationProp } from '@react-navigation/native';
+  import {  useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
-import type {PropsWithChildren} from 'react';
-import {db, auth,} from '../../Firebase/firebase'
-import {getStorage,ref,uploadString,getDownloadURL, uploadBytesResumable} from "firebase/storage"
-import {setDoc,doc, Timestamp} from 'firebase/firestore'
 import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
 import { useFeed } from '../../Contexts/FeedContext';
@@ -33,6 +24,7 @@ import CameraPage from './CameraPage'
 import LoadingOverlay from '../../Overlays/LoadingOverlay';
 import * as ImagePicker from 'expo-image-picker'
 import ErrorModal from '../../Overlays/ErrorModal';
+import CameraAddSVG from '../../IconBin/svg/camera_add.svg'
 
 type RootStackParamList = {
     SkillsPage:undefined,
@@ -385,7 +377,7 @@ const ExperienceUploader = ():JSX.Element => {
                         )}
                         {!cameraImageState && (
                         <>
-                            <Image style={{...styles.bottomBarIcon}} source={require("../../IconBin/camera_add.png")} />
+                            <CameraAddSVG width={scaleFont(45)} height={scaleFont(45)} />
                             <Text style={{...styles.loginlabel}}>Press here to open camera.</Text>
                         </> 
                         )}
@@ -413,7 +405,7 @@ const ExperienceUploader = ():JSX.Element => {
                         )}
                         {!imageOneState && (
                         <>
-                            <Image style={{...styles.bottomBarIcon}} source={require("../../IconBin/camera_add.png")} />
+                            <CameraAddSVG width={scaleFont(45)} height={scaleFont(45)} />
                         </> 
                         )}
                 </TouchableOpacity>
@@ -426,7 +418,7 @@ const ExperienceUploader = ():JSX.Element => {
                         )}
                         {!imageTwoState && (
                         <>
-                            <Image style={{...styles.bottomBarIcon}} source={require("../../IconBin/camera_add.png")} />
+                            <CameraAddSVG width={scaleFont(45)} height={scaleFont(45)} />
                         </> 
                         )}
                 </TouchableOpacity>
@@ -439,7 +431,7 @@ const ExperienceUploader = ():JSX.Element => {
                         )}
                         {!imageThreeState && (
                         <>
-                            <Image style={{...styles.bottomBarIcon}} source={require("../../IconBin/camera_add.png")} />
+                            <CameraAddSVG width={scaleFont(45)} height={scaleFont(45)} />
                         </> 
                         )}
                 </TouchableOpacity>

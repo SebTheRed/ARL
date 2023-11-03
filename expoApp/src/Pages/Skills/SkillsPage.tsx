@@ -1,18 +1,13 @@
 import {
-    SafeAreaView,
     ScrollView,
-    StatusBar,
-    StyleSheet,
     Text,
-    useColorScheme,
     View,
     TouchableOpacity
   } from 'react-native';
 
 import { useEffect, useState } from 'react';
 import styles from '../../styles'
-import type {PropsWithChildren} from 'react';
-import { useNavigation, CommonActions } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import EventTile from './EventTile'
 import {useUserData} from '../../Contexts/UserDataContext'

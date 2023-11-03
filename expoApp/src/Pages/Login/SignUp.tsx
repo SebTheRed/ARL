@@ -140,9 +140,7 @@ const addUserFetch = async () => {
 
 
 return(
-<KeyboardAvoidingView
-			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-		>
+<>
 <ScrollView style={{...styles.logincontainer,backgroundColor:"#22ace3"}} contentContainerStyle={{alignItems:"center", justifyContent:"center"}}>
     <View style={{height:10}}></View>
     <View style={{...styles.loginWrapper, height:550, width:"90%"}}>
@@ -262,8 +260,7 @@ return(
     <View style={{height:500,}} />
 </ScrollView>
 <LoadingOverlay text={"Signing you up..."} isVisible={loadingBool} opacity={1}/>
-</KeyboardAvoidingView>
-
+</>
     )
 }
 

@@ -792,17 +792,22 @@ profilePageStatsTop:{
   flexDirection:"row",
   justifyContent:"space-evenly",
 },
+profilePageSmallStatsContainer:{
+  flexDirection:"row"
+},
 profilePageJoinDateContainer:{
   width:"40%",
   flexDirection:"row",
   justifyContent:"flex-end",
-  alignItems:"center"
+  alignItems:"center",
 },
 profilePageStreakContainer:{
   flexDirection:"row",
   alignItems:"center",
-  justifyContent:"center",
-  width:"20%"
+  justifyContent:"flex-end",
+  width:"20%",
+  position:"absolute",
+  top:-30,
 },
 profilePageFriendsContainer:{
   width:"40%",

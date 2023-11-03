@@ -31,6 +31,7 @@ import FriendsRemoveSVG from '../../IconBin/svg/friendRemove.svg'
 import BlockSVG from '../../IconBin/svg/block.svg'
 import CalendarSVG from '../../IconBin/svg/calendar.svg'
 import VerifiedSVG from '../../IconBin/svg/verified.svg'
+import StreakSVG from '../../IconBin/svg/streak.svg'
 
 
 // const screenWidth = Dimensions.get('window').width;
@@ -312,12 +313,14 @@ const ProfileHeader = ():JSX.Element => {
             <FriendsSVG width={scaleFont(30)} height={scaleFont(30)} />
               <Text style={{...styles.postTopStreak, fontSize:scaleFont(24)}}> {matchingProfileData.friendCount}</Text>
           </View>
-          {/* <View style={styles.profilePageStreakContainer}>
-            <Image style={styles.postTopStreakIcon} source={require('../../IconBin/streak.png')} />
-
-                <Text style={{...styles.postTopStreak}}>{matchingProfileData.streak.toLocaleString()}</Text>
-        </View> */}
+          <View style={{width:"20%"}} />
           <View style={styles.profilePageJoinDateContainer}>
+
+              <View style={styles.profilePageStreakContainer}>
+                  <Text style={{...styles.postTopStreak}}>{matchingProfileData.streak.toLocaleString()}</Text>
+                  <StreakSVG width={scaleFont(30)} height={scaleFont(30)} />
+              </View>
+
               <Text style={{...styles.postTopStreak,fontSize:scaleFont(24)}}>{matchingProfileData.accountCreationDate}</Text>
               <CalendarSVG width={scaleFont(30)} height={scaleFont(30)} />
           </View>

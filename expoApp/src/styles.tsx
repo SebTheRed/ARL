@@ -805,7 +805,7 @@ profilePageStreakContainer:{
   flexDirection:"row",
   alignItems:"center",
   justifyContent:"flex-end",
-  width:"20%",
+  width:"40%",
   position:"absolute",
   top:-30,
 },

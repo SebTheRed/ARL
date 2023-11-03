@@ -508,16 +508,39 @@ const giveUserXP = async (skill: string, uid: string, xpQty: number) => {
     logger.error('Error updating XP:', error);
   }
 };
-
-const updateStreakDate = async (uid:string) => {
-  try{
+const getPSTDate = (timestamp: admin.firestore.Timestamp) => {
+  const dateObj = timestamp.toDate();
+  const offset = 480; // PST is UTC-8
+  dateObj.setMinutes(dateObj.getMinutes() - offset);
+  return `${dateObj.getUTCFullYear()}-${dateObj.getUTCMonth() + 1}-${dateObj.getUTCDate()}`;
+}
+const updateStreakDate = async (uid: string) => {
+  try {
     const userRef = db.collection('users').doc(uid);
-    await userRef.update({
-      lastPostDate:admin.firestore.Timestamp.now()
-    });
+
+    // Get the current user data
+    const userSnapshot = await userRef.get();
+    const userData = userSnapshot.data();
+
+    if (!userData) {
+      logger.error("User data not found for UID:", uid);
+      return false;
+    }
+
+    const lastPostDate = userData.lastPostDate;
+    const currentPSTDate = getPSTDate(admin.firestore.Timestamp.now());
+
+    // If there's no lastPostDate or the lastPostDate isn't today
+    if (!lastPostDate || getPSTDate(lastPostDate) !== currentPSTDate) {
+      await userRef.update({
+        lastPostDate: admin.firestore.Timestamp.now(),
+        streak: admin.firestore.FieldValue.increment(1)
+      });
+    }
+    // Otherwise, the user has already posted today, so we do nothing
     return true;
-  } catch(err) {
-    logger.error(err)
+  } catch (err) {
+    logger.error(err);
     return false;
   }
 }

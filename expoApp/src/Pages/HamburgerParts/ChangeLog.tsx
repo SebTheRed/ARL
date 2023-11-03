@@ -39,16 +39,16 @@ const ChangeLog = ():JSX.Element => {
     <ScrollView style={{backgroundColor:"#1c1c1c"}}>
       <View style={{ ...styles.defaultPageBackground, alignItems: "flex-start", padding: 10 }}>
         {changes.map((change, index) => (
-          <>
+          <View key={index}>
           <View style={{height:20}} />
-          <View key={change.id}>
+          <View >
             <Text style={{...styles.sectionTitle, fontSize:scaleFont(28)}}>{change.version}</Text>
             <Text style={{...styles.sectionTitle,fontSize:scaleFont(24)}}>{change.title}</Text>
             <Text style={{...styles.sectionFlare}}>{change.message}</Text>
           </View>
           <View style={{height:20}} />
           <View style={{...styles.sectionLine}} />
-          </>
+          </View>
         ))}
       </View>
     </ScrollView>

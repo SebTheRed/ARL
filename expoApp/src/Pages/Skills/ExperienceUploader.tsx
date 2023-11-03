@@ -7,7 +7,6 @@ import {
     Modal,
     Switch,
     Keyboard,
-    Image,
     ImageBackground
   } from 'react-native';
   import React from 'react'
@@ -19,6 +18,7 @@ import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
 import { useFeed } from '../../Contexts/FeedContext';
 import { useFriends } from '../../Contexts/FriendsContext';
+import { useCooldowns } from '../../Contexts/CooldownContext';
 import {scaleFont} from '../../Utilities/fontSizing'
 import CameraPage from './CameraPage'
 import LoadingOverlay from '../../Overlays/LoadingOverlay';
@@ -26,11 +26,8 @@ import * as ImagePicker from 'expo-image-picker'
 import ErrorModal from '../../Overlays/ErrorModal';
 import CameraAddSVG from '../../IconBin/svg/camera_add.svg'
 
-type RootStackParamList = {
-    SkillsPage:undefined,
-    Feed:undefined,
-}
 const ExperienceUploader = ():JSX.Element => {
+    const {refreshCooldowns}:any = useCooldowns()
     const {trueFriends, blockedPersons}:any = useFriends()
     const {userData}:any = useUserData()
     const {currentEvent, setCurrentEvent}:any = useCurrentEvent()
@@ -48,7 +45,6 @@ const ExperienceUploader = ():JSX.Element => {
     const [imageOneState,setImageOneState] = useState<string|null>(null)
     const [imageTwoState,setImageTwoState] = useState<string|null>(null)
     const [imageThreeState,setImageThreeState] = useState<string|null>(null)
-    const [imageFourState,setImageFourState] = useState(null)
     const [loadingBool,setLoadingBool] = useState(false)
     const [errorBool,setErrorBool] = useState(false)
     const [errorMessageText,setErrorMessageText] = useState<string>()
@@ -188,6 +184,7 @@ const ExperienceUploader = ():JSX.Element => {
                     } else {
                       setLoadingBool(false)
                       newPostHandler()
+                      refreshCooldowns()
                       navigation.popToTop()
                       navigation.navigate("Feed")
                     }
@@ -271,6 +268,7 @@ const ExperienceUploader = ():JSX.Element => {
                     } else {
                       setLoadingBool(false)
                       newPostHandler()
+                      refreshCooldowns()
                       navigation.popToTop()
                       navigation.navigate("Feed")
                     }
@@ -330,25 +328,9 @@ const ExperienceUploader = ():JSX.Element => {
                 console.log("Response Message: ",responseMessage);
                 setLoadingBool(false)
                     newPostHandler()
+                    refreshCooldowns()
                     navigation.popToTop()
                     navigation.navigate("Feed")
-                    // navigation.dispatch(
-                    //     CommonActions.reset({
-                    //         index: 0,
-                    //         routes: [
-                    //         {
-                    //             name: 'AuthedApp', // The name of the root navigator's screen that contains the child navigators
-                    //             state: {
-                    //             routes: [
-                    //                 {
-                    //                 name: 'Feed', // The name of the child navigator
-                    //                 },
-                    //             ],
-                    //             },
-                    //         },
-                    //         ],
-                    //     })
-                    //     );
                 }catch(err){
                     console.error(err)
                     setLoadingBool(false)

@@ -17,10 +17,12 @@
     "reset trait numbers when going to a new user's page":true,
     "fix friends in profile?? ":true,
     "fix cooldown allowing users to cheat cooldowns (just made a refresh func in the cooldown context)":true,
-  
-    "add streaks with posting":false,
-    "add @ tagging":false,
+    "add streaks with posting":true,
+
     "set up trophies the way they should be":false,
+    "make trophy posts last a week. backend & front end":false,
+    "add @ tagging":false,
+    "ART BABAYY":false,
 
     "notification when user's post is cleared (24 hrs)":false,
     "notification when experience is off cooldown":false,

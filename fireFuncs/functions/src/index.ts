@@ -189,7 +189,14 @@ export const createPost = functions.https.onRequest(async(request,response)=>{
     break;
   }
   if (isSuccess) {
-    response.send("SUCCESS")
+    const streakUpdate = await updateStreakDate(posterUID)
+    if (streakUpdate){
+      response.send("SUCCESS")
+    } else {
+      logger.error('STREAK POST FAILED FOR SOME REASON')
+      response.send("POST FAILED, STREAK POST DIDN'T WORK?!")
+    }
+    
   } else {
     response.send("INAPPROPRIATE")
   }
@@ -502,6 +509,18 @@ const giveUserXP = async (skill: string, uid: string, xpQty: number) => {
   }
 };
 
+const updateStreakDate = async (uid:string) => {
+  try{
+    const userRef = db.collection('users').doc(uid);
+    await userRef.update({
+      lastPostDate:admin.firestore.Timestamp.now()
+    });
+    return true;
+  } catch(err) {
+    logger.error(err)
+    return false;
+  }
+}
 
 const giveUserNotification = async (uid:string,message:string) => {
   const notificationObj = {
@@ -609,6 +628,11 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
 });
 
 
-export const streakClock = functions.pubsub.schedule('0 0 * *').timeZone('America/Los_Angeles').onRun(async(context)=>{
-  
+
+
+
+// DAILY STREAK CLOCK //
+
+export const streakClock = functions.pubsub.schedule('0 0 * * *').timeZone('America/Los_Angeles').onRun(async(context)=>{
+
 })

@@ -20,11 +20,12 @@
   
     "add streaks with posting":false,
     "add @ tagging":false,
-    
+    "set up trophies the way they should be":false,
+
     "notification when user's post is cleared (24 hrs)":false,
     "notification when experience is off cooldown":false,
     "notification upon friend request":false,
-    "streak notifications":false,
+    "notifications to remind users of streak expiration":false,
     "one huge final last test!":false,
     "apply to APP STORES!!": false
   },
@@ -37,11 +38,11 @@
     "change icon PNGS to svgs":true,
 
     "fix the weird back arrow thing pls omg":false,
+    "Add pinch zoom to camera uploader":false,
+    "update email and password backend funcs": false,
     "if friends feed empty, prompt user to search for friends":false,
     "make unique placeholder values for the text input field when making a new post":false,
-    "Fix stuttering profile pages":"COULD NOT FIX THIS FOR THE FUCKING LIFE OF ME. 4 HOURS OF FAILURE IS ENOUGH FOR A POLISH",
-    "Add pinch zoom to camera uploader":false,
-    "update email and password backend funcs": false
+    "Fix stuttering profile pages":false
 
   }
 }

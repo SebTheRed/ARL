@@ -609,4 +609,6 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
 });
 
 
-
+export const streakClock = functions.pubsub.schedule('0 0 * *').timeZone('America/Los_Angeles').onRun(async(context)=>{
+  
+})

@@ -656,6 +656,35 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
 
 // DAILY STREAK CLOCK //
 
-export const streakClock = functions.pubsub.schedule('0 0 * * *').timeZone('America/Los_Angeles').onRun(async(context)=>{
+export const streakClock = functions.pubsub.schedule('0 23 * * *').timeZone('America/Los_Angeles').onRun(async(context)=>{
+  try {
+    // Get today's date in PST format
+    const currentPSTDate = getPSTDate(admin.firestore.Timestamp.now());
 
+    // Reference to the users collection
+    const usersRef = db.collection('users');
+    const usersSnapshot = await usersRef.get();
+
+    // Iterate over each user
+    for (const userDoc of usersSnapshot.docs) {
+        const userData = userDoc.data();
+        if (userData.lastPostDate) {
+            const userLastPostPSTDate = getPSTDate(userData.lastPostDate);
+
+            // Check if user's last post date is not the same as the current date
+            if (userLastPostPSTDate !== currentPSTDate) {
+                await userDoc.ref.update({
+                    streak: 0
+                });
+            }
+        } else {
+            // If the user doesn't have a lastPostDate, reset the streak
+            await userDoc.ref.update({
+                streak: 0
+            });
+        }
+    }
+  } catch (error) {
+      logger.error("Error in streakClock function: ", error);
+  }
 })

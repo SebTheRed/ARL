@@ -656,7 +656,7 @@ export const cleanupPostsAndRewardUsers = functions.pubsub.schedule('every 1 hou
 
 // DAILY STREAK CLOCK //
 
-export const streakClock = functions.pubsub.schedule('0 23 * * *').timeZone('America/Los_Angeles').onRun(async(context)=>{
+export const streakClock = functions.pubsub.schedule('45 23 * * *').timeZone('America/Los_Angeles').onRun(async(context)=>{
   try {
     // Get today's date in PST format
     const currentPSTDate = getPSTDate(admin.firestore.Timestamp.now());

@@ -1,14 +1,9 @@
 import {
-    SafeAreaView,
     ScrollView,
-    StatusBar,
-    StyleSheet,
     Text,
-    useColorScheme,
     View,
     TouchableOpacity,
 		TextInput,
-		Animated,
 		Keyboard,
 		KeyboardAvoidingView,
 		Platform,
@@ -21,11 +16,9 @@ import { useEffect, useState } from 'react';
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import { useUID } from '../../Contexts/UIDContext';
 import styles from '../../styles'
-import type {PropsWithChildren} from 'react';
 import {db, auth,} from '../../Firebase/firebase'
 import {doc, getDoc} from 'firebase/firestore'
 import { useUserData } from '../../Contexts/UserDataContext';
-import LinearGradient from 'react-native-linear-gradient';
 import LoadingOverlay from '../../Overlays/LoadingOverlay';
 import { scaleFont } from '../../Utilities/fontSizing';
 

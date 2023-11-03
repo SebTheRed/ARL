@@ -1,31 +1,19 @@
 import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
 	Image,
 	TouchableOpacity,
-	FlatList,
-	RefreshControl,
-	Switch,
 	TextInput,
-    Modal,
+  Modal,
 } from 'react-native'
 import React from 'react'
-import { useEffect, useState } from 'react';
-import { useFeed } from '../../Contexts/FeedContext';
-import {useUserData} from '../../Contexts/UserDataContext'
+import { useState } from 'react';
 import { useUID } from '../../Contexts/UIDContext';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import styles from '../../styles'
-import {db, auth} from '../../Firebase/firebase'
-import {getAuth, updateEmail, updatePassword} from "firebase/auth"
-import {updateDoc,doc} from 'firebase/firestore'
 import { scaleFont } from '../../Utilities/fontSizing';
 import LoadingOverlay from '../../Overlays/LoadingOverlay';
+import CloseSVG from '../../IconBin/svg/close.svg'
 
 const UserPassPopup = ():JSX.Element => {
 const {uid}:any = useUID()
@@ -136,10 +124,7 @@ const DeleteConfirmation = ():JSX.Element => {
     <View style={styles.confimationModal}>
       <View style={styles.deleteModalContent}>
         <TouchableOpacity onPress={()=>setDeleteModal(false)} style={{}}>
-          <Image
-          style={{ width:30,height:30,resizeMode:"cover" }}
-          source={require('../../IconBin/close.png')}
-        />
+          <CloseSVG width={scaleFont(30)} height={scaleFont(30)}/>
         </TouchableOpacity>
         <View style={{height:50}} />
         <Text style={{color:"white", fontSize:scaleFont(24)}}>Are you sure you want to delete your account?</Text>

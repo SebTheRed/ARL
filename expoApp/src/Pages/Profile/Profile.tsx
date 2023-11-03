@@ -1,27 +1,18 @@
 import {
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
 	Image,
 	TouchableOpacity,
 	FlatList,
 	RefreshControl,
-    SectionList,
-    Dimensions,
-    ActivityIndicator
 } from 'react-native'
 import React from 'react'
 import FeedPost from '../Feed/FeedPost';
-import { useEffect, useState, useRef } from 'react';
-import { useFeed } from '../../Contexts/FeedContext';
+import { useEffect, useState } from 'react';
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 // import FeedPost from './FeedPost';
-import {db, auth,} from '../../Firebase/firebase'
-import {setDoc,doc,addDoc,getDoc,deleteDoc, Timestamp, updateDoc, arrayUnion, increment} from 'firebase/firestore'
+import {db,} from '../../Firebase/firebase'
+import {setDoc,doc,getDoc,deleteDoc, updateDoc, arrayUnion, increment} from 'firebase/firestore'
 import styles from '../../styles'
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
@@ -33,6 +24,13 @@ import {useFriends} from '../../Contexts/FriendsContext'
 import { useGameRules } from '../../Contexts/GameRules';
 import {scaleFont} from '../../Utilities/fontSizing'
 import LoadingOverlay from '../../Overlays/LoadingOverlay';
+import EditSVG from '../../IconBin/svg/edit.svg'
+import FriendsSVG from '../../IconBin/svg/friends.svg'
+import FriendsAddSVG from '../../IconBin/svg/friendAdd.svg'
+import FriendsRemoveSVG from '../../IconBin/svg/friendRemove.svg'
+import BlockSVG from '../../IconBin/svg/block.svg'
+import CalendarSVG from '../../IconBin/svg/calendar.svg'
+import VerifiedSVG from '../../IconBin/svg/verified.svg'
 
 
 // const screenWidth = Dimensions.get('window').width;
@@ -229,7 +227,7 @@ const Profile = ():JSX.Element => {
         switch(relation){
             case "self": return(
             <TouchableOpacity onPress={handleEditButtonPress} style={styles.profilePageMultiButton}>
-                <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/edit.png')} />
+                <EditSVG width={scaleFont(25)} height={scaleFont(25)} />
                 <Text style={styles.postTopButtonText}>Edit Profile</Text>
             </ TouchableOpacity>
             
@@ -237,11 +235,11 @@ const Profile = ():JSX.Element => {
             case "none": return(
             <View style={{flexDirection:"row", justifyContent:"flex-end",alignItems:"center"}}>
                 <TouchableOpacity onPress={handleAddFriendPress} style={{...styles.profilePageMultiButton, width:100}}>
-                    <Image style={styles.profilePageButtonIcon} source={require('../../IconBin/friendAdd.png')} />
+                    <FriendsAddSVG width={scaleFont(25)} height={scaleFont(25)} />
                     <Text style={styles.postTopButtonText}>Add Friend</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleBlockPersonPress} style={{...styles.profilePageMultiButton, width:25, borderColor:"#fe0000", backgroundColor:"rgba(255, 0, 0, 0.3)"}}>
-                    <Image style={{...styles.profilePageButtonIcon, tintColor:"#fe0000"}} source={require('../../IconBin/block.png')} />
+                    <BlockSVG width={scaleFont(25)} height={scaleFont(25)} />
                 </TouchableOpacity>
             </View>
             )
@@ -251,18 +249,18 @@ const Profile = ():JSX.Element => {
                     <Text style={styles.postTopButtonText}>Pending. . .</Text>
                 </ View>
                 <TouchableOpacity onPress={handleBlockPersonPress} style={{...styles.profilePageMultiButton, width:25, borderColor:"#fe0000", backgroundColor:"rgba(255, 0, 0, 0.3)"}}>
-                    <Image style={{...styles.profilePageButtonIcon, tintColor:"#fe0000"}} source={require('../../IconBin/block.png')} />
+                    <BlockSVG width={scaleFont(25)} height={scaleFont(25)} />
                 </TouchableOpacity>
             </View>
             )
             case "friends": return(
         <View style={{flexDirection:"row", justifyContent:"flex-end",alignItems:"center"}}>
             <View style={{...styles.profilePageMultiButton, width:100}}>
-                <Image style={{...styles.profilePageButtonIcon}} source={require('../../IconBin/verified.png')} />
+                <VerifiedSVG width={scaleFont(25)} height={scaleFont(25)} />
                 <Text style={{...styles.postTopButtonText}}>Friends</Text>
             </ View>
             <TouchableOpacity onPress={handleRemoveFriendPress} style={{...styles.profilePageMultiButton, width:25, borderColor:"#fe0000"}}>
-                <Image style={{...styles.profilePageButtonIcon, tintColor:"#fff"}} source={require('../../IconBin/friendRemove.png')} />
+                <FriendsRemoveSVG width={scaleFont(25)} height={scaleFont(25)} />
             </TouchableOpacity>
         </View>
             )
@@ -311,7 +309,7 @@ const ProfileHeader = ():JSX.Element => {
       <View style={styles.profilePageStatsContainer}>
         <View style={styles.profilePageStatsTop}>
           <View style={styles.profilePageFriendsContainer}>
-            <Image style={styles.postTopStreakIcon} source={require('../../IconBin/friends.png')} />
+            <FriendsSVG width={scaleFont(30)} height={scaleFont(30)} />
               <Text style={{...styles.postTopStreak, fontSize:scaleFont(24)}}> {matchingProfileData.friendCount}</Text>
           </View>
           {/* <View style={styles.profilePageStreakContainer}>
@@ -321,7 +319,7 @@ const ProfileHeader = ():JSX.Element => {
         </View> */}
           <View style={styles.profilePageJoinDateContainer}>
               <Text style={{...styles.postTopStreak,fontSize:scaleFont(24)}}>{matchingProfileData.accountCreationDate}</Text>
-              <Image style={styles.postTopStreakIcon} source={require('../../IconBin/calendar.png')} />
+              <CalendarSVG width={scaleFont(30)} height={scaleFont(30)} />
           </View>
       </View>
         {(Object.keys(currentLevels).length > 0)&&

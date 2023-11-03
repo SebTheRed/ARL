@@ -1,23 +1,14 @@
 import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
     Text,
-    useColorScheme,
     View,
     TouchableOpacity,
-	TextInput,
     Modal,
-    Switch,
     Image,
   } from 'react-native';
-  import {getStorage,ref, getDownloadURL, uploadBytes} from 'firebase/storage';
+  import {getStorage,ref, getDownloadURL} from 'firebase/storage';
   import {useState,useEffect} from 'react'
   import { useUserData } from '../../Contexts/UserDataContext';
-  import {updateDoc,doc} from 'firebase/firestore'
   import { useUID } from '../../Contexts/UIDContext';
-  import {db, auth,} from '../../Firebase/firebase'
   import styles from '../../styles';
   import {scaleFont} from '../../Utilities/fontSizing'
   import * as ImagePicker from 'expo-image-picker'

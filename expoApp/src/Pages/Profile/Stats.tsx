@@ -1,10 +1,5 @@
 import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
     Text,
-    useColorScheme,
     View,
     TouchableOpacity,
     Dimensions,
@@ -15,9 +10,8 @@ import {
   } from "react-native-chart-kit";
 import React, {useEffect, useState} from 'react'
 import { db } from '../../Firebase/firebase';
-import { getDocs, query, orderBy, startAt, endAt,where, collection, limit,startAfter, Timestamp } from "firebase/firestore"; // Import onSnapshot
+import { getDocs, query, orderBy,collection,Timestamp } from "firebase/firestore"; // Import onSnapshot
 import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
-// import { useUID } from '../../Contexts/UIDContext';
 import { useProfilePageUID } from '../../Contexts/ProfilePageUID';
 import styles from '../../styles'
 import { useNavigation, CommonActions } from '@react-navigation/native';

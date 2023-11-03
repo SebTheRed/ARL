@@ -1,15 +1,9 @@
 import {
-	SafeAreaView,
 	ScrollView,
-	StatusBar,
-	StyleSheet,
 	Text,
-	useColorScheme,
 	View,
 	Image,
 	TouchableOpacity,
-	FlatList,
-	RefreshControl,
 	Switch,
 	TextInput,
 	Keyboard
@@ -17,15 +11,17 @@ import {
 import {getStorage,ref, getDownloadURL} from 'firebase/storage';
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { useFeed } from '../../Contexts/FeedContext';
 import {useUserData} from '../../Contexts/UserDataContext'
 import { useUID } from '../../Contexts/UIDContext';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import styles from '../../styles'
-import {db, auth,} from '../../Firebase/firebase'
+import {db, } from '../../Firebase/firebase'
 import {updateDoc,doc} from 'firebase/firestore'
 import ProfilePicModal from './ProfPicModal';
 import {scaleFont} from '../../Utilities/fontSizing'
+import CameraAddSVG from '../../IconBin/svg/camera_add.svg'
+import EditSVG from '../../IconBin/svg/edit.svg'
+
 const EditProfile = ():JSX.Element => {
 	const navigation = useNavigation<any>();
 	const {userData}:any = useUserData()
@@ -171,10 +167,7 @@ const EditProfile = ():JSX.Element => {
 			onPress={() => setIsEditing(label)}
 		>
 			<Text style={{ ...styles.profilePageRealName, fontSize: scaleFont(18) }}>
-			<Image
-				style={{ ...styles.editProfilePencil }}
-				source={require('../../IconBin/edit.png')}
-			/>
+			<EditSVG width={scaleFont(25)} height={scaleFont(25)} />
 			{label}:
 			</Text>
 			{isEditing === label ? (
@@ -229,8 +222,7 @@ return(
 			alignItems:"center",
 			justifyContent:"center"
 		}}>
-			<Image style={{...styles.bottomBarIcon,}} source={require('../../IconBin/camera_add.png')} 
-			/>
+			<CameraAddSVG width={scaleFont(45)} height={scaleFont(45)} />
 		</TouchableOpacity>
 		
 		</View>
@@ -272,8 +264,7 @@ return(
 				}}
 				onPress={handleProfPicPress}
 				>
-					<Image style={{...styles.bottomBarIcon,width:"100%",height:"100%",resizeMode: 'cover',}} source={require('../../IconBin/camera_add.png')} 
-					/>
+					<CameraAddSVG width={scaleFont(45)} height={scaleFont(45)} />
 				</TouchableOpacity>
             </View>
             <View style={styles.profilePageMultiBox}>

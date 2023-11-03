@@ -34,8 +34,10 @@
     "quantify friends":true,
     "fix search and make it more robust":true,
 
-    "if friends feed empty, prompt user to search for friends":false,
     "change icon PNGS to svgs":false,
+    "fix the weird back arrow thing pls omg":false,
+
+    "if friends feed empty, prompt user to search for friends":false,
     "make unique placeholder values for the text input field when making a new post":false,
     "Fix stuttering profile pages":"COULD NOT FIX THIS FOR THE FUCKING LIFE OF ME. 4 HOURS OF FAILURE IS ENOUGH FOR A POLISH",
     "Add pinch zoom to camera uploader":false,

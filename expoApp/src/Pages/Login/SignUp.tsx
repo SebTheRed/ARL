@@ -1,27 +1,21 @@
 
 import {
-    SafeAreaView,
     ScrollView,
-    StatusBar,
-    StyleSheet,
     Text,
-    useColorScheme,
     View,
     TouchableOpacity,
 		TextInput,
-        Animated,
-        Keyboard,
-        KeyboardAvoidingView,
-        Platform,
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
   } from 'react-native';
   import React from 'react'
   import { useNavigation } from '@react-navigation/native';
   import { NavigationProp } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
-import { getFirestore, doc, setDoc,getDoc } from "firebase/firestore";
+import { useState } from 'react';
+import { doc, getDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import styles from '../../styles'
-import type {PropsWithChildren} from 'react';
 import {db, auth} from '../../Firebase/firebase'
 import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';

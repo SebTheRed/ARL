@@ -448,7 +448,7 @@ const ExperienceUploader = ():JSX.Element => {
                 <View style={{...styles.logContainer}}>
                     <View style={{flexDirection:"row",justifyContent:"space-between",width:"90%"}}>
                         <Text style={{...styles.loginlabel}}>Write a log of the experience:</Text>
-                        <Text style={{...styles.loginlabel, color:`${(text.length === 160)?"red":"white"}`}}>{text.length} / 160</Text>
+                        <Text style={{...styles.loginlabel, color:`${(text.length > 150)?"yellow":"white"}`}}>{text.length} / 160</Text>
                     </View>
                     <TextInput
                         style={styles.textArea}

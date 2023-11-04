@@ -145,15 +145,15 @@ return(
     <View style={{height:10}}></View>
     <View style={{...styles.loginWrapper, height:550, width:"90%"}}>
         <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-            <Text style={styles.logintitle}>sign up</Text>
+            <Text style={styles.logintitle}>Sign up</Text>
             <Text style={{...styles.skillPageXPText,}}> or </Text>
             <TouchableOpacity onPress={()=>handleGoBackPress("Login")} style={styles.loginSignupButton}>
-                <Text style={styles.loginbuttonText}>⇦ go back</Text>
+                <Text style={styles.loginbuttonText}>⇦ Go back</Text>
             </TouchableOpacity>
         </View>
         <View style={styles.logininputContainer}>
             <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-end"}}>
-                <Text style={styles.loginlabel}>user name</Text>
+                <Text style={styles.loginlabel}>Unique username:</Text>
                 {!isUserNameValid&&(<Text style={{...styles.loginlabel, color:"#ff0000",fontSize:10,}}>! alphabet characters & ._- only!</Text>)}
 
             </View>
@@ -171,7 +171,7 @@ return(
         </View>
         <View style={styles.logininputContainer}>
         <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-end"}}>
-            <Text style={styles.loginlabel}>email</Text>
+            <Text style={styles.loginlabel}>Your email (used to log in):</Text>
             {!isEmailValid&&(<Text style={{...styles.loginlabel, color:"#ff0000",fontSize:10,}}>! enter a proper email !</Text>)}
         </View>
             <TextInput
@@ -190,7 +190,7 @@ return(
         </View>
         <View style={styles.logininputContainer}>
         <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-end"}}>
-            <Text style={styles.loginlabel}>first & last Name</Text>
+            <Text style={styles.loginlabel}>Full name:</Text>
             {!isNameValid&&(<Text style={{...styles.loginlabel,fontSize:10, color:"#ff0000"}}>! alphabet characters & ._- only!</Text>)}
         </View>
             <TextInput
@@ -207,7 +207,7 @@ return(
         </View>
         <View style={styles.logininputContainer}>
         <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-end"}}>
-            <Text style={styles.loginlabel}>phone number</Text>
+            <Text style={styles.loginlabel}>Phone number:</Text>
             {!isPhoneNumberValid&&(<Text style={{...styles.loginlabel, color:"#ff0000",fontSize:10}}>! enter an accurate phone # !</Text>)}
 
         </View>
@@ -226,7 +226,7 @@ return(
         </View>
         <View style={styles.logininputContainer}>
         <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"flex-end"}}>
-            <Text style={styles.loginlabel}>password</Text>
+            <Text style={styles.loginlabel}>Strong password:</Text>
             {!isPasswordValid&&(<Text style={{...styles.loginlabel, color:"#ff0000",fontSize:10,}}>! at least 8 characers !</Text>)}
         </View>
             <TextInput
@@ -243,16 +243,16 @@ return(
         </View>
         {(isUserNameValid&&isEmailValid&&isNameValid&&isPasswordValid&&isPhoneNumberValid&&userName&&email&&name&&password&&phoneNumber)&&(
         <TouchableOpacity onPress={addUserFetch} style={styles.loginbutton}>
-            <Text style={styles.loginbuttonText}>complete sign up</Text>
+            <Text style={styles.loginbuttonText}>Complete sign up!</Text>
         </TouchableOpacity>)}
 
         {((!isUserNameValid||!isEmailValid||!isNameValid||!isPasswordValid||!isPhoneNumberValid)||(!userName||!email||!name||!password||!phoneNumber))&&(
         <TouchableOpacity style={{...styles.loginbutton, backgroundColor:"#333"}}>
             {(!userName||!email||!name||!password||!phoneNumber)&&(
-                <Text style={styles.loginbuttonText}>fill out all fields</Text>
+                <Text style={styles.loginbuttonText}>Fill out all fields</Text>
             )}
             {(userName&&email&&name&&password&&phoneNumber)&&(
-                <Text style={styles.loginbuttonText}>! fix your info !</Text>
+                <Text style={styles.loginbuttonText}>! Fix your info !</Text>
             )}  
         </TouchableOpacity>)}
         

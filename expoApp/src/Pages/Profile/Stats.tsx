@@ -18,6 +18,18 @@ import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useLastPage } from '../../Contexts/LastPageContext';
 import {scaleFont} from '../../Utilities/fontSizing'
 import { useGameRules } from '../../Contexts/GameRules';
+
+
+import FamilySVG from '../../IconBin/SkillIcons/family_1.svg'
+import FriendsSVG from '../../IconBin/SkillIcons/friends_1.svg'
+import FitnessSVG from '../../IconBin/SkillIcons/fitness_1.svg'
+import EarthcraftSVG from '../../IconBin/SkillIcons/earthcraft_1.svg'
+import CookingSVG from '../../IconBin/SkillIcons/cooking_1.svg'
+import TechnologySVG from '../../IconBin/SkillIcons/technology_1.svg'
+import GamesSVG from '../../IconBin/SkillIcons/games_3.svg'
+import LanguageSVG from '../../IconBin/SkillIcons/language_2.svg'
+import HumanitySVG from '../../IconBin/SkillIcons/humanity_2.svg'
+
 const Stats = ():JSX.Element => {
   const {lastPage}:any = useLastPage()
   const {skillsList, XPScale, trophyData}:any = useGameRules()
@@ -192,6 +204,24 @@ const calculateLineGraphData = (logList: Object[]) => {
     return formattedDate;
   };
 
+
+  const CurrentIcon = ()=> {
+    switch(currentTraitTitle){
+      case "Family": return <FamilySVG width={scaleFont(30)} height={scaleFont(30)} />
+      case "Friends": return <FriendsSVG width={scaleFont(30)} height={scaleFont(30)} />
+      case "Fitness": return <FitnessSVG width={scaleFont(30)} height={scaleFont(30)} />
+      case "Earthcraft": return <EarthcraftSVG width={scaleFont(30)} height={scaleFont(30)} />
+      case "Cooking": return <CookingSVG width={scaleFont(30)} height={scaleFont(30)} />
+      case "Technology": return <TechnologySVG width={scaleFont(30)} height={scaleFont(30)} />
+      case "Games": return <GamesSVG width={scaleFont(30)} height={scaleFont(30)} />
+      case "Language": return <LanguageSVG width={scaleFont(30)} height={scaleFont(30)} />
+      case "Humanity": return <HumanitySVG width={scaleFont(30)} height={scaleFont(30)} />
+      default: return <></>
+    }
+  }
+
+
+
   const StatsHeader = ():JSX.Element => {
     return(
       <>
@@ -199,11 +229,15 @@ const calculateLineGraphData = (logList: Object[]) => {
         <Text style={{...styles.backHeaderText}}>⇦Go Back</Text>
       </TouchableOpacity>
       <View style={styles.statsHeaderContainer}>
-        <Text style={{...styles.statsTitle, color:`${matchingColor}`}}>{currentTraitTitle}</Text>
+        <View style={styles.statsHeaderTitleBox}>
+          <CurrentIcon />
+          <Text style={{...styles.statsTitle, color:`${matchingColor}`}}> {currentTraitTitle}</Text>
+        </View>
+        
           <View style={styles.statsGraphContainer}>
             {Object.keys(lineChartData).length > 0 && 
               <View style={{alignItems:"center"}}>
-                <Text style={{...styles.statsTitle, fontSize:scaleFont(22),}}>{currentTraitTitle} XP over the last 30 days:</Text>
+                <Text allowFontScaling={false} style={{...styles.statsTitle, fontSize:scaleFont(22),}}>{currentTraitTitle} XP over the last 30 days:</Text>
                 <LineChart
                   data={lineChartData}
                   width={(Dimensions.get("window").width)-20}
@@ -219,7 +253,7 @@ const calculateLineGraphData = (logList: Object[]) => {
                   }}
                 />
                 <View style={{height:20,}}></View>
-                <Text style={{...styles.statsTitle, fontSize:scaleFont(22),}}>All of your {currentTraitTitle} Experiences:</Text>
+                <Text allowFontScaling={false} style={{...styles.statsTitle, fontSize:scaleFont(22),}}>All of your {currentTraitTitle} Experiences:</Text>
               </View>
             }
           </View>
@@ -232,9 +266,9 @@ const calculateLineGraphData = (logList: Object[]) => {
 const LogPost = ({data}:any):JSX.Element => {
   return(
     <View style={{...styles.logPostContainer, width:(Dimensions.get("window").width)-20}}>
-      <Text style={{...styles.logPostTitle, width:"45%"}}>{data.eventTitle}</Text>
-      <Text style={{...styles.logPostTitle, width:"10%", color:`${matchingColor}`}}>{data.xp}</Text>
-      <Text style={{...styles.logPostTitle, width:"25%"}}>{convertTimestampToMMDDYY(data.timeStamp)}</Text>
+      <Text allowFontScaling={false} style={{...styles.logPostTitle, width:"45%"}}>{data.eventTitle}</Text>
+      <Text allowFontScaling={false} style={{...styles.logPostTitle, width:"10%", color:`${matchingColor}`}}>{data.xp}</Text>
+      <Text allowFontScaling={false} style={{...styles.logPostTitle, width:"25%"}}>{convertTimestampToMMDDYY(data.timeStamp)}</Text>
     </View>
   )
 }

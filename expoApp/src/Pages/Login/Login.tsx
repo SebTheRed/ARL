@@ -117,10 +117,8 @@ const signIn = async(e:any) => {
 		>
 		<ScrollView keyboardShouldPersistTaps='handled' style={{...styles.logincontainer,backgroundColor:"#299e46"}} contentContainerStyle={{alignItems:"center", justifyContent:"space-between"}}>
 			<View style={{...styles.ARLLogoWrapper, backgroundColor:"transparent"}}>
-				<View style={styles.offsetWrapper}>
-				</View>
-				<Text style={{...styles.borderedTextShadow, color: 'black',fontWeight:"bold"}}>ARL</Text>
-				<Text style={{...styles.borderedText, color: 'white' ,fontWeight:"bold"}}>ARL</Text>
+				<Image style={{...styles.loginARLLogo}} source={require('../../IconBin/arl_letters.png')} />
+        <Text style={{color:"#fff",fontSize:scaleFont(20), fontWeight:"bold"}}>App Real Life</Text>
 			</View>
 			<View style={{...styles.loginWrapper}}>
       {failureMessage&&(<View style={{height:30,width:"100%",backgroundColor:"rgba(255,0,0,0.5)", alignItems:"center", justifyContent:"center", borderColor:"#ff0000",borderWidth:2}}>
@@ -128,16 +126,16 @@ const signIn = async(e:any) => {
       </View>)}
       <View style={{height:10}} />
 				<View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-					<Text style={styles.logintitle}>sign in </Text>
+					<Text style={styles.logintitle}>Sign in </Text>
 					<Text style={{...styles.skillPageXPText,}}> or </Text>
 					<TouchableOpacity onPress={()=>handleSignUpPress("SignUp")} style={styles.loginSignupButton}>
 						
-						<Text style={styles.loginbuttonText}>sign up</Text>
+						<Text style={styles.loginbuttonText}>Sign up</Text>
 					</TouchableOpacity>
 				</View>
 				
 				<View style={styles.logininputContainer}>
-					<Text style={styles.loginlabel}>email</Text>
+					<Text style={styles.loginlabel}>Email:</Text>
 					<TextInput
 					returnKeyType="done"
 					blurOnSubmit={true}
@@ -148,7 +146,7 @@ const signIn = async(e:any) => {
 					  />
 				</View>
 				<View style={styles.logininputContainer}>
-					<Text style={styles.loginlabel}>password</Text>
+					<Text style={styles.loginlabel}>Password:</Text>
 					<TextInput 
 						returnKeyType="done"
             blurOnSubmit={true}
@@ -160,7 +158,7 @@ const signIn = async(e:any) => {
 				</View>
 				
 				<TouchableOpacity onPress={signIn} style={styles.loginbutton}>
-					<Text style={styles.loginbuttonText}>sign into arl</Text>
+					<Text style={styles.loginbuttonText}>Sign in</Text>
 				</TouchableOpacity>
 				{/* <TouchableOpacity onPress={signIn} style={styles.whatIsARLButton}>
 					<Text style={styles.loginbuttonText}>what's arl ?</Text>

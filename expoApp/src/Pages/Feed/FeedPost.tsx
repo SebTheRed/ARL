@@ -16,6 +16,17 @@ import { scaleFont } from '../../Utilities/fontSizing';
 import { useGameRules } from '../../Contexts/GameRules';
 import { useUID } from '../../Contexts/UIDContext';
 import ScoreCounter from './ScoreCounter';
+
+import FamilySVG from '../../IconBin/SkillIcons/family_1.svg'
+import FriendsSVG from '../../IconBin/SkillIcons/friends_1.svg'
+import FitnessSVG from '../../IconBin/SkillIcons/fitness_1.svg'
+import EarthcraftSVG from '../../IconBin/SkillIcons/earthcraft_1.svg'
+import CookingSVG from '../../IconBin/SkillIcons/cooking_1.svg'
+import TechnologySVG from '../../IconBin/SkillIcons/technology_1.svg'
+import GamesSVG from '../../IconBin/SkillIcons/games_3.svg'
+import LanguageSVG from '../../IconBin/SkillIcons/language_2.svg'
+import HumanitySVG from '../../IconBin/SkillIcons/humanity_2.svg'
+
 type RootStackParamList = {
 	Profile:undefined,
 }
@@ -146,6 +157,20 @@ const handleProfilePress = () => {
 	}
 
 
+const CurrentIcon = ()=> {
+  switch(data.postSkill){
+    case "Family": return <FamilySVG width={scaleFont(30)} height={scaleFont(30)} />
+    case "Friends": return <FriendsSVG width={scaleFont(30)} height={scaleFont(30)} />
+    case "Fitness": return <FitnessSVG width={scaleFont(30)} height={scaleFont(30)} />
+    case "Earthcraft": return <EarthcraftSVG width={scaleFont(30)} height={scaleFont(30)} />
+    case "Cooking": return <CookingSVG width={scaleFont(30)} height={scaleFont(30)} />
+    case "Technology": return <TechnologySVG width={scaleFont(30)} height={scaleFont(30)} />
+    case "Games": return <GamesSVG width={scaleFont(30)} height={scaleFont(30)} />
+    case "Language": return <LanguageSVG width={scaleFont(30)} height={scaleFont(30)} />
+    case "Humanity": return <HumanitySVG width={scaleFont(30)} height={scaleFont(30)} />
+    default: return <></>
+  }
+}
 
 
 
@@ -229,9 +254,12 @@ const PostContentSplitter = ():JSX.Element => {
           
 					
 				</View>
-				<View style={{position:"absolute",right:0}}>
-            <Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
-          </View>
+				<View style={{position:"absolute",right:0, top:0}}>
+          <Text style={{...styles.postTopTimestamp}}>{translatedTimestamp}</Text>
+        </View>
+        <View style={{position:"absolute",right:0}}>
+          <CurrentIcon />
+        </View>
 			<View style={{...styles.postTopExperienceContainer}}>
 				
 			</View>

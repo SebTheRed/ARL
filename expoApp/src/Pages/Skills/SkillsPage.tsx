@@ -17,6 +17,15 @@ import { useLastPage } from '../../Contexts/LastPageContext';
 import {useUID} from '../../Contexts/UIDContext'
 import { useGameRules } from '../../Contexts/GameRules';
 import {scaleFont} from '../../Utilities/fontSizing'
+import FamilySVG from '../../IconBin/SkillIcons/family_1.svg'
+import FriendsSVG from '../../IconBin/SkillIcons/friends_1.svg'
+import FitnessSVG from '../../IconBin/SkillIcons/fitness_1.svg'
+import EarthcraftSVG from '../../IconBin/SkillIcons/earthcraft_1.svg'
+import CookingSVG from '../../IconBin/SkillIcons/cooking_1.svg'
+import TechnologySVG from '../../IconBin/SkillIcons/technology_1.svg'
+import GamesSVG from '../../IconBin/SkillIcons/games_3.svg'
+import LanguageSVG from '../../IconBin/SkillIcons/language_2.svg'
+import HumanitySVG from '../../IconBin/SkillIcons/humanity_2.svg'
 
 type RootStackParamList = {
   SkillsMain:undefined,
@@ -50,6 +59,21 @@ useEffect(()=>{
     // console.log(experiencesList)
   }  
 },[dataLoading])
+
+const CurrentIcon = ()=> {
+  switch(skillData.title){
+    case "Family": return <FamilySVG width={scaleFont(50)} height={scaleFont(50)} />
+    case "Friends": return <FriendsSVG width={scaleFont(50)} height={scaleFont(50)} />
+    case "Fitness": return <FitnessSVG width={scaleFont(50)} height={scaleFont(50)} />
+    case "Earthcraft": return <EarthcraftSVG width={scaleFont(50)} height={scaleFont(50)} />
+    case "Cooking": return <CookingSVG width={scaleFont(50)} height={scaleFont(50)} />
+    case "Technology": return <TechnologySVG width={scaleFont(50)} height={scaleFont(50)} />
+    case "Games": return <GamesSVG width={scaleFont(50)} height={scaleFont(50)} />
+    case "Language": return <LanguageSVG width={scaleFont(50)} height={scaleFont(50)} />
+    case "Humanity": return <HumanitySVG width={scaleFont(50)} height={scaleFont(50)} />
+    default: return <></>
+  }
+}
 
 
 const calculateXPBarWidth = (currentXP: number, prevXP: number, nextXP: number) => {
@@ -124,8 +148,12 @@ if (dataLoading == false) {
           </TouchableOpacity>
           <View style={{...styles.skillPageHeader, alignItems:"center", width:"100%"}}>
             <View style={styles.skillPageTitleBox}>
-              <Text style={styles.skillPageTitle}>{skillData.title}</Text>
-              <Text style={styles.skillPageTitle}>{xpStats.currentLevel}/99</Text>
+              <View style={styles.skillPageContentBox}>
+                <CurrentIcon />
+                <Text allowFontScaling={false} style={styles.skillPageTitle}> {skillData.title}</Text>
+              </View>
+              
+              <Text allowFontScaling={false} style={styles.skillPageTitle}>{xpStats.currentLevel}/99</Text>
             </View>
             <View style={styles.skillPageXPContainer}>
               <View style={{...styles.skillPageXPBar,backgroundColor:"transparent"}}></View>

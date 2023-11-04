@@ -155,6 +155,10 @@ sectionContainer: {
   justifyContent:"space-between",
   alignItems:"center",
 },
+sectionContentContainer:{
+  flexDirection:"row",
+  justifyContent:"space-evenly"
+},
 sectionTextContainer:{
   display:"flex",
   flexDirection:"column",
@@ -192,6 +196,12 @@ sectionLevelBox:{
   borderColor:"#656565",
   borderWidth:2
 },
+sectionIconContainer:{
+  width:"15%",
+  alignItems:"center",
+  justifyContent:"center"
+},
+
 borderedTextShadow:{
   fontSize:scaleFont(48),
   paddingLeft:5,
@@ -265,6 +275,9 @@ skillPageTitleBox:{
   flexDirection:"row",
   justifyContent:"space-between",
   width:"95%"
+},
+skillPageContentBox:{
+  flexDirection:"row",
 },
 skillPageXPContainer:{
   position:"relative",
@@ -494,6 +507,10 @@ loginVoltLogo:{
   width:"25%",
   height:80,
 },
+loginARLLogo:{
+  height:scaleFont(80),
+  width:scaleFont(125),
+},
 
 /**
  
@@ -501,7 +518,7 @@ POSTS & FEED
 
  */
 feedFlatList:{
-  backgroundColor:"#333",
+  backgroundColor:"#1c1c1c",
   flex:1,
   width:"100%",
 },
@@ -795,6 +812,10 @@ profilePageStatsTop:{
 profilePageSmallStatsContainer:{
   flexDirection:"row"
 },
+statsHeaderTitleBox:{
+  flexDirection:"row",
+  alignItems:"center"
+},
 profilePageJoinDateContainer:{
   width:"40%",
   flexDirection:"row",
@@ -1003,7 +1024,6 @@ sectionProfPic:{
   width: 50,  // desired width
   height: 50, // desired height
   resizeMode: 'cover', // or 'cover'
-  
 },
 hamburgerMenu: {
   position: 'absolute',

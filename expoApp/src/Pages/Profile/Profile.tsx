@@ -317,7 +317,7 @@ const ProfileHeader = ():JSX.Element => {
           <View style={styles.profilePageJoinDateContainer}>
 
               <View style={styles.profilePageStreakContainer}>
-                  <Text style={{...styles.postTopStreak}}>{matchingProfileData.streak.toLocaleString()}</Text>
+                  <Text style={{...styles.postTopStreak, fontSize:scaleFont(24)}}>{matchingProfileData.streak.toLocaleString()}</Text>
                   <StreakSVG width={scaleFont(30)} height={scaleFont(30)} />
               </View>
 
@@ -332,7 +332,7 @@ const ProfileHeader = ():JSX.Element => {
               return(
                   <TouchableOpacity onPress={()=>handleTraitStatsPress(d.title)} style={{...styles.profilePageTraitBox, backgroundColor:d.color}} key={i}>
                       {/* <Text style={styles.profilePageTraitTitle}>{data.title}</Text> */}
-                      <Text style={{...styles.borderedText, color:"#1c1c1c", fontSize:scaleFont(25), fontWeight:"bold"}}>{d.currentLevel}</Text>
+                      <Text allowFontScaling={false} style={{...styles.borderedText, color:"#1c1c1c", fontSize:scaleFont(25), fontWeight:"bold"}}>{d.currentLevel}</Text>
                       {/* <Text style={{...styles.borderedTextShadow, fontSize:25,fontWeight:"bold", color:"#fff"}}>{currentLevel}</Text> */}
                   </TouchableOpacity>
               )

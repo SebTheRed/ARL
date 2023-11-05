@@ -32,6 +32,10 @@
     "one huge final last test!":false,
     "apply to APP STORES!!": false
   },
+  "trophies":
+  {
+    
+  },
   "polish":
   {
     "make every account start with SebTheRed as a friend":true,
@@ -48,4 +52,5 @@
     "Fix stuttering profile pages":false
 
   }
+
 }

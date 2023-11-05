@@ -34,4 +34,7 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-src/Firebase/firebase.js
+# under the hood / hide from users
+src/Firebase/
+src/Contexts/
+src/Utilities/AdminComponent.tsx

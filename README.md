@@ -14,6 +14,7 @@ ARL is a unique social media application that combines social media dynamics wit
 - React Native
 - Expo
 - Guts
+- Firebase backend
 
 # Installation
 # TWO OPTIONS:

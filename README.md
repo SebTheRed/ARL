@@ -2,13 +2,13 @@
 
 ARL is a unique social media application that combines social media dynamics with a video game-style leveling system. Engage in real-life activities, share your experiences, and level up your Traits!
 
-# Features
+## Features
 
 - **Nine Traits System**: Level up traits like Family, Fitness, Cooking, and more.
 - **Dynamic Posts**: Share your experiences with Log, Camera, and Timeline posts.
 - **Trophies and Achievements**: Earn trophies for real-life achievements.
 
-# Prerequisites
+### Prerequisites
 
 - Node.js
 - React Native
@@ -16,8 +16,8 @@ ARL is a unique social media application that combines social media dynamics wit
 - Guts
 - Firebase backend
 
-# Installation
-# TWO OPTIONS:
+### Installation
+#### TWO OPTIONS:
 
 1. With your own Firebase keys.
 Clone the repo
@@ -36,14 +36,14 @@ add Firebase (Admin granted keys) folder into your expoApp/src/
 `npm start` the demo
 
 
-# Contributing
+### Contributing
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create.
 To receive the Trophy, simply make one contribution and have it accepted into the codebase!
 Please be patient, for we are still small and have lives outside of ARL 
 
 Please read our CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests.
 
-# License
+## License
 Distributed under the MIT License. See LICENSE for more information.
 
 # Contact

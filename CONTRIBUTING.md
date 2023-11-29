@@ -1,12 +1,16 @@
 # Contributing to ARL
 
-First off, thank you for considering contributing to ARL. It's people like you that make ARL such a great tool.
-Secondly, to prove your Trophy on ARL only post what you've committed after its been approved!
+First off, thank you for considering contributing to ARL. It is the people like you that make ARL such a great tool.
+Secondly, to prove your "Team ARL" Trophy on ARL only post what you have committed after it has been approved!
 
 # Copyright
+- Read LICENSE. 
+- The Software is shared with the intention of community development of the production app. 
+- All modifications of The Software are expected to be contributed back to the main project.
 
 # How Can I Contribute?
 - Make a pull request (I think? Idk I'm still new to this)
+- Once your code is approved you can post the "Team ARL" Trophy
 
 # How Do I Submit A Bug Report?
 
@@ -17,7 +21,7 @@ Bugs are tracked as GitHub issues. Explain the problem and include additional de
 - **Provide specific examples** to demonstrate the steps.
 
 
-# How do I Submitting A Feature Request
+# How do I Submit A Feature Request
 
 - **Use a clear and descriptive title** for the issue.
 - **Provide a step-by-step description of the suggested enhancement** in as many details as possible.

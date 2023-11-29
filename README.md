@@ -4,17 +4,17 @@ ARL is a unique social media application that combines social media dynamics wit
 
 ## Features
 
-- **Nine Traits System**: Level up traits like Family, Fitness, Cooking, and more.
-- **Dynamic Posts**: Share your experiences with Log, Camera, and Timeline posts.
-- **Trophies and Achievements**: Earn trophies for real-life achievements.
+- **Nine Traits System**: Level up Traits like Family, Fitness, Cooking, and more.
+- **Dynamic Posts**: Share your Experiences with Log, Camera, and Timeline posts with your friends or the globe.
+- **Trophies and Achievements**: Earn Trophies for real-life achievements.
 
 ### Prerequisites
 
+- Expo
 - Node.js
 - React Native
-- Expo
-- Guts
-- Firebase backend
+- Firebase Firestore backend
+
 
 ### Installation
 #### TWO OPTIONS:

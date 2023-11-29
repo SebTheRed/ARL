@@ -19,21 +19,23 @@ ARL is a unique social media application that combines social media dynamics wit
 ### Installation
 #### TWO OPTIONS:
 
-1. With your own Firebase keys.
-Clone the repo
-Install NPM packages: `npm install`
-Ensure Expo CLI install
-`cd` into expoApp/
-`npm start` her up
+1. 
+- With your own Firebase keys.
+- Clone the repo
+- Install NPM packages: `npm install`
+- Ensure Expo CLI install
+- `cd` into expoApp/
+- `npm start` her up
 
-2. `With Admin granted Demo keys.``
-Get keys from an Admin (Most important step!)
-Clone the repo
-Install NPM packages: `npm install`
-Ensure Expo CLI install
-add Firebase (Admin granted keys) folder into your expoApp/src/
-`cd` into expoApp/
-`npm start` the demo
+2. 
+- `With Admin granted Demo keys.``
+- Get keys from an Admin (Most important step!)
+- Clone the repo
+- Install NPM packages: `npm install`
+- Ensure Expo CLI install
+- add Firebase (Admin granted keys) folder into your expoApp/src/
+- `cd` into expoApp/
+- `npm start` the demo
 
 
 ### Contributing
@@ -47,6 +49,6 @@ Please read our CONTRIBUTING.md for details on our code of conduct, and the proc
 Distributed under the MIT License. See LICENSE for more information.
 
 # Contact
-Your Name - email@example.com
+Your Name - SebTheRed seb.belfonti@gmail.com
 
 Project Link: https://github.com/SebTheRed/ARL

@@ -19,9 +19,9 @@ type RootStackParamList = {
 	Profile:undefined,
 }
 const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
-    const {findPageUserID, }:any = useProfilePageUID()
+    const {findPageUserID,refreshProfileFeed }:any = useProfilePageUID()
     const {uid}:any = useUID()
-    const {setFriendsRefresh,friendsRefresh,trueFriends}:any = useFriends()
+    const {refreshFriendsList,friendsData}:any = useFriends()
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const [isLoading,setIsLoading] = useState(true)
     const [profilePicState,setProfilePicState] = useState<any>(null)
@@ -56,13 +56,13 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
     },[])
 
     useEffect(()=>{
-      if (trueFriends.includes(userDoc.uid)) {
+      if (friendsData.trueFriends.includes(userDoc.uid)) {
         setAreWeFriends(true);
       } else {
         setAreWeFriends(false);
       }
 
-    },[trueFriends])
+    },[friendsData.trueFriends])
 
     const findHighestXP = () => {
         let highestXP = 0;
@@ -94,6 +94,7 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
       };
 
       const handlePress =()=>{
+            refreshProfileFeed()
             findPageUserID(userDoc.uid)
             navigation.dispatch(
                 CommonActions.reset({
@@ -130,14 +131,14 @@ const UserTile = ({userDoc, XPScale, skillsList, type}:any):JSX.Element => {
       friendCount: increment(1)
     })
     console.log("ACCEPTED !")
-    setFriendsRefresh((friendsRefresh:boolean)=>!friendsRefresh)
+    refreshFriendsList()
   }
   const handleDeny = async() => {
     const sortedUIDString = [uid, userDoc.uid].sort().join('_'); 
     const docRef = doc(db, "friendships", sortedUIDString);
     await deleteDoc(docRef)
     console.log("DENIED !")
-    setFriendsRefresh((friendsRefresh:boolean)=>!friendsRefresh)
+    refreshFriendsList()
   }
       
     return(

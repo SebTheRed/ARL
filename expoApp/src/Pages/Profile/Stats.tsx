@@ -9,6 +9,7 @@ import {
   LineChart,
   } from "react-native-chart-kit";
 import React, {useEffect, useState} from 'react'
+import { useUID } from '../../Contexts/UIDContext';
 import { db } from '../../Firebase/firebase';
 import { getDocs, query, orderBy,collection,Timestamp } from "firebase/firestore"; // Import onSnapshot
 import {useCurrentTraitStat} from '../../Contexts/CurrentTraitStat'
@@ -31,13 +32,13 @@ import LanguageSVG from '../../IconBin/SkillIcons/language_2.svg'
 import HumanitySVG from '../../IconBin/SkillIcons/humanity_2.svg'
 
 const Stats = ():JSX.Element => {
+  const {uid}:any = useUID()
   const {lastPage}:any = useLastPage()
-  const {skillsList, XPScale, trophyData}:any = useGameRules()
+  const {gameRules}:any = useGameRules()
   const navigation = useNavigation<any>();
   // const {uid}:any = useUID()
-  const {profilePageUID}:any = useProfilePageUID()
+  const {profilePageData}:any = useProfilePageUID()
   const {currentTraitTitle}:any = useCurrentTraitStat()
-  const [currentLog,setCurrentLog] = useState<any>()
   const [allMatchingLogData,setAllMatchingLogData] = useState<any>([])
   const [lineChartData,setLineChartData] = useState<any>({})
   const [matchingColor,setMatchingColor] = useState("#fff")
@@ -46,13 +47,16 @@ const Stats = ():JSX.Element => {
   useEffect(()=>{
 //FETCH ALL DATA
   const skillSwitch = ()=>{
-    Object.values(skillsList).map((skill:any,i:number)=>{
-      if (skill.title == currentTraitTitle){setMatchingColor(skill.color)}
+    Object.values(gameRules.skillsList).map((skill:any,i:number)=>{
+      if (skill.title.toLowerCase() == currentTraitTitle.toLowerCase()){setMatchingColor(skill.color)}
     })
   }
   const fetchDataFresh = async () => {
     let feedQuery;
-    const collectionPath = `users/${profilePageUID}/xpLog`
+    let matchUID:string
+    if (!profilePageData.profilePageUID) {matchUID = uid}
+    else {matchUID = profilePageData.profilePageUID}
+    const collectionPath = `users/${matchUID}/xpLog`
       feedQuery = query(
         collection(db, collectionPath),
         orderBy("timeStamp", "desc"),
@@ -68,7 +72,7 @@ const Stats = ():JSX.Element => {
       skillSwitch()
       let sortedByTraitDocs:any = [{eventTitle:"Event Name", xp:"XP", timeStamp:"Timestamp", id:"HEADEROFLIST"}]
       newDocs.map((doc)=>{
-        if (doc.traitType !== currentTraitTitle) { return; }
+        if (doc.traitType.toLowerCase() !== currentTraitTitle.toLowerCase()) { return; }
         sortedByTraitDocs.push(doc)
       })
       setAllMatchingLogData(sortedByTraitDocs)
@@ -122,7 +126,7 @@ const calculateLineGraphData = (logList: Object[]) => {
     let hasData = false;
   
     logList.forEach((doc: any) => {
-      if (doc.traitType !== currentTraitTitle) { return; }
+      if (doc.traitType.toLowerCase() !== currentTraitTitle.toLowerCase()) { return; }
       
       // Compare Firestore Timestamps directly
       const docDate = new Date(doc.timeStamp.seconds*1000)
@@ -237,7 +241,7 @@ const calculateLineGraphData = (logList: Object[]) => {
           <View style={styles.statsGraphContainer}>
             {Object.keys(lineChartData).length > 0 && 
               <View style={{alignItems:"center"}}>
-                <Text allowFontScaling={false} style={{...styles.statsTitle, fontSize:scaleFont(22),}}>{currentTraitTitle} XP over the last 30 days:</Text>
+                <Text allowFontScaling={false} style={{...styles.statsTitle, fontSize:scaleFont(22),}}>{currentTraitTitle} EXP over the last 30 days:</Text>
                 <LineChart
                   data={lineChartData}
                   width={(Dimensions.get("window").width)-20}
@@ -253,7 +257,7 @@ const calculateLineGraphData = (logList: Object[]) => {
                   }}
                 />
                 <View style={{height:20,}}></View>
-                <Text allowFontScaling={false} style={{...styles.statsTitle, fontSize:scaleFont(22),}}>All of your {currentTraitTitle} Experiences:</Text>
+                <Text allowFontScaling={false} style={{...styles.statsTitle, fontSize:scaleFont(22),}}>All of the {currentTraitTitle} Experiences:</Text>
               </View>
             }
           </View>
@@ -266,8 +270,8 @@ const calculateLineGraphData = (logList: Object[]) => {
 const LogPost = ({data}:any):JSX.Element => {
   return(
     <View style={{...styles.logPostContainer, width:(Dimensions.get("window").width)-20}}>
-      <Text allowFontScaling={false} style={{...styles.logPostTitle, width:"45%"}}>{data.eventTitle}</Text>
-      <Text allowFontScaling={false} style={{...styles.logPostTitle, width:"10%", color:`${matchingColor}`}}>{data.xp}</Text>
+      <Text allowFontScaling={false} style={{...styles.logPostTitle, width:"50%"}}>{data.eventTitle}</Text>
+      <Text allowFontScaling={false} style={{...styles.logPostTitle, width:"15%", color:`${matchingColor}`}}>{data.xp}</Text>
       <Text allowFontScaling={false} style={{...styles.logPostTitle, width:"25%"}}>{convertTimestampToMMDDYY(data.timeStamp)}</Text>
     </View>
   )

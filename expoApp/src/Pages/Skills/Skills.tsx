@@ -7,7 +7,7 @@ import {
   import React from 'react'
   import { useNavigation } from '@react-navigation/native';
   import { NavigationProp } from '@react-navigation/native';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import styles from '../../styles'
 import type {PropsWithChildren} from 'react';
 import {useUserData} from '../../Contexts/UserDataContext'
@@ -25,6 +25,8 @@ import TechnologySVG from '../../IconBin/SkillIcons/technology_1.svg'
 import GamesSVG from '../../IconBin/SkillIcons/games_3.svg'
 import LanguageSVG from '../../IconBin/SkillIcons/language_2.svg'
 import HumanitySVG from '../../IconBin/SkillIcons/humanity_2.svg'
+import TotalSVG from '../../IconBin/SkillIcons/total_level.svg'
+
 
 
 type SectionProps = PropsWithChildren<{
@@ -56,16 +58,30 @@ type RootStackParamList = {
 
 
 
-function Skills({route}:SkillsProps): JSX.Element {
-  const {userData}:any = useUserData()
+function Skills(): JSX.Element {
+  const {userData, userLevels}:any = useUserData()
   const {uid}:any = useUID()
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { skillsList, levelScale,dataLoading}:any = useGameRules()
+  const { gameRules }:any = useGameRules()
 
-  useEffect(()=>{
-    // console.log("userData", userData)
-    // console.log("uid", uid)
-  },[userData,uid])
+  const [calcedLevels,setCalcedLevels] = useState<any>({
+    family:0,
+    friends:0,
+    fitness:0,
+    earthcraft:0,
+    cooking:0,
+    technology:0,
+    games:0,
+    language:0,
+    humanity:0,
+    totalLevel:0,
+  })
+
+  // useEffect(()=>{
+  //   // const levels = calculateUserLevels(userData,gameRules.levelScale)
+  //   setCalcedLevels(levels)
+  //   console.log(levels)
+  // },[])
   
 
 
@@ -73,23 +89,31 @@ function Skills({route}:SkillsProps): JSX.Element {
     navigation.navigate(val);
   }
   
-  const calculateCurrentLevel = (skillName: string, XPScale: any) => {
-    const currentXP = userData.xpData[skillName]; // Assuming skillData.title is 'Family', 'Friends', etc.
-    let level = 1;
-    for (const [lvl, xp] of Object.entries(XPScale) as [string,number][]) {
-      if (currentXP >= xp) {
-        level = parseInt(lvl);
-      } else {
-        break;
-      }
-    }
-    return level;
-  };
-
  // Calculate current level
 
 
-
+const TotalLevelTile = ():JSX.Element => {
+  return(
+    <View style={styles.sectionContainer}>
+      <View style={styles.sectionContentContainer}>
+        <View style={styles.sectionIconContainer}>
+          <TotalSVG width={scaleFont(50)} height={scaleFont(50)} />
+        </View>
+        <View style={styles.sectionTextContainer}>
+          <Text allowFontScaling={false} style={styles.sectionTitle}>Total Level</Text>
+          <Text allowFontScaling={false} style={styles.sectionDescription}>All - Human - Traits</Text>
+          
+        </View>
+      </View>
+      
+      <View style={{...styles.sectionLevelBox, backgroundColor:"transparent"}}>
+        <View style={styles.offsetWrapper}>
+        </View>
+        <Text allowFontScaling={false} style={{...styles.borderedText, color: '#fff' }}>{userLevels.totalLevel}</Text>
+      </View>
+    </View>
+  )
+}
  
 const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
 
@@ -108,7 +132,6 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
     }
   }
 
-  const currentLevel = calculateCurrentLevel(title.toLowerCase(), levelScale);
   return(
     <TouchableOpacity onPress={()=>{handlePress(title)}} style={styles.sectionContainer}>
       <View style={styles.sectionContentContainer}>
@@ -125,8 +148,8 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
       <View style={{...styles.sectionLevelBox, backgroundColor:color}}>
         <View style={styles.offsetWrapper}>
         </View>
-        <Text allowFontScaling={false} style={{...styles.borderedTextShadow, color: 'black',}}>{currentLevel}</Text>
-        <Text allowFontScaling={false} style={{...styles.borderedText, color: 'white' }}>{currentLevel}</Text>
+        <Text allowFontScaling={false} style={{...styles.borderedTextShadow, color: 'black',}}>{userLevels[title.toLowerCase()]}</Text>
+        <Text allowFontScaling={false} style={{...styles.borderedText, color: 'white' }}>{userLevels[title.toLowerCase()]}</Text>
       </View>
     </TouchableOpacity>
   )
@@ -135,16 +158,18 @@ const SkillTile = ({title,flare, color,level}:SkillTileProps): JSX.Element => {
 
 return(
 <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.backgroundStyle}>
-    {dataLoading ? (
+    {gameRules.dataLoading ? (
       
       <LoadingOverlay text={"Loading Traits..."} isVisible={true} />
     ) : (
       <View>
-        {Object.values(skillsList)
+        <TotalLevelTile />
+        {Object.values(gameRules.skillsList)
           .sort((a: any, b: any) => a.order - b.order)
           .map((d: any, i: number) => {
             return (<SkillTile title={d.title} color={d.color} level={d.level} flare={d.flare} key={i+100000} />)
         })}
+        
       </View>
     )}
   </ScrollView>

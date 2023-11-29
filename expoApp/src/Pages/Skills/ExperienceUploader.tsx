@@ -23,12 +23,14 @@ import {scaleFont} from '../../Utilities/fontSizing'
 import CameraPage from './CameraPage'
 import LoadingOverlay from '../../Overlays/LoadingOverlay';
 import * as ImagePicker from 'expo-image-picker'
+import * as ImageManipulator from 'expo-image-manipulator';
 import ErrorModal from '../../Overlays/ErrorModal';
 import CameraAddSVG from '../../IconBin/svg/camera_add.svg'
+import BackArrow from '../../IconBin/svg/back_arrow.svg'
 
 const ExperienceUploader = ():JSX.Element => {
     const {refreshCooldowns}:any = useCooldowns()
-    const {trueFriends, blockedPersons}:any = useFriends()
+    const {friendsData}:any = useFriends()
     const {userData}:any = useUserData()
     const {currentEvent, setCurrentEvent}:any = useCurrentEvent()
     const {newPostHandler}:any = useFeed()
@@ -51,68 +53,43 @@ const ExperienceUploader = ():JSX.Element => {
     const navigation = useNavigation<any>();
     useEffect(()=>{
         setUtilityType(currentEvent.type)
-        console.log("expUpload")
-        console.log(currentEvent)
-        console.log(trueFriends)
     },[])
-
-    function generateTimestamp() {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hour = String(now.getHours()).padStart(2, '0');
-        const minute = String(now.getMinutes()).padStart(2, '0');
-        const second = String(now.getSeconds()).padStart(2, '0');
-      
-        return `${year}-${month}-${day}-${hour}-${minute}-${second}`;
-      }
-      
     const handleGoBack = () => {
-        const skillName = currentEvent.skillTitle
-        console.log(skillName)
         navigation.navigate(currentEvent.skillTitle)
         setCurrentEvent({})
     }
-    // const getGeoLocation = () => {
-    //     return new Promise((resolve, reject) => {
-    //       Geolocation.getCurrentPosition(
-    //         (position) => {
-    //           resolve({
-    //             latitude: position.coords.latitude,
-    //             longitude: position.coords.longitude,
-    //           });
-    //         },
-    //         (error) => {
-    //           reject(error);
-    //         },
-    //         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    //       );
-    //     });
-    //   };
+
     const pickImage = async (setImageState:any) => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
-        });
-      
-        if (!result.canceled) {
-          setImageState(result.assets[0].uri);
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+      });
+  
+      if (!result.canceled && result.assets) {
+        const originalWidth = result.assets[0].width;
+        const originalHeight = result.assets[0].height;
+        const aspectRatio = (originalWidth / originalHeight)
+  
+        let newWidth, newHeight;
+        if (originalWidth > originalHeight) {
+          newWidth = 1000;
+          newHeight = 1000 / aspectRatio;
+        } else {
+          newHeight = 1000;
+          newWidth = 1000 * aspectRatio;
         }
-      };
-    // const uploadImageToFirebase = async (imageURI: string, postID: string, imageNumber: string) => {
-    //     const storage = getStorage();
-    //     const imageRef = ref(storage, `posts/${postID}_image${imageNumber}.jpg`);
-    
-    //     const response = await fetch(imageURI);
-    //     const blob = await response.blob();
-    
-    //     await uploadBytesResumable(imageRef, blob);
-    
-    //     return await getDownloadURL(imageRef);
-    // };
+  
+  
+        const manipulatedResult = await ImageManipulator.manipulateAsync(
+          result.assets[0].uri,
+          [{resize:{width:newWidth,height:newHeight}}],
+          {compress:0.5}
+        )
+        setImageState(manipulatedResult.uri);
+      }
+    };
+
 
     const blobToBase64 = (blob:any) => {
       const reader = new FileReader();
@@ -126,8 +103,6 @@ const ExperienceUploader = ():JSX.Element => {
 
     const handleTimelineSubmit = async() => {
       setLoadingBool(true)
-        let timeStamp = generateTimestamp()
-        const postID = `${uid}_${timeStamp}`
         if (text.length>9 && imageOneState && imageTwoState && imageThreeState) {
             try{
               const imageBlobs = await Promise.all([
@@ -167,8 +142,8 @@ const ExperienceUploader = ():JSX.Element => {
                         settingTwo:settingTwo,
                         settingThree:settingThree,
                         type:currentEvent.type,
-                        visibleTo:[...trueFriends,uid],
-                        blockedTo:[...blockedPersons]
+                        visibleTo:[...friendsData.trueFriends,uid],
+                        blockedTo:[...friendsData.blockedPersons]
                     }),
                     })
                     if (!response.ok) {
@@ -204,10 +179,6 @@ const ExperienceUploader = ():JSX.Element => {
     }
     const handleCameraPostSubmit = async() => {
         setLoadingBool(true)
-        let timeStamp = generateTimestamp()
-        // const storage = getStorage();
-        // const postID = `${uid}_${timeStamp}`
-        // const imageRef = ref(storage,`posts/${postID}.jpg`)
         if (text.length>9 && cameraImageURL && cameraImageState) {
             // let pictureURL:string = ""
             try {
@@ -215,18 +186,6 @@ const ExperienceUploader = ():JSX.Element => {
             const blob = await response.blob()
             const base64Image = await blobToBase64(blob)
             console.log("base64 Image successfully converted from blob")
-            // const uploadTask = uploadBytesResumable(imageRef,blob)
-            // uploadTask.on('state_changed',
-            // (snapshot) => {
-            // // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            // console.log('Upload is ' + progress + '% done');
-            // },
-            // (error) => {
-            // console.error("Upload failed:", error);
-            // },
-            // async () => {
-            //     pictureURL = await getDownloadURL(imageRef)
                 const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/createPost"
 
                 try {
@@ -251,8 +210,8 @@ const ExperienceUploader = ():JSX.Element => {
                         settingTwo:settingTwo,
                         settingThree:settingThree,
                         type:currentEvent.type,
-                        visibleTo:[...trueFriends,uid],
-                        blockedTo:[...blockedPersons]
+                        visibleTo:[...friendsData.trueFriends,uid],
+                        blockedTo:[...friendsData.blockedPersons]
                     }),
                     })
                     if (!response.ok) {
@@ -315,8 +274,8 @@ const ExperienceUploader = ():JSX.Element => {
                     settingTwo:settingTwo,
                     settingThree:settingThree,
                     type:currentEvent.type,
-                    visibleTo:[...trueFriends,uid],
-                    blockedTo:[...blockedPersons]
+                    visibleTo:[...friendsData.trueFriends,uid],
+                    blockedTo:[...friendsData.blockedPersons]
                 }),
                 })
         
@@ -434,14 +393,17 @@ const ExperienceUploader = ():JSX.Element => {
     }
 
     return(
-        <Modal
-        animationType="slide"
-        transparent={true}
-        visible={true}>
-            <ScrollView style={{...styles.expUploaderTop}}>
-                <TouchableOpacity onPress={()=>handleGoBack()} style={styles.closeUploaderButton}>
-                    <Text style={styles.backHeaderText}>⇦Go Back</Text>
+        <>
+              <TouchableOpacity onPress={()=>handleGoBack()} style={styles.backHeaderBar}>
+                    <BackArrow width={scaleFont(20)} height={scaleFont(20)} />
+                    <Text style={styles.backHeaderText}>Go Back</Text>
                 </TouchableOpacity>
+            <ScrollView style={{...styles.expUploaderTop}}>
+                
+                <View style={{alignItems:"center", padding:10, borderBottomWidth:2, borderColor:"#656565"}}>
+                  <Text style={{color:currentEvent.skillColor, fontSize:scaleFont(24)}}>{currentEvent.title}</Text>
+                  <Text style={{color:"#ababab", fontSize:scaleFont(16)}}>{currentEvent.desc}</Text>
+                </View>
                 <View style={{...styles.actionBox,backgroundColor:''}}>
                     <ActionSplitter />
                 </View>
@@ -472,7 +434,7 @@ const ExperienceUploader = ():JSX.Element => {
                             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                                 <Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Friends Post</Text>
                             </View>
-                            <Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Switch off to hide post from friends. Disabling any additional XP from their Upvotes.</Text>
+                            <Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Switch off to hide post from friends. Disabling any additional EXP from their Upvotes.</Text>
                         </View>
                         <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
                             <View style={styles.eventButtonWrapper}>
@@ -486,41 +448,6 @@ const ExperienceUploader = ():JSX.Element => {
                             </View>
                         </View>
                     </View>
-                    {/* {settingOne == true &&
-                    (<View style={{...styles.eventTileWrapper,borderColor:`${settingTwo?currentEvent.skillColor:"#656565"}`}}>
-                        <View style={{...styles.eventTileMain}}>
-                            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:scaleFont(20),textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Post</Text>
-                            </View>
-                            <Text style={{...styles.eventTileText, fontSize:scaleFont(16),}}>Switch on to have your post appear on the Map for friends to find.</Text>
-                        </View>
-                        <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
-                            <View style={styles.eventButtonWrapper}>
-                            <Switch
-                                trackColor={{ false: '#767577', true: currentEvent.skillColor }}  // Change '#81b0ff' to your desired color
-                                thumbColor={settingTwo ? '#fff' : '#fff'}  // Change '#f5dd4b' to your desired color
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={(newVal)=>setSettingTwo((prev)=>!prev)}
-                                value={settingTwo}
-                            />
-                            </View>
-                        </View>
-                    </View>
-                    )}
-                    {settingOne == false &&
-                    (<View style={{...styles.eventTileWrapper,borderColor:"#2e2e2e"}}>
-                        <View style={{...styles.eventTileMain}}>
-                            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-                                <Text style={{...styles.eventTileText,fontSize:scaleFont(20),color:"gray",textDecorationColor:"#656565",textDecorationLine:"underline"}}>Map Post</Text>
-                            </View>
-                            <Text style={{...styles.eventTileText,color:"gray", fontSize:scaleFont(16),}}>Switch on to have your post appear on the Map for friends to find.</Text>
-                        </View>
-                        <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
-                            <View style={styles.eventButtonWrapper}>
-                            </View>
-                        </View>
-                    </View>
-                    )} */}
                     { (settingOne==true && userData.settings.privateProfile == true) &&
                     (<View style={{...styles.eventTileWrapper,borderColor:`${settingThree?currentEvent.skillColor:"#656565"}`}}>
                         <View style={{...styles.eventTileMain}}>
@@ -587,17 +514,17 @@ const ExperienceUploader = ():JSX.Element => {
                 <View style={{alignItems:"center", width:"100%"}}>
                     {utilityType=="camera"&&(
                     <TouchableOpacity onPress={handleCameraPostSubmit} style={{...styles.loginbutton, width:"95%", backgroundColor:`${currentEvent.skillColor}`}}>
-                        <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Log your {currentEvent.skillTitle} Picture</Text>
+                        <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Post your {currentEvent.skillTitle} Experience</Text>
                     </TouchableOpacity>
                     )}
                     {(utilityType=="log"||utilityType=="api")&&(
                     <TouchableOpacity onPress={handleLogPostSubmit} style={{...styles.loginbutton, width:"95%", backgroundColor:`${currentEvent.skillColor}`}}>
-                        <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Log your {currentEvent.skillTitle} Experience</Text>
+                        <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Post your {currentEvent.skillTitle} Experience</Text>
                     </TouchableOpacity>
                     )}
                     {utilityType=="timeline"&&(
                     <TouchableOpacity onPress={handleTimelineSubmit} style={{...styles.loginbutton, width:"95%", backgroundColor:`${currentEvent.skillColor}`}}>
-                        <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Log your {currentEvent.skillTitle} Timeline</Text>
+                        <Text style={{...styles.loginbuttonText,color:"#1c1c1c",}}>Post your {currentEvent.skillTitle} Experience</Text>
                     </TouchableOpacity>
                     )}
                     <View style={{height:20}} />
@@ -605,17 +532,26 @@ const ExperienceUploader = ():JSX.Element => {
                     <Text style={{color:"#fff",fontSize:scaleFont(14)}}>!! {errorMessage} !!</Text>
                     </View>)}
                 </View>
-                
+                <View style={styles.uploaderDescription}>
+                  <Text style={{color:"#fff"}}>- What are Experiences?</Text>
+                  <Text style={{paddingLeft: 10,color:"#ababab"}}>Experiences are activities in your real life posted on the Feed for Friends and/or the Globe to see. Uploading the post earns you EXP points, then bonus EXP based on the final score it receives.</Text>
+                  <View style={{height:10}} />
+                  <Text style={{color:"#fff"}}>- How does scoring work for Experiences?</Text>
+                  <Text style={{paddingLeft: 10,color:"#ababab"}}>Scores for your Experiences are determined by other users through upvotes & downvotes. A higher score indicates more community engagement and appreciation. Your final score at the end of 24 hours determines the bonus EXP you earn.</Text>
+                  <View style={{height:10}} />
+                  <Text style={{color:"#fff"}}>- Why do Experiences last only 24 hours?</Text>
+                  <Text style={{paddingLeft: 10,color:"#ababab"}}>We keep Experiences to a 24-hour lifespan to encourage a dynamic and ever-refreshing Feed. This time frame promotes the sharing of new, daily Experiences and helps in maintaining a lean, cost-effective storage strategy.</Text>
+                </View>
                 <View style={{height:200,}} />
             </ScrollView>
             {cameraActiveBool==true&&(
                 <CameraPage setCameraImageURL={setCameraImageURL} setCameraActiveBool={setCameraActiveBool} cameraImageState={cameraImageState} setCameraImageState={setCameraImageState} />
             )}
           {loadingBool&&(
-            <LoadingOverlay text={"Uploading Post..."} isVisible={loadingBool} opacity={0.5}/>
+            <LoadingOverlay text={"Uploading Post..."} isVisible={loadingBool} opacity={0.8}/>
           )}
-            <ErrorModal setErrorBool={setErrorBool} isVisible={errorBool} text={errorMessageText} opacity={0.5} />
-        </Modal>
+            <ErrorModal setErrorBool={setErrorBool} isVisible={errorBool} text={errorMessageText} opacity={0.8} />
+        </>
     )
 }
 

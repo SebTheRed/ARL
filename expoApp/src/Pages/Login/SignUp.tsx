@@ -5,8 +5,8 @@ import {
   TouchableOpacity,
   TextInput,
   Keyboard,
-  KeyboardAvoidingView,
-  Platform,
+  Modal,
+  Button
 } from 'react-native';
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +19,8 @@ import {db, auth} from '../../Firebase/firebase'
 import { useUserData } from '../../Contexts/UserDataContext';
 import { useUID } from '../../Contexts/UIDContext';
 import LoadingOverlay from '../../Overlays/LoadingOverlay'
+import { scaleFont } from '../../Utilities/fontSizing';
+import BackArrow from '../../IconBin/svg/back_arrow.svg'
 
 type RootStackParamList = {
 Login:undefined,
@@ -45,40 +47,21 @@ const {setUserData}:any = useUserData()
   const [password, setPassword] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [loadingBool,setLoadingBool] = useState(false)
-  // 2. Use the useNavigation hook with the type
+
+  const [modalVisible, setModalVisible] = useState(false);
+
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  // 3. Update the handlePress function
   const handleGoBackPress = (val: keyof RootStackParamList) => {
   navigation.navigate(val);
   }
 
-// const animatedValue = new Animated.Value(0);
 
-// useEffect(() => {
-//   Animated.loop(
-// 	Animated.sequence([
-// 	  Animated.timing(animatedValue, {
-// 		toValue: 1,
-// 		duration: 5000,
-// 		useNativeDriver: false,
-// 	  }),
-// 	  Animated.timing(animatedValue, {
-// 		toValue: 0,
-// 		duration: 5000,
-// 		useNativeDriver: false,
-// 	  }),
-// 	])
-//   ).start();
-// }, []);
-// const interpolatedColor = animatedValue.interpolate({
-// 	inputRange: [0,0.25,0.5,0.75, 1],
-// 	outputRange: ['orange', 'gold', "green", "cyan", "#007bff"],
-//   });
   const handleInputChange = (text:any, setter:any, validator:any, isValidSetter:any) => {
       setter(text);
       isValidSetter(validator(text));
     };
+
 
 
 const addUserFetch = async () => {
@@ -134,8 +117,78 @@ const addUserFetch = async () => {
   }
   };
 
-
-
+const WaiverModal = ():JSX.Element => {
+  return(
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(!modalVisible);
+      }}>
+    <View style={{height:"100%", width:"100%", backgroundColor:"rgba(0,0,0,0.7)"}}>
+      <View style={{ marginTop: 100, marginHorizontal: 20, backgroundColor: '#1c1c1c', borderColor:"#fff", borderWidth:2, borderRadius:10 }}>
+      <View style={{height:10}} />
+        <ScrollView
+          style={{backgroundColor:"#1c1c1c", padding:20, borderRadius:10, borderColor:"#656565", borderWidth:1, height:"70%"}}
+        >
+          <Text style={{color:"#fff", fontSize:scaleFont(24)}}>Scroll Entire Waiver</Text>
+          <View style={{height:10}} />
+          <Text style={{color: "#fff", fontWeight: 'bold'}}>1. Acknowledgment and Acceptance of Risks:</Text>
+          <View style={{height:10}} />
+          <Text style={{color: "#fff"}}>
+            I understand that participating in the activities and experiences suggested by The App for Real Life (ARL) involves inherent risks and dangers. These may include, but are not limited to, physical injury, psychological stress, and in extreme cases, death.
+          </Text>
+          <View style={{height:10}} />
+          <Text style={{color: "#fff", fontWeight: 'bold'}}>2. Personal Responsibility:</Text>
+          <Text style={{color: "#fff"}}>
+            I acknowledge that I am participating voluntarily, and I am solely responsible for my safety and well-being. I affirm that I am in good health and physically capable of engaging in these activities.
+          </Text>
+          <View style={{height:10}} />
+          <Text style={{color: "#fff", fontWeight: 'bold'}}>3. Liability Release:</Text>
+          <Text style={{color: "#fff"}}>
+            I hereby release, waive, and discharge Volt Applications LLC, its affiliates, officers, employees, agents, and ARL from any and all liabilities, claims, demands, or causes of action that may arise from my participation in activities suggested by ARL, whether caused by negligence or otherwise.
+          </Text>
+          <View style={{height:10}} />
+          <Text style={{color: "#fff", fontWeight: 'bold'}}>4. Compliance with Rules and Instructions:</Text>
+          <Text style={{color: "#fff"}}>
+            I agree to comply with all rules and instructions provided by ARL and understand that failure to do so may increase the risk of injury or harm.
+          </Text>
+          <View style={{height:10}} />
+          <Text style={{color: "#fff", fontWeight: 'bold'}}>5. Age Requirement:</Text>
+          <Text style={{color: "#fff"}}>
+            I affirm that I am of legal age to consent to this waiver, or that I have obtained consent from a parent or legal guardian if I am a minor.
+          </Text>
+          <View style={{height:10}} />
+          <Text style={{color: "#fff", fontWeight: 'bold'}}>6. Image and Data Usage Consent:</Text>
+          <Text style={{color: "#fff"}}>
+            I agree that ARL may use any images, video footage, or data I provide for promotional, research, or other purposes as outlined in the Privacy Policy and Terms of Service.
+          </Text>
+          <View style={{height:10}} />
+          <Text style={{color: "#fff", fontWeight: 'bold'}}>7. Amendment and Modification:</Text>
+          <Text style={{color: "#fff"}}>
+            I understand that ARL reserves the right to modify or amend this waiver at any time, and I agree to adhere to any such modifications.
+          </Text>
+          <View style={{height:10}} />
+          <Text style={{color: "#fff", fontWeight: 'bold'}}>8. Governing Law:</Text>
+          <Text style={{color: "#fff"}}>
+            This waiver shall be governed by and construed in accordance with the laws of the jurisdiction in which Volt Applications LLC operates.
+          </Text>
+          <View style={{height:10}} />
+          <TouchableOpacity 
+            onPress={() => {
+              addUserFetch()
+              setModalVisible(false)
+            }} style={styles.loginbutton}>
+            <Text accessibilityLabel="Agree to legal terms" style={styles.loginbuttonText}>I Agree, Sign Me Up!</Text>
+          </TouchableOpacity>
+          <View style={{height:80}} />
+        </ScrollView>
+      </View>
+      </View>
+    </Modal>
+  )
+}
 
 
 return(
@@ -147,7 +200,8 @@ return(
           <Text style={styles.logintitle}>Sign up</Text>
           <Text style={{...styles.skillPageXPText,}}> or </Text>
           <TouchableOpacity onPress={()=>handleGoBackPress("Login")} style={styles.loginSignupButton}>
-              <Text style={styles.loginbuttonText}>⇦ Go back</Text>
+              <BackArrow width={scaleFont(20)} height={scaleFont(20)} />
+              <Text style={styles.loginbuttonText}>Go back</Text>
           </TouchableOpacity>
       </View>
       <View style={styles.logininputContainer}>
@@ -241,14 +295,14 @@ return(
           />
       </View>
       {(isUserNameValid&&isEmailValid&&isNameValid&&isPasswordValid&&isPhoneNumberValid&&userName&&email&&name&&password&&phoneNumber)&&(
-      <TouchableOpacity onPress={addUserFetch} style={styles.loginbutton}>
-          <Text style={styles.loginbuttonText}>Complete sign up!</Text>
+      <TouchableOpacity onPress={()=>setModalVisible(true)} style={styles.loginbutton}>
+          <Text style={styles.loginbuttonText}>Submit</Text>
       </TouchableOpacity>)}
 
       {((!isUserNameValid||!isEmailValid||!isNameValid||!isPasswordValid||!isPhoneNumberValid)||(!userName||!email||!name||!password||!phoneNumber))&&(
       <TouchableOpacity style={{...styles.loginbutton, backgroundColor:"#333"}}>
           {(!userName||!email||!name||!password||!phoneNumber)&&(
-              <Text style={styles.loginbuttonText}>Fill out all fields</Text>
+              <Text style={styles.loginbuttonText}>Fill out all fields first</Text>
           )}
           {(userName&&email&&name&&password&&phoneNumber)&&(
               <Text style={styles.loginbuttonText}>! Fix your info !</Text>
@@ -259,6 +313,7 @@ return(
   <View style={{height:500,}} />
 </ScrollView>
 <LoadingOverlay text={"Signing you up..."} isVisible={loadingBool} opacity={1}/>
+<WaiverModal />
 </>
   )
 }

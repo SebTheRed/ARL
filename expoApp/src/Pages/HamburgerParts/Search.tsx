@@ -14,8 +14,8 @@ import {scaleFont} from '../../Utilities/fontSizing'
 import { useGameRules } from '../../Contexts/GameRules';
 
 const Search = ():JSX.Element => {
-    const { levelScale,skillsList}:any = useGameRules()
-    const [searchTerm,setSearchTerm] = useState("")
+    const { gameRules}:any = useGameRules()
+
     const searchRef = useRef<string>()
     const [errorMessage,setErrorMessage] = useState("")
     const [users,setUsers] = useState<any>()
@@ -87,7 +87,7 @@ const Search = ():JSX.Element => {
             {users && (
                 <FlatList
                 data={users}
-                renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={levelScale} userDoc={item} key={item.uid} />}
+                renderItem={({item})=>< UserTile skillsList={gameRules.skillsList} XPScale={gameRules.levelScale} userDoc={item} key={item.uid} />}
                 contentContainerStyle={{ alignItems: 'center' }}
                 style={styles.userTileContainer}
                 scrollEventThrottle={150}

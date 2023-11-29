@@ -12,7 +12,9 @@ import {
   import styles from '../../styles';
   import {scaleFont} from '../../Utilities/fontSizing'
   import * as ImagePicker from 'expo-image-picker'
+  import * as ImageManipulator from 'expo-image-manipulator';
   import LoadingOverlay from '../../Overlays/LoadingOverlay';
+  import ErrorModal from '../../Overlays/ErrorModal';
 
 const ProfilePicModal = ({modalType,setModalType,updateProfPic,updateCoverPic}:any):JSX.Element => {
         
@@ -23,6 +25,9 @@ const ProfilePicModal = ({modalType,setModalType,updateProfPic,updateCoverPic}:a
         const [profilePicState,setProfilePicState] = useState(String)
         const [coverPhotoState,setCoverPhotoState] = useState(String)
         const [uploadingImage,setUploadingImage] = useState<boolean>(false)
+        const [errorBool,setErrorBool] = useState<boolean>(false)
+        const [errorMessageText,setErrorMessageText] = useState<string>()
+
         useEffect(()=>{
             const translateURL = async () => {
                 const storage = getStorage()
@@ -38,24 +43,48 @@ const ProfilePicModal = ({modalType,setModalType,updateProfPic,updateCoverPic}:a
         },[])
       
         const pickImage = async (type:any) => {
-          let aspectRatio:any
+          let heightSet:number ,widthSet:number, aspectRatio:any
           if (type == "profile") {
             aspectRatio = [1,1]
+            heightSet = 400
+            widthSet = 400
           } else if (type == "cover") {
             aspectRatio = [16, 9]
+            heightSet = 1000
+            widthSet = 1000
           } else {
             aspectRatio = [4, 3]
+            heightSet= 1000
+            widthSet = 1000
           }
-          let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: aspectRatio,
-            quality: 0.6,
-          });
+            let result = await ImagePicker.launchImageLibraryAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.Images,
+              allowsEditing: true,
+              aspect: aspectRatio,
+            });
         
-          if (!result.canceled) {
-            setImageSource(result.assets[0].uri);
-          }
+            if (!result.canceled && result.assets) {
+              const originalWidth = result.assets[0].width;
+              const originalHeight = result.assets[0].height;
+              const aspectRatio = (originalWidth / originalHeight)
+        
+              let newWidth, newHeight;
+              if (originalWidth > originalHeight) {
+                newWidth = widthSet;
+                newHeight = heightSet / aspectRatio;
+              } else {
+                newHeight = heightSet;
+                newWidth = widthSet * aspectRatio;
+              }
+        
+        
+              const manipulatedResult = await ImageManipulator.manipulateAsync(
+                result.assets[0].uri,
+                [{resize:{width:newWidth,height:newHeight}}],
+                {compress:0.5}
+              )
+              setImageSource(manipulatedResult.uri);
+          };
         };
       
         const confirmImage = async() => {
@@ -86,21 +115,26 @@ const ProfilePicModal = ({modalType,setModalType,updateProfPic,updateCoverPic}:a
                   if (!response.ok) {
                     const text = await response.text();
                     console.error('Server error:', text);
-                    setUploadingImage(false)
+                    if (text == "INAPPROPRIATE") {
+                      setUploadingImage(false)
+                      setErrorMessageText("DO NOT UPLOAD INAPPROPRIATE CONTENT TO THIS PLATFORM!!")
+                      setErrorBool(true)
+                    }
                     return;
                 }
                   const data = await response.json();
       
                   if (response.ok) {
-                      console.log(data.message);
-                      setModalType("");
-                      setImageSource("");
-                      setProfilePicState("");
-                      const storage = getStorage();
-                      const pathRef = ref(storage, data.gsLink);
-                      const profPicURL = await getDownloadURL(pathRef);
-                      updateProfPic(profPicURL)
-                      setUploadingImage(false)
+                      const responseMessage = data.message
+                      console.log(responseMessage)
+                        setModalType("");
+                        setImageSource("");
+                        setProfilePicState("");
+                        const storage = getStorage();
+                        const pathRef = ref(storage, data.gsLink);
+                        const profPicURL = await getDownloadURL(pathRef);
+                        updateProfPic(profPicURL)
+                        setUploadingImage(false)
                   } else {
                       console.error('Error uploading image:', data.error);
                       setUploadingImage(false)
@@ -139,13 +173,18 @@ const ProfilePicModal = ({modalType,setModalType,updateProfPic,updateCoverPic}:a
                   if (!response.ok) {
                     const text = await response.text();
                     console.error('Server error:', text);
-                    setUploadingImage(false)
+                    if (text == "INAPPROPRIATE") {
+                      setUploadingImage(false)
+                      setErrorMessageText("DO NOT UPLOAD INAPPROPRIATE CONTENT TO THIS PLATFORM!!")
+                      setErrorBool(true)
+                    }
                     return;
                 }
                   const data = await response.json();
       
                   if (response.ok) {
-                      console.log(data.message);
+                      const responseMessage = data.message
+                      console.log(responseMessage)
                       setModalType("");
                       setImageSource("");
                       setProfilePicState("");
@@ -249,6 +288,7 @@ const ProfilePicModal = ({modalType,setModalType,updateProfPic,updateCoverPic}:a
             </View>
             </View>
             <LoadingOverlay isVisible={uploadingImage} text={"Uploading Picture..."} opacity={0.8} />
+            <ErrorModal setErrorBool={setErrorBool} isVisible={errorBool} text={errorMessageText} opacity={0.8} />
         </Modal>
         
       </>

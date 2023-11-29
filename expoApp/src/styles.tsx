@@ -119,6 +119,9 @@ backHeaderBar:{
   height:26,
   borderBottomWidth:2,
   borderColor:"#656565",
+  flexDirection:"row",
+  alignItems:"center",
+  backgroundColor:"#1c1c1c"
 },
 backHeaderText:{
   color:"white",
@@ -188,13 +191,13 @@ sectionDescription: {
   color:"white",
 },
 sectionLevelBox:{
-  height:"96%",
-  width:"20%",
-  borderRadius:7,
+  height:"106%",
+  width:"22%",
+  borderRadius:10,
   alignItems:"center",
-  marginRight:0,
+  marginRight:-2,
   borderColor:"#656565",
-  borderWidth:2
+  borderWidth:2,
 },
 sectionIconContainer:{
   width:"15%",
@@ -205,6 +208,7 @@ sectionIconContainer:{
 borderedTextShadow:{
   fontSize:scaleFont(48),
   paddingLeft:5,
+  paddingTop:2,
   position:"absolute",
   zIndex:9,
 },
@@ -238,6 +242,7 @@ eventTileText:{
 borderedText:{
   fontSize:scaleFont(45),
   position:"absolute",
+  paddingTop:2,
   zIndex:10,
 },
 offsetWrapper:{
@@ -349,6 +354,17 @@ textArea: {
   backgroundColor: '#656565',
   color:"white",
 },
+textAreaTrophy:{
+  height: 180,
+  justifyContent: 'flex-start',
+  borderColor: 'white',
+  borderRadius:10,
+  borderWidth: 2,
+  width: '95%',
+  padding: 10,
+  backgroundColor: '#656565',
+  color:"white",
+},
 togglesContainer:{
   marginTop:20,
   width:"100%",
@@ -362,7 +378,9 @@ headerIdk:{
 },
 sectionDescriptionContainer:{
 },
-
+uploaderDescription:{
+  padding:10,
+},
 
 /*
 
@@ -376,7 +394,7 @@ trophyBoxWrapper:{
   flexWrap:"wrap",
 },
 trophyBox:{
-  width:100,
+  width:150,
   height:"32.6%",
   color:"white",
   borderColor:"#656565",
@@ -385,17 +403,35 @@ trophyBox:{
   justifyContent:"space-between",
   margin:1,
 },
+trophyTitle:{
+  padding:3,
+  color:"#fff",
+  textAlign:"center",
+  fontSize:scaleFont(20)
+},
 trophyText:{
   padding:3,
   color:"white",
   textAlign:"center",
-  fontSize:scaleFont(12)
+  fontSize:scaleFont(16)
 },
 trophyIcon:{
   tintColor:"white",
   width: 80,  // desired width
   height: 80, // desired height
   resizeMode: 'contain', // or 'cover'
+},
+trophyButton:{
+  width:145,
+  borderWidth:2,
+  borderRadius:10,
+  borderColor:"#1c1c1c",
+  height:50,
+  alignItems:"center",
+  justifyContent:"center"
+},
+trophyButtonText:{
+  fontSize:scaleFont(16)
 },
 
 /*
@@ -478,7 +514,8 @@ loginSignupButton:{
   paddingHorizontal: 5,
   borderRadius:5,
   alignItems:'center',
-  width:"40%"
+  width:"40%",
+  flexDirection:"row",
 },
 whatIsARLButton:{
   marginTop:20,
@@ -553,7 +590,7 @@ postTopRow:{
 postProfileAndNameContainer:{
   flexDirection:"row",
   justifyContent:"flex-start",
-  alignItems:"flex-end"
+  alignItems:"flex-start"
 },
 postProfPic:{
   borderColor:"white",
@@ -717,8 +754,7 @@ profilePageTopContainer:{
 profilePageTopLeftContainer:{
   width:"30%",
   flexDirection:"row",
-  alignItems:"flex-start",
-  marginTop:2.5,
+  alignItems:"center",
   // borderWidth:2,
   // borderColor:"#fff",
 },
@@ -807,7 +843,7 @@ profilePageStatsTop:{
   width:"97.5%",
   height:30,
   flexDirection:"row",
-  justifyContent:"space-evenly",
+  justifyContent:"space-between",
 },
 profilePageSmallStatsContainer:{
   flexDirection:"row"
@@ -818,9 +854,9 @@ statsHeaderTitleBox:{
 },
 profilePageJoinDateContainer:{
   width:"40%",
-  flexDirection:"row",
+  flexDirection:"column",
   justifyContent:"flex-end",
-  alignItems:"center",
+  alignItems:"flex-end",
 },
 profilePageStreakContainer:{
   flexDirection:"row",
@@ -832,8 +868,11 @@ profilePageStreakContainer:{
 },
 profilePageFriendsContainer:{
   width:"40%",
-  flexDirection:"row",
-  alignItems:"center"
+  flexDirection:"column",
+  alignItems:"flex-start",
+  justifyContent:"flex-end",
+  
+
 },
 profilePageStatsbottom:{
   width:"100%",

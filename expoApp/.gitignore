@@ -33,8 +33,3 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
-
-# under the hood / hide from users
-src/Firebase/
-src/Contexts/
-src/Utilities/AdminComponent.tsx

@@ -10,7 +10,7 @@ import { scaleFont } from '../../Utilities/fontSizing';
 import CloseSVG from '../../IconBin/svg/close.svg'
 import FlipSVG from '../../IconBin/svg/flip.svg'
 import CameraSVG from '../../IconBin/svg/camera.svg'
-
+import * as ImageManipulator from 'expo-image-manipulator';
 
 const CameraPage = ({setCameraActiveBool,setCameraImageURL,setCameraImageState}:any):JSX.Element => {
 
@@ -32,13 +32,21 @@ const CameraPage = ({setCameraActiveBool,setCameraImageURL,setCameraImageState}:
     const takePicture = async()=>{
       if (cameraRef.current) {
 
-        const options = {quality:0.5,base64:true};
+        const options = {quality:1,base64:true};
         const data = await cameraRef.current.takePictureAsync(options);
-        const dataURL = `data:image/jpeg;base64,${data.base64}`
-        setCameraImageState(data.uri)
+
+        const resizedImage = await ImageManipulator.manipulateAsync(
+          data.uri,
+          [{resize:{height:1000}}],
+          {compress: 0.5}
+        )
+
+
+        const dataURL = `data:image/jpeg;base64,${resizedImage.base64}`
+        setCameraImageState(resizedImage.uri)
         setCameraImageURL(dataURL)
         setCameraActiveBool(false)
-        console.log(data.uri)
+        // console.log(resizedImage.uri)
       }
     }
 

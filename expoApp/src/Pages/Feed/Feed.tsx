@@ -6,19 +6,19 @@ import {
 	RefreshControl
 } from 'react-native'
 import React from 'react'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useFeed } from '../../Contexts/FeedContext';
 import FeedPost from './FeedPost';
+import TrophyPost from './TrophyPost';
 import styles from '../../styles'
+import { useGameRules } from '../../Contexts/GameRules';
+import { useUserData } from '../../Contexts/UserDataContext';
 
 const Feed = () => {
 	//currentFeed holds a sorted array of posts. Sorted or not.
 	//This value is called from FeedContext.tsx
 	const { friendsFeed,globalFeed, refreshFeed, paginateFeed, paginateFriends }:any = useFeed();
-
-	//CHANGE THIS OUT ONCE WE SET UP FIREBASE TO INITIALIZE GAME RULES.
-
-
+  const {userLevels}:any = useUserData()
 	//A simple refresh state just to the app actually changess after the reload.
 	const [refreshing, setRefreshing] = useState(false);
   const [feedTypeBool,setFeedTypeBool] = useState(false);
@@ -27,6 +27,7 @@ const Feed = () => {
 	//The immportant thing here is the await call. Reason being is that we should WAIT until the feed is updated,
 	//before updating the refreshing state. This ensures that the feed is always current when reloading, and prevent
 	//any duplicate feed rendering.
+
 	const handleRefresh = async () => {
 	  setRefreshing(true);
 	  await refreshFeed();
@@ -50,6 +51,14 @@ const Feed = () => {
 		)
 	}
 
+  const FeedPostSplitter = ({data, voteLock}:any):JSX.Element => {
+    // console.log("DATA BEING PASSED THRU FEED POST SPLITTER", data.type)
+    if (data.type == "trophy") {
+      return(<TrophyPost data={data} voteLock={voteLock} />)
+    } else {
+      return(<FeedPost data={data} voteLock={voteLock} />)
+    }
+  }
 	//I will explain this in great detail, because this is one of the keystones of the app.
 	//first, data={currentFeed}.. The data param is what is actually mapped over to create the FlatList.
 	//second, renderItem.. The JSX return for each item of currentFeed that is rendered (mapped in my mind).
@@ -92,7 +101,7 @@ const Feed = () => {
       <FlatList
         data={friendsFeed}
         ListHeaderComponent={<FeedHeader />}
-        renderItem={({ item }) => <FeedPost data={item} />}
+        renderItem={({ item }) => <FeedPostSplitter voteLock={(userLevels.totalLevel >= 11 ? false : true)} data={item} />}
         keyExtractor={item => item.id.toString()}
         style={styles.feedFlatList}
         contentContainerStyle={{ alignItems: 'center' }}
@@ -113,7 +122,7 @@ const Feed = () => {
       <FlatList
         data={globalFeed}
         ListHeaderComponent={<FeedHeader />}
-        renderItem={({ item }) => <FeedPost data={item} />}
+        renderItem={({ item }) => <FeedPostSplitter voteLock={(userLevels.totalLevel >= 11 ? false : true)} data={item} />}
         keyExtractor={item => item.id.toString()}
         style={styles.feedFlatList}
         contentContainerStyle={{ alignItems: 'center' }}

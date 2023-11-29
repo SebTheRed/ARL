@@ -1,416 +1,4 @@
-{
-  "trophies":{
-    "bronze": [
-      {
-        "title": "Day N' Night",
-        "imgPath": "../IconBin/TrophyPNG/goblet1.png",
-        "tier": "Bronze",
-        "desc": "Livestream for 12 hours straight with limited breaks.",
-        "xp": 500,
-        "skill": "games",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Cooking Connoisseur",
-        "imgPath": "../IconBin/TrophyPNG/gem1.png",
-        "tier": "Bronze",
-        "desc": "Prepare a 5 course meal. Then share the recipe for all courses.",
-        "xp": 500,
-        "skill": "cooking",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Yoga Yogi",
-        "imgPath": "../IconBin/TrophyPNG/simple1.png",
-        "tier": "Bronze",
-        "desc": "Stick to a yoga routine for 3 months. Show off your progress of the journey.",
-        "xp": 500,
-        "skill": "fitness",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Michelin Chef",
-        "imgPath": "../IconBin/TrophyPNG/star3.png",
-        "tier": "Bronze",
-        "desc": "Prepare any food that wins an award. Participation trophies do not count!",
-        "xp": 500,
-        "skill": "cooking",
-        "unlocksExperience": false
-      },
-      {
-        "title": "All Star",
-        "imgPath": "../IconBin/TrophyPNG/shield2.png",
-        "tier": "Bronze",
-        "desc": "Win a trophy or medal from a sporting tournament. Participation trophies do not count!",
-        "xp": 500,
-        "skill": "games",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Wood Worker",
-        "imgPath": "../IconBin/TrophyPNG/simple4.png",
-        "tier": "Bronze",
-        "desc": "Construct something of wood. Furniture, decoration, or even a shed!",
-        "xp": 500,
-        "skill": "earthcraft",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Can't Pause This Game",
-        "imgPath": "../IconBin/TrophyPNG/gem5.png",
-        "tier": "Bronze",
-        "desc": "Log 1,000 hours in a singular video game.",
-        "xp": 500,
-        "skill": "games",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Marathon's March",
-        "imgPath": "../IconBin/TrophyPNG/elegant4.png",
-        "tier": "Bronze",
-        "desc": "Run or walk a half marathon, 13.2 miles. Must be an official race!",
-        "xp": 500,
-        "skill": "fitness",
-        "unlocksExperience": false
-      },
-      {
-        "title": "East to West and Back Again",
-        "imgPath": "../IconBin/TrophyPNG/gem6.png",
-        "tier": "Bronze",
-        "desc": "Take a 2 week roadtrip. Don't stay in one place more than one night!",
-        "xp": 500,
-        "skill": "friends",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Land Owner",
-        "imgPath": "../IconBin/TrophyPNG/pedistal2.png",
-        "tier": "Bronze",
-        "desc": "Show off your slice of land! You must hold the deed to the property.",
-        "xp": 500,
-        "skill": "family",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Game of Life",
-        "imgPath": "../IconBin/TrophyPNG/simple3.png",
-        "tier": "Bronze",
-        "desc": "Celebrate one year using ARL!",
-        "xp": 500,
-        "skill": "friends",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Hands of Bronze",
-        "imgPath": "../IconBin/TrophyPNG/gem7.png",
-        "tier": "Bronze",
-        "desc": "Complete a V9 bouldering challenge.",
-        "xp": 500,
-        "skill": "fitness",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Cowboy",
-        "imgPath": "../IconBin/TrophyPNG/star8.png",
-        "tier": "Bronze",
-        "desc": "Ride a horse!",
-        "xp": 500,
-        "skill": "earthcraft",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Lost In Nature",
-        "imgPath": "../IconBin/TrophyPNG/goblet3.png",
-        "tier": "Bronze",
-        "desc": "Spend two nights consecutively out in the wild. Alone or with others.",
-        "xp": 500,
-        "skill": "earthcraft",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Of The Earth",
-        "imgPath": "../IconBin/TrophyPNG/shield4.png",
-        "tier": "Bronze",
-        "desc": "Grow your own food. Document its life from sprout -> harvest -> meal.",
-        "xp": 500,
-        "skill": "cooking",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Bearing FAANGs",
-        "imgPath": "../IconBin/TrophyPNG/star4.png",
-        "tier": "Bronze",
-        "desc": "Alone or with a group, publish an app for the iOS and Google Play store.",
-        "xp": 500,
-        "skill": "technology",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Civic Duty",
-        "imgPath": "../IconBin/TrophyPNG/person2.png",
-        "tier": "Bronze",
-        "desc": "Decide who rules over you, it is your duty to democracy. Vote at a Federal, State, County, or Municipal election.",
-        "xp": 1776,
-        "skill": "humanity",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Artist's Hand",
-        "imgPath": "../IconBin/TrophyPNG/person3.png",
-        "tier": "Bronze",
-        "desc": "Make a 9 piece series of art.",
-        "xp": 500,
-        "skill": "humanity",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Family Feast",
-        "imgPath": "../IconBin/TrophyPNG/star2.png",
-        "tier": "Bronze",
-        "desc": "Host a holiday dinner with at least 9 family members in attendance.",
-        "xp": 500,
-        "skill": "family",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Well Educated",
-        "imgPath": "../IconBin/TrophyPNG/star9.png",
-        "tier": "Bronze",
-        "desc": "Achieve your Highschool Diploma or GED.",
-        "xp": 500,
-        "skill": "language",
-        "unlocksExperience": true
-      }
-    ],
-    "silver": [
-      {
-        "title": "Fleetfooted Fanatic",
-        "imgPath": "../IconBin/TrophyPNG/star1.png",
-        "tier": "Silver",
-        "desc": "Ccomplete 9 sanctioned races in any sport. School-sanctioned races of any kind do not count.",
-        "xp": 1000,
-        "skill": "fitness",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Mountain Climber",
-        "imgPath": "../IconBin/TrophyPNG/gem2.png",
-        "tier": "Silver",
-        "desc": "Successfully summit one of the world's top 50 highest mountains.",
-        "xp": 1000,
-        "skill": "earthcraft",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Licensed Merchant",
-        "imgPath": "../IconBin/TrophyPNG/simple3.png",
-        "tier": "Silver",
-        "desc": "Found a government-recognized company by yourself or with partners.",
-        "xp": 1000,
-        "skill": "friends",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Code Crusader",
-        "imgPath": "../IconBin/TrophyPNG/elegant3.png",
-        "tier": "Silver",
-        "desc": "Contribute 1,000 times in one year to Github. Share the projects you have coded for.",
-        "xp": 1000,
-        "skill": "technology",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Peer Reviewed",
-        "imgPath": "../IconBin/TrophyPNG/person4.png",
-        "tier": "Silver",
-        "desc": "Publish a peer-reviewed study. Cite your sources!",
-        "xp": 1000,
-        "skill": "language",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Silver Stage",
-        "imgPath": "../IconBin/TrophyPNG/person1.png",
-        "tier": "Silver",
-        "desc": "Share your performance of any kind on a stage in front of an audience.",
-        "xp": 1000,
-        "skill": "humanity",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Hard Work > Talent",
-        "imgPath": "../IconBin/TrophyPNG/simple5.png",
-        "tier": "Silver",
-        "desc": "Keep up with a goal you work on for an entire year. The goal can be anything, make your Mom proud!",
-        "xp": 1000,
-        "skill": "family",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Año de Duolingo",
-        "imgPath": "../IconBin/TrophyPNG/gem4.png",
-        "tier": "Silver",
-        "desc": "Achieve a 365 day Duoling streak.",
-        "xp": 1000,
-        "skill": "language",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Social Butterfly",
-        "imgPath": "../IconBin/TrophyPNG/mirror2.png",
-        "tier": "Silver",
-        "desc": "Take a selfie at 9 different massively social events.",
-        "xp": 1000,
-        "skill": "friends",
-        "unlocksExperience": false
-      },
-      {
-        "title": "A True Engineer",
-        "imgPath": "../IconBin/TrophyPNG/steering1.png",
-        "tier": "Silver",
-        "desc": "Build or majorly repair a motor vehicle. It must be operable upon completion.",
-        "xp": 1000,
-        "skill": "technology",
-        "unlocksExperience": true
-      },
-      {
-        "title": "Solar Seeker",
-        "imgPath": "../IconBin/TrophyPNG/star7.png",
-        "tier": "Silver",
-        "desc": "Document how your transition to solar energy.",
-        "xp": 1000,
-        "skill": "earthcraft",
-        "unlocksExperience": false
-      },
-      {
-        "title": "ARL all Year",
-        "imgPath": "../IconBin/TrophyPNG/star9.png",
-        "tier": "Silver",
-        "desc": "Reach a 365 day streak on ARL!",
-        "xp": 1000,
-        "skill": "friends",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Queen's Gambit",
-        "imgPath": "../IconBin/TrophyPNG/gem8.png",
-        "tier": "Silver",
-        "desc": "Compete in a regional or national chess tournament. School-sanctioned tournaments do not count.",
-        "xp": 1000,
-        "skill": "games",
-        "unlocksExperience": false
-      },
-      {
-        "title": "Family Reunion",
-        "imgPath": "../IconBin/TrophyPNG/star5.png",
-        "tier": "Silver",
-        "desc": "Organize a family reunion with at least 25 family members.",
-        "xp": 1000,
-        "skill": "family",
-        "unlocksExperience": true
-      }
-    ],"gold": [
-      {
-          "title": "Golden Devotion",
-          "imgPath": "../IconBin/TrophyPNG/number1.png",
-          "tier": "Silver",
-          "desc": "Accomplish a 999 day streak on ARL",
-          "xp": 10000,
-          "skill": "family",
-          "unlocksExperience": false
-      },
-      {
-          "title": "Life on the Silver Screen",
-          "imgPath": "../IconBin/TrophyPNG/star6.png",
-          "tier": "Gold",
-          "desc": "Land a role in a televised and/or streamed film or television show. Youtube does not count.",
-          "xp": 10000,
-          "skill": "humanity",
-          "unlocksExperience": false
-      },
-      {
-          "title": "Sisyphus' Prized Work",
-          "imgPath": "../IconBin/TrophyPNG/pedistal1.png",
-          "tier": "Gold",
-          "desc": "Master your specific field of Fitness. Something equivalent to a black belt, climbing Everest, or a cycling 100 miles in one day.",
-          "xp": 10000,
-          "skill": "fitness",
-          "unlocksExperience": false
-      },
-      {
-          "title": "Dreams do Come True",
-          "imgPath": "../IconBin/TrophyPNG/elegant2.png",
-          "tier": "Gold",
-          "desc": "Register and open your own restaurant to the public.",
-          "xp": 10000,
-          "skill": "cooking",
-          "unlocksExperience": false
-      },
-      {
-          "title": "Public Servant",
-          "imgPath": "../IconBin/TrophyPNG/gem3.png",
-          "tier": "Gold",
-          "desc": "Serve as an elected official in a public office. Good luck on your campaign!",
-          "xp": 10000,
-          "skill": "humanity",
-          "unlocksExperience": false
-      },
-      {
-          "title": "Lucky 7's",
-          "imgPath": "../IconBin/TrophyPNG/shield1.png",
-          "tier": "Gold",
-          "desc": "Reach total level 777!",
-          "xp": 10000,
-          "skill": "friends",
-          "unlocksExperience": false
-      },
-      {
-          "title": "Digital Dynasty",
-          "imgPath": "../IconBin/TrophyPNG/gear.png",
-          "tier": "Gold",
-          "desc": "Gather 10,000 active users on an app/game/site that you own.",
-          "xp": 10000,
-          "skill": "technology",
-          "unlocksExperience": false
-      },
-      {
-          "title": "World Record Holder",
-          "imgPath": "../IconBin/TrophyPNG/number2.png",
-          "tier": "Gold",
-          "desc": "Have your name enscribed into the Guinness Book of World Records",
-          "xp": 10000,
-          "skill": "games",
-          "unlocksExperience": false
-      },
-      {
-          "title": "Globe Trotter",
-          "imgPath": "../IconBin/TrophyPNG/simple6.png",
-          "tier": "Gold",
-          "desc": "Visit 9 different countries, after joining ARL. Try to make each visit relevant to one unique trait.",
-          "xp": 10000,
-          "skill": "language",
-          "unlocksExperience": false
-      },
-      {
-          "title": "One with Nature",
-          "imgPath": "../IconBin/TrophyPNG/star10.png",
-          "tier": "Gold",
-          "desc": "Spend an entire week in the wilderness. Camping only in a tent, without re-entering society once.",
-          "xp": 10000,
-          "skill": "earthcraft",
-          "unlocksExperience": false
-      },
-      {
-          "title": "Butchers & Shepherds",
-          "imgPath": "../IconBin/TrophyPNG/shield3.png",
-          "tier": "Gold",
-          "desc": "Construct & Share your own animal livestock collection.",
-          "xp": 10000,
-          "skill": "earthcraft",
-          "unlocksExperience": false
-      }
-  ]
-  },
+{  
   "xpScale":{
   "1":0,
   "2":10,
@@ -517,67 +105,679 @@
       "order":0,
       "title":"Family",
       "color":"#ff0000",
-      "flare":"Calls - Visits - Reunions",
-      "level":99
+      "flare":"Visits - Talks - Holidays"
     },
     "friends":{
       "order":1,
       "title":"Friends",
       "color":"#ff8400",
-      "flare":"Events - Meetups - Dates",
-      "level":12
+      "flare":"Pals - Business - ARL"
     },
     "fitness":{
       "order":2,
       "title":"Fitness",
       "color":"#ffea00",
-      "flare":"Gyms - Runs - Routines",
-      "level":8
+      "flare":"Gyms - Exercise - Wellness"
     },
     "earthcraft":{
       "order":3,
       "title":"Earthcraft",
       "color":"#4dff00",
-      "flare":"Plants - Animals - Outdoors",
-      "level":60
+      "flare":"Plants - Animals - Outdoors"
     },
     "cooking":{
       "order":4,
       "title":"Cooking",
       "color":"#00ff80",
-      "flare":"Recipes - Dieting - Baking",
-      "level":50
+      "flare":"Recipes - Meals - Baking"
     },
     "technology":{
       "order":5,
       "title":"Technology",
       "color":"#00fffb",
-      "flare":"Code - Electronics - 3D",
-      "level":75
+      "flare":"Code - Vehicles - Power"
     },
     "games":{
       "order":6,
       "title":"Games",
       "color":"#0080ff",
-      "flare":"Tabletop - Video - Sports",
-      "level":15
+      "flare":"Sports - Video - Tabletop"
     },
     "language":{
       "order":7,
       "title":"Language",
       "color":"#7700ff",
-      "flare":"Duolingo - Travel - Reading",
-      "level":10
+      "flare":"Duolingo - Travel - Reading"
     },
     "humanity":{
       "order":8,
       "title":"Humanity",
       "color":"#c800ff",
-      "flare":"Activism - Volunteering - Arts",
-      "level":20
+      "flare":"Activism - Charity - Arts"
     }
   },
-  "XpTriggerEvents":{
+  "trophies":{
+    "bronze": [
+      {
+        "title": "Cameras Rolling",
+        "imgPath": "medal_basic1.svg",
+        "tier": "Bronze",
+        "desc": "Livestream for 12 hours straight with limited breaks.",
+        "xp": 500,
+        "skill": "games",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Cooking Connoisseur",
+        "imgPath": "medal_basic2.svg",
+        "tier": "Bronze",
+        "desc": "Prepare a 5 course meal. Then share the recipe for all courses.",
+        "xp": 500,
+        "skill": "cooking",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Yoga Yogi",
+        "imgPath": "medal_elegant4.svg",
+        "tier": "Bronze",
+        "desc": "Stick to a yoga routine for 3 months. Show off your progress of the journey.",
+        "xp": 500,
+        "skill": "fitness",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Michelin Chef",
+        "imgPath": "medal_star1.svg",
+        "tier": "Bronze",
+        "desc": "Prepare any food that wins an award. Participation trophies do not count!",
+        "xp": 500,
+        "skill": "cooking",
+        "unlocksExperience": false
+      },
+      {
+        "title": "All Star",
+        "imgPath": "medal_star4.svg",
+        "tier": "Bronze",
+        "desc": "Win a trophy or medal from a sporting tournament. Participation trophies do not count!",
+        "xp": 500,
+        "skill": "games",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Wood Worker",
+        "imgPath": "medal_basic3.svg",
+        "tier": "Bronze",
+        "desc": "Construct something of wood. Furniture, decoration, or even a shed!",
+        "xp": 500,
+        "skill": "earthcraft",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Can't Pause This Game",
+        "imgPath": "medal_shield1.svg",
+        "tier": "Bronze",
+        "desc": "Reach 1,000 hours of play-time in any video game.",
+        "xp": 500,
+        "skill": "games",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Marathon's March",
+        "imgPath": "medal_elegant1.svg",
+        "tier": "Bronze",
+        "desc": "Run or walk a half marathon, 13.2 miles. Must be an official race with number bibs!",
+        "xp": 500,
+        "skill": "fitness",
+        "unlocksExperience": false
+      },
+      {
+        "title": "East to West and Back Again",
+        "imgPath": "medal_basic4.svg",
+        "tier": "Bronze",
+        "desc": "Take a 2 week roadtrip. Don't stay in one place more than one night!",
+        "xp": 500,
+        "skill": "friends",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Land Owner",
+        "imgPath": "medal_star2.svg",
+        "tier": "Bronze",
+        "desc": "Show off your slice of land! You must hold the deed to the property.",
+        "xp": 500,
+        "skill": "family",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Game of Life",
+        "imgPath": "crown2.svg",
+        "tier": "Bronze",
+        "desc": "Celebrate one year using ARL!",
+        "xp": 500,
+        "skill": "friends",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Hands of Bronze",
+        "imgPath": "medal_elegant8.svg",
+        "tier": "Bronze",
+        "desc": "Complete a V7 bouldering challenge.",
+        "xp": 500,
+        "skill": "fitness",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Cowboy",
+        "imgPath": "medal_star3.svg",
+        "tier": "Bronze",
+        "desc": "Ride a horse!",
+        "xp": 500,
+        "skill": "earthcraft",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Lost In Nature",
+        "imgPath": "medal_basic5.svg",
+        "tier": "Bronze",
+        "desc": "Spend two nights consecutively out in the wild. Alone or with others.",
+        "xp": 500,
+        "skill": "earthcraft",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Of The Earth",
+        "imgPath": "medal_elegant6.svg",
+        "tier": "Bronze",
+        "desc": "Grow your own food. Document its life from sprout -> harvest -> meal.",
+        "xp": 500,
+        "skill": "cooking",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Bearing FAANGs",
+        "imgPath": "medal_star6.svg",
+        "tier": "Bronze",
+        "desc": "Alone or with a group, publish an app for the iOS and Google Play store.",
+        "xp": 500,
+        "skill": "technology",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Civic Duty",
+        "imgPath": "medal_elegant5.svg",
+        "tier": "Bronze",
+        "desc": "Decide who rules over you, it is your duty to democracy. Vote at a Federal, State, County, or Municipal election.",
+        "xp": 1776,
+        "skill": "humanity",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Artist's Hand",
+        "imgPath": "medal_elegant2.svg",
+        "tier": "Bronze",
+        "desc": "Make a 6 piece series of art.",
+        "xp": 500,
+        "skill": "humanity",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Family Feast",
+        "imgPath": "medal_elegant3.svg",
+        "tier": "Bronze",
+        "desc": "Host a holiday dinner with at least 9 family members in attendance.",
+        "xp": 500,
+        "skill": "family",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Well Educated",
+        "imgPath": "certificate1.svg",
+        "tier": "Bronze",
+        "desc": "Achieve your Highschool Diploma or GED.",
+        "xp": 500,
+        "skill": "language",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Team ARL",
+        "imgPath": "medal_star5.svg",
+        "tier": "Bronze",
+        "desc": "Contribute code that ends up being used in ARL. The app is open source! Github.com/SebTheRed/ARL",
+        "xp": 500,
+        "skill": "technology",
+        "unlocksExperience": false
+      }
+    ],
+    "silver": [
+      {
+        "title": "Fleetfooted Fanatic",
+        "imgPath": "trophy_elegant5.svg",
+        "tier": "Silver",
+        "desc": "Complete 6 sanctioned races of the same sport. School-sanctioned races of any kind do not count.",
+        "xp": 1000,
+        "skill": "fitness",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Mountain Climber",
+        "imgPath": "trophy_star3.svg",
+        "tier": "Silver",
+        "desc": "Successfully summit one of the 50 highest mountains in the world.",
+        "xp": 1000,
+        "skill": "earthcraft",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Licensed Merchant",
+        "imgPath": "trophy_person1.svg",
+        "tier": "Silver",
+        "desc": "Found a government-recognized company by yourself or with partners.",
+        "xp": 1000,
+        "skill": "friends",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Code Crusader",
+        "imgPath": "trophy_basic1.svg",
+        "tier": "Silver",
+        "desc": "Contribute 1,000 times in one year to Github. Share the projects you have coded for.",
+        "xp": 1000,
+        "skill": "technology",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Peer Reviewed",
+        "imgPath": "certificate2.svg",
+        "tier": "Silver",
+        "desc": "Publish a peer-reviewed study. Cite your sources!",
+        "xp": 1000,
+        "skill": "language",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Silver Stage",
+        "imgPath": "trophy_person2.svg",
+        "tier": "Silver",
+        "desc": "Share your performance of any kind on a stage in front of an audience.",
+        "xp": 1000,
+        "skill": "humanity",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Hard Work > Talent",
+        "imgPath": "trophy_cup1.svg",
+        "tier": "Silver",
+        "desc": "Keep up with a goal you work on for an entire year. The goal can be anything, make your Mom proud!",
+        "xp": 1000,
+        "skill": "family",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Año de Duolingo",
+        "imgPath": "trophy_cup3.svg",
+        "tier": "Silver",
+        "desc": "Achieve a 365 day Duolingo streak.",
+        "xp": 1000,
+        "skill": "language",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Social Butterfly",
+        "imgPath": "trophy_elegant1.svg",
+        "tier": "Silver",
+        "desc": "Take a selfie at 6 different social events where over 1,000 people are in attendance.",
+        "xp": 1000,
+        "skill": "friends",
+        "unlocksExperience": false
+      },
+      {
+        "title": "History's Steward",
+        "imgPath": "trophy_cup6.svg",
+        "tier": "Silver",
+        "desc": "Restore or help preserve a history landmark.",
+        "xp": 1000,
+        "skill": "language",
+        "unlocksExperience": false
+      },
+      {
+        "title": "A True Engineer",
+        "imgPath": "trophy_wheel.svg",
+        "tier": "Silver",
+        "desc": "Build or majorly repair a motor vehicle. It must be operable upon completion.",
+        "xp": 1000,
+        "skill": "technology",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Ethlete",
+        "imgPath": "trophy_star4.svg",
+        "tier": "Silver",
+        "desc": "Achieve top-rank in any highly competitive video game. Like League, CS:GO, or Valorant.",
+        "xp": 1000,
+        "skill": "games",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Patent Holder",
+        "imgPath": "trophy_basic5.svg",
+        "tier": "Silver",
+        "desc": "Invent something unique and secure a patent for it.",
+        "xp": 1000,
+        "skill": "technology",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Solar Seeker",
+        "imgPath": "trophy_elegant4.svg",
+        "tier": "Silver",
+        "desc": "Transition your home to solar energy.",
+        "xp": 1000,
+        "skill": "earthcraft",
+        "unlocksExperience": false
+      },
+      {
+        "title": "ARL all Year",
+        "imgPath": "trophy_basic4.svg",
+        "tier": "Silver",
+        "desc": "Reach a 365 day streak on ARL!",
+        "xp": 1000,
+        "skill": "friends",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Queen's Gambit",
+        "imgPath": "trophy_cup2.svg",
+        "tier": "Silver",
+        "desc": "Compete in a regional or national chess tournament. School-sanctioned tournaments do not count.",
+        "xp": 1000,
+        "skill": "games",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Family Reunion",
+        "imgPath": "trophy_shield1.svg",
+        "tier": "Silver",
+        "desc": "Organize a family reunion with at least 25 family members.",
+        "xp": 1000,
+        "skill": "family",
+        "unlocksExperience": true
+      },
+      {
+        "title": "Committed Collector",
+        "imgPath": "trophy_star6.svg",
+        "tier": "Silver",
+        "desc": "Amass a collection of over 100 unique items of the same theme. Like stamps or Disney merchandise.",
+        "xp": 1000,
+        "skill": "games",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Butchers & Shepherds",
+        "imgPath": "trophy_gem4.svg",
+        "tier": "Silver",
+        "desc": "Construct & Share your own animal livestock collection.",
+        "xp": 1000,
+        "skill": "earthcraft",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Of Good Will",
+        "imgPath": "trophy_basic3.svg",
+        "tier": "Silver",
+        "desc": "Join the Peace Corps and serve one term.",
+        "xp": 1000,
+        "skill": "family",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Home Sweet Home",
+        "imgPath": "trophy_cup4.svg",
+        "tier": "Silver",
+        "desc": "Build or completely remodel your own home.",
+        "xp": 1000,
+        "skill": "family",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Artisan Crafter",
+        "imgPath": "trophy_cup7.svg",
+        "tier": "Silver",
+        "desc": "Create and sell over 100 hand-made items.",
+        "xp": 1000,
+        "skill": "friends",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Community Educator",
+        "imgPath": "trophy_person4.svg",
+        "tier": "Silver",
+        "desc": "Host your own classes (on anything) for 9 months, free of charge, at the local library.",
+        "xp": 1000,
+        "skill": "humanity",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Indie Filmmaker",
+        "imgPath": "trophy_star1.svg",
+        "tier": "Silver",
+        "desc": "Produce and screen an independent film at a festival.",
+        "xp": 1000,
+        "skill": "humanity",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Thrill Seeker",
+        "imgPath": "trophy_cup5.svg",
+        "tier": "Silver",
+        "desc": "Complete an extreme sport challenge like skydiving, or free-soloing.",
+        "xp": 1000,
+        "skill": "fitness",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Charity Champion",
+        "imgPath": "trophy_star7.svg",
+        "tier": "Silver",
+        "desc": "Raise over $1,000 for a charitable cause.",
+        "xp": 1000,
+        "skill": "humanity",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Titleist",
+        "imgPath": "trophy_first.svg",
+        "tier": "Silver",
+        "desc": "Place first place in tournament that has over 50 contestants. Alone or with a team.",
+        "xp": 1000,
+        "skill": "games",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Call me Doctor",
+        "imgPath": "trophy_shield3.svg",
+        "tier": "Silver",
+        "desc": "Achieve a PhD (or equivalent) in your field of study.",
+        "xp": 1000,
+        "skill": "language",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Recipe Reach",
+        "imgPath": "trophy_star5.svg",
+        "tier": "Silver",
+        "desc": "Have one of your original recipes published in a printed cook-book or magazine.",
+        "xp": 1000,
+        "skill": "cooking",
+        "unlocksExperience": false
+      },
+      {
+        "title": "LAN-gendary",
+        "imgPath": "trophy_shield5.svg",
+        "tier": "Silver",
+        "desc": "Host a LAN party with 9+ participants.",
+        "xp": 1000,
+        "skill": "games",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Micro Brewer",
+        "imgPath": "trophy_star2.svg",
+        "tier": "Silver",
+        "desc": "Brew and brand your own line of craft beer, wine, or any alcohol.",
+        "xp": 1000,
+        "skill": "cooking",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Angel Investor",
+        "imgPath": "trophy_gem2.svg",
+        "tier": "Silver",
+        "desc": "Be the first to invest in a startup company and help it launch.",
+        "xp": 1000,
+        "skill": "friends",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Backyard Botanist",
+        "imgPath": "trophy_elegant2.svg",
+        "tier": "Silver",
+        "desc": "Cultivate a garden with at least 20 different plant species.",
+        "xp": 1000,
+        "skill": "earthcraft",
+        "unlocksExperience": false
+      },
+      {
+        "title": "HAL 9000",
+        "imgPath": "trophy_elegant6.svg",
+        "tier": "Silver",
+        "desc": "Convert your home into a smart home with technology you've programmed yourself.",
+        "xp": 1000,
+        "skill": "technology",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Triad Athlete",
+        "imgPath": "trophy_shield2.svg",
+        "tier": "Silver",
+        "desc": "Complete a Triathlon.",
+        "xp": 1000,
+        "skill": "fitness",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Food Truckin'",
+        "imgPath": "trophy_gem3.svg",
+        "tier": "Silver",
+        "desc": "Sell food you cooked from a pop-up tent or food truck at a local festival.",
+        "xp": 1000,
+        "skill": "cooking",
+        "unlocksExperience": false
+      },
+      {
+        "title": "Full on Philanthropist",
+        "imgPath": "trophy_person5.svg",
+        "tier": "Silver",
+        "desc": "Found your own non-profit charity organization. Spread the word!",
+        "xp": 1000,
+        "skill": "humanity",
+        "unlocksExperience": false
+      }
+    ],
+    "gold": [
+      {
+          "title": "Golden Devotion",
+          "imgPath": "crown1.svg",
+          "tier": "Gold",
+          "desc": "Accomplish a 999 day streak on ARL.",
+          "xp": 10000,
+          "skill": "family",
+          "unlocksExperience": false
+      },
+      {
+          "title": "Life on the Silver Screen",
+          "imgPath": "trophy_person3.svg",
+          "tier": "Gold",
+          "desc": "Land a role in a broadcasted and/or streamed film or television show. Youtube does not count.",
+          "xp": 10000,
+          "skill": "humanity",
+          "unlocksExperience": false
+      },
+      {
+          "title": "Sisyphus' Prized Work",
+          "imgPath": "trophy_elegant3.svg",
+          "tier": "Gold",
+          "desc": "Master your specific field of Fitness. Something equivalent to a black belt, climbing Everest, or a cycling 100 miles in one day.",
+          "xp": 10000,
+          "skill": "fitness",
+          "unlocksExperience": false
+      },
+      {
+          "title": "Dreams do Come True",
+          "imgPath": "trophy_star8.svg",
+          "tier": "Gold",
+          "desc": "Register and open your own restaurant to the public.",
+          "xp": 10000,
+          "skill": "cooking",
+          "unlocksExperience": false
+      },
+      {
+          "title": "Public Servant",
+          "imgPath": "trophy_torch.svg",
+          "tier": "Gold",
+          "desc": "Serve as an elected official in a public office. Good luck on your campaign!",
+          "xp": 10000,
+          "skill": "humanity",
+          "unlocksExperience": false
+      },
+      {
+          "title": "Lucky 7's",
+          "imgPath": "trophy_gem1.svg",
+          "tier": "Gold",
+          "desc": "Reach total level 777!",
+          "xp": 10000,
+          "skill": "friends",
+          "unlocksExperience": false
+      },
+      {
+          "title": "Digital Dynasty",
+          "imgPath": "certificate3.svg",
+          "tier": "Gold",
+          "desc": "Gather 10,000 active users on an app/game/site that you own.",
+          "xp": 10000,
+          "skill": "technology",
+          "unlocksExperience": false
+      },
+      {
+          "title": "World Record Holder",
+          "imgPath": "trophy_shield4.svg",
+          "tier": "Gold",
+          "desc": "Have your name enshrined into the Guinness Book of World Records",
+          "xp": 10000,
+          "skill": "games",
+          "unlocksExperience": false
+      },
+      {
+          "title": "Globe Trotter",
+          "imgPath": "trophy_globe.svg",
+          "tier": "Gold",
+          "desc": "Visit 6 different countries, after joining ARL.",
+          "xp": 10000,
+          "skill": "language",
+          "unlocksExperience": false
+      },
+      {
+          "title": "One with Nature",
+          "imgPath": "trophy_basic2.svg",
+          "tier": "Gold",
+          "desc": "Spend an entire week in the wilderness. Camping only in a tent, without re-entering society once.",
+          "xp": 10000,
+          "skill": "earthcraft",
+          "unlocksExperience": false
+      }
+  ]
+  },
+
+  "experiences":{
     "family":{
       "call_loved_one":{
         "type":"log",
@@ -1082,7 +1282,7 @@
       "finish_line":{
         "type":"camera",
         "title":"Finish Line",
-        "desc":"Compete a race in any sport.",
+        "desc":"Compete in a race of any sport.",
         "xp":100,
         "unlocksAt":0,
         "lockedBy":"Fleetfooted Fanatic",
@@ -1625,7 +1825,7 @@
         "lockedBy":"Bearing FAANGs",
         "cooldown":72
       },
-      "grase_monkey":{
+      "grease_monkey":{
         "type":"camera",
         "title":"Grase Monkey",
         "desc":"Share your mechanical work.",

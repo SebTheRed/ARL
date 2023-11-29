@@ -24,25 +24,24 @@ type RootStackParamList = {
 ////// COMPONENT FUNCTION BEGINNING //////
 const HeaderBar = ():JSX.Element => {
 	const {uid}:any = useUID()
-	const {findPageUserID}:any = useProfilePageUID()
+	const {findPageUserID,refreshProfileFeed}:any = useProfilePageUID()
   const {activeNotif}:any = useNotifications()
 	const {userData}:any = useUserData()
 	const {setHamburgerToggle}:any = useHamburgerBar()
 	const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 	const [profilePicState,setProfilePicState] = useState<any>(null)
-	const [sideBarState,setSideBarState] = useState<boolean>()
-	const [isLoading,setIsLoading] = useState<any>()
+	// const [isLoading,setIsLoading] = useState<any>()
 
 
 useEffect(()=>{
 	const translateURL = async () => {
-		setIsLoading(true); // Set loading state to true before fetching
+		// setIsLoading(true); // Set loading state to true before fetching
 		const storage = getStorage();
 		const pathRef = ref(storage, userData.picURL);
 		const profilePicUrl = await getDownloadURL(pathRef);
 		console.log("header image promise")
 		setProfilePicState(profilePicUrl);
-		setIsLoading(false); // Set loading state to false after fetching
+		// setIsLoading(false); // Set loading state to false after fetching
 	};
 	translateURL()
 },[])
@@ -52,6 +51,7 @@ const handleHamburgerPress = () => {
 }
 
 const handleProfilePress = () => {
+  refreshProfileFeed()
 	findPageUserID(uid)
 	navigation.dispatch(
 		CommonActions.reset({

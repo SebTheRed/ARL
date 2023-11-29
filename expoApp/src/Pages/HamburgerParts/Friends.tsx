@@ -10,25 +10,17 @@ import UserTile from './UserTile';
 import styles from '../../styles';
 import { useFriends } from '../../Contexts/FriendsContext';
 import { useGameRules } from '../../Contexts/GameRules';
+import { scaleFont } from '../../Utilities/fontSizing';
 
 const Friends = ():JSX.Element => {
-	const { levelScale,skillsList}:any = useGameRules()
-	const {trueFriends,pendingFriends,trueFriendDocs,pendingFriendDocs,friendsRefresh,setFriendsRefresh}:any = useFriends()
-	const [currentList,setCurrentList] = useState<any>()
-	const [currentRequests,setCurrentRequests] = useState<any>()
+	const { gameRules}:any = useGameRules()
+	const {friendsData,refreshFriendsList}:any = useFriends()
 	const [chosenTab,setChosenTab] = useState<boolean>(false)
 	const [refreshing,setRefreshing] = useState<boolean>(false)
 
-	useEffect(()=>{
-		// console.log("These are my friends uids: ", trueFriends)
-		// console.log("These are my friends docs: ", trueFriendDocs)
-		// console.log("These are my pending uids: ", pendingFriends)
-		// console.log("These are my pending docs: ", pendingFriendDocs)
-	},[friendsRefresh])
-
 	const handleRefresh=async()=>{
 		setRefreshing(true)
-		await setFriendsRefresh((prev:boolean)=>!prev)
+		await refreshFriendsList()
 		setRefreshing(false)
 	}
 
@@ -44,19 +36,50 @@ const Friends = ():JSX.Element => {
 			</View>
 			{chosenTab==true&&(
 				<FlatList 
-				data={trueFriendDocs}
+				data={friendsData.trueFriendDocs}
 				keyExtractor={(item)=>item.uid}
-        renderItem={({item})=>< UserTile skillsList={skillsList} XPScale={levelScale} userDoc={item} key={item.uid} />}
+        renderItem={({item})=>< UserTile skillsList={gameRules.skillsList} XPScale={gameRules.levelScale} userDoc={item} key={item.uid} />}
         contentContainerStyle={{ alignItems: 'center' }}
         style={styles.userTileContainer}
         scrollEventThrottle={150}
+        refreshControl={
+          <RefreshControl
+					  refreshing={refreshing}
+					  onRefresh={handleRefresh}
+					  colors={['#FFF']}
+					  tintColor="#FFF"
+					/>
+        }
 				/>
 			)}
-			{chosenTab==false&&(
+			{(chosenTab==false && friendsData.pendingFriendDocs.length > 0)&&(
 				<FlatList 
-				data={pendingFriendDocs}
-        renderItem={({item})=>< UserTile skillsList={skillsList} type={"pending"} XPScale={levelScale} userDoc={item} key={item.uid} />}
+				data={friendsData.pendingFriendDocs}
+        renderItem={({item})=>< UserTile skillsList={gameRules.skillsList} type={"pending"} XPScale={gameRules.levelScale} userDoc={item} key={item.uid} />}
 				keyExtractor={(item)=>item.uid}
+        contentContainerStyle={{ alignItems: 'center' }}
+        style={styles.userTileContainer}
+        scrollEventThrottle={150}
+				refreshControl={
+					<RefreshControl
+					  refreshing={refreshing}
+					  onRefresh={handleRefresh}
+					  colors={['#FFF']}
+					  tintColor="#FFF"
+					/>
+				  }
+				/>
+			)}
+      {(chosenTab==false && friendsData.pendingFriendDocs.length <= 0)&&(
+				<FlatList 
+				data={[{id:"whoCares"}]}
+        renderItem={({item})=>
+        <View>
+          <View style={{height:30}} />
+          <Text style={{color:"#656565", fontSize:scaleFont(20)}}>Pull down to refresh friend requests...</Text>
+        </View>
+      }
+				keyExtractor={(item)=>item.id}
         contentContainerStyle={{ alignItems: 'center' }}
         style={styles.userTileContainer}
         scrollEventThrottle={150}

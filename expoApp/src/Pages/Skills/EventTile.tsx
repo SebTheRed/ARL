@@ -10,7 +10,6 @@ import { scaleFont } from '../../Utilities/fontSizing';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import {useCurrentEvent} from '../../Contexts/CurrentEventContext'
-import {useGameRules} from '../../Contexts/GameRules'
 import {useCooldowns} from '../../Contexts/CooldownContext'
 
 import ApiSVG from '../../IconBin/svg/api.svg'
@@ -25,7 +24,6 @@ type RootStackParamList = {
     ExperienceUploader:undefined,
   }
 const EventTile = ({d,locked, i, color,skillTitle, uid}:any):JSX.Element => {
-    const {skillsList}:any = useGameRules()
     const {cooldowns,cooldownsLoading}:any = useCooldowns()
     const {setCurrentEvent}:any = useCurrentEvent()
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -100,8 +98,22 @@ if (cooldownTime>0) {
             </View>
         </TouchableOpacity>
     )
-}
-else if (locked == false) {
+} else if (locked == false) {
+  if (d.lockedBy == "") {
+    <TouchableOpacity style={styles.eventTileWrapper}>
+        <View style={{...styles.eventTileMain}}>
+            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                <Text style={{...styles.eventTileText,fontSize:scaleFont(24),textDecorationColor:"#656565",textDecorationLine:"underline", color:"#656565"}}>{d.title}</Text>
+            </View>
+            <Text style={{...styles.eventTileText, color:color}}>Unlocks at {skillTitle} level {d.unlocksAt}</Text>
+        </View>
+        <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+            <View style={styles.eventButtonWrapper}>
+                <LockSVG width={scaleFont(45)} height={scaleFont(45)} />
+            </View>
+        </View>
+    </TouchableOpacity>
+  }
     return(
         <TouchableOpacity onPress={handlePress} style={styles.eventTileWrapper}>
             <View style={{...styles.eventTileMain}}>
@@ -119,6 +131,39 @@ else if (locked == false) {
         </TouchableOpacity>
     )
 } else {
+  if (d.lockedBy == "") {
+    return(
+      <TouchableOpacity style={styles.eventTileWrapper}>
+          <View style={{...styles.eventTileMain}}>
+              <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                  <Text style={{...styles.eventTileText,fontSize:scaleFont(24),textDecorationColor:"#656565",textDecorationLine:"underline", color:"#656565"}}>{d.title}</Text>
+              </View>
+              <Text style={{...styles.eventTileText, color:color}}>Unlocks at {skillTitle} level {d.unlocksAt}</Text>
+          </View>
+          <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+              <View style={styles.eventButtonWrapper}>
+                  <LockSVG width={scaleFont(45)} height={scaleFont(45)} />
+              </View>
+          </View>
+      </TouchableOpacity>
+  )
+  } else {
+    return(
+      <TouchableOpacity style={styles.eventTileWrapper}>
+          <View style={{...styles.eventTileMain}}>
+              <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                  <Text style={{...styles.eventTileText,fontSize:scaleFont(24),textDecorationColor:"#656565",textDecorationLine:"underline", color:"#656565"}}>{d.title}</Text>
+              </View>
+              <Text style={{...styles.eventTileText, color:color}}>Unlocks with the {d.lockedBy} trophy.</Text>
+          </View>
+          <View style={{...styles.sectionLevelBox, backgroundColor:"transparent", height:80, borderColor:"transparent"}}>
+              <View style={styles.eventButtonWrapper}>
+                  <LockSVG width={scaleFont(45)} height={scaleFont(45)} />
+              </View>
+          </View>
+      </TouchableOpacity>
+  )
+  }
     return(
         <TouchableOpacity style={styles.eventTileWrapper}>
             <View style={{...styles.eventTileMain}}>

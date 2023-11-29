@@ -1,95 +1,114 @@
 import {
     Text,
     View,
-	Image,
     TouchableOpacity,
   } from 'react-native';
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import styles from '../../styles';
-import type {PropsWithChildren} from 'react';
+import ICONS from './TrophyIcons';
+import { useNavigation } from '@react-navigation/native';
+import { useCurrentEvent } from '../../Contexts/CurrentEventContext';
+import { scaleFont } from '../../Utilities/fontSizing';
 
-type TrophyBoxProps = PropsWithChildren<{
-    d:{
-        title:string,
-        imgPath:any,
-        tier:string,
-        desc:string,
-        progressQTY:number,
-        unlocked:boolean,
-    }
-}>
+const TrophyBox = ({d,locked,status,openPost}:any):JSX.Element => {
+    const navigation:any = useNavigation();
+    const {setCurrentEvent}:any = useCurrentEvent()
 
-const TrophyBox = ({d}:TrophyBoxProps):JSX.Element => {
-  const trophyImageMap = {
-    "Titan of Steel": require('../../IconBin/TrophyPNG/goblet1.png'),
-    "Fleetfooted Fanatic": require('../../IconBin/TrophyPNG/gem1.png'),
-    "Yoga Yogi": require('../../IconBin/TrophyPNG/simple1.png'),
-    "Chef of the Year": require('../../IconBin/TrophyPNG/star3.png'),
-    "3D Modeling Maniac": require('../../IconBin/TrophyPNG/simple4.png'),
-    "Can't Pause This Game": require('../../IconBin/TrophyPNG/gem5.png'),
-    "Book Worm": require('../../IconBin/TrophyPNG/elegant4.png'),
-    "Gallery Guru": require('../../IconBin/TrophyPNG/gem6.png'),
-    "Checking In": require('../../IconBin/TrophyPNG/pedistal2.png'),
-    "Game of Life": require('../../IconBin/TrophyPNG/simple3.png'),
-    "Hands of Bronze": require('../../IconBin/TrophyPNG/gem7.png'),
-    "Stillness of Mind": require('../../IconBin/TrophyPNG/star8.png'),
-    "Lost in Nature": require('../../IconBin/TrophyPNG/goblet3.png'),
-    "Of The Earth": require('../../IconBin/TrophyPNG/shield4.png'),
-    "Nature's Steward": require('../../IconBin/TrophyPNG/person2.png'),
-    "Nature's Friend": require('../../IconBin/TrophyPNG/person3.png'),
-    "Golden Devotion": require('../../IconBin/TrophyPNG/number1.png'),
-    "Exercise Enthusiast": require('../../IconBin/TrophyPNG/star1.png'),
-    "Cooking Connoisseur": require('../../IconBin/TrophyPNG/simple3.png'),
-    "Code Crusader": require('../../IconBin/TrophyPNG/elegant3.png'),
-    "Curriculum Contributor": require('../../IconBin/TrophyPNG/person4.png'),
-    "Hard Work > Talent": require('../../IconBin/TrophyPNG/simple5.png'),
-    "The Grind": require('../../IconBin/TrophyPNG/gem4.png'),
-    "Social Butterfly": require('../../IconBin/TrophyPNG/mirror2.png'),
-    "Civic Duty": require('../../IconBin/TrophyPNG/steering1.png'),
-    "Life on The Road": require('../../IconBin/TrophyPNG/star6.png'),
-    "Eyes of Silver": require('../../IconBin/TrophyPNG/star7.png'),
-    "Finding Nature": require('../../IconBin/TrophyPNG/star9.png'),
-    "Nature's Agent": require('../../IconBin/TrophyPNG/star9.png'),
-    "Sisyphus' Prized Work": require('../../IconBin/TrophyPNG/pedistal1.png'),
-    "Mountain Climber": require('../../IconBin/TrophyPNG/gem2.png'),
-    "Martial Master": require('../../IconBin/TrophyPNG/elegant2.png'),
-    "26.2": require('../../IconBin/TrophyPNG/gem3.png'),
-    "Iron Chef": require('../../IconBin/TrophyPNG/shield1.png'),
-    "Family Feast": require('../../IconBin/TrophyPNG/star2.png'),
-    "Bearing FAANGs": require('../../IconBin/TrophyPNG/star4.png'),
-    "Digital Playground": require('../../IconBin/TrophyPNG/gear.png'),
-    "Gotta Go Fast": require('../../IconBin/TrophyPNG/number2.png'),
-    "All Star": require('../../IconBin/TrophyPNG/shield2.png'),
-    "Globe Trotter": require('../../IconBin/TrophyPNG/simple6.png'),
-    "Family Reunion": require('../../IconBin/TrophyPNG/star5.png'),
-    "Voice of Gold": require('../../IconBin/TrophyPNG/person1.png'),
-    "Decoration of Space": require('../../IconBin/TrophyPNG/gem8.png'),
-    "One with Nature": require('../../IconBin/TrophyPNG/star10.png'),
-    "Butchers & Shepherds": require('../../IconBin/TrophyPNG/shield3.png'),
-  };
-  const imgSource = trophyImageMap[d.title];
     const [panelState,setPanelState]=useState(false);
+    const [Icon,setIcon] = useState<any>(null)
+    const [unlockLevel,setUnlockLevel] = useState<number>(0)
+    const [tierColor,setTierColor] = useState<string>()
+
+    useEffect(()=>{
+      switch(d.tier){
+        case "Bronze":
+          setUnlockLevel(50)
+          setTierColor("#cd7f32")
+        break;
+        case "Silver":
+          setUnlockLevel(100)
+          setTierColor("#c1d4e3")
+        break;
+        case "Gold":
+          setUnlockLevel(200)
+          setTierColor("#d4af37")
+        break;
+      }
+      const loadSVG = async()=>{
+        setIcon(()=>ICONS[d.imgPath])
+      }
+        loadSVG()
+      
+    },[])
+
+
+    const beginTrophyPost = () => {
+      setCurrentEvent({...d, "tierColor":tierColor,"Icon":Icon})
+      navigation.navigate("TrophyUploader");
+    }
+
+
 
     return(
-        <TouchableOpacity onPress={()=>{setPanelState(!panelState)}} style={styles.trophyBox}>
-						
-            {panelState == false && (
-                <>
-                    <Text style={styles.trophyText}>{d.title}</Text>
-                    <Image style={styles.trophyIcon} source={imgSource} />
-                </>
-            )}
-            {panelState == true && (
-                <>
-                    <Text style={{...styles.trophyText,textAlign:"left"}}>Trophies coming soon... They reward a ton of XP and can be pinned to profile.</Text>
-                    {/* <Image style={styles.trophyIcon} source={d.imgPath} /> */}
-                    <View>
-                        <Text style={{...styles.trophyText}} > Progress:</Text>
-                        <Text style={{...styles.trophyText}} >0 / {d.progressQTY}</Text>
-                    </View>
-                </>
-            )}
-        </TouchableOpacity>
+      <>
+        {locked == true &&
+          <View style={styles.trophyBox}>
+            <Text style={{...styles.trophyTitle, color:"#5c5c5c"}}>{d.tier} trophies unlock at total level {unlockLevel}</Text>
+              {Icon && <Icon width={90} height={90} fill={"#5c5c5c"} />}
+          </View>
+        }
+        {(locked == false && status.status == "none") &&
+          <TouchableOpacity onPress={()=>{setPanelState(!panelState)}} style={styles.trophyBox}>
+              {panelState == false && (
+                  <>
+                      <Text style={styles.trophyTitle}>{d.title}</Text>
+                      {Icon && <Icon width={90} height={90} fill={"#fff"} />}
+                  </>
+              )}
+              {panelState == true && (
+                  <>
+                      <Text style={{...styles.trophyText,textAlign:"left"}}>{d.desc}</Text>
+                      {/* <Image style={styles.trophyIcon} source={d.imgPath} /> */}
+                      <View>
+                        <TouchableOpacity onPress={beginTrophyPost} style={{...styles.trophyButton, backgroundColor:tierColor}}>
+                            <Text style={styles.trophyButtonText}>Make Trophy Post</Text>
+                          </TouchableOpacity>
+                      </View>
+                  </>
+              )}
+          </TouchableOpacity>
+        }
+        {(locked == false && status.status == "pending") &&
+          <TouchableOpacity onPress={()=>{setPanelState(!panelState)}} style={{...styles.trophyBox, borderColor:tierColor}}>
+              {panelState == false && (
+                  <>
+                      <Text style={styles.trophyTitle}>{d.title}</Text>
+                      {Icon && <Icon width={90} height={90} fill="#fff" />}
+                  </>
+              )}
+              {panelState == true && (
+                  <>
+                      <Text style={{...styles.trophyText,textAlign:"left"}}>Your post is on the Feed. Good luck!</Text>
+                      {/* <Image style={styles.trophyIcon} source={d.imgPath} /> */}
+                      <View>
+                        <View style={{...styles.trophyButton, borderColor:"transparent"}}>
+                            <Text style={{...styles.trophyButtonText, color:"#fff"}}>Pending..</Text>
+                          </View>
+                      </View>
+                  </>
+              )}
+          </TouchableOpacity>
+        }
+        {(locked == false && status.status == "achieved") &&
+          <TouchableOpacity onPress={()=>{openPost(status.data.id)}} style={{...styles.trophyBox, borderColor:tierColor, borderWidth:8}}>
+                  <>  
+                      <Text style={{...styles.trophyTitle, color:"#fff", fontWeight:"bold"}}>{d.title}</Text>
+                      {Icon && <Icon width={90} height={90} fill={tierColor} />}
+                  </>
+          </TouchableOpacity>
+        }
+      </>
+        
     )
 }
 

@@ -28,13 +28,11 @@ type RootStackParamList = {
 ////// COMPONENT FUNCTION BEGINNING //////
 const BottomBar = ():JSX.Element => {
 const {uid}:any = useUID()
-const {matchingProfileData, profilePageUID, setProfilePageUID, setMatchingProfileData}:any = useProfilePageUID()
 const {feedButtonHandler}:any = useFeed()
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handlePress = (val: keyof RootStackParamList) => {
     navigation.navigate(val);
-	setProfilePageUID(null)
   }
 
 

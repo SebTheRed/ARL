@@ -4,6 +4,7 @@ import {
 	Image,
 	TouchableOpacity,
 } from 'react-native'
+import { useUserData } from '../../Contexts/UserDataContext';
 import React,{useEffect,useState} from 'react'
 import { runTransaction,doc,updateDoc,onSnapshot } from 'firebase/firestore';
 import { db } from '../../Firebase/firebase';
@@ -14,13 +15,16 @@ import CaratDown from '../../IconBin/svg/carat_down.svg'
 import { scaleFont } from '../../Utilities/fontSizing';
 
 
-const ScoreCounter = ({data}:any):JSX.Element => {
+const ScoreCounter = ({data,voteLock}:any):JSX.Element => {
   const {uid}:any = useUID()
   const [score,setScore] = useState<number>(0)
 
 
   useEffect(() => {
-    const postRef = doc(db, 'posts', data.id);
+    let postBucketType:string
+    if (data.type == "trophy"){postBucketType="trophyPosts"}
+    else {postBucketType="posts"}
+    const postRef = doc(db, postBucketType, data.id);
   
     // Set up the onSnapshot listener
     const unsubscribe = onSnapshot(postRef, (docSnapshot) => {
@@ -36,7 +40,10 @@ const ScoreCounter = ({data}:any):JSX.Element => {
 
   const handleUpvote = async () => {
     const postId = data.id;
-    const postRef = doc(db, 'posts', postId);
+    let postBucketType:string
+    if (data.type == "trophy"){postBucketType="trophyPosts"}
+    else {postBucketType="posts"}
+    const postRef = doc(db, postBucketType, postId);
   
     try {
       await runTransaction(db, async (transaction) => {
@@ -48,8 +55,8 @@ const ScoreCounter = ({data}:any):JSX.Element => {
         }
   
         const postData = postDoc.data();
-        const upvotes = postData.upvote || [];
-        const downvotes = postData.downvote || [];
+        const upvotes = postData.upvotes || [];
+        const downvotes = postData.downvotes || [];
   
         // Check if the user has already upvoted the post
         if (upvotes.includes(uid)) {
@@ -63,14 +70,14 @@ const ScoreCounter = ({data}:any):JSX.Element => {
           downvotes.splice(index, 1);
           await updateDoc(postRef, {
             score: postData.score + 2, // +1 to remove the downvote and +1 for the upvote
-            downvote: downvotes,
-            upvote: [...upvotes, uid],
+            downvotes: downvotes,
+            upvotes: [...upvotes, uid],
           });
         } else {
           // Increment the score and add user's UID to upvotes
           await updateDoc(postRef, {
             score: postData.score + 1,
-            upvote: [...upvotes, uid],
+            upvotes: [...upvotes, uid],
           });
         }
       });
@@ -80,7 +87,10 @@ const ScoreCounter = ({data}:any):JSX.Element => {
   }
   const handleDownvote = async () => {
     const postId = data.id;
-    const postRef = doc(db, 'posts', postId);
+    let postBucketType:string
+    if (data.type == "trophy"){postBucketType="trophyPosts"}
+    else {postBucketType="posts"}
+    const postRef = doc(db, postBucketType, postId);
   
     try {
       await runTransaction(db, async (transaction) => {
@@ -92,8 +102,8 @@ const ScoreCounter = ({data}:any):JSX.Element => {
         }
   
         const postData = postDoc.data();
-        const upvotes = postData.upvote || [];
-        const downvotes = postData.downvote || [];
+        const upvotes = postData.upvotes || [];
+        const downvotes = postData.downvotes || [];
   
         // Check if the user has already downvoted the post
         if (downvotes.includes(uid)) {
@@ -107,14 +117,14 @@ const ScoreCounter = ({data}:any):JSX.Element => {
           upvotes.splice(index, 1);
           await updateDoc(postRef, {
             score: postData.score - 2, // -1 to remove the upvote and -1 for the downvote
-            upvote: upvotes,
-            downvote: [...downvotes, uid],
+            upvotes: upvotes,
+            downvotes: [...downvotes, uid],
           });
         } else {
           // Decrement the score and add user's UID to downvotes
           await updateDoc(postRef, {
             score: postData.score - 1,
-            downvote: [...downvotes, uid],
+            downvotes: [...downvotes, uid],
           });
         }
       });
@@ -126,17 +136,29 @@ const ScoreCounter = ({data}:any):JSX.Element => {
 
 
   return(
-    <View style={{...styles.postBottomVoteContainer}}>
-      <TouchableOpacity onPress={handleUpvote} style={styles.postBottomIconContainer} >
-        <CaratUp width={scaleFont(45)} height={scaleFont(45)} />
-        {/* <Text style={styles.postBottomText}></Text> */}
-      </TouchableOpacity>
-      <Text style={styles.postBottomScore}>{score}</Text>
-      <TouchableOpacity onPress={handleDownvote} style={styles.postBottomIconContainer} >
-        <CaratDown width={scaleFont(45)} height={scaleFont(45)} />
-        {/* <Text style={styles.postBottomText}></Text> */}
-      </TouchableOpacity>
-    </View>
+    <>
+      {(!voteLock)&& (
+        <View style={{...styles.postBottomVoteContainer}}>
+
+        <TouchableOpacity onPress={handleUpvote} style={styles.postBottomIconContainer} >
+          <CaratUp width={scaleFont(45)} height={scaleFont(45)} />
+          {/* <Text style={styles.postBottomText}></Text> */}
+        </TouchableOpacity>
+        <Text style={styles.postBottomScore}>{score}</Text>
+        <TouchableOpacity onPress={handleDownvote} style={styles.postBottomIconContainer} >
+          <CaratDown width={scaleFont(45)} height={scaleFont(45)} />
+          {/* <Text style={styles.postBottomText}></Text> */}
+        </TouchableOpacity>
+      </View>
+        )}
+        {(voteLock)&& (
+        <View style={{flexDirection:"column",alignItems:"center"}}>
+          <Text style={styles.postBottomScore}>{score}</Text>
+          <Text style={{color:"#656565"}}>Voting unlocks at total level 11.</Text>
+      </View>
+        )}
+      </>
+
   )
 }
 

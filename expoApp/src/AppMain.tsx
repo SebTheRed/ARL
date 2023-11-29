@@ -1,19 +1,18 @@
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import { Animated, Easing } from 'react-native';
-import { NavigationContainer, StackActions,} from '@react-navigation/native';
+import { NavigationContainer,} from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators} from '@react-navigation/stack';
 import Skills from './Pages/Skills/Skills';
 import SkillsPage from './Pages/Skills/SkillsPage'
 import Stats from './Pages/Profile/Stats';
 import Map from './Pages/Map/Map';
 import Profile from './Pages/Profile/Profile';
+import TrophyCase from './Pages/Profile/TrophyCase'
 import EditProfile from './Pages/Profile/EditProfile'
 import Trophies from './Pages/Trophies/Trophies'
+import TrophyFeed from './Pages/Trophies/TrophyFeed';
 import HeaderBar from './Overlays/HeaderBar';
-import ProfilePicModal from './Pages/Profile/ProfPicModal'
-import { useState, useEffect } from 'react';
+
 import styles from './styles';
 import Feed from './Pages/Feed/Feed';
 import Login from './Pages/Login/Login'
@@ -40,34 +39,23 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-// import Geolocation from '@react-native-community/geolocation';
 import BottomBar from './Overlays/BottomBar';
-import { useUID } from './Contexts/UIDContext';
 import ExperienceUploader from './Pages/Skills/ExperienceUploader';
-import {db} from './Firebase/firebase'
+import TrophyUploader from './Pages/Trophies/TrophyUploader';
 import {UserDataProvider, useUserData} from './Contexts/UserDataContext';
 import { useGameRules } from './Contexts/GameRules';
 import UserPassPopup from './Pages/Profile/UserPassPopup';
 import { GameRulesProvider } from './Contexts/GameRules';
 import { CooldownProvider } from './Contexts/CooldownContext';
+import { UserTrophiesProvider } from './Contexts/UserTrophies';
 import LoadingOverlay from './Overlays/LoadingOverlay';
 const Stack = createStackNavigator();
 const SkillStack = createStackNavigator();
 const AuthStack = createStackNavigator();
 const ProfileStack = createStackNavigator()
+const TrophyStack = createStackNavigator()
 
 ////// COMPONENT FUNCTION BEGINNING //////
 function AppMain(): JSX.Element {
@@ -91,40 +79,62 @@ const SkillsNav = () => {
   
 }
 
+const TrophiesNav = () => {
+  return(
+    <TrophyStack.Navigator initialRouteName="TrophyCase"screenOptions={{ headerShown: false,cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,}}>
+      <TrophyStack.Screen name="TrophyCase" component={Trophies} />
+      <TrophyStack.Screen name="TrophyUploader" component={TrophyUploader} />
+      <TrophyStack.Screen name="TrophyFeed" component={TrophyFeed} />
+    </TrophyStack.Navigator>
+  )
+}
+
+const ProfilePages = () => {
+  return(
+    
+      <ProfileStack.Navigator initialRouteName='Profile' screenOptions={{headerShown:false}}>
+        <ProfileStack.Screen name="Profile"  component={Profile} />
+        <ProfileStack.Screen name="EditProfile" component={EditProfile} />
+        <ProfileStack.Screen name="UserPassPopup" component={UserPassPopup} />
+        <ProfileStack.Screen name="ProfileStats" component={Stats} />
+        <ProfileStack.Screen name="TrophyCase" component={TrophyCase} />
+      </ProfileStack.Navigator>
+  )
+}
 
 const AuthApp = ()=>{
-  const {userData}:any = useUserData()
-  const {dataLoading}:any = useGameRules()
+  const {userData, userLevels}:any = useUserData()
   // console.log("authapp, ", userData)
-  if (Object.values(userData).length>0 && dataLoading==false) {
+  if (Object.values(userData).length>0 && userLevels) {
     return(
-      <FeedProvider>
-
+      
         <CooldownProvider>
           <NotificationProvider>
-          <StatusBar />
-          <HeaderBar />
-            <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Skills" component={SkillsNav} />
-              <Stack.Screen name="Trophies" component={Trophies} />
-              <Stack.Screen name="Map" component={Map} />
-              <Stack.Screen name="Feed" component={Feed} />
-              <Stack.Screen name="ProfileStack" component={ProfilePages} />
-              <Stack.Screen name="UserStats" component={Stats} />
-              <Stack.Screen name="Search" component={Search} />
-              <Stack.Screen name="Notifications" component={Notifications} />
-              <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
-              <Stack.Screen name="Friends" component={Friends} />
-              <Stack.Screen name="Streak" component={Streak} />
-              <Stack.Screen name="Tutorial" component={Tutorial} />
-              <Stack.Screen name="ChangeLog" component={ChangeLog} />
-              <Stack.Screen name="Admin" component={AdminComponent} />
-            </Stack.Navigator>
-          <HamburgerBar />
-          <BottomBar/>
+            <UserTrophiesProvider>
+              <StatusBar />
+              <HeaderBar />
+              
+                <Stack.Navigator initialRouteName='Skills' screenOptions={{ headerShown: false }}>
+                  <Stack.Screen name="Skills" component={SkillsNav} />
+                  <Stack.Screen name="Trophies" component={TrophiesNav} />
+                  <Stack.Screen name="Map" component={Map} />
+                  <Stack.Screen name="Feed" component={Feed} />
+                  <Stack.Screen name="ProfileStack" component={ProfilePages} />
+                  <Stack.Screen name="UserStats" component={Stats} />
+                  <Stack.Screen name="Search" component={Search} />
+                  <Stack.Screen name="Notifications" component={Notifications} />
+                  <Stack.Screen name="TrophyGrading" component={TrophyGrading} />
+                  <Stack.Screen name="Friends" component={Friends} />
+                  <Stack.Screen name="Streak" component={Streak} />
+                  <Stack.Screen name="Tutorial" component={Tutorial} />
+                  <Stack.Screen name="ChangeLog" component={ChangeLog} />
+                  <Stack.Screen name="Admin" component={AdminComponent} />
+                </Stack.Navigator>
+              <HamburgerBar />
+              <BottomBar/>
+            </UserTrophiesProvider>
           </NotificationProvider>
         </CooldownProvider>
-      </FeedProvider>
     )
   } else {
     return(
@@ -137,16 +147,7 @@ const AuthApp = ()=>{
   }
 }
 
-const ProfilePages = () => {
-  return(
-    <ProfileStack.Navigator initialRouteName='Profile' screenOptions={{headerShown:false}}>
-      <ProfileStack.Screen name="Profile"  component={Profile} />
-      <ProfileStack.Screen name="EditProfile" component={EditProfile} />
-      <ProfileStack.Screen name="UserPassPopup" component={UserPassPopup} />
-      <ProfileStack.Screen name="ProfileStats" component={Stats} />
-    </ProfileStack.Navigator>
-  )
-}
+
 
   return(
 
@@ -155,10 +156,11 @@ const ProfilePages = () => {
       <FriendsProvider>
       <GameRulesProvider>
         <UserDataProvider>
-          <ProfilePageUIDProvider>
           <CurrentEventProvider>
+          <ProfilePageUIDProvider>
               <CurrentTraitStatProvider>
               <HamburgerBarProvider>
+              <FeedProvider>
                 <SafeAreaView style={styles.backgroundStyle}>
                   <NavigationContainer >
                     <AuthStack.Navigator initialRouteName='Login' screenOptions={{ headerShown: false }}>
@@ -168,10 +170,11 @@ const ProfilePages = () => {
                     </AuthStack.Navigator>
                   </NavigationContainer>
                 </SafeAreaView>
+                </FeedProvider>
               </HamburgerBarProvider>
               </CurrentTraitStatProvider>
+              </ProfilePageUIDProvider>
           </CurrentEventProvider>
-          </ProfilePageUIDProvider>
         </UserDataProvider>
         </GameRulesProvider>
       </FriendsProvider>

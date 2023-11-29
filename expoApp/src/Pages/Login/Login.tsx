@@ -16,11 +16,14 @@ import { useEffect, useState } from 'react';
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import { useUID } from '../../Contexts/UIDContext';
 import styles from '../../styles'
-import {db, auth,} from '../../Firebase/firebase'
-import {doc, getDoc} from 'firebase/firestore'
+import {auth} from '../../Firebase/firebase'
 import { useUserData } from '../../Contexts/UserDataContext';
 import LoadingOverlay from '../../Overlays/LoadingOverlay';
 import { scaleFont } from '../../Utilities/fontSizing';
+import { useGameRules } from '../../Contexts/GameRules';
+import { useFeed } from '../../Contexts/FeedContext';
+import { useFriends } from '../../Contexts/FriendsContext';
+import ForwardArrow from '../../IconBin/svg/forward_arrow.svg'
 
 type RootStackParamList = {
 Login:undefined,
@@ -28,17 +31,22 @@ AuthedApp:undefined,
 SignUp:undefined,
 }
 const Login = ({route}:any):JSX.Element => {
+const {setGameRulesData}:any = useGameRules()
 const [email,setEmail] = useState("")
 const [password,setPassword] = useState("")
 const {setUID}:any = useUID();
-const {setUserData}:any = useUserData()
+const {setUserData, setUserTrophies, setUserLevels}:any = useUserData()
+const {setFriendsData}:any = useFriends()
+const {setGlobalFeed, setFriendsFeed, setLastVisibleFriends, setLastVisibleFriendsTrophy, setLastVisibleGlobal, setLastVisibleGlobalTrophy,}:any = useFeed()
 const [loadingBool,setLoadingBool] = useState<boolean>(false)
 const [failureMessage,setFailureMessage] = useState<string>()
 const [initializing, setInitializing] = useState<boolean>(false)
 const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-
-
+// UN-COMMENT TO FORCE LOG OUT!
+// useEffect(()=>{
+//   auth.signOut()
+// },[])
 
 
 const handleSignUpPress = (val: keyof RootStackParamList) => {
@@ -46,20 +54,66 @@ const handleSignUpPress = (val: keyof RootStackParamList) => {
 }
 
 
-
-
 const handleAuthChange = async(user:any) => {
   if (user) {
-    setUID(user.uid)
-    const userDocRef = doc(db, "users", user.uid)
-    const docSnap = await getDoc(userDocRef)
-    if (docSnap.exists()){
-      setUserData(docSnap.data())
+    const functionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/initializeApplication"
+    const response = await fetch(functionURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({uid:user.uid})
+    })
+    if (response.ok) {
+      const responseData = await response.json()
+      console.log(JSON.stringify(responseData.gameRules,null,2))
+      setUID(user.uid)
+      setUserData(responseData.userData)
+      setGameRulesData(responseData.gameRules)
+      setUserTrophies(responseData.userTrophies)
+      setUserLevels(responseData.userLevels)
+      setFriendsData(responseData.userFriends)
       setInitializing(false)
       navigation.navigate("AuthedApp")
+      const friendsFeedFunctionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/generateFriendsFeed"
+      const globalFeedFunctionURL = "https://us-central1-appreallife-ea3d9.cloudfunctions.net/generateGlobalFeed"
+      const [friendsFeedResponse,globalFeedResponse] = await Promise.all([
+        fetch(friendsFeedFunctionURL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({uid:user.uid, lastVisFriends:null,lastVisTrophy:null})
+        }),
+        fetch(globalFeedFunctionURL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({uid:user.uid, lastVisGlobal:null,lastVisTrophy:null})
+        }),
+      ]);
+      if (friendsFeedResponse.ok) {
+        const friendsFeedData = await friendsFeedResponse.json()
+        setFriendsFeed(friendsFeedData.posts)
+        setLastVisibleFriends(friendsFeedData.lastVisibleFriends)
+        setLastVisibleFriendsTrophy(friendsFeedData.lastVisibleFriendsTrophy)
+        console.log(JSON.stringify(friendsFeedData,null,2))
+        // set friends feed data
+      } else {console.error("Friends Feed Data not properly initialized")}
+
+      if (globalFeedResponse.ok) {
+        const globalFeedData = await globalFeedResponse.json()
+        setGlobalFeed(globalFeedData.posts)
+        setLastVisibleGlobal(globalFeedData.lastVisibleGlobal)
+        setLastVisibleGlobalTrophy(globalFeedData.lastVisibleGlobalTrophy)
+        console.log(JSON.stringify(globalFeedData,null,2))
+        // set global feed data
+      } else {console.error("Global Feed Data not properly initialized")}
+      
     } else {
+      console.error("Server error when trying to initialize: ", response.status, response.statusText)
       setInitializing(false)
-      setFailureMessage("ERROR: Reload app and try again.")
     }
   } else{setInitializing(false)}
   
@@ -71,42 +125,15 @@ useEffect(()=>{
 },[])
 
 
-
-
-
-
 const signIn = async(e:any) => {
-e.preventDefault();
-try {
-  signInWithEmailAndPassword(auth,email,password)
-  .then((userCredentials)=>{
-      // console.log(userCredentials)
-    let uid = userCredentials.user.uid
-    navigation.navigate("AuthedApp")
-    setUID(uid)
-    if (uid) {
-      const userDocRef = doc(db, "users", uid);
-      getDoc(userDocRef)
-        .then((docSnapshot) => {
-        if (docSnapshot.exists()) {
-        //   console.log("Setting user data:", docSnapshot.data());  // Debugging line
-          setUserData(docSnapshot.data());
-        } else {
-          // console.error("No such document!");
-          setFailureMessage("ERROR: Reload app and try again.")
-        }
-        })
-        .catch((error) => {
-        // console.error("Error getting doc", error);
-        setFailureMessage("ERROR: Reload app and try again.")
-        });
-      }
-      })
-      .catch((error)=>{
-          // console.error(error)
-          setFailureMessage("Wrong email / password.")
-      })
-} catch(err) {
+  e.preventDefault();
+  try {
+    console.log(auth,email,password)
+    signInWithEmailAndPassword(auth,email,password)
+    .catch((error)=>{
+      setFailureMessage("Wrong email / password.")
+    })
+  } catch(err) {
 }
   
 }
@@ -128,9 +155,9 @@ return(
       <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
         <Text style={styles.logintitle}>Sign in </Text>
         <Text style={{...styles.skillPageXPText,}}> or </Text>
-        <TouchableOpacity onPress={()=>handleSignUpPress("SignUp")} style={styles.loginSignupButton}>
-          
-          <Text style={styles.loginbuttonText}>Sign up</Text>
+        <TouchableOpacity onPress={()=>handleSignUpPress("SignUp")} style={{...styles.loginSignupButton, borderColor:"#fff", backgroundColor:"#36b149", justifyContent:"center"}}>
+          <Text style={{...styles.loginbuttonText, fontWeight:"bold"}}>Sign up</Text>
+          <ForwardArrow width={scaleFont(20)} height={scaleFont(20)} />
         </TouchableOpacity>
       </View>
       
@@ -158,7 +185,7 @@ return(
       </View>
       
       <TouchableOpacity onPress={signIn} style={styles.loginbutton}>
-        <Text style={styles.loginbuttonText}>Sign in</Text>
+        <Text style={{...styles.loginbuttonText, fontWeight:"bold"}}>Sign in</Text>
       </TouchableOpacity>
       {/* <TouchableOpacity onPress={signIn} style={styles.whatIsARLButton}>
         <Text style={styles.loginbuttonText}>what's arl ?</Text>

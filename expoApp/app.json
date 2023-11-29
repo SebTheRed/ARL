@@ -1,15 +1,23 @@
 {
   "expo": {
-    "name": "expoApp",
-    "slug": "expoApp",
-    "version": "1.0.0",
+    "name": "App Real Life",
+    "slug": "ARL",
+    "version": "1.1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/appIcon.png",
     "userInterfaceStyle": "light",
     "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": ["js", "jsx", "ts", "tsx", "svg"],
-      "assetPlugins": ["react-native-svg-transformer"]
+      "sourceExts": [
+        "js",
+        "jsx",
+        "ts",
+        "tsx",
+        "svg"
+      ],
+      "assetPlugins": [
+        "react-native-svg-transformer"
+      ]
     },
     "splash": {
       "image": "./assets/splash.png",
@@ -20,13 +28,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.voltapplications.ARL"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#1c1c1c"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -35,9 +48,14 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+          "cameraPermission": "Allow ARL to access your camera."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b63ab340-ffbf-4b59-ab8f-6c236ae0137c"
+      }
+    }
   }
 }

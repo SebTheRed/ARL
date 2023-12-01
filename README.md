@@ -1,4 +1,4 @@
-# ARL (App for Real Life)
+# ARL (App Real Life)
 
 ARL is a unique social media application that combines social media dynamics with a video game-style leveling system. Engage in real-life activities, share your experiences, and level up your Traits!
 

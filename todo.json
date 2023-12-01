@@ -18,39 +18,81 @@
     "fix friends in profile?? ":true,
     "fix cooldown allowing users to cheat cooldowns (just made a refresh func in the cooldown context)":true,
     "add streaks with posting":true,
-    "ART BABAYY":true,
+    "weave in google cloud vision API to profile & cover pic changes":true,
+    "When a post closes out after 24 hours, update XP log data point to reflect additional XP gained.":true,
+    "add a report post function":true,
+    "add delete button to post if its the user's":true,
+    "Fix stuttering profile pages": true,
+    "re-work contexts so we stop re-rending all the fucking time": true,
+    "exps that unlock with trophies need to show that they require that trophy.": true,
+    "lock voting on other's posts 'til lvl 11": true,
+    "reduce profile pic upload size to defined size":true,
+    "reduce feed pic upload size to defined square":true,
+    "get real technical with image upload sizing":true,
+    "finish trophies":true,
+    "FIX UPVOTING ON TROPHIES ITS REALLY BROKEN":true,
+    "change all nomenclature from XP to EXP":true,
+    "trophies refresh streak": true,
+    "move all of the heavy logic/lifting methods from front-end useEffects to backend fetch functions":true,
+    "you must be friends with this user to see their posts, block non-friends from seeing user posts":true,
+    "set all splash & app button icons":true,
 
-    "set up trophies the way they should be":false,
-    "make trophy posts last a week. backend & front end":false,
-    
-    "add @ tagging":false,
+    "make notification appear to receiving user when friend request accepted":false,
+    "make notification to sending user when receiving user accepts":false,
 
     "notification when user's post is cleared (24 hrs)":false,
     "notification when experience is off cooldown":false,
     "notification upon friend request":false,
     "notifications to remind users of streak expiration":false,
+
+    "add @ tagging":false,
+    "add @ tagging in trophy posts":false,
+
+
     "one huge final last test!":false,
-    "apply to APP STORES!!": false
-  },
-  "trophies":
-  {
+    "apply to APP STORES!!": false,
+    "make promo video":false
     
+  },
+  "optimization":{
+    "build out all backend functions":true,
+    "plug them into front end":true,
+    "test like mad":false  
   },
   "polish":
   {
+    
     "make every account start with SebTheRed as a friend":true,
     "show red notification in hamburger & notification bell when user has fresh notifs":true,
     "quantify friends":true,
     "fix search and make it more robust":true,
     "change icon PNGS to svgs":true,
+    "add total level to profile page":true,
+    "optimize feed at least":true,
+    "rework heavy front-end contexts (feed, profile, friends, etc) to process on the backend. Then change only a few states.":true,
+    "work in more loading screens":true,
+    "on profile page make cover photo button & trophy case button where users can scroll trophies.":"instead I made trophy cases",
+    "fix the weird back arrow thing pls omg":true,
+    "friends & friend request pull up to refresh UI message":true,
+    "change all total level calcs for the user to draw from the pre-defined state in userDataContext":true,
 
-    "fix the weird back arrow thing pls omg":false,
-    "Add pinch zoom to camera uploader":false,
+
+
+
+    "make feed curate based off of current friends list, instead of when it was posted":false,
+
+    "make in-game QR code that re-directs the person snapping the photo to download the app, and it generates a friend-code":false,
+    "make each trophy case load only when paginated onto":false,
+    "make accept invite button & friends profile multi button show loading when pressed":false,
+    "make each of the bottom bars and maybe the hamburger their own nav. Only 5 navs. Make the rest reactive.": false,
+
     "update email and password backend funcs": false,
     "if friends feed empty, prompt user to search for friends":false,
     "make unique placeholder values for the text input field when making a new post":false,
-    "Fix stuttering profile pages":false
+    "eventually re-work the snapshot listener for score posts":false
+
 
   }
 
 }
+
